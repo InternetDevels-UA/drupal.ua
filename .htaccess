@@ -105,6 +105,9 @@ DirectoryIndex index.php
   RewriteCond %{HTTP_HOST} ^www\.drupal\.ua$ [NC]
   RewriteRule ^(.*)$ http://drupal.ua/$1 [L,R=301]
 
+  RewriteCond %{HTTP_HOST} ^demo\.drupal\.ua$ [NC]
+  RewriteRule ^(.*)$ http://drupal.ua/$1 [L,R=301]
+
   RewriteCond %{REQUEST_URI} ^/chat$ [NC]
   RewriteRule ^(.*)$ chat.php [L,QSA]
 
