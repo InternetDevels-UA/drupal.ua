@@ -21,7 +21,7 @@ Drupal.behaviors.imceInline = function(context) {
 //function to be executed when imce loads.
 ii.load = function(win) {
   win.imce.setSendTo(Drupal.t('Insert file'), ii.insert);
-  $(window).unload(function() {
+  $(window).bind('unload', function() {
     if (ii.pop && !ii.pop.closed) ii.pop.close();
   });
 };

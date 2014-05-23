@@ -63,7 +63,7 @@ E.tagDialog = function(tag, fields, opt) {
       n--;
       continue;
     }
-    rows[n] = [field.title, fhtml(field)];
+    rows[n] = [BUE.html('label', field.title, {'for': field.attributes.id}), fhtml(field)];
     while (field.getnext && (field = fields[++i])) {
       rows[n][1] += fhtml(fproc(field, obj, sel));
     }
@@ -115,14 +115,18 @@ var fproc = function(f, obj, sel) {
   f.fname = 'attr_' + f.name;
   f.type = f.value.indexOf('\n') > -1 ? 'textarea' : (f.type || 'text');
   f.attributes = $.extend({name: f.fname, id: f.fname, 'class': ''}, f.attributes);
-  f.attributes['class'] += ' form-' + f.type + (f.required ? ' required' : '');
+  f.attributes['class'] += ' form-' + f.type;
+  if (f.required) {
+    f.attributes['class'] += ' required';
+    f.attributes['title'] = Drupal.t('This field is required.');
+  }
   return f;
 };
 
 //tag dialog form submit
 var fsubmit = function(tag, form, opt, E) {
   //check required fields.
-  for (var el, i = 0; el = form.elements[i]; i++) if ($(el).is('.required') && !el.value) {
+  for (var el, i = 0; el = form.elements[i]; i++) if ($(el).hasClass('required') && !el.value) {
     return BUE.noticeRequired(el);
   }
   //custom validate

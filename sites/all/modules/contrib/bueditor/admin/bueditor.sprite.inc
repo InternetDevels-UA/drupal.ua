@@ -50,7 +50,8 @@ function bueditor_sprite_icons($icons) {
   //Image properties of the first one in the list will be the reference for the sprite
   $first_icon = $icons[0];
   $sprite_dir = bueditor_sprites_dir();
-  $sprite_name = 'sprite_' . md5(implode(' ', $icons)) . substr($first_icon, strrpos($first_icon, '.'));
+  $sizes = @array_map('filesize', $icons);
+  $sprite_name = 'sprite_' . md5(implode(' ', array_merge($icons, $sizes))) . substr($first_icon, strrpos($first_icon, '.'));
   $sprite_path = $sprite_dir . '/' . $sprite_name;
   if (file_exists($sprite_path)) {
     return $sprite_name;

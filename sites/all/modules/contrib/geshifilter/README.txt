@@ -1,4 +1,3 @@
-// $Id: README.txt,v 1.9 2010/04/03 23:28:58 soxofaan Exp $
 
 ============================
 GeSHi Filter (Drupal Module)
@@ -31,8 +30,7 @@ INSTALLATION
   from the branch 1.1.x (also described as geshi-dev), which is not yet
   supported by the GeSHi filter module.
   Place the entire extracted 'geshi' folder (which contains geshi.php)
-  in the geshifilter directory (e.g. as sites/all/modules/geshifilter/geshi),
-  or better, in a libraries directory (e.g. as sites/all/libraries/geshi).
+  in a libraries directory (e.g. as sites/all/libraries/geshi).
 
 3. Enable this module as any other Drupal module by navigating to
   administer > site building > modules
@@ -64,7 +62,7 @@ When language tags are enabled (like "<java>" for Java) you can also do
     dothisdothat(i);
   }
   </java>
-More options and tricks can be found in the filter tips of the input format at
+More options and tricks can be found in the filter tips of the text format at
 www.example.com/?q=filter/tips .
 
 

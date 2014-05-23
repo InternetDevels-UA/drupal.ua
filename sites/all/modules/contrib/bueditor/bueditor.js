@@ -2,9 +2,21 @@
 
 var BUE = window.BUE = window.BUE || {preset: {}, templates: {}, instances: [], preprocess: {}, postprocess: {}};
 
+// Set behaviors that must run before BUE.
+BUE.preBehaviors = {
+  textarea: !Drupal.behaviors.textarea,
+  teaser: !Drupal.behaviors.teaser
+};
+
 // Get editor settings from Drupal.settings and process preset textareas.
-BUE.behavior = function(context) {
-  var set = Drupal.settings.BUE || null, tpls = BUE.templates, pset = BUE.preset;
+Drupal.behaviors.BUE = function(context) {
+  var i, behavior, set = Drupal.settings.BUE, tpls = BUE.templates, pset = BUE.preset;
+  // Check for any necessary behaviors that haven't run yet and execute them.
+  for (i in BUE.preBehaviors) {
+    if (BUE.preBehaviors[i] && (behavior = Drupal.behaviors[i])) {
+      behavior.apply(this, arguments);
+    }
+  }
   if (set) {
     $.each(set.templates, function (id, tpl) {
       tpls[id] = tpls[id] || $.extend({}, tpl);
@@ -81,7 +93,9 @@ BUE.theme = function (tplid) {
     var surl = (new Image()).src = sprite.url, sunit = sprite.unit, sx1 = sprite.x1;
     $(document.body).append('<style type="text/css" media="all">.bue-'+ tplid +' .bue-sprite-button {background-image: url('+ surl +'); width: '+ sunit +'px; height: '+ sunit +'px;}</style>');
   }
-  var access = $.browser.mozilla && 'Shift + Alt' || ($.browser.msie || window.chrome) && 'Alt', title, content, icon, key, func;
+  var title, content, icon, key, func,
+  style = document.documentElement.style,
+  access = ('MozAppearance' in style) && 'Shift + Alt' || (('ActiveXObject' in window) || ('WebkitAppearance' in style)) && 'Alt';
   // Create html for buttons. B(0-title, 1-content, 2-icon or caption, 3-accesskey) and 4-function for js buttons
   for (var B, isimg, src, type, btype, attr, alt, i = 0, s = 0; B = tpl.buttons[i]; i++) {
     // Empty button.
@@ -125,14 +139,14 @@ BUE.theme = function (tplid) {
 };
 
 // Cross browser selection handling. 0-1=All, 2=IE, 3=Opera
-BUE.mode = (window.getSelection || document.getSelection) ? ($.browser.opera ? 3 : 1) : (document.selection && document.selection.createRange ? 2 : 0 );
+BUE.mode = document.createElement('textarea').setSelectionRange ? (window.opera ? 3 : 1) : (document.selection && document.selection.createRange ? 2 : 0);
 
 // New line standardization. At least make them represented by a single char.
 BUE.text = BUE.processText = BUE.mode < 2 ? function (s) {return s.toString()} : function (s) {return s.toString().replace(/\r\n/g, '\n')};
 
 // Create selection in a textarea
 BUE.selMake = BUE.mode == 2 ? function (T, start, end) {
-  range = T.createTextRange();
+  var range = T.createTextRange();
   range.collapse();
   range.moveEnd('character', end);
   range.moveStart('character', start);
@@ -142,9 +156,10 @@ BUE.mode == 3 ? function (T, start, end) {
   var text = BUE.text(T.value), i = text.substring(0, start).split('\n').length, j = text.substring(start, end).split('\n').length;
   T.setSelectionRange(start + i -1 , end + i + j - 2);
 } :
-function (T, start, end) {
+BUE.mode == 1 ? function (T, start, end) {
   T.setSelectionRange(start, end);
-};
+} :
+function (T, start, end) {};
 
 // Return the selection coordinates in a textarea
 BUE.selPos = BUE.mode == 2 ? function (T) {
@@ -208,11 +223,6 @@ BUE.$html = function(s){
 
 // Backward compatibility.
 window.editor = window.editor || BUE;
-
-// Initiate bueditor
-$(document).ready(function () {
-  (Drupal.behaviors.BUE = BUE.behavior)(document);
-});
 
 })(jQuery);
 

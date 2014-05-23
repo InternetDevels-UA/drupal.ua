@@ -1,5 +1,4 @@
 <?php
-// $Id: geshifilter.pages.inc,v 1.15.2.2 2011/02/02 23:12:46 soxofaan Exp $
 
 /**
  * @file
@@ -13,11 +12,11 @@
 require_once drupal_get_path('module', 'geshifilter') .'/geshifilter.inc';
 
 /**
- * Helper function for parsing the attributes of GeSHi code tags
+ * Helper function for parsing the attributes of GeSHi code tags.
  * to get the settings for language, line numbers, etc.
  *
- * @param $attributes string with the attributes
- * @param $format the concerning input format
+ * @param $attributes string with the attributes.
+ * @param $format the concerning text format.
  * @return array of settings with fields 'language', 'line_numbering', 'linenumbers_start' and 'title'.
  */
 function _geshifilter_parse_attributes($attributes, $format) {
@@ -124,17 +123,17 @@ function _geshifilter_prepare($format, $text) {
   if (in_array(GESHIFILTER_BRACKETS_ANGLE, $tag_styles)) {
     // Prepare <foo>..</foo> blocks.
     $pattern = '#(<)('. $tags_string .')((\s+[^>]*)*)(>)(.*?)(</\2\s*>|$)#s';
-    $text = preg_replace_callback($pattern, create_function('$match', "return _geshifilter_prepare_callback(\$match, $format);"), $text);
+    $text = preg_replace_callback($pattern, create_function('$match', "return _geshifilter_prepare_callback(\$match, '$format');"), $text);
   }
   if (in_array(GESHIFILTER_BRACKETS_SQUARE, $tag_styles)) {
     // Prepare [foo]..[/foo] blocks.
     $pattern = '#((?<!\[)\[)('. $tags_string .')((\s+[^\]]*)*)(\])(.*?)((?<!\[)\[/\2\s*\]|$)#s';
-    $text = preg_replace_callback($pattern, create_function('$match', "return _geshifilter_prepare_callback(\$match, $format);"), $text);
+    $text = preg_replace_callback($pattern, create_function('$match', "return _geshifilter_prepare_callback(\$match, '$format');"), $text);
   }
   if (in_array(GESHIFILTER_BRACKETS_DOUBLESQUARE, $tag_styles)) {
     // Prepare [[foo]]..[[/foo]] blocks.
     $pattern = '#(\[\[)('. $tags_string .')((\s+[^\]]*)*)(\]\])(.*?)(\[\[/\2\s*\]\]|$)#s';
-    $text = preg_replace_callback($pattern, create_function('$match', "return _geshifilter_prepare_callback(\$match, $format);"), $text);
+    $text = preg_replace_callback($pattern, create_function('$match', "return _geshifilter_prepare_callback(\$match, '$format');"), $text);
   }
   if (in_array(GESHIFILTER_BRACKETS_PHPBLOCK, $tag_styles)) {
     // Prepare < ?php ... ? > blocks.
@@ -199,7 +198,7 @@ function _geshifilter_prepare_callback($match, $format) {
 }
 
 /**
- * _geshifilter_prepare callback for < ?php ... ? > blocks
+ * _geshifilter_prepare callback for < ?php ... ? > blocks.
  */
 function _geshifilter_prepare_php_callback($match) {
   return '[geshifilter-questionmarkphp]'
@@ -212,9 +211,9 @@ function _geshifilter_prepare_php_callback($match) {
  */
 function _geshifilter_process($format, $text) {
   // load GeSHi library (if not already)
-  $geshi_library = _geshifilter_check_geshi_library();
-  if (!$geshi_library['success']) {
-    drupal_set_message($geshi_library['message'], 'error');
+  $geshi_library = libraries_load('geshi');
+  if (!$geshi_library['loaded']) {
+    drupal_set_message($geshi_library['error message'], 'error');
     return $text;
   }
   // get the available tags
@@ -229,13 +228,13 @@ function _geshifilter_process($format, $text) {
   $tags_string = implode('|', $tags);
   // Pattern for matching the prepared "<code>...</code>" stuff
   $pattern = '#\\[geshifilter-('. $tags_string .')([^\\]]*)\\](.*?)(\\[/geshifilter-\1\\])#s';
-  $text = preg_replace_callback($pattern, create_function('$match', "return _geshifilter_replace_callback(\$match, $format);"), $text);
+  $text = preg_replace_callback($pattern, create_function('$match', "return _geshifilter_replace_callback(\$match, '$format');"), $text);
   return $text;
 }
 
 
 /**
- * preg_replace_callback callback
+ * preg_replace_callback callback.
  */
 function _geshifilter_replace_callback($match, $format) {
   // $match[0]: complete matched string
@@ -291,11 +290,11 @@ function _geshifilter_replace_callback($match, $format) {
   }
   $inline_mode = (strpos($source_code, "\n") === FALSE);
   // process and return
-  return geshifilter_process($source_code, $lang, $line_numbering, $linenumbers_start, $inline_mode, $title);
+  return geshifilter_process_sourcecode($source_code, $lang, $line_numbering, $linenumbers_start, $inline_mode, $title);
 }
 
 /**
- * Helper function for overriding some GeSHi defaults
+ * Helper function for overriding some GeSHi defaults.
  */
 function _geshifilter_override_geshi_defaults(&$geshi, $langcode) {
   // override the some default GeSHi styles (e.g. GeSHi uses Courier by default, which is ugly)
@@ -308,9 +307,9 @@ function _geshifilter_override_geshi_defaults(&$geshi, $langcode) {
 }
 
 /**
- * General geshifilter processing function
+ * General geshifilter processing function for a chunk of source code.
  */
-function geshifilter_process($source_code, $lang, $line_numbering=0, $linenumbers_start=1, $inline_mode=FALSE, $title = NULL) {
+function geshifilter_process_sourcecode($source_code, $lang, $line_numbering=0, $linenumbers_start=1, $inline_mode=FALSE, $title = NULL) {
   // process
   if ($lang == 'php' && variable_get('geshifilter_use_highlight_string_for_php', FALSE)) {
     return geshifilter_highlight_string_process($source_code, $inline_mode);
@@ -326,16 +325,16 @@ function geshifilter_process($source_code, $lang, $line_numbering=0, $linenumber
  */
 function geshifilter_geshi_process($source_code, $lang, $line_numbering=0, $linenumbers_start=1, $inline_mode=FALSE, $title = NULL) {
   // load GeSHi library (if not already)
-  $geshi_library = _geshifilter_check_geshi_library();
+  $geshi_library = libraries_load('geshi');
   if (!$geshi_library['loaded']) {
-    drupal_set_message($geshi_library['message'], 'error');
+    drupal_set_message($geshi_library['error message'], 'error');
     return $source_code;
   }
 
    // Check for a cached version of this source code and return it if available.
    // @todo: Use a dedicated table instead of using cache_filter? If so,
    // also take care of the flushing in _geshifilter_clear_filter_cache().
-  $cache_id = "geshifilter:$lang:$line_numbering:$line_numbering:$inline_mode" . md5($title . $source_code);
+  $cache_id = "geshifilter:$lang:$line_numbering:$linenumbers_start:$inline_mode" . md5($title . $source_code);
   if ($cached = cache_get($cache_id, 'cache_filter')) {
     return $cached->data;
   }
@@ -393,7 +392,7 @@ function geshifilter_geshi_process($source_code, $lang, $line_numbering=0, $line
 }
 
 /**
- * geshifilter wrapper for highlight_string() processing of PHP
+ * geshifilter wrapper for highlight_string() processing of PHP.
  */
 function geshifilter_highlight_string_process($source_code, $inline_mode) {
   // Make sure that the source code starts with < ?php and ends with ? >

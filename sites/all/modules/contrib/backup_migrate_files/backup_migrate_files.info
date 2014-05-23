@@ -3,9 +3,9 @@ description = "Add file backup and restore support to backup and migrate."
 dependencies[] = backup_migrate
 core = 6.x
 
-; Information added by drupal.org packaging script on 2011-08-02
+; Information added by drupal.org packaging script on 2013-09-30
 version = "6.x-1.x-dev"
 core = "6.x"
 project = "backup_migrate_files"
-datestamp = "1312286656"
+datestamp = "1380555219"
 

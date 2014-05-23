@@ -1,0 +1,9 @@
+<?php
+
+/**
+ * Implementation of hook_ctools_plugin_dierctory() to let the system know
+ * we implement plugins.
+ */
+function vk_share_panels_ctools_plugin_directory($module, $plugin) {
+  return 'plugins/' . $plugin;
+}

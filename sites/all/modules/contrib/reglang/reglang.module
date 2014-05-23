@@ -4,13 +4,11 @@
  * @file
  * Registration Language module file
  *
- * A helper Module that tries to circumvent some Drupal language behaviour problems.
+ * A helper Module that tries to circumvent some Drupal language behaviour
+ * problems.
  *
  */
 
-/**
- * Contants
- */
 define('REGLANG_REGISTER_OFF', 0);
 define('REGLANG_REGISTER_CURRENT', 1);
 define('REGLANG_REGISTER_DEFAULT', 2);
@@ -25,7 +23,7 @@ define('REGLANG_NODE_CURRENT', 1);
 define('REGLANG_NODE_DEFAULT', 2);
 
 /**
- * Implementation of hook_menu().
+ * Implements hook_menu().
  */
 function reglang_menu() {
   $items = array();
@@ -43,7 +41,7 @@ function reglang_menu() {
 }
 
 /**
- * Administtration form
+ * Administration form.
  */
 function reglang_settings() {
 
@@ -90,10 +88,10 @@ function reglang_settings() {
 
 
 /**
- * Implementation of hook_user().
+ * Implements hook_user().
  */
 function reglang_user($op, &$edit, &$account, $category = NULL) {
-  //If no language already set and operation is insert
+  // If no language was already set and operation is "insert".
   if (!$account->language && $op == 'insert') {
     switch (variable_get('reglang_option', REGLANG_REGISTER_OFF)) {
 
@@ -104,10 +102,10 @@ function reglang_user($op, &$edit, &$account, $category = NULL) {
       case REGLANG_REGISTER_DEFAULT:
         $language = language_default();
         break;
-	
+
       case REGLANG_REGISTER_BROWSER:
-         $language = language_from_browser();
-         break;
+        $language = language_from_browser();
+        break;
 
       case REGLANG_REGISTER_OFF:
       default:
@@ -118,16 +116,16 @@ function reglang_user($op, &$edit, &$account, $category = NULL) {
 }
 
 /**
- * Implementation of hook_mail_alter().
+ * Implements hook_mail_alter().
  */
 function reglang_mail_alter(&$message) {
-  //only check if the mail contains a user object
+  // Only check if the mail contains a user object.
   if (isset($message['params']['account'])) {
     switch (variable_get('reglang_notify_option', REGLANG_NOTIFY_OFF)) {
 
       case REGLANG_NOTIFY_USER:
-        //might already be the preferred language of the user but any way we have to load the language
-        //so checking is equal to setting.
+        // Might already be the preferred language of the user but any way we
+        // have to load the language so checking is equal to setting.
         $message['language'] = user_preferred_language($message['params']['account']);
         break;
 
@@ -142,8 +140,11 @@ function reglang_mail_alter(&$message) {
   }
 }
 
+/**
+ * Implements hook_nodeapi().
+ */
 function reglang_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
-  //if update or insert and no language set
+  // If update or insert and no language set.
   if (($op == 'insert' || $op == 'update') && !$node->language) {
     switch (variable_get('reglang_node_option', REGLANG_NODE_OFF)) {
 

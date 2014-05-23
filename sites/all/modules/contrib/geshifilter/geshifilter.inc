@@ -1,80 +1,26 @@
 <?php
-// $Id: geshifilter.inc,v 1.8 2009/07/12 15:00:28 soxofaan Exp $
 
 /**
  * @file
  * General GeSHi filter helper functions.
  */
 
-function _geshifilter_get_geshi_dir() {
-  return variable_get('geshifilter_geshi_dir', drupal_get_path('module', 'geshifilter') .'/geshi');
-}
-
-/**
- * Helper function for loading/checking the GeSHi library v 1.0.x (if not already)
- * Returns an array with keys 'success', 'loaded' and 'message'
- */
-function _geshifilter_check_geshi_library($use_cache=TRUE, $geshi_dir=NULL, $load_when_found=TRUE) {
-  static $geshi_library_cache = NULL;
-  if ($use_cache && $geshi_library_cache !== NULL) {
-    // get from cache
-    $geshi_library = $geshi_library_cache;
-  }
-  else {
-    // initialisation
-    $geshi_library = array('success' => NULL, 'loaded' => FALSE, 'message' => NULL);
-    // no cache
-    if (!$geshi_dir) {
-      $geshi_dir = _geshifilter_get_geshi_dir();
-    }
-    if (!is_dir($geshi_dir)) {
-      $geshi_library['success'] = FALSE;
-      $geshi_library['message'] = t('GeSHi library error: %dir is not a directory.', array('%dir' => $geshi_dir));
-    }
-    elseif (is_file($geshi_dir .'/geshi.php')) {
-      // GeSHi 1.0.x found (probably, we can only be sure by loading it)
-      $geshi_library['success'] = TRUE;
-      if ($load_when_found) {
-        require_once($geshi_dir .'/geshi.php');
-        // check version
-        $geshi_library_version = explode('.', GESHI_VERSION);
-        if (!($geshi_library_version[0] == '1' &&  $geshi_library_version[1] == '0')) {
-          $geshi_library['success'] = FALSE;
-          $geshi_library['loaded'] = FALSE;
-          $geshi_library['message'] = t('GeSHi library error: The detected version of GeSHi library (%version) is not supported. A version from the 1.0.x branch is required.', array('%version' => GESHI_VERSION));
-        }
-        else {
-          $geshi_library['loaded'] = TRUE;
-        }
-      }
-    }
-    else {
-      $geshi_library['success'] = FALSE;
-      $geshi_library['message'] = t('GeSHi library error: Could not find a known version of the GeSHi library in directory %dir.' , array('%dir' => $geshi_dir));
-    }
-    // store in cache if needed
-    if ($use_cache) {
-      $geshi_library_cache = $geshi_library;
-    }
-  }
-  return $geshi_library;
-}
-
 /**
  * List of available languages.
- * @return an array mapping language code to array with the language path and full language name
+ *
+ * @return an array mapping language code to array with the language path and full language name.
  */
 function _geshifilter_get_available_languages() {
   // try to get it from cache (database actually)
   $available_languages = variable_get('geshifilter_available_languages_cache', NULL);
   if ($available_languages === NULL) {
     // not in cache: build the array of available_languages
-    $geshi_library = _geshifilter_check_geshi_library();
+    $geshi_library = libraries_load('geshi');
     $available_languages = array();
-    if ($geshi_library['success']) {
-      $dirs = array(_geshifilter_get_geshi_dir() .'/geshi', drupal_get_path('module', 'geshifilter') .'/geshi-extra');
+    if ($geshi_library['loaded']) {
+      $dirs = array($geshi_library['library path'] .'/geshi', drupal_get_path('module', 'geshifilter') .'/geshi-extra');
       foreach ($dirs as $dir) {
-        foreach (file_scan_directory($dir, '\.[pP][hH][pP]$') as $filename => $fileinfo) {
+        foreach (file_scan_directory($dir, '/.[pP][hH][pP]$/i') as $filename => $fileinfo) {
           // short name
           $name = $fileinfo->name;
           // get full name
@@ -114,7 +60,7 @@ function _geshifilter_get_enabled_languages() {
 }
 
 /**
- * Helper function for gettings the tags
+ * Helper function for gettings the tags.
  * (with caching)
  */
 function _geshifilter_get_tags($format) {
@@ -137,7 +83,7 @@ function _geshifilter_get_tags($format) {
 }
 
 /**
- * helper function for generating a GeSHi object
+ * Helper function for generating a GeSHi object.
  * @param $language the language to generate a GeSHi object for
  */
 function _geshifilter_geshi_factory($source_code, $language) {

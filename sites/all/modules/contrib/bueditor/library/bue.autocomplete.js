@@ -25,7 +25,7 @@ BUE.preprocess.autocomplete = function(E, $) {
     var code = e.charCode === undefined ? e.keyCode : e.charCode;
     //disable keycodes that have multi-meaning in opera. 39: hypen-right, 40: parenthesis-down.
     //extend 37:percentage-left, 38:ampersand-up, 33:exclamation-pageup, 34:double quote-pagedown...
-    if ($.browser.opera && /^(37|38|39|40)$/.test(code+'')) return;
+    if (window.opera && /^(37|38|39|40)$/.test(code+'')) return;
     var handler, suffix, chr = String.fromCharCode(code), prefix = chr;
     if (!(handler = E.AC[chr])) return;
     if (!handler.lookback) {
@@ -77,7 +77,7 @@ E.ACAdd = function(prefix, suffix) {
 
 //Remove an AC pair at runtime
 E.ACRemove = function(prefix) {
-  var E = this;
+  var E = this, len = prefix.length;
   var trigger = prefix.charAt(len-1);
   if (E.AC && E.AC[trigger]) {
     if (typeof E.AC[trigger] == 'object') {

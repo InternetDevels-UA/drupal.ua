@@ -10,7 +10,6 @@
  */
 function bueditor_install() {
   drupal_install_schema('bueditor');
-  drupal_set_message(t('!module has been installed.', array('!module' => l('BUEditor', 'admin/settings/bueditor'))));
   //workaround for #200931
   $GLOBALS['bueditor_just_installed'] = TRUE;
 }

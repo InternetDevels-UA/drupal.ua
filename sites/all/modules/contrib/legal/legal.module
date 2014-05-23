@@ -286,7 +286,8 @@ function legal_user($op, &$edit, &$account, $category = FALSE) {
       // Destroy the current session.
       session_destroy();
       session_set_save_handler('sess_open', 'sess_close', 'sess_read', 'sess_write', 'sess_destroy_sid', 'sess_gc');
-      module_invoke_all('user', 'logout', NULL, $user);
+      $null = NULL;
+      user_module_invoke('logout', $null, $user);
 
       // We have to use $GLOBALS to unset a global variable.
       $user = user_load(array('uid' => 0));

@@ -1,5 +1,4 @@
 <?php
-// $Id: geshifilter.conflicts.inc,v 1.7 2009/07/12 23:24:48 soxofaan Exp $
 
 /**
  * @file
@@ -12,13 +11,15 @@ require_once drupal_get_path('module', 'geshifilter') .'/geshifilter.inc';
  * Menu callback for filter conflicts page
  */
 function geshifilter_admin_filter_conflicts($check_only=FALSE) {
+  global $user;
+
   // start
   $output = '';
   // check if GeSHi library is available
-  $geshi_library = _geshifilter_check_geshi_library();
-  if (!$geshi_library['success']) {
+  $geshi_library = libraries_load('geshi');
+  if (!$geshi_library['loaded']) {
     if (!$check_only) {
-      drupal_set_message($geshi_library['message'], 'error');
+      drupal_set_message($geshi_library['error message'], 'error');
     }
     return $output;
   }
@@ -27,21 +28,21 @@ function geshifilter_admin_filter_conflicts($check_only=FALSE) {
     'filter/0' => '_geshifilter_htmlfilter_conflicts',
     'codefilter/0' => '_geshifilter_codefilter_conflicts',
   );
-  foreach (filter_formats() as $format => $input_format) {
-    // Get the filters in this input format
+  foreach (filter_formats($user) as $format => $input_format) {
+    // Get the filters in this text format
     $filters = filter_list_format($format);
-    // look if GeSHi is enabled in this input format
+    // look if GeSHi is enabled in this text format
     if (isset($filters['geshifilter/0'])) {
       $geshifilter = $filters['geshifilter/0'];
-      // Check if possibly conflicting filters are also present in input format
+      // Check if possibly conflicting filters are also present in text format
       foreach ($conflict_detectors as $filter_key => $conflict_detector) {
-        // does this filter exist in the input format?
+        // does this filter exist in the text format?
         if (array_key_exists($filter_key, $filters)) {
           $cfilter = $filters[$filter_key];
           $conflicts = $conflict_detector($format, $cfilter, $geshifilter);
           foreach ($conflicts as $conflict) {
             $alerts[] = array(
-              l(t($input_format->name), "admin/settings/filters/$format"),
+              l(t($input_format->name), "admin/config/content/formats/$format"),
               $cfilter->name,
               $conflict['description'],
               $conflict['solution'],
@@ -60,7 +61,7 @@ function geshifilter_admin_filter_conflicts($check_only=FALSE) {
       $alerts[] = array(array('data' => t('No known filter conflicts were detected.'), 'colspan' => 4));
     }
     $header = array(t('Input format'), t('Filter'), t('Description'), t('Possible solutions'));
-    $output .= theme('table', $header, $alerts);
+    $output .= theme('table', array('header' => $header, 'rows' => $alerts));
     return $output;
   }
 }
@@ -75,7 +76,7 @@ function _geshifilter_htmlfilter_conflicts($format, $cfilter, $geshifilter) {
     $conflicts[] = array(
       'description' => t('%cfilter should not come after %geshifilter to prevent loss of layout and highlighting.',
           array('%cfilter' => $cfilter->name, '%geshifilter' => $geshifilter->name)),
-      'solution' => l(t('Rearrange filters'), "admin/settings/filters/$format/order"),
+      'solution' => l(t('Rearrange filters'), "admin/config/content/formats/$format"),
     );
   }
   // check tag escaping of html filter
@@ -83,7 +84,7 @@ function _geshifilter_htmlfilter_conflicts($format, $cfilter, $geshifilter) {
     $conflicts[] = array(
       'description' => t('%cfilter is configured to "Escape all tags", which is likely to cause problems with %geshifilter.',
         array('%cfilter' => $cfilter->name, '%geshifilter' => $geshifilter->name)),
-      'solution' => l(t('Configure HTML filtering to "Strip disallowed tags"'), "admin/settings/filters/$format/configure", array('html' => TRUE)),
+      'solution' => l(t('Configure HTML filtering to "Strip disallowed tags"'), "admin/config/content/formats/$format", array('html' => TRUE)),
     );
   }
   return $conflicts;

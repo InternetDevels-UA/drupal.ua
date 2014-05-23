@@ -1,0 +1,10 @@
+name = VKontakte share button
+description = "Share content of your site on vkontakte.ru"
+package = "VK"
+core = 6.x
+; Information added by drupal.org packaging script on 2012-09-30
+version = "6.x-1.0-beta2"
+core = "6.x"
+project = "vk_openapi"
+datestamp = "1348995066"
+

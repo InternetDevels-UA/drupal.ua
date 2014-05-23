@@ -14,12 +14,12 @@ function bueditor_admin() {
   bueditor_eop();
   $editors = bueditor_editors('all');
   $token = drupal_get_token(date('ymd'));
-  $header = array(t('Editor name'), array('data' => t('Operations'), 'colspan' => 2));
+  $header = array(t('Editor name'), t('Operations'));
   $rows = array();
   foreach ($editors as $eid => $editor) {
-    $rows[] = array($editor->name, l(t('Edit'), 'admin/settings/bueditor/'. $eid) .' | '. l(t('Delete'), 'admin/settings/bueditor/'. $eid .'/delete', array('attributes' => array('class' => 'eop-delete'))) .' | '. l(t('Copy'), 'admin/settings/bueditor', array('attributes' => array('class' => 'eop-copy', 'name' => 'Copy of '. $editor->name), 'query' => array('eop' => 'copy', 'eid' => $eid, 'token' => $token))) .' | '. l(t('Export'), 'admin/settings/bueditor', array('attributes' => array('class' => 'eop-export'), 'query' => array('eop' => 'export', 'eid' => $eid, 'token' => $token))));
+    $rows[] = array(check_plain($editor->name), l(t('Edit'), 'admin/settings/bueditor/'. $eid) .' | '. l(t('Delete'), 'admin/settings/bueditor/'. $eid .'/delete', array('attributes' => array('class' => 'eop-delete'))) .' | '. l(t('Copy'), 'admin/settings/bueditor', array('attributes' => array('class' => 'eop-copy', 'name' => 'Copy of '. $editor->name), 'query' => array('eop' => 'copy', 'eid' => $eid, 'token' => $token))) .' | '. l(t('Export'), 'admin/settings/bueditor', array('attributes' => array('class' => 'eop-export'), 'query' => array('eop' => 'export', 'eid' => $eid, 'token' => $token))));
   }
-  $rows[] = array('', l(t('Add new editor'), 'admin/settings/bueditor/new') .' | '. l(t('Import editor'), 'admin/settings/bueditor/import') .' | '. l(t('Add the default editor'), 'admin/settings/bueditor', array('attributes' => array('class' => 'eop-add-default', 'name' => 'default editor'), 'query' => array('eop' => 'add_default', 'token' => $token))));
+  $rows[] = array(array('data' => l(t('Add new editor'), 'admin/settings/bueditor/new') .' | '. l(t('Import editor'), 'admin/settings/bueditor/import') .' | '. l(t('Add the default editor'), 'admin/settings/bueditor', array('attributes' => array('class' => 'eop-add-default', 'name' => 'default editor'), 'query' => array('eop' => 'add_default', 'token' => $token))), 'colspan' => 2));
   $output = '<h2 class="title">'. t('Available editors') .'</h2>';
   $output .= theme('table', $header, $rows, array('id' => 'available-editors-list'));
   $output .= drupal_get_form('bueditor_admin_form');
@@ -103,7 +103,7 @@ function bueditor_admin_submit($form, &$form_state) {
 function bueditor_role_form($role, $weight = TRUE, $core = TRUE) {
   $form['name'] = array(
     '#type' => 'markup',
-    '#value' => $role['name'],
+    '#value' => check_plain($role['name']),
   );
   if ($weight) {
     $form['weight'] = $core ? array(

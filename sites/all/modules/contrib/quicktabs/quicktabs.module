@@ -562,15 +562,21 @@ function quicktabs_render_tabpage($tab, $hide_empty = FALSE) {
         $pos = strpos($tab['bid'], '_delta_');
         $blockmodule = substr($tab['bid'], 0, $pos);
         $blockdelta = substr($tab['bid'], $pos + 7);
-        $block = (object) module_invoke($blockmodule, 'block', 'view', $blockdelta);
-        if (isset($block->content)) {
-          $block->module = $blockmodule;
-          $block->delta = $blockdelta;
-          $block->region = 'quicktabs_tabpage';
-          if ($tab['hide_title'] || !isset($block->subject)) {
-            $block->subject = FALSE;
+        $access = _quictabs_access_block($blockmodule, $blockdelta);
+        if ($access) {
+          $block = (object) module_invoke($blockmodule, 'block', 'view', $blockdelta);
+          if (isset($block->content)) {
+            $block->module = $blockmodule;
+            $block->delta = $blockdelta;
+            $block->region = 'quicktabs_tabpage';
+            if ($tab['hide_title'] || !isset($block->subject)) {
+              $block->subject = FALSE;
+            }
+            $output = theme('block', $block);
           }
-          $output = theme('block', $block);
+        }
+        else {
+          $output = theme('quicktabs_tab_access_denied', $tab);
         }
       }
       break;
@@ -597,6 +603,24 @@ function quicktabs_render_tabpage($tab, $hide_empty = FALSE) {
   $cache[$cachekey] = $output;
 
   return $output;
+}
+
+/**
+ * Helper function to determine if user has access to a specific block delta.
+ */
+function _quictabs_access_block($module = '', $delta = '') {
+  global $user;
+  $rids = array_keys($user->roles);
+  $result = db_query("SELECT rid from {blocks_roles} br WHERE module = '%s' and delta = '%s'", $module, $delta);
+  $authorized_rids = array();
+  while ($rid = db_result($result)) {
+    $authorized_rids[] = $rid;
+  }
+  // Return whether the user can access the block:
+  // - Either all roles have access - no record in {blocks_roles}
+  // - Or only specific roles have access - in which case rids should match.
+  return (count($authorized_rids) == 0)
+    || (count(array_intersect($authorized_rids, $rids)) != 0);
 }
 
 /**
