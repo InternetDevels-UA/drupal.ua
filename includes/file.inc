@@ -34,52 +34,19 @@ define('FILE_STATUS_PERMANENT', 1);
 /**
  * Create the download path to a file.
  *
- * There are two kinds of local files:
- * - "created files", i.e. those in the files directory (which is stored in
- *   the file_directory_path variable and can be retrieved using
- *   file_directory_path()). These are files that have either been uploaded by
- *   users or were generated automatically (for example through CSS
- *   aggregation).
- * - "shipped files", i.e. those outside of the files directory, which ship as
- *   part of Drupal core or contributed modules or themes.
- *
- * @param $path
- *   A string containing the Drupal path (i.e. path relative to the Drupal
- *   root directory) of the file to generate the URL for.
- * @return
- *   A string containing a URL that can be used to access the file.
+ * @param $path A string containing the path of the file to generate URL for.
+ * @return A string containing a URL that can be used to download the file.
  */
 function file_create_url($path) {
-  // Clean up Windows paths.
-  $old_path = $path = str_replace('\\', '/', $path);
-
-  drupal_alter('file_url', $path);
-
-  // Return path if it was altered by any module, or if it already is a
-  // root-relative or a protocol-relative URL.
-  if ($path != $old_path || drupal_substr($path, 0, 1) == '/' || drupal_substr($path, 0, 2) == '//') {
-    return $path;
+  // Strip file_directory_path from $path. We only include relative paths in URLs.
+  if (strpos($path, file_directory_path() .'/') === 0) {
+    $path = trim(substr($path, strlen(file_directory_path())), '\\/');
   }
-
-  // Shipped files.
-  if (preg_match("#^(/?)(misc|modules|sites|themes)/#i", $path) && (strpos($path, file_directory_path() . '/') !== 0)) {
-    return base_path() . $path;
-  }
-  // Created files.
-  else {
-    switch (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC)) {
-      case FILE_DOWNLOADS_PUBLIC:
-        return $GLOBALS['base_url'] . '/' . $path;
-      case FILE_DOWNLOADS_PRIVATE:
-        // Strip file_directory_path from $path. Private downloads' URLs are
-        // rewritten to be served relatively to system/files (which is a menu
-        // callback that streams the file) instead of relatively to the file
-        // directory path.
-        if (strpos($path, file_directory_path() . '/') === 0) {
-          $path = trim(substr($path, strlen(file_directory_path())), '\\/');
-        }
-        return url('system/files/' . $path, array('absolute' => TRUE));
-    }
+  switch (variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC)) {
+    case FILE_DOWNLOADS_PUBLIC:
+      return $GLOBALS['base_url'] .'/'. file_directory_path() .'/'. str_replace('\\', '/', $path);
+    case FILE_DOWNLOADS_PRIVATE:
+      return url('system/files/'. $path, array('absolute' => TRUE));
   }
 }
 
@@ -167,20 +134,81 @@ function file_check_directory(&$directory, $mode = 0, $form_item = NULL) {
     }
   }
 
-  if ((file_directory_path() == $directory || file_directory_temp() == $directory) && !is_file("$directory/.htaccess")) {
-    $htaccess_lines = "SetHandler Drupal_Security_Do_Not_Remove_See_SA_2006_006\nOptions None\nOptions +FollowSymLinks";
+  if (file_directory_path() == $directory || file_directory_temp() == $directory) {
+    file_create_htaccess($directory, $form_item);
+  }
+
+  return TRUE;
+}
+
+/**
+ * Creates a .htaccess file in the given directory.
+ *
+ * @param $directory
+ *   The directory.
+ * @param $form_item
+ *   An optional string containing the name of a form item that any errors
+ *   will be attached to. Useful when called from file_check_directory() to
+ *   validate a directory path entered as a form value. An error will
+ *   consequently prevent form submit handlers from running, and instead
+ *   display the form along with the error messages.
+ * @param $force_overwrite
+ *   Set to TRUE to attempt to overwrite the existing .htaccess file if one is
+ *   already present. Defaults to FALSE.
+ */
+function file_create_htaccess($directory, $form_item = NULL, $force_overwrite = FALSE) {
+  if (!is_file("$directory/.htaccess") || $force_overwrite) {
+    $htaccess_lines = file_htaccess_lines();
     if (($fp = fopen("$directory/.htaccess", 'w')) && fputs($fp, $htaccess_lines)) {
       fclose($fp);
       chmod($directory .'/.htaccess', 0664);
     }
     else {
       $variables = array('%directory' => $directory, '!htaccess' => '<br />'. nl2br(check_plain($htaccess_lines)));
-      form_set_error($form_item, t("Security warning: Couldn't write .htaccess file. Please create a .htaccess file in your %directory directory which contains the following lines: <code>!htaccess</code>", $variables));
+      if ($form_item) {
+        form_set_error($form_item, t("Security warning: Couldn't write .htaccess file. Please create a .htaccess file in your %directory directory which contains the following lines: <code>!htaccess</code>", $variables));
+      }
       watchdog('security', "Security warning: Couldn't write .htaccess file. Please create a .htaccess file in your %directory directory which contains the following lines: <code>!htaccess</code>", $variables, WATCHDOG_ERROR);
     }
   }
+}
 
-  return TRUE;
+/**
+ * Returns the standard .htaccess lines that Drupal writes to file directories.
+ *
+ * @return
+ *   A string representing the desired contents of the .htaccess file.
+ *
+ * @see file_create_htaccess()
+ */
+function file_htaccess_lines() {
+  $lines = <<<EOF
+# Turn off all options we don't need.
+Options None
+Options +FollowSymLinks
+
+# Set the catch-all handler to prevent scripts from being executed.
+SetHandler Drupal_Security_Do_Not_Remove_See_SA_2006_006
+<Files *>
+  # Override the handler again if we're run later in the evaluation list.
+  SetHandler Drupal_Security_Do_Not_Remove_See_SA_2013_003
+</Files>
+
+# If we know how to do it safely, disable the PHP engine entirely.
+<IfModule mod_php5.c>
+  php_flag engine off
+</IfModule>
+# PHP 4, Apache 1.
+<IfModule mod_php4.c>
+  php_flag engine off
+</IfModule>
+# PHP 4, Apache 2.
+<IfModule sapi_apache2.c>
+  php_flag engine off
+</IfModule>
+EOF;
+
+  return $lines;
 }
 
 /**
@@ -436,6 +464,9 @@ function file_munge_filename($filename, $extensions, $alerts = TRUE) {
 
   // Allow potentially insecure uploads for very savvy users and admin
   if (!variable_get('allow_insecure_uploads', 0)) {
+    // Remove any null bytes. See http://php.net/manual/en/security.filesystem.nullbytes.php
+    $filename = str_replace(chr(0), '', $filename);
+
     $whitelist = array_unique(explode(' ', trim($extensions)));
 
     // Split the filename up by periods. The first part becomes the basename
@@ -895,7 +926,7 @@ function file_transfer($source, $headers) {
   }
   
   // IE cannot download private files because it cannot store files downloaded
-  // over https in the browser cache. The problem can be solved by sending
+  // over HTTPS in the browser cache. The problem can be solved by sending
   // custom headers to IE. See http://support.microsoft.com/kb/323308/en-us
   if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) {
     drupal_set_header('Cache-Control: private');

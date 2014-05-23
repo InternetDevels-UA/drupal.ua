@@ -544,41 +544,4 @@ function drupal_substr($text, $start, $length = NULL) {
   }
 }
 
-/**
- * Wraps a UTF-8 string to a given number of characters using a string break character.
- */
-function drupal_wordwrap($str, $width = 75, $break = "\n", $cut = FALSE) {
-  if ($cut) {
-    while ($len = drupal_strlen($str)) {
-      $chunk = drupal_substr($str, 0, $width);
-      $return .= $chunk;
-      $str = ltrim(drupal_substr($str, $width, $len - $width));
-      if (drupal_strlen($str) > 0) {
-        $return .= $break;
-      }
-    }
-  }
-  else {
-    if (version_compare(phpversion(), '5.2.3') > 0) {
-      $str = preg_split('#\h+#u', $str);
-    }
-    else {
-      $str = preg_split('# +#u', $str);
-    }
 
-    $len = 0;
-    foreach ($str as $val) {
-      $val .= ' ';
-      $tmp = drupal_strlen($val);
-      $len += $tmp;
-      if ($len >= $width) {
-        $return .= $break . $val;
-        $len = $tmp;
-      }
-      else {
-        $return .= $val;
-      }
-    }
-  }
-  return $return;
-}

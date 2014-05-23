@@ -798,7 +798,7 @@ function locale_translate_edit_form(&$form_state, $lid) {
     'original' => array(
       '#type'  => 'item',
       '#title' => t('Original text'),
-      '#value' => check_plain(drupal_wordwrap($source->source, 0)),
+      '#value' => check_plain(wordwrap($source->source, 0)),
     ),
     'lid' => array(
       '#type'  => 'value',
