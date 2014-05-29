@@ -199,11 +199,11 @@ function _vk_get_user_data($vkuid) {
 }
 
 function vk_openapi_login() {
+  
   $member = authOpenAPIMember();
-
+  
   if ($member !== FALSE) {
     $vkuid = $_POST['uid'];
-
     $vk_data = _vk_get_user_data($vkuid);
     $vk_data['last_update'] = time();
     
@@ -229,7 +229,7 @@ function vk_openapi_login() {
       }
       
       $account->name = str_replace('  ', ' ', $account->name);
-
+  
       $account->name = _vk_openapi_check_name($account->name);
       $array = array(
         'name' => $account->name,
@@ -264,6 +264,7 @@ function vk_openapi_login() {
       $newuser = TRUE;
     }
     else {
+
       $user = user_load(array('uid' => $r->uid));
       $user_data = unserialize($user->data);
       
@@ -277,20 +278,23 @@ function vk_openapi_login() {
       }
               
       user_save($user, $array);
+
     }
-    
     //if (!$newuser || !variable_get('vk_openapi_oblige_users_to_enter_email', 0)) {
-    if (($user->mail && $user->mail != $vkuid . '@vkontakte.ru') || !variable_get('vk_openapi_oblige_users_to_enter_email', 0)) {
+    if (($user->mail && $user->mail != $vkuid . '@vk.com') || !variable_get('vk_openapi_oblige_users_to_enter_email', 0)) {
       $logged_in = user_external_login($user);
     }
     else {
       $_SESSION['vk_new_user'] = $user->uid;
     }
-    
-    $edit = (array) $account;
-    user_module_invoke('register', $edit, $account);
+   
 
-    if (($user->mail && $user->mail != $vkuid . '@vkontakte.ru') || !variable_get('vk_openapi_oblige_users_to_enter_email', 0)) {
+    $edit = (array) $account;
+
+    user_module_invoke('register', $edit, $account);
+  
+    if (($user->mail && $user->mail != $vkuid . '@vk.com') || !variable_get('vk_openapi_oblige_users_to_enter_email', 0)) {
+
       if (!$newuser && $logged_in) {
         drupal_set_message(t('@name, you successfully logged in via vKontakte account.', array('@name' => $user->name )));
       }
@@ -307,6 +311,7 @@ function vk_openapi_login() {
       }
       exit(json_encode(array('error' => FALSE, 'exit_code' => '3', 'redirect_url' => variable_get('vk_openapi_redirect_url', ""))));
       */
+
       exit(json_encode(array('error' => FALSE, 'exit_code' => '3', 'redirect_url' => "vk/enter-e-mail")));
     }
   }

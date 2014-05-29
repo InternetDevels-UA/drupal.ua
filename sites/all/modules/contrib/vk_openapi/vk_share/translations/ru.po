@@ -1,0 +1,78 @@
+# $Id$
+#
+# Russian translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  vk_share.admin.inc: n/a
+#  vk_share.module: n/a
+#  vk_share.info: n/a
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2010-09-20 22:05+0200\n"
+"PO-Revision-Date: 2010-09-20 22:05+0200\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Russian <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=((((n%10)==1)&&((n%100)!=11))?(0):(((((n%10)>=2)&&((n%10)<=4))&&(((n%100)<10)||((n%100)>=20)))?(1):2));\n"
+
+#: vk_share.admin.inc:8
+msgid "Node types to share in vkontakte.ru"
+msgstr "Типы материалов, которые могут быть расшарены"
+
+#: vk_share.admin.inc:10
+msgid "Check node types witch you want to share."
+msgstr "Выберите типы материалов, для которых будет выводиться кнопка ВКонтакте share"
+
+#: vk_share.admin.inc:16
+msgid "Display share button on full node pages"
+msgstr "Выводить кнопку в полных версиях материалов"
+
+#: vk_share.admin.inc:22
+msgid "Display share button on node teasers"
+msgstr "Выводить кнопку в анонсах материалов"
+
+#: vk_share.admin.inc:28
+msgid "Style of share button"
+msgstr "Тип кнопки"
+
+#: vk_share.admin.inc:31
+msgid "Button with counts"
+msgstr "Кнопка со счетчиком"
+
+#: vk_share.admin.inc:32
+msgid "Button without counts"
+msgstr "Кнопка без счетчика"
+
+#: vk_share.admin.inc:33
+msgid "Link"
+msgstr "Ссылув"
+
+#: vk_share.admin.inc:35
+msgid "Button styles <a href=\"!url\">description</a>."
+msgstr "Описание типов кнопок <a href=\"!url\">доступно здесь</a>"
+
+#: vk_share.module:8
+msgid "use vkontakte share button"
+msgstr ""
+
+#: vk_share.module:16
+msgid "VKontakte share-button settings"
+msgstr "Настройки кнопки ВКонтакте-share"
+
+#: vk_share.info:0
+msgid "VKontakte share button"
+msgstr "Кнопка ВКонтакте-share"
+
+#: vk_share.info:0
+msgid "Share content of your site on vkontakte.ru"
+msgstr "Позволяет посетителям сайта делиться контентом через ВКонтакте"
+
+#: vk_share.info:0
+msgid "VK"
+msgstr "ВКонтакте"
+
