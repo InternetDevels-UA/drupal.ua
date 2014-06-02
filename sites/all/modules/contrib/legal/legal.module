@@ -213,7 +213,6 @@ function theme_legal_page($form) {
 function legal_user($op, &$edit, &$account, $category = FALSE) {
   global $user;
   global $language;
-
   switch ($op) {
     case 'register':
       $conditions = legal_get_conditions($language->language);
@@ -255,10 +254,8 @@ function legal_user($op, &$edit, &$account, $category = FALSE) {
       if ($user->uid == 1) {
         break;
       }
-
       // Get last accepted version for this account.
       $legal_account = legal_get_accept($user->uid);
-
           // If no version has been accepted yet,
           // get version with current language revision.
           if (empty($legal_account['version'])) {
@@ -275,7 +272,6 @@ function legal_user($op, &$edit, &$account, $category = FALSE) {
 
         // Check latest version of T&C has been accepted.
         $accepted = legal_version_check($user->uid, $conditions['version'], $conditions['revision'], $legal_account);
-
             if ($accepted) {
               return;
             }
@@ -310,7 +306,6 @@ function legal_user($op, &$edit, &$account, $category = FALSE) {
       break;
 
     case 'form':
-
       if ($category != 'account') return;
 
       // Get last accepted version for this account.

@@ -9,13 +9,18 @@
   </div>
 
 
-  <?php if ($links || count($taxonomy)): ?>
+  
     <div class="meta-links">
       <?php if ($submitted): ?>
         <div class="meta">
           <span class="submitted">
             <?php print $name; ?> / <span class="date"><?php print $date; ?></span>
           </span>
+        </div>
+      <?php endif; ?>
+      <?php if ($comment): ?>
+        <div class="node-links">
+          <?php  print $comment; ?>
         </div>
       <?php endif; ?>
       <?php if ($links): ?>
@@ -28,6 +33,5 @@
       <?php endif; ?>
       <div class="clear-block"></div>
     </div>
-  <?php endif; ?>
 </div>
 <div class="clear-block"></div>
