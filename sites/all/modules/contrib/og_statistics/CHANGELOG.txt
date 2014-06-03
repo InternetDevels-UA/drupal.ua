@@ -1,4 +1,0 @@
-Drupal 6.x-dev
-o #610930 by DeFr: Check for isset initial groups
-o #639156 by ziobudda: Statistics in group
-

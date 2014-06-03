@@ -1,4 +1,0 @@
-# php_flag display_errors 1
-php_value memory_limit 128M
-php_value max_execution_time 3600
-php_value mysql.connect_timeout 3600
