@@ -280,3 +280,6 @@
 [submodule "sites/all/modules/contrib/heartbeat"]
 	path = sites/all/modules/contrib/heartbeat
 	url = git://git.drupal.org/project/heartbeat.git
+[submodule "sites/all/modules/contrib/addthish"]
+	path = sites/all/modules/contrib/addthish
+	url = http://git.drupal.org/project/addthis.git
