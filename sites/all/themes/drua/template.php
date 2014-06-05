@@ -9,9 +9,6 @@ function drua_theme() {
   variable_set('content_profile_extra_templates', $content_profile_extra_templates);
 
   return array(
-   'sphinxsearch_search_box' => array(
-      'arguments' => array('form' => NULL),
-    ),
    'profile_header' => array(
       'arguments' => array('account' => NULL, 'teaser' => NULL),
       'template' => 'profile-header',
@@ -26,7 +23,7 @@ function drua_theme() {
  * Preprocess page template.
  */
 function drua_preprocess_page(&$vars) {
-  $vars['search'] = drupal_get_form('sphinxsearch_search_box');
+#  $vars['search'] = drupal_get_form('sphinxsearch_search_box');
   $vars['user_menu_block'] = user_menu_block();
   $node = $vars['node'];
 
@@ -249,7 +246,7 @@ function drua_preprocess_block(&$vars, $hook) {
  * output avatar and tabs, so, we need the special care here.
  */
 function drua_preprocess_profile_header(&$vars) {
-  $profile_vars = $vars['content_profile']->get_variables('profile', $vars['teaser'], TRUE);
+  //$profile_vars = $vars['content_profile']->get_variables('profile', $vars['teaser'], TRUE);
   
   $vars['user_name'] = '';
   if (isset($profile_vars['field_first_name'][0]['value']) && !empty($profile_vars['field_first_name'][0]['value'])) {
@@ -264,14 +261,14 @@ function drua_preprocess_profile_header(&$vars) {
   $vars['tabs'] = theme('menu_local_tasks');
 }
 
-/**
- * Search box theming.
- */
-function drua_sphinxsearch_search_box($form) {
-  $form['inline']['submit']['#prefix'] = '<span class="button bsmall binner sblue"><span>';
-  $form['inline']['submit']['#suffix'] = '</span></span>';
-  return drupal_render($form);
-}
+///**
+// * Search box theming.
+// */
+//function drua_sphinxsearch_search_box($form) {
+//  $form['inline']['submit']['#prefix'] = '<span class="button bsmall binner sblue"><span>';
+//  $form['inline']['submit']['#suffix'] = '</span></span>';
+//  return drupal_render($form);
+//}
 
 /**
  * Top buttons block.
@@ -291,8 +288,8 @@ function user_menu_block() {
     		'destination' => drupal_get_path_alias(implode('/', arg())),
        ), 
     );
-    $menu = '<span class="button bsmall sgreen"><span>'. l(t('Log in'), 'user/login', $options) .'</span></span>&nbsp;'.
-            '<span class="button bsmall sred"><span>'. l(t('Register'), 'user/register', $options) .'</span></span>';
+    $menu = '<span class="button bsmall sgreen"><span>'. l(t('Log in'). ' / ' . t('Register'), 'user/login', $options) .'</span></span>&nbsp;';
+            //'<span class="button bsmall sred"><span>'. l(t('Register'), 'user/register', $options) .'</span></span>';
   }
 
   // Add language switcher.

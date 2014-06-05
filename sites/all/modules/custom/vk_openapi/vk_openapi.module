@@ -416,17 +416,22 @@ function vk_openapi_form_user_login_alter($form, $form_state) {
   _vk_openapi_login_form_alter($form, $form_state);
 }
 
-/**
- * Implementation of hook_form_FORM_ID_alter().
- */
-function vk_openapi_form_user_login_block_alter($form, $form_state) {
-  _vk_openapi_login_form_alter($form, $form_state);
-}
+///**
+// * Implementation of hook_form_FORM_ID_alter().
+// */
+//function vk_openapi_form_user_login_block_alter($form, $form_state) {
+//  _vk_openapi_login_form_alter($form, $form_state);
+//}
+
 
 function _vk_openapi_login_form_alter(&$form, &$form_state) {
   if (variable_get('vk_openapi_alter_login_form', 1) == 1) {
     $form['vk_openapi_button'] = array(
       '#value' => '<div id="vk_login" class="vk_login" onclick="doLogin();"></div>',
+      '#weight' => 100,
+    );
+    $form['register_mail'] = array(
+      '#value' => '<div id="register-mail" class="register"><a href = "/user/register">'.t('Register with email').'</a></div>',
       '#weight' => 100,
     );
   }

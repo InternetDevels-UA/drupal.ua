@@ -7,6 +7,7 @@
   <?php print $head; ?>
   <?php print $styles; ?>
   <?php print $scripts; ?>
+  <script src="http://vk.com/js/api/openapi.js" type="text/javascript"></script>
 </head>
 
 <body class="<?php print $body_classes; ?> sshow-grid">

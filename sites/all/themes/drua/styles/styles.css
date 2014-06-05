@@ -727,6 +727,7 @@ h1 .tag a, h2 .tag a, h1 .tag em, h2 .tag em {
 }
 #footer-container {
   position:relative;
+  width: 80%
 }
 #footer .block { float:left; margin:0 50px 0 0; }
 
@@ -1105,29 +1106,36 @@ div#admin-toolbar {
 
 #sphinxsearch-search-box,
 #sphinxsearch-search-box-1,
-#sphinxsearch-search-box-2 {
+#sphinxsearch-search-box-2,
+#search-block-form {
   float:right;
   margin:3px 0 0 0;
 }
-
+#search-block-form label {
+  display: none;
+}
+#search-block-form  #edit-search-block-form-1-wrapper #edit-search-block-form-1,
 #sphinxsearch-search-box #edit-keys-wrapper #edit-keys,
 #sphinxsearch-search-box-1 #edit-keys-1-wrapper #edit-keys-1,
 #sphinxsearch-search-box-2 #edit-keys-2-wrapper #edit-keys-2 {
   width:200px;
   border-color:#286596;
 }
+.header #search-block-form  #edit-search-block-form-1-wrapper,
 .header #sphinxsearch-search-box #edit-keys-wrapper #edit-keys,
 .header #sphinxsearch-search-box-1 #edit-keys-1-wrapper #edit-keys-1,
 .header #sphinxsearch-search-box-2 #edit-keys-2-wrapper #edit-keys-2 {
   width:auto;
 }
+.header #search-block-form,
 .header #sphinxsearch-search-box, .header #sphinxsearch-search-box-1, .header #sphinxsearch-search-box-2 {
   float:right;
 }
-
+#search-block-form  #edit-search-block-form-1-wrapper,
 #edit-keys-wrapper, #edit-keys-1-wrapper, #edit-keys-2-wrapper {
   line-height:22px;
 }
+#search-block-form .form-text,
 #sphinxsearch-search-box .form-text,
 #sphinxsearch-search-box-1 .form-text,
 #sphinxsearch-search-box-2 .form-text {
@@ -1146,7 +1154,11 @@ div#admin-toolbar {
   background:#fff;
   border:1px solid #000;
 }
-
+#search-block-form  .form-submit {
+  background: url(../images/buttons-small.png) 0px -132px no-repeat;
+  border: none;
+  color: rgb(255, 255, 255);
+}
 /************************************
 /* Profile
 /************************************/
@@ -2070,6 +2082,73 @@ div.geshifilter, table .geshifilter td {
 .view-display-id-block_1 .views-row {
   margin: 10px 5px;
 }
-.vk_share_link td {
+.vk_share_link td,
+#vk_login td {
   padding: 0px !important; 
+}
+.social-button .fb {
+  background: transparent url(../images/knopki.jpg) no-repeat scroll -240px -137px;
+}
+.social-button .vk {
+  background:  transparent url(../images/knopki.jpg) no-repeat scroll -153px -139px;
+}
+.social-button .tw {
+  background: transparent url(../images/knopki.jpg) no-repeat scroll -323px -138px;
+}
+.social-button  li {
+  list-style: none;
+  width: 48px;
+  height: 48px;
+  display: inline-block;
+}
+.social-button li a {
+  display: block;
+  width: 48px;
+  height: 48px;
+}
+#register-mail {
+  float: left;
+  -webkit-appearance: push-button;
+  -webkit-rtl-ordering: logical;
+  -webkit-user-select: none;
+  -webkit-writing-mode: horizontal-tb;
+  align-items: flex-start;
+  background-color: rgb(221, 221, 221);
+  border-bottom-color: rgb(221, 221, 221);
+  border-bottom-style: outset;
+  border-bottom-width: 2px;
+  border-image-outset: 0px;
+  border-image-repeat: stretch;
+  border-image-slice: 100%;
+  border-image-source: none;
+  border-image-width: 1;
+  border-left-color: rgb(221, 221, 221);
+  border-left-style: outset;
+  border-left-width: 2px;
+  border-right-color: rgb(221, 221, 221);
+  border-right-style: outset;
+  border-right-width: 2px;
+  border-top-color: rgb(221, 221, 221);
+  border-top-style: outset;
+  border-top-width: 2px;
+  box-sizing: border-box;
+  display: inline-block;
+  font-family: Arial;
+  font-size: 13px;
+  height: 27px;
+  letter-spacing: normal;
+  line-height: normal;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  padding: 4px 13px;
+}
+#register-mail a {
+  color: #000;
+  padding: 5px;
+  text-decoration: none;
+}
+#vk_login  {
+  position: absolute;
+  top: 193px;
+  left: 100px;
 }
