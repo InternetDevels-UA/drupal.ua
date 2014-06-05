@@ -1,4 +1,5 @@
 <?php
+// $Id: default.settings.php,v 1.8.2.4 2009/09/14 12:59:18 goba Exp $
 
 /**
  * @file
@@ -88,7 +89,7 @@
  *   $db_url = 'mysqli://username:password@localhost/databasename';
  *   $db_url = 'pgsql://username:password@localhost/databasename';
  */
-$db_url = 'mysqli://root:123@localhost/dua';
+$db_url = 'mysql://username:password@localhost/databasename'';
 $db_prefix = '';
 
 /**
