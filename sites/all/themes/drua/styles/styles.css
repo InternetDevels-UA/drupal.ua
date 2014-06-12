@@ -225,7 +225,8 @@ ul.secondary-menu li a, ul.secondary-menu li.active-trail a {
   float:left;
 }
 
-.node .meta-links {
+.node .meta-links,
+.page-question .meta-links {
   color:#ccc;
   line-height:21px;
   padding:0.5em 0;
@@ -394,7 +395,7 @@ h1 .tag a, h2 .tag a, h1 .tag em, h2 .tag em {
 .link-answers { background:url("../images/answers/question-not-answered.gif") no-repeat scroll 0 50% transparent; }
 .link-best-answers { background:url("../images/answers/question-answered.gif") no-repeat scroll 0 50% transparent; }
 .link-add-answer { background:url("../images/answers/question-add.gif") no-repeat scroll 0 50% transparent; }
-.comment_comments a { background:url("../images/answers/question-answers.gif") no-repeat scroll 0 50% transparent; }
+.comment_comments a, .count-comments { background:url("../images/answers/question-answers.gif") no-repeat scroll 0 50% transparent; }
 .comment_add a { background:url("../images/answers/balloon--plus.png") no-repeat scroll 0 50% transparent; }
 .webform_goto a { background:url("../images/answers/ui-scroll-pane-form.png") no-repeat scroll 0 50% transparent; }
 .statistics_counter span { background:url("../images/answers/eye.png") no-repeat scroll 0 50% transparent; }
@@ -2020,6 +2021,12 @@ div.geshifilter, table .geshifilter td {
   float: left;
   margin-right: 63px;
 }
+.page-question .meta-links .meta {
+  float: left;
+}
+.page-question  .meta-links {
+  padding-bottom: 50px;
+}
 .page-node td {
   padding: 0 !important;
 }
@@ -2032,28 +2039,22 @@ div.geshifilter, table .geshifilter td {
   float: left;
 }
 .view-question.view-display-id-page_1 .views-field-title a {
-  font-family: 'Helvetica Regular', 'Helvetica';
-  font-size: 18px;
-  text-decoration: underline;
-  color: #666666;
+  font-family: Arial, sans-serif;
+  font-size: 26px;
+  font-style: normal;
+  text-decoration: none solid rgb(33, 115, 175);
 }
 .view-question.view-display-id-page_1 .views-field-title {
   margin: 15px 0px;
 }
 .view-question.view-display-id-page_1  .views-field-body {
-  border-bottom: solid 2px #757474;
   text-align: justify;
-}
-.view-question.view-display-id-page_1 .views-row  {
-  border-bottom: solid 3px #757474;
-  padding: 10px 20px;
 }
 #block-views-question-block_1,
 .pane-question {
   width: 214px;
   float: right;
   border-radius: 4px;
-  background: #F2F2F2;
 }
 #block-views-question-block_1 .block-title,
 .pane-question .pane-title {
@@ -2064,10 +2065,8 @@ div.geshifilter, table .geshifilter td {
   font-style: normal;
   padding-left: 5px;
 }
-#block-views-question-block_1 .content a,
 .page-node .pane-node-author a,
-.view-question.view-display-id-page_1 .views-field-name a,
-.pane-question .pane-content a {
+.view-question.view-display-id-page_1 .views-field-name a {
   color: rgb(102, 102, 102);
   display: inline;
   font-family: 'Helvetica Regular', Helvetica;
