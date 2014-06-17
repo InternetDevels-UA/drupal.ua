@@ -132,3 +132,9 @@
       exit(json_encode(array('error' => TRUE, 'exit_code' => '1', 'message' => 'auth error [1]', 'redirect_url' => variable_get('vk_openapi_redirect_url', ""))));
   }
  }
+  function idevels_form_user_login_alter($form, $form_state) {
+    $form['register_mail'] = array(
+      '#value' => '<div id="register-mail" class="register"><a href = "/user/register">'.t('Register with email').'</a></div>',
+      '#weight' => 100,
+    );
+  }
