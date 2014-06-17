@@ -283,3 +283,6 @@
 [submodule "sites/all/modules/contrib/addthish"]
 	path = sites/all/modules/contrib/addthish
 	url = http://git.drupal.org/project/addthis.git
+[submodule "sites/all/modules/contrib/vk_openapi"]
+	path = sites/all/modules/contrib/vk_openapi
+	url = http://git.drupal.org/project/vk_openapi.git

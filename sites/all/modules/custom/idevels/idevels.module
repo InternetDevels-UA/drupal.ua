@@ -1,0 +1,134 @@
+<?php
+/**
+ * files module idevels.
+ */
+
+ /**
+ * Implementation of hook_menu_alter().
+ */
+ function idevels_menu_alter(&$items){
+  $items['vk/login']['page callback'] = 'idevels_vk_login';
+ }
+
+ function idevels_vk_login() {
+  global $language;
+  $member = authOpenAPIMember();
+  
+  if ($member !== FALSE) {
+    $vkuid = $_POST['uid'];
+    $vk_data = _vk_get_user_data($vkuid);
+    $vk_data['last_update'] = time();
+    
+    $r = db_fetch_object(db_query("SELECT uid FROM {vkontakte_users} WHERE vkuid = %d", $vkuid));
+    $newuser = FALSE;
+    if (!$r->uid) {
+      $vk_data['confirmed'] = FALSE;
+      // create new user
+      $account = new stdClass();
+
+      $account->name = variable_get('vk_openapi_username', '%first_name %last_name_lq%nickname%last_name_rq %last_name');
+      $account->name = str_replace('%first_name', $vk_data['first_name'], $account->name);
+      $account->name = str_replace('%last_name', $vk_data['last_name'], $account->name);
+      if (mb_strlen($nickname)) {
+        $account->name = str_replace('%nickname_lq', variable_get('vk_openapi_nickname_lq', '«'), $account->name);
+        $account->name = str_replace('%nickname_rq', variable_get('vk_openapi_nickname_rq', '»'), $account->name);
+        $account->name = str_replace('%nickname', $vk_data['nickname'], $account->name);
+      }
+      else {
+        $account->name = str_replace('%nickname_lq', '', $account->name);
+        $account->name = str_replace('%nickname_rq', '', $account->name);
+        $account->name = str_replace('%nickname', '', $account->name);
+      }
+      
+      $account->name = str_replace('  ', ' ', $account->name);
+  
+      $account->name = _vk_openapi_check_name($account->name);
+      $array = array(
+        'name' => $account->name,
+        'pass' => user_password(),
+        'status' => variable_get('user_register', 1),
+        'vk_data' => $vk_data,
+        'vk_show_unite_message' => TRUE,
+        'mail' => $vkuid . '@vkontakte.ru',
+      );
+      
+      if ($vk_data['vkontakte_avatar']) {
+        $array['picture'] = $vk_data['vkontakte_avatar'];
+      }
+      
+      if (!$user = user_save($account, $array)) {
+        drupal_set_message(t('User create error'), 'error');
+        print json_encode(array('error' => TRUE, 'exit_code' => '2', 'message' => 'user create error [2]', 'redirect_url' => variable_get('vk_openapi_redirect_url', "")));
+        exit();
+      }
+      
+      if ($rid = variable_get('vk_openapi_role_for_new_user', 0)) {
+        db_query("INSERT INTO {users_roles} (`uid`, `rid`) VALUES (%d, %d)", $user->uid, $rid);
+      }
+      
+      if ($r->count == 0) {
+        db_query("INSERT INTO {vkontakte_users} (`uid`, `vkuid`, `timestamp`) VALUES (%d, %d, %d)", $user->uid, $vkuid, time());
+      }
+      else {
+        db_query("UPDATE {vkontakte_users} SET `uid` = %d, `timestamp` = %d WHERE vkuid = %d", $user->uid, time(), $vkuid);
+      }
+      drupal_set_message(t('New user @name successfully created. Now you should enter your e-mail', array('@name' => $user->name)));
+      $newuser = TRUE;
+      $conditions = legal_get_conditions($language->language);
+      legal_save_accept($conditions['version'], $conditions['revision'], $conditions['language'], $user->uid);
+    }
+    else {
+
+      $user = user_load(array('uid' => $r->uid));
+      $user_data = unserialize($user->data);
+      
+      $existing_vk_data = $user_data['vk_data'];
+      $vk_data = array_merge($existing_vk_data, $vk_data);
+      
+      $array = array('vk_data' => $vk_data);
+      
+      if ($avatar) {
+        $array['picture'] = $avatar;
+      }
+              
+      user_save($user, $array);
+    }
+    //if (!$newuser || !variable_get('vk_openapi_oblige_users_to_enter_email', 0)) {
+    if (($user->mail && $user->mail != $vkuid . '@vk.com') || !variable_get('vk_openapi_oblige_users_to_enter_email', 0)) {
+      $logged_in = user_external_login($user);
+    }
+    else {
+      $_SESSION['vk_new_user'] = $user->uid;
+    }
+   
+
+    $edit = (array) $account;
+    
+    user_module_invoke('register', $edit, $account);
+  
+    if (($user->mail && $user->mail != $vkuid . '@vk.com') || !variable_get('vk_openapi_oblige_users_to_enter_email', 0)) {
+
+      if (!$newuser && $logged_in) {
+        drupal_set_message(t('@name, you successfully logged in via vKontakte account.', array('@name' => $user->name )));
+      }
+      exit(json_encode(array('error' => FALSE, 'exit_code' => '4', 'redirect_url' => variable_get('vk_openapi_redirect_url', ""))));
+    }
+    else {
+      /*
+      if (!$newuser) {
+        drupal_set_message(t('You successfully logged in, but you should enter your e-mail.'));
+      } else {
+        if (variable_get('vk_openapi_allow_users_unite_accounts', 1)) {
+          drupal_set_message(t('If you already have account you can <a href="@unite">unite their</a>', array('@unite' => url('vk/unite'))));
+        }
+      }
+      exit(json_encode(array('error' => FALSE, 'exit_code' => '3', 'redirect_url' => variable_get('vk_openapi_redirect_url', ""))));
+      */
+
+      exit(json_encode(array('error' => FALSE, 'exit_code' => '3', 'redirect_url' => "vk/enter-e-mail")));
+    }
+  }
+  else {
+      exit(json_encode(array('error' => TRUE, 'exit_code' => '1', 'message' => 'auth error [1]', 'redirect_url' => variable_get('vk_openapi_redirect_url', ""))));
+  }
+ }
