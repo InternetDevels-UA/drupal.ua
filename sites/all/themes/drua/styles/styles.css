@@ -728,7 +728,6 @@ h1 .tag a, h2 .tag a, h1 .tag em, h2 .tag em {
 }
 #footer-container {
   position:relative;
-  width: 80%
 }
 #footer .block { float:left; margin:0 50px 0 0; }
 
@@ -2146,8 +2145,11 @@ div.geshifilter, table .geshifilter td {
   padding: 5px;
   text-decoration: none;
 }
-#vk_login  {
+.not-logged-in #vk_login  {
   position: absolute;
   top: 193px;
   left: 100px;
+}
+.logged-in #vk_login {
+  margin: 0px !important;
 }

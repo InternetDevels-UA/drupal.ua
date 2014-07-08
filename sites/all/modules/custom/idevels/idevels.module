@@ -3,22 +3,23 @@
  * files module idevels.
  */
 
- /**
+/**
  * Implementation of hook_menu_alter().
  */
- function idevels_menu_alter(&$items){
+function idevels_menu_alter(&$items) {
   $items['vk/login']['page callback'] = 'idevels_vk_login';
- }
+  $items['node']['access callback'] = FALSE;
+}
 
- function idevels_vk_login() {
+function idevels_vk_login() {
   global $language;
   $member = authOpenAPIMember();
-  
+
   if ($member !== FALSE) {
     $vkuid = $_POST['uid'];
     $vk_data = _vk_get_user_data($vkuid);
     $vk_data['last_update'] = time();
-    
+
     $r = db_fetch_object(db_query("SELECT uid FROM {vkontakte_users} WHERE vkuid = %d", $vkuid));
     $newuser = FALSE;
     if (!$r->uid) {
@@ -39,9 +40,9 @@
         $account->name = str_replace('%nickname_rq', '', $account->name);
         $account->name = str_replace('%nickname', '', $account->name);
       }
-      
+
       $account->name = str_replace('  ', ' ', $account->name);
-  
+
       $account->name = _vk_openapi_check_name($account->name);
       $array = array(
         'name' => $account->name,
@@ -51,21 +52,26 @@
         'vk_show_unite_message' => TRUE,
         'mail' => $vkuid . '@vkontakte.ru',
       );
-      
+
       if ($vk_data['vkontakte_avatar']) {
         $array['picture'] = $vk_data['vkontakte_avatar'];
       }
-      
+
       if (!$user = user_save($account, $array)) {
         drupal_set_message(t('User create error'), 'error');
-        print json_encode(array('error' => TRUE, 'exit_code' => '2', 'message' => 'user create error [2]', 'redirect_url' => variable_get('vk_openapi_redirect_url', "")));
+        print json_encode(array(
+          'error' => TRUE,
+          'exit_code' => '2',
+          'message' => 'user create error [2]',
+          'redirect_url' => variable_get('vk_openapi_redirect_url', "")
+        ));
         exit();
       }
-      
+
       if ($rid = variable_get('vk_openapi_role_for_new_user', 0)) {
         db_query("INSERT INTO {users_roles} (`uid`, `rid`) VALUES (%d, %d)", $user->uid, $rid);
       }
-      
+
       if ($r->count == 0) {
         db_query("INSERT INTO {vkontakte_users} (`uid`, `vkuid`, `timestamp`) VALUES (%d, %d, %d)", $user->uid, $vkuid, time());
       }
@@ -81,16 +87,16 @@
 
       $user = user_load(array('uid' => $r->uid));
       $user_data = unserialize($user->data);
-      
+
       $existing_vk_data = $user_data['vk_data'];
       $vk_data = array_merge($existing_vk_data, $vk_data);
-      
+
       $array = array('vk_data' => $vk_data);
-      
+
       if ($avatar) {
         $array['picture'] = $avatar;
       }
-              
+
       user_save($user, $array);
     }
     //if (!$newuser || !variable_get('vk_openapi_oblige_users_to_enter_email', 0)) {
@@ -100,18 +106,22 @@
     else {
       $_SESSION['vk_new_user'] = $user->uid;
     }
-   
+
 
     $edit = (array) $account;
-    
+
     user_module_invoke('register', $edit, $account);
-  
+
     if (($user->mail && $user->mail != $vkuid . '@vk.com') || !variable_get('vk_openapi_oblige_users_to_enter_email', 0)) {
 
       if (!$newuser && $logged_in) {
-        drupal_set_message(t('@name, you successfully logged in via vKontakte account.', array('@name' => $user->name )));
+        drupal_set_message(t('@name, you successfully logged in via vKontakte account.', array('@name' => $user->name)));
       }
-      exit(json_encode(array('error' => FALSE, 'exit_code' => '4', 'redirect_url' => variable_get('vk_openapi_redirect_url', ""))));
+      exit(json_encode(array(
+        'error' => FALSE,
+        'exit_code' => '4',
+        'redirect_url' => variable_get('vk_openapi_redirect_url', "")
+      )));
     }
     else {
       /*
@@ -129,12 +139,92 @@
     }
   }
   else {
-      exit(json_encode(array('error' => TRUE, 'exit_code' => '1', 'message' => 'auth error [1]', 'redirect_url' => variable_get('vk_openapi_redirect_url', ""))));
+    exit(json_encode(array(
+      'error' => TRUE,
+      'exit_code' => '1',
+      'message' => 'auth error [1]',
+      'redirect_url' => variable_get('vk_openapi_redirect_url', "")
+    )));
   }
- }
-  function idevels_form_user_login_alter($form, $form_state) {
-    $form['register_mail'] = array(
-      '#value' => '<div id="register-mail" class="register"><a href = "/user/register">'.t('Register with email').'</a></div>',
-      '#weight' => 100,
+}
+
+function idevels_form_user_login_alter($form, $form_state) {
+  $form['register_mail'] = array(
+    '#value' => '<div id="register-mail" class="register"><a href = "/user/register">' . t('Register with email') . '</a></div>',
+    '#weight' => 100,
+  );
+}
+
+/*function idevels_preprocess_views_view(&$view) {
+  if ($view['name'] == 'question' && $view['display_id'] == 'block_2') {
+    $view->title = 'bu';
+    dsm($view);
+  }
+}*/
+
+/**
+ * Implementation of hook_views_pre_render().
+ *
+ * Add text for question views if empty.
+ */
+function idevels_views_pre_render(&$view) {
+  if ($view->name == 'question' && $view->current_display == 'page_1') {
+    // if (empty($view->result)) {
+    $attachment = '<p class="empty-questions">' . t('Having problems with Drupal? Ask a question about the community!') . '</p>';
+    $attachment .= '<span class="button ask">';
+    $attachment .= l(t('Ask question'), 'node/add/helper', array('attributes' => array('class' => 'button-helper helper')));
+    $attachment .= '</span>';
+    // $view->attachment_after = $attachment;
+    // }
+    $view->attachment_before = $attachment;
+  }
+
+}
+
+/**
+ * Implementation of hook_form_alter()
+ * Add Always show checbox for add access to link.
+ **/
+function idevels_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'menu_edit_item' || $form_id == 'og_menu_edit_item_form') {
+    $form['menu']['always_visible'] = array(
+      '#title' => t('Always show this menu item.'),
+      '#type' => 'checkbox',
+      '#weight' => '1',
+      '#default_value' => $form['menu']['options']['#value']['always_visible'],
     );
+    array_unshift($form['#submit'], 'idevels_menu_edit_form_submit');
   }
+}
+
+/**
+ * Function submit .
+ */
+function idevels_menu_edit_form_submit($form, &$form_state) {
+  $menu =& $form_state['values']['menu'];
+  if ($menu['always_visible']) {
+    $menu['options']['always_visible'] = 1;
+    $menu['options']['alter'] = 1;
+  }
+  else {
+    $menu['options']['always_visible'] = 0;
+    $menu['options']['alter'] = 0;
+  }
+}
+
+/**
+ * Implementation of hook_translated_menu_link_alter().
+ * Add access to link in menu.
+ */
+function idevels_translated_menu_link_alter(&$item, $map) {
+  if ($item['options']['always_visible'] == TRUE) {
+    $item['access'] = TRUE;
+    $item['title'] = $item['link_title'];
+    if (isset($item['localized_options']['attributes']['class'])) {
+      $item['localized_options']['attributes']['class'] .= ' restricted';
+    }
+    else {
+      $item['localized_options']['attributes']['class'] = 'restricted';
+    }
+  }
+}
