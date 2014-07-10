@@ -1,0 +1,112 @@
+$(function () {
+  hideNonLine($('.user-front .view-users-front .views-row'));
+
+
+  // For right question block
+  $('.view-question .views-row').each(function () {
+    $('> .views-field-title, > .views-field-created', this).wrapAll('<div class="question-lastposts-content"></div>');
+  });
+  $('.view-question .question-lastposts-content').prepend("<div class='buckle-up'></div>");
+  $('.view-question .question-lastposts-content').prepend("<div class='buckle-down'></div>");
+//$('.view-question .view-content > .views-row').wrap('<div class="question-lastposts-content"></div>');
+  $('#block-menu-secondary-links .menu li a').each(function () {
+    $(this).wrapInner('<span class="tile-title"></span>');
+  });
+
+  // Delete background from user link in primary menu.
+  $('.button').each(function (e) {
+    $(this).mousedown(function () {
+      $(this).addClass('active');
+    });
+    $(this).mouseup(function () {
+      $(this).removeClass('active');
+    });
+    $(this).hover(function () {
+    }, function () {
+      $(this).removeClass('active');
+    });
+  });
+  $('.steps .step1 br').remove();
+  var text = Drupal.t('Menu');
+  $('#block-menu-primary-links ul.menu').after('<a href="#" id="pull">' + text + '</a>');
+
+  // For expand primary menu on mobile.
+  var pull = $('#pull');
+  var menu = $('#block-menu-primary-links ul.menu');
+  $('#pull').click(function (e) {
+//    e.preventDefault();
+    menu.toggle();
+  });
+
+  // Move logo to top on mobile devices.
+  if ($(window).width() < 801 && $(window).width() > 480) {
+    $('#header_banner').prepend($('#wrap_branding'));
+  }
+  if ($(window).width() < 480) {
+    $('#wrap_branding').after($('#header_banner'));
+  }
+
+
+  // On resize.
+  $(window).resize(function () {
+    $('.user-front .view-users-front .views-row').each(function () {
+      $(this).show();
+    });
+    hideNonLine($('.user-front .view-users-front .views-row'));
+
+    // Display menu after resize.
+    var w = $(window).width();
+    if (w > 479 && menu.is(':hidden')) {
+      menu.removeAttr('style');
+    }
+    if ($(window).width() < 480) {
+      $('#wrap_branding').after($('#header_banner'));
+    }
+    if ($(window).width() < 800 && $(window).width() > 480) {
+      $('#header_banner').prepend($('#wrap_branding'));
+    }
+    if ($(window).width() > 800) {
+      $('#header_banner').after($('#wrap_branding'));
+    }
+  });
+
+  // Change orientation on mobile device.
+  $(window).bind("orientationchange", orientationChange);
+  function orientationChange() {
+    //whatever needs to happen when it changes.
+    $('.user-front .view-users-front .views-row').each(function () {
+      $(this).show();
+    });
+    hideNonLine($('.user-front .view-users-front .views-row'));
+  }
+
+// Function for remove non line elements in "$('.user-front .view-users-front .views-row')".
+  function hideNonLine(obj) {
+    var listRow = 0;
+    var firstRow = 0;
+    var row = 1;
+    obj.each(function (i) {
+      if ($(this).prev().length > 0) {
+        if ($(this).position().top != $(this).prev().position().top) {
+          row++;
+          if (row == 1) {
+            firstRow = listRow;
+          }
+          listRow = 1;
+        } else {
+          listRow++;
+        }
+      }
+      else {
+        listRow++;
+      }
+    });
+//      console.log('firstRow ' + firstRow);
+//      console.log('Row =  ' + row);
+//      console.log('listRow =  ' + listRow);
+    // Delete non line elements.
+    if (row != 1) {
+      obj.slice(-listRow).hide();
+    }
+  }
+});
