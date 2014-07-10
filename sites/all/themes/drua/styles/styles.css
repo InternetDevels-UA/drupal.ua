@@ -1,4 +1,4 @@
-/************************************
+
 /* General
 /************************************/
 
@@ -2152,4 +2152,7 @@ div.geshifilter, table .geshifilter td {
 }
 .logged-in #vk_login {
   margin: 0px !important;
+}
+.view-News .views-row .content img{
+  margin-right: 35px;
 }
