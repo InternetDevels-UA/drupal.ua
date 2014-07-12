@@ -94,7 +94,7 @@ body > .body-wrapper {height: auto; min-height: 100%;}
 .footer {
   position: relative;
   margin: -210px 0 0 0; /* negative value of footer height */
-  height: 130px;
+  /*height: 130px;*/
   clear:both;
 }
 
