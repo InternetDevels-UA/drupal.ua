@@ -79,6 +79,7 @@ function idevels_preprocess_page(&$vars) {
  * Implementation of hook_preprocess_node().
  */
 function idevels_preprocess_node(&$vars) {
+
   global $language;
   $node = $vars['node'];
 
@@ -526,3 +527,4 @@ function idevels_preprocess_views_view_field__og_most_popular_groups_by_term__ti
     $vars['row']->term_data_name, $language->language),
     'taxonomy/term/'. $vars['row']->term_data_tid);
 }
+

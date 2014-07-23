@@ -48,7 +48,7 @@ function last_run_init() {
         if ($_REQUEST['destination']) {
           unset($_REQUEST['destination']);
         }
-        
+
         if (arg(2) == 'edit') {
           drupal_goto('user/'. $node->uid .'/edit/profile');
         }

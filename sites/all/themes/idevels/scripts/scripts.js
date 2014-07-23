@@ -1,10 +1,10 @@
 $(function () {
-  hideNonLine($('.user-front .view-users-front .views-row'));
+  hideNonLine($('.user-front .view-Users-front-profiles .views-row'));
 
 
   // For right question block
   $('.view-question .views-row').each(function () {
-    $('> .views-field-title, > .views-field-created', this).wrapAll('<div class="question-lastposts-content"></div>');
+    $('> .views-field-title, > .views-field-created-1', this).wrapAll('<div class="question-lastposts-content"></div>');
   });
   $('.view-question .question-lastposts-content').prepend("<div class='buckle-up'></div>");
   $('.view-question .question-lastposts-content').prepend("<div class='buckle-down'></div>");
@@ -52,7 +52,7 @@ $(function () {
     $('.user-front .view-users-front .views-row').each(function () {
       $(this).show();
     });
-    hideNonLine($('.user-front .view-users-front .views-row'));
+    hideNonLine($('.user-front .view-Users-front-profiles .views-row'));
 
     // Display menu after resize.
     var w = $(window).width();
@@ -70,6 +70,19 @@ $(function () {
     }
   });
 
+  // Random sort elements in Tags views (front page), and hide other 20 elements.
+  var tags = $('.view-tegs-front .view-content'),
+    tagsrow = tags.children('.views-row').get();
+
+  tagsrow.sort(function(){
+    return Math.random()*10 > 5 ? 1 : -1;
+  });
+
+  $.each(tagsrow, function(idx, itm) { tags.append(itm); });
+  var count = $('.view-tegs-front .view-content .views-row').length;
+  count = count -10;
+  $('.view-tegs-front .view-content .views-row').slice(-count).hide();
+
   // Change orientation on mobile device.
   $(window).bind("orientationchange", orientationChange);
   function orientationChange() {
@@ -77,21 +90,23 @@ $(function () {
     $('.user-front .view-users-front .views-row').each(function () {
       $(this).show();
     });
-    hideNonLine($('.user-front .view-users-front .views-row'));
+
+    hideNonLine($('.user-front .view-Users-front-profiles .views-row'));
   }
 
 // Function for remove non line elements in "$('.user-front .view-users-front .views-row')".
   function hideNonLine(obj) {
+
     var listRow = 0;
     var firstRow = 0;
     var row = 1;
     obj.each(function (i) {
       if ($(this).prev().length > 0) {
         if ($(this).position().top != $(this).prev().position().top) {
-          row++;
           if (row == 1) {
             firstRow = listRow;
           }
+          row++;
           listRow = 1;
         } else {
           listRow++;
@@ -101,12 +116,12 @@ $(function () {
         listRow++;
       }
     });
-//      console.log('firstRow ' + firstRow);
-//      console.log('Row =  ' + row);
-//      console.log('listRow =  ' + listRow);
-    // Delete non line elements.
-    if (row != 1) {
-      obj.slice(-listRow).hide();
+    var count = firstRow*3;
+    count = obj.length - count;
+    console.log(count);
+
+    if (row > 3) {
+      obj.slice(-count).hide();
     }
   }
 });

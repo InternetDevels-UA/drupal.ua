@@ -2,3 +2,4 @@ name = Idevels main module
 description = "Main module for site UkrMet"
 package = Internetdevels
 core = 6.x
+plugins[vud][widgets] = widgets

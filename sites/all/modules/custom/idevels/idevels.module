@@ -228,3 +228,14 @@ function idevels_translated_menu_link_alter(&$item, $map) {
     }
   }
 }
+
+/**
+ * Implementation of ctools hook_ctools_plugin_dierctory().
+ *
+ * Let the system know we implement widget plugins.
+ */
+function idevels_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'vud') {
+    return $plugin;
+  }
+}

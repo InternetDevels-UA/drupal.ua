@@ -286,3 +286,6 @@
 [submodule "sites/all/modules/contrib/vk_openapi"]
 	path = sites/all/modules/contrib/vk_openapi
 	url = http://git.drupal.org/project/vk_openapi.git
+[submodule "sites/all/modules/contrib/user_karma"]
+	path = sites/all/modules/contrib/user_karma
+	url = http://git.drupal.org/project/user_karma.git

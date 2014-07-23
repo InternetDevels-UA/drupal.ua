@@ -52,7 +52,6 @@
     #block-menu-secondary-links ul.menu,
     .footer-menu .menu,
     .footer-footer,
-    .user-front .pane-content,
     .user-front .pane-title{ width:720px; }
     #block-menu-primary-links ul.menu li a{
       font-weight:normal;
@@ -60,6 +59,9 @@
       color:#444444;
       font-family: 'open_sans_bold'
     }
+  .user-front .pane-content{
+    width: 700px;
+  }
 
     /*#logo { margin-top:30px; }*/
     /*#logo img { width:140px; }*/
@@ -323,7 +325,7 @@
   }
   /*.panel-pane h3.pane-title{width: 300px}*/
   .center-center .user-front .pane-content{
-    width: 80%;
+    width: 500px;
     /*max-width: 400px;*/
     margin: 0 auto;
   }

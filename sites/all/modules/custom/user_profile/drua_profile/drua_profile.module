@@ -1,7 +1,6 @@
 <?php
 // $Id$
 
-
 /**
  * Implementation of hook_theme().
  */
@@ -164,7 +163,7 @@ function drua_profile_block($op = 'list', $delta = 0) {
             $user_fields = _drua_profile_fields_load($account->uid, array('avatar' => '', ));
             
             //TODO fix load data (karma, medals)
-            
+
             $user_data = array(
               'uid' => $account->uid,
               'status' => (time() - $account->access) < variable_get('user_block_seconds_online', 900),
@@ -177,10 +176,12 @@ function drua_profile_block($op = 'list', $delta = 0) {
                 'tran' => 1,
               ),
               'top' => 2,
-              'karma' => -42,
+              'karma' => user_karma_user_karma($account->uid),
+
               'change_karma' => ($user->uid && $user->uid != $account->uid ? 1 : 0),
             );
           }
+//          dsm($account);
           return array(
             'subject' => t('Avatar'),
             'content' => theme('drua_block_avatar_block', $user_data),
@@ -467,6 +468,7 @@ function theme_drua_block_contacts($fields = NULL, $link = '') {
  * Theming block — Avatar.
  */
 function theme_drua_block_avatar_block($user_data = NULL) {
+
   return '
 <div class="profile-avatar-wrap-head">
   <div class="wrap-head">
@@ -477,11 +479,11 @@ function theme_drua_block_avatar_block($user_data = NULL) {
   </div>
 </div>
 <div class="g-rating">
-  <div class="profile-top">'. theme('drua_block_top', $user_data['top']) .'</div>
+  <!--<div class="profile-top">'. theme('drua_block_top', $user_data['top']) .'</div>-->
   <div class="profile-karma">'. theme('drua_block_karma', $user_data['karma'], $user_data['change_karma']) .'</div>
 </div>
 </div>
-';
+';    // @TODO uncomment top if necessary.
 }
 
 
@@ -551,6 +553,7 @@ function theme_drua_block_medals($medals = NULL) {
 function theme_drua_block_karma($karma_value = NULL, $change_karma = FALSE) {
   if ($change_karma) {
     //TODO correct links
+
     $plus = '<a class="karma-plus-on" href="#">&nbsp;</a>';
     $minus = '<a class="karma-minus-on" href="#">&nbsp;</a>';
   }
@@ -558,6 +561,7 @@ function theme_drua_block_karma($karma_value = NULL, $change_karma = FALSE) {
     $plus = '<a class="karma-plus-off" href="#">&nbsp;</a>';
     $minus = '<a class="karma-minus-off" href="#">&nbsp;</a>';
   }
+
   return '
   <div class="profile-karma-text">'. t('karma') .'</div>
   <div class="profile-karma-count'. ($change_karma ? ' change_karma' : '') .'">'.
