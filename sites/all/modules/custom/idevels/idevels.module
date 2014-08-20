@@ -239,3 +239,89 @@ function idevels_ctools_plugin_directory($module, $plugin) {
     return $plugin;
   }
 }
+
+/**
+ * Implementation of template_preprocess_views_view().
+ * For exposed sort by carma or new users;
+ */
+function idevels_preprocess_views_view(&$vars) {
+  if ($vars['view']->name == 'users') {
+    if ($vars['view']->current_display == 'page_1') {
+      $vars['header'] = t('Order By: ');
+      $req = arg(2);
+      if (empty($req)) {
+        $reverse = 'asc';
+        $revnew = 'asc';
+      }
+      switch (arg(1)) {
+        case 'votingapi_cache_users_value':
+          if (arg(2) == 'desc') {
+            $reverse = 'asc';
+            $class = 'karma down';
+
+          }else {
+            $reverse = 'desc';
+            $class = 'karma up';
+          }
+          break;
+        case 'users_created_day':
+          if (arg(2) == 'desc') {
+            $revnew = 'asc';
+            $classNew = 'karma down';
+          }else {
+            $revnew = 'desc';
+            $classNew = 'karma up';
+          }
+          break;
+      }
+        $vars['header'] .=  l(t('karma'), 'users-lists/votingapi_cache_users_value/'.$reverse, array('attributes'=>array('class'=>$class)));
+        $vars['header'] .= l(t('new user'), 'users-lists/users_created_day/'.$revnew, array('attributes'=>array('class'=>$classNew)));
+    }
+  }
+}
+
+/**
+ * Implementation of template_preprocess_views_view_fields().
+ * For create country flags in users-lists page.
+ */
+function idevels_preprocess_views_view_fields(&$vars) {
+  if ($vars['view']->name == 'users') {
+    if ($vars['view']->current_display == 'page_1') {
+      if ($vars['fields']['nothing']->content != ' ') {
+        $country = $vars['fields']['country']->raw;
+        $path = drupal_get_path('module', 'idevels') . '/img/' . $country . '.png';
+        $image = theme('image', $path, $country, $country);
+        $vars['fields']['nothing']->content = $image . $vars['fields']['nothing']->content;
+      }
+      $vars['fields']['country']->content = '';
+      $vars['fields']['city']->content = '';
+    }
+  }
+}
+
+/**
+ * Implementation of hook_views_query_alter().
+ * For exposed sort by carma or new users;
+ */
+function idevels_views_query_alter(&$view, &$query) {
+  if ($view->name == 'users') {
+    switch (arg(1)) {
+      case 'votingapi_cache_users_value':
+        if (arg(2) == 'asc') {
+          $direction = 'ASC';
+        }else {
+          $direction = 'DESC';
+        }
+        $query->orderby[0] = 'votingapi_cache_users_value '.$direction;
+        break;
+      case 'users_created_day':
+        if (arg(2) == 'asc') {
+          $direction = 'ASC';
+        }else {
+          $direction = 'DESC';
+        }
+        $query->orderby[0] = 'users_created_day '.$direction;
+        break;
+    }
+  }
+}
