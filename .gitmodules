@@ -289,3 +289,6 @@
 [submodule "sites/all/modules/contrib/user_karma"]
 	path = sites/all/modules/contrib/user_karma
 	url = http://git.drupal.org/project/user_karma.git
+[submodule "sites/all/modules/contrib/geolocation"]
+	path = sites/all/modules/contrib/geolocation
+	url = http://git.drupal.org/project/geolocation.git
