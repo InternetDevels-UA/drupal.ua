@@ -292,3 +292,6 @@
 [submodule "sites/all/modules/contrib/geolocation"]
 	path = sites/all/modules/contrib/geolocation
 	url = http://git.drupal.org/project/geolocation.git
+[submodule "sites/all/modules/contrib/views_autocomplete_filters"]
+	path = sites/all/modules/contrib/views_autocomplete_filters
+	url = http://git.drupal.org/project/views_autocomplete_filters.git
