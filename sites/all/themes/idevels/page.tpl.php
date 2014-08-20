@@ -95,7 +95,7 @@
         <div id="main-content" class="region clear-block <?php if (!is_panel()) /*{ print('grid-12'); }*/ ?>">
           <?php print $content; ?>
         </div>
-      </div>
+
 
 
     <?php if ($left): ?>
@@ -109,6 +109,7 @@
         <?php print $right; ?>
       </div>
     <?php endif; ?>
+      </div>
 
     <?php if ($page_bottom): ?>
       <div id="page-bottom" class="grid-12 clear-block">

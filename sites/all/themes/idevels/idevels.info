@@ -15,6 +15,7 @@ regions[header_right] = Header right
 regions[featured] = Featured content
 regions[page_top] = Page top
 regions[left] = Left sidebar
+regions[right] = Right sidebar
 regions[page_bottom] = Page bottom
 regions[footer] = Footer
 regions[copyrights] = Footer message
@@ -30,7 +31,6 @@ stylesheets[all][] = styles/styles.css
 stylesheets[all][] = views/views-view-answers.css
 stylesheets[all][] = styles/groups-page.css
 stylesheets[all][] = styles/forms.css
-stylesheets[all][] = styles/responsive.css
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; ------------- SCRIPTS -------------- ;
