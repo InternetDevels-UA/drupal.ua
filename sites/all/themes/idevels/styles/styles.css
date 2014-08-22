@@ -3483,6 +3483,38 @@ float: none;
   background-repeat: no-repeat;
   background-position: 0px;
 }
+
+.view-Events .views-field-field-city-value{
+  float: left;
+  display: block;
+  margin-right: 15px;
+  /*font-weight: 15px;*/
+}
+.view-Events .views-field-field-city-value .field-content{
+  padding-left: 22px;
+  background-image: url('../images/icons/folder.png');
+  background-repeat: no-repeat;
+  background-position: 0px;
+}
+.view-Events .views-field-totalcount,
+.view-Events .views-field-comment-count {
+  float: right;
+  display: block;
+  margin-right: 15px;
+}
+
+.view-Events .views-field-totalcount .field-content,
+.view-Events .views-field-comment-count .field-content {
+  padding-left: 22px;
+  background-repeat: no-repeat;
+  background-position: 0px;
+}
+.view-Events .views-field-totalcount .field-content {
+  background-image: url('../images/answers/question-answers.gif');
+}
+.view-Events .views-field-comment-count .field-content{
+  background-image: url('../images/answers/eye.png');
+}
 .view-Events .views-field-field-event-type-value{
   margin-left: 10px;
 }
