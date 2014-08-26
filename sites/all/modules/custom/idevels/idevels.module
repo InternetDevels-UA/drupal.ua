@@ -325,3 +325,25 @@ function idevels_views_query_alter(&$view, &$query) {
     }
   }
 }
+
+function idevels_form_views_exposed_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_state['view']->name == 'Events' && $form['#id'] == 'views-exposed-form-Events-page-1') {
+    $form['city']['#type'] = 'textfield';
+    $form['city']['#default_value'] = '';
+    $form['city']['#size'] = 30;
+    unset($form['city']['#options']);
+    if ($form_state['input']['city'] == 'All') {
+      $form_state['input']['city'] = '';
+    }
+    $form['city']['#autocomplete_path'] = 'taxonomy/autocomplete/11';
+    $form['#validate'][] = 'idevels_cities_autocomplete_validate';
+  }
+}
+
+function idevels_cities_autocomplete_validate(&$form, &$form_state) {
+  if (isset($form_state['values']['city']) AND $form_state['values']['city'] != 'All') {
+    $form_state['values']['city'] = str_replace('"', "", $form_state['values']['city']);
+    $temp_array = taxonomy_get_term_by_name($form_state['values']['city']);
+    $form_state['values']['city'] = $temp_array[0]->tid;
+  }
+}

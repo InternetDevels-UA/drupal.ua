@@ -295,3 +295,6 @@
 [submodule "sites/all/modules/contrib/views_autocomplete_filters"]
 	path = sites/all/modules/contrib/views_autocomplete_filters
 	url = http://git.drupal.org/project/views_autocomplete_filters.git
+[submodule "sites/all/modules/contrib/views_or"]
+	path = sites/all/modules/contrib/views_or
+	url = http://git.drupal.org/project/views_or.git
