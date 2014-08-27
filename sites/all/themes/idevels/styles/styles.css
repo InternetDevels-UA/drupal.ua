@@ -2194,6 +2194,7 @@ div.geshifilter, table .geshifilter td {
   width: 48px;
   height: 48px;
 }
+#recover-password,
 #register-mail {
   float: left;
   -webkit-appearance: push-button;
@@ -2230,6 +2231,7 @@ div.geshifilter, table .geshifilter td {
   margin-right: 10px;
   padding: 4px 13px;
 }
+#recover-password a,
 #register-mail a {
   color: #000;
   padding: 5px;
@@ -3490,34 +3492,69 @@ float: none;
   margin-right: 15px;
   /*font-weight: 15px;*/
 }
+.view-vacations .views-field-field-cities-value .field-content,
 .view-Events .views-field-field-city-value .field-content{
   padding-left: 22px;
   background-image: url('../images/icons/folder.png');
   background-repeat: no-repeat;
   background-position: 0px;
 }
+.view-vacations .views-field-field-cities-value .field-content {
+  float: left;
+}
+.view-vacations .views-field-field-company-url .field-content {
+  float: left;
+  margin-left: 10px;
+}
+.view-vacations .views-field-body .field-content {
+  clear: both;
+}
+.view-vacations .views-field-totalcount,
+.view-vacations .views-field-comment-count,
 .view-Events .views-field-totalcount,
 .view-Events .views-field-comment-count {
   float: right;
   display: block;
   margin-right: 15px;
 }
-
+.view-vacations .views-field-totalcount .field-content,
+.view-vacations .views-field-comment-count .field-content,
 .view-Events .views-field-totalcount .field-content,
 .view-Events .views-field-comment-count .field-content {
   padding-left: 22px;
   background-repeat: no-repeat;
   background-position: 0px;
 }
+.view-vacations .views-field-totalcount .field-content,
 .view-Events .views-field-totalcount .field-content {
   background-image: url('../images/answers/question-answers.gif');
 }
+.view-vacations .views-field-comment-count .field-content,
 .view-Events .views-field-comment-count .field-content{
   background-image: url('../images/answers/eye.png');
+}
+.view-vacations .view-header * {
+  width: auto;
+  display:inline-block;
+}
+.view-vacations .view-header p {
+  margin: 0;
+  float: right;
+}
+.view-vacations .view-header h1 {
+  margin: 25px 0 10px 0;
+}
+.view-vacations .view-header p a {
+  margin: 10px 0 20px 0;
+}
+.view-vacations .views-row {
+  clear: both;
 }
 .view-Events .views-field-field-event-type-value{
   margin-left: 10px;
 }
+#main-content,
+.view-vacations .view-content .views-row,
 .view-Events .view-content {
   background-image: url("../images/dot-h-2.png" );
   background-position: left top;

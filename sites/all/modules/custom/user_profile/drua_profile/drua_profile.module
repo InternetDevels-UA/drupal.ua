@@ -176,7 +176,7 @@ function drua_profile_block($op = 'list', $delta = 0) {
                 'tran' => 1,
               ),
               'top' => 2,
-              'karma' => user_karma_user_karma($account->uid),
+              //'karma' => user_karma_user_karma($account->uid),
 
               'change_karma' => ($user->uid && $user->uid != $account->uid ? 1 : 0),
             );

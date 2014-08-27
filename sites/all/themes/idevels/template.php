@@ -52,7 +52,7 @@ function idevels_preprocess_page(&$vars) {
 
   if (!$user->uid && arg(0) == 'user' && !is_numeric(arg(2))) {
     unset($vars['breadcrumb']);
-    unset($vars['tabs']);
+    //unset($vars['tabs']);
     if (arg(1) == 'register') {
       $vars['title'] = t('Registration');
     }
@@ -72,6 +72,16 @@ function idevels_preprocess_page(&$vars) {
       $logo = file_create_url($settings['logo_path']);
     }
     $vars['logo'] = theme('image', $logo, '', '', NULL, FALSE);
+  }
+
+  if ($_GET['q'] == 'events') {
+    $vars['title'] = t('Events');
+  }
+  elseif ($_GET['q'] == 'user/login') {
+    $vars['title'] = t('Login');
+  }
+  elseif ($_GET['q'] == 'user/password') {
+    $vars['title'] = t('Password recovery');
   }
 }
 
