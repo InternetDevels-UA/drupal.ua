@@ -83,6 +83,9 @@ function idevels_preprocess_page(&$vars) {
   elseif ($_GET['q'] == 'user/password') {
     $vars['title'] = t('Password recovery');
   }
+  elseif ($_GET['q'] == 'resources') {
+    $vars['title'] = t('Resources');
+  }
 }
 
 /**
