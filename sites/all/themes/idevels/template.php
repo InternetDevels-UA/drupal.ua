@@ -74,14 +74,7 @@ function idevels_preprocess_page(&$vars) {
     $vars['logo'] = theme('image', $logo, '', '', NULL, FALSE);
   }
 
-  if ($_GET['q'] == 'events') {
-    $vars['title'] = t('Events');
-    drupal_set_title(t('Events'));
-  }
-  elseif ($_GET['q'] == 'vacations') {
-    $vars['title'] = t('Vacations');
-  }
-  elseif ($_GET['q'] == 'user/login') {
+  if ($_GET['q'] == 'user/login') {
     $vars['title'] = t('Login');
   }
   elseif ($_GET['q'] == 'user/password') {
