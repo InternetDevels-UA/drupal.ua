@@ -224,7 +224,12 @@ function idevels_views_pre_render(&$view) {
     // }
     $view->attachment_before = $attachment;
   }
-
+  elseif ($view->name == 'Events' && $view->current_display == 'page_1') {
+    drupal_set_title(t('Events'));
+  }
+  elseif ($view->name == 'vacations' && $view->current_display == 'page_1') {
+    drupal_set_title(t('Vacations'));
+  }
 }
 
 /**

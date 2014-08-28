@@ -76,6 +76,7 @@ function idevels_preprocess_page(&$vars) {
 
   if ($_GET['q'] == 'events') {
     $vars['title'] = t('Events');
+    drupal_set_title(t('Events'));
   }
   elseif ($_GET['q'] == 'vacations') {
     $vars['title'] = t('Vacations');
