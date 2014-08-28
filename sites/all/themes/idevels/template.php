@@ -77,6 +77,9 @@ function idevels_preprocess_page(&$vars) {
   if ($_GET['q'] == 'events') {
     $vars['title'] = t('Events');
   }
+  elseif ($_GET['q'] == 'vacations') {
+    $vars['title'] = t('Vacations');
+  }
   elseif ($_GET['q'] == 'user/login') {
     $vars['title'] = t('Login');
   }

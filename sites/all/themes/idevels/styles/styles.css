@@ -3294,6 +3294,8 @@ float: none;
 .view-users .views-field-nothing{
   margin-top: 10px;
 }
+.view-vacations .views-field-field-cities-value img,
+.view-Events .views-field-field-city-value img,
 .view-users .views-field-nothing img{
   margin-right: 10px;
 }
@@ -3492,13 +3494,13 @@ float: none;
   margin-right: 15px;
   /*font-weight: 15px;*/
 }
-.view-vacations .views-field-field-cities-value .field-content,
+/*.view-vacations .views-field-field-cities-value .field-content,
 .view-Events .views-field-field-city-value .field-content{
   padding-left: 22px;
   background-image: url('../images/icons/folder.png');
   background-repeat: no-repeat;
   background-position: 0px;
-}
+}*/
 .view-vacations .views-field-field-cities-value .field-content {
   float: left;
 }
@@ -3527,11 +3529,11 @@ float: none;
 }
 .view-vacations .views-field-totalcount .field-content,
 .view-Events .views-field-totalcount .field-content {
-  background-image: url('../images/answers/question-answers.gif');
+  background-image: url('../images/answers/eye.png');
 }
 .view-vacations .views-field-comment-count .field-content,
 .view-Events .views-field-comment-count .field-content{
-  background-image: url('../images/answers/eye.png');
+  background-image: url('../images/answers/question-answers.gif');
 }
 .view-vacations .view-header * {
   width: auto;

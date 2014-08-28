@@ -11,6 +11,47 @@ function idevels_menu_alter(&$items) {
   $items['node']['access callback'] = FALSE;
 }
 
+/**
+ * Implements hook_menu().
+ */
+function idevels_menu() {
+  $items['idevels-taxonomy/autocomplete'] = array(
+    'title' => 'Autocomplete taxonomy',
+    'page callback' => 'idevels_taxonomy_autocomplete',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+/**
+ * Custom autocomplete for cities
+ */
+function idevels_taxonomy_autocomplete($vid, $string = '') {
+  // The user enters a comma-separated list of tags. We only autocomplete the last tag.
+  $array = drupal_explode_tags($string);
+
+  // Fetch last tag
+  $last_string = trim(array_pop($array));
+  $matches = array();
+  if ($last_string != '') {
+    $result = db_query_range(db_rewrite_sql("SELECT t.tid, t.name FROM {term_data} t WHERE t.vid = %d AND LOWER(t.name) LIKE LOWER('%%%s%%')", 't', 'tid'), $vid, $last_string, 0, 10);
+
+    $prefix = count($array) ? implode(', ', $array) .', ' : '';
+
+    while ($tag = db_fetch_object($result)) {
+      $n = $tag->name;
+      // Commas and quotes in terms are special cases, so encode 'em.
+      if (strpos($tag->name, ',') !== FALSE || strpos($tag->name, '"') !== FALSE) {
+        $n = str_replace('"', '""', $tag->name);
+      }
+      $matches[$prefix . $n] = check_plain($tag->name);
+    }
+  }
+
+  drupal_json($matches);
+}
+
 function idevels_vk_login() {
   global $language;
   $member = authOpenAPIMember();
@@ -302,6 +343,39 @@ function idevels_preprocess_views_view_fields(&$vars) {
       $vars['fields']['city']->content = '';
     }
   }
+  elseif ($vars['view']->name == 'Events' OR $vars['view']->name == 'vacations') {
+    if ($vars['view']->current_display == 'page_1') {
+      if ($vars['fields']['nothing']->content != ' ') {
+        $countries = array(
+          'Україна' => 'ua',
+          'Азербайджан' => 'az',
+          'Білорусь' => 'by',
+          'Вірменія' => 'am',
+          'Казахстан' => 'kz',
+          'Киргизія' => 'kg',
+          'Молдова' => 'md',
+          'Росія' => 'ru',
+          'Таджикістан' => 'tj',
+          'Узбекистан' => 'uz',
+        );
+        if (isset($vars['fields']['field_city_value']) OR isset($vars['fields']['field_cities_value'])) {
+          if (isset($vars['fields']['field_city_value'])) {
+            $city = 'field_city_value';
+          }
+          else {
+            $city = 'field_cities_value';
+          }
+          $country = $vars['fields'][$city]->content;
+          $country = substr($country, strpos($country, ', '));
+          $country = substr($country, 2, strpos($country, '"')-2);
+          $country = $countries[$country];
+          $path = drupal_get_path('module', 'idevels') . '/img/' . $country . '.png';
+          $image = theme('image', $path, $country, $country);
+          $vars['fields'][$city]->content = $image . $vars['fields'][$city]->content;
+        }
+      }
+    }
+  }
 }
 
 /**
@@ -332,15 +406,22 @@ function idevels_views_query_alter(&$view, &$query) {
 }
 
 function idevels_form_views_exposed_form_alter(&$form, &$form_state) {
-  if ($form_state['view']->name == 'Events' && $form['#id'] == 'views-exposed-form-Events-page-1') {
-    $form['city']['#type'] = 'textfield';
-    $form['city']['#default_value'] = '';
-    $form['city']['#size'] = 30;
-    unset($form['city']['#options']);
-    if ($form_state['input']['city'] == 'All') {
-      $form_state['input']['city'] = '';
+  if (($form_state['view']->name == 'Events' AND $form['#id'] == 'views-exposed-form-Events-page-1') OR
+      ($form_state['view']->name == 'vacations' AND $form['#id'] == 'views-exposed-form-vacations-page-1')) {
+    if (isset($form['city'])) {
+      $city = 'city';
     }
-    $form['city']['#autocomplete_path'] = 'taxonomy/autocomplete/11';
+    else {
+      $city = 'field_cities_value';
+    }
+    $form[$city]['#type'] = 'textfield';
+    $form[$city]['#default_value'] = '';
+    $form[$city]['#size'] = 30;
+    unset($form[$city]['#options']);
+    if ($form_state['input'][$city] == 'All') {
+      $form_state['input'][$city] = '';
+    }
+    $form[$city]['#autocomplete_path'] = 'idevels-taxonomy/autocomplete/11';
     $form['#validate'][] = 'idevels_cities_autocomplete_validate';
   }
 }
