@@ -3667,3 +3667,47 @@ float: none;
 .page-node .pane-custom{
   margin-right: 15px;
 }
+/*
+* contact form
+*/
+#main-content form[action="/contacts"] .form-required,
+#main-content form[action="/contacts"] .editor-container {
+  display: none;
+}
+#main-content form[action="/contacts"] input[type="text"],
+#main-content form[action="/contacts"] input[type="email"] {
+  background: none!important;
+  width: 300px!important;
+  padding: 6px!important;
+  border: 1px solid #dbdbdb!important;
+  font-family: verdana, ms sans serif!important;
+  font-size: 24px!important;
+  border-radius: 5px;
+}
+#main-content form[action="/contacts"] textarea {
+  background: none!important;
+  border: 1px solid #dbdbdb!important;
+  padding: 10px!important;
+  width: 530px;
+  color: #717171!important;
+  font-family: verdana, ms sans serif!important;
+  font-size: 12px!important;
+  border-radius: 9px;
+}
+#main-content form[action="/contacts"] input[type="submit"] {
+  margin: 12px 0 30px 0px!important;
+  text-shadow: none;
+  float: left;
+  background: #d96501;
+  box-shadow: 0px 2px 0px #ba5600;
+  border-bottom: 1px solid #d9751f;
+  display: block;
+  padding: 5px 25px;
+  cursor: pointer;
+  color: #ffffff;
+  border: none;
+  font: 28px 'Source Sans Pro';
+  border-radius: 4px;
+  font-weight: 700;
+  transition: all 300ms ease-in;
+}
