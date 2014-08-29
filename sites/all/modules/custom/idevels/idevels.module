@@ -234,6 +234,9 @@ function idevels_views_pre_render(&$view) {
   elseif ($view->name == 'users_tracker' && $view->current_display == 'page_1') {
     drupal_set_title(t('Last activity'));
   }
+  elseif ($view->name == 'users' && $view->current_display == 'page_1') {
+    drupal_set_title(t('Users'));
+  }
 }
 
 /**
@@ -353,7 +356,7 @@ function idevels_preprocess_views_view_fields(&$vars) {
     }
   }
   elseif ($vars['view']->name == 'Events' OR $vars['view']->name == 'vacations') {
-    if ($vars['view']->current_display == 'page_1') {
+    if ($vars['view']->current_display == 'page_1' OR $vars['view']->current_display == 'panel_pane_1') {
       if ($vars['fields']['nothing']->content != ' ') {
         $countries = array(
           'Україна' => 'ua',

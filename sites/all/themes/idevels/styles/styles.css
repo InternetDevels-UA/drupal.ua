@@ -3302,7 +3302,7 @@ float: none;
 .view-users .view-header{
   font-size: 11px;
   float: left;
-  /*margin-top: 12px;*/
+  margin-top: 12px;
 }
 .view-users .view-header a {
   font-family: 'open-sans', Verdana, Arial;
@@ -3339,8 +3339,8 @@ float: none;
 .view-users .views-exposed-widget.views-submit-button{
   margin-left: 10px;
 }
-.views-exposed-form .views-exposed-widget .form-submit{
-  margin-top: 23px;
+.view-users .views-exposed-form .views-exposed-widget .form-submit{
+  margin-top: 0px;
 }
 .view-users .views-exposed-form .views-submit-button{
   position: relative;
@@ -3367,7 +3367,7 @@ float: none;
 }
 .view-users .view-content{
   padding-top: 10px;
-  margin-top: 30px;
+  margin-top: 10px;
   background-image: url('../images/dot-h-2.png');
   background-position: left top;
   background-repeat: repeat-x;
@@ -3511,6 +3511,48 @@ float: none;
 .view-vacations .views-field-body .field-content {
   clear: both;
 }
+.view-Resources table {
+  border-collapse: separate;
+  border-spacing: 30px 5px;
+}
+.view-Resources tr td {
+  width: 50%;
+  border: solid 1px #bbb !important;
+  -moz-box-shadow 4px 4px 4px #ccc;
+  -webkit-box-shadow 4px 4px 4px #ccc;
+  box-shadow: 4px 4px 4px #ccc;
+}
+.view-Resources .views-field-nothing .field-content hr {
+  margin: 5px 0;
+  border: 0;
+  height: 1px;
+  background: #bbb;
+}
+.view-Resources .views-field-title,
+.view-Resources .views-field-name-1,
+.view-Resources .views-field-body {
+  float: left;
+  clear: left;
+}
+.view-Resources .views-field-title {
+  display: block;
+  max-width: 250px;
+}
+.view-Resources .views-field-title h2 {
+  margin-bottom: 5px;
+}
+.view-Resources .views-field-type {
+  float: right;
+  padding: 0 5px;
+  border: solid 1px #bbb;
+  border-radius: 5px;
+}
+.view-Resources .views-field-name-1 a {
+  text-decoration: underline;
+  color: #333;
+}
+.view-Resources .views-field-totalcount,
+.view-Resources .views-field-comment-count,
 .view-vacations .views-field-totalcount,
 .view-vacations .views-field-comment-count,
 .view-Events .views-field-totalcount,
@@ -3527,10 +3569,25 @@ float: none;
   background-repeat: no-repeat;
   background-position: 0px;
 }
+.view-Resources .views-field-created .field-content,
+.view-Resources .views-field-totalcount .field-content,
+.view-Resources .views-field-comment-count .field-content {
+  font-size: 1.1em;
+  padding-left: 26px;
+  background-repeat: no-repeat;
+  background-position: 0px;
+}
+.view-Resources .views-field-created .field-content {
+  background-image: url('../images/answers/calendar.png');
+}
+.view-Resources .views-field-totalcount .field-content {
+  background-image: url('../images/answers/eye-new.png');
+}
 .view-vacations .views-field-totalcount .field-content,
 .view-Events .views-field-totalcount .field-content {
   background-image: url('../images/answers/eye.png');
 }
+.view-Resources .views-field-comment-count .field-content,
 .view-vacations .views-field-comment-count .field-content,
 .view-Events .views-field-comment-count .field-content{
   background-image: url('../images/answers/question-answers.gif');
