@@ -499,6 +499,9 @@ h1 .tag a, h2 .tag a, h1 .tag em, h2 .tag em {
   margin:0 -15px;
   padding:5px 10px 5px 15px;
 }
+.comment .meta .picture {
+  float: left;
+}
 .meta .submitted a, .meta .links a {
   border-bottom:0 solid;
   color:#aaa;
@@ -529,12 +532,9 @@ h1 .tag a, h2 .tag a, h1 .tag em, h2 .tag em {
 }
 
 .comment .new {
-  bottom:8px;
   color:red;
   line-height:19px;
-  padding:0 3px;
-  position:absolute;
-  left:101%;
+  padding: 0 10px;
 }
 
 .comment .picture img { vertical-align:middle; margin-right:4px; }
@@ -561,7 +561,7 @@ h1 .tag a, h2 .tag a, h1 .tag em, h2 .tag em {
 }
 .guidelines .tips {
   padding:1em 1em 1em 1.4em;
-  margin:-15px 0 12px 0;
+  margin:-15px 121px 12px 0;
   display:none;
   background-color:#eee;
   border-left:solid 1px #ddd;
@@ -581,7 +581,7 @@ h1 .tag a, h2 .tag a, h1 .tag em, h2 .tag em {
   border-bottom:dashed 1px;
   display:block;
   float:right;
-  margin:-16px 10px 0 0;
+  margin:-16px 121px 0 0;
   padding:5px 20px 5px 10px;
   line-height:1em;
   color:#999;
@@ -2478,12 +2478,6 @@ h2.title{
   max-width: 1240px;
   margin: 0 auto;
 }
-#main-content .panel-panel.panel-col-first.panel-left{
-  background-image: url("../images/dot-v.png");
-  background-position: right top;
-  background-repeat: repeat-y;
-  display: table;
-}
 div.panel-pane div.node {
   padding: 0 10px;
 }
@@ -3153,7 +3147,7 @@ element.style {
 }
 #block-menu-menu-userlogin .user-login{
   color: #ffffff;
-  background: #bbbbbb;
+  background: #e75200;
   font-size: 11px;
   line-height: 12px;
   margin-right: 1px;
@@ -3165,7 +3159,7 @@ element.style {
 }
 #block-menu-menu-userlogin .user-register{
   color: #ffffff;
-  background: #e75200;
+  background: #bbbbbb;
   font-size: 11px;
   line-height: 12px;
   padding: 5px 9px;
@@ -3173,6 +3167,11 @@ element.style {
   text-transform: uppercase;
   position: relative;
   top: 3px;
+}
+.block-menu-userprofile {
+  position: absolute;
+  top: 8px;
+  right: 30px;
 }
 .panels-flexible-region-1-center{
   width: 100%;
@@ -3698,9 +3697,7 @@ float: none;
 .view-Events .views-field-field-event-type-value{
   margin-left: 10px;
 }
-#main-content,
-.view-vacations .view-content .views-row,
-.view-Events .view-content {
+#main-content {
   background-image: url("../images/dot-h-2.png" );
   background-position: left top;
   background-repeat: repeat-x;
@@ -3714,7 +3711,6 @@ float: none;
   font-family: 'open_sans';
 }
 .node-type-events .views-field-address,
-.node-type-events .views-field-field-event-date-value-3,
 .node-type-events .views-field-field-event-date-value-4,
 .node-type-events .views-field-field-event-price-value,
 .node-type-events .views-field-field-site-value,
@@ -3728,13 +3724,6 @@ float: none;
   background-position: left top;
   background-repeat: repeat-x;
 }
-.node-type-events .views-field-addthis-toolbox{
-  background-image: url("../images/dot-h-2.png" );
-  background-position: left bottom;
-  background-repeat: repeat-x;
-  padding-bottom: 25px;
-}
-
 .views-label-address{
   margin-right: 5px;
 
@@ -3756,6 +3745,9 @@ float: none;
 /*
 * contact form
 */
+#main-content form[action="/contacts"] {
+  width: 600px;
+}
 #main-content form[action="/contacts"] .form-required,
 #main-content form[action="/contacts"] .editor-container {
   display: none;
