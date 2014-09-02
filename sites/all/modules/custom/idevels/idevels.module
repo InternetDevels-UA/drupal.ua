@@ -228,6 +228,9 @@ function idevels_views_pre_render(&$view) {
   elseif ($view->name == 'Events' && $view->current_display == 'page_1') {
     drupal_set_title(t('Events'));
   }
+  elseif ($view->name == 'Events' && $view->current_display == 'page_2') {
+    drupal_set_title(t('Past Events'));
+  }
   elseif ($view->name == 'vacations' && $view->current_display == 'page_1') {
     drupal_set_title(t('Vacations'));
   }
@@ -236,6 +239,12 @@ function idevels_views_pre_render(&$view) {
   }
   elseif ($view->name == 'users' && $view->current_display == 'page_1') {
     drupal_set_title(t('Users'));
+  }
+  elseif ($view->name == 'Resources' && $view->current_display == 'page_1') {
+    drupal_set_title(t('Resources'));
+  }
+  elseif ($view->name == 'question' && $view->current_display == 'block_1') {
+    drupal_set_title(t('Questions/Answers'));
   }
 }
 
@@ -356,7 +365,7 @@ function idevels_preprocess_views_view_fields(&$vars) {
     }
   }
   elseif ($vars['view']->name == 'Events' OR $vars['view']->name == 'vacations') {
-    if ($vars['view']->current_display == 'page_1' OR $vars['view']->current_display == 'panel_pane_1') {
+    if ($vars['view']->current_display == 'page_1' OR $vars['view']->current_display == 'panel_pane_1' OR $vars['view']->current_display == 'page_2') {
       if ($vars['fields']['nothing']->content != ' ') {
         $countries = array(
           'Україна' => 'ua',
@@ -419,6 +428,7 @@ function idevels_views_query_alter(&$view, &$query) {
 
 function idevels_form_views_exposed_form_alter(&$form, &$form_state) {
   if (($form_state['view']->name == 'Events' AND $form['#id'] == 'views-exposed-form-Events-page-1') OR
+      ($form_state['view']->name == 'Events' AND $form['#id'] == 'views-exposed-form-Events-page-2') OR
       ($form_state['view']->name == 'vacations' AND $form['#id'] == 'views-exposed-form-vacations-page-1')) {
     if (isset($form['city'])) {
       $city = 'city';
