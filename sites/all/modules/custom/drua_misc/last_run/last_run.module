@@ -87,7 +87,7 @@ function last_run_link_alter($links, $node, $comment = NULL) {
     if (isset($links['comment_forbidden'])) {
       unset($links['comment_forbidden']);
       $links['comment_comments'] = array(
-        'title' => '0',
+        'title' => $all,
         'href' => "node/$node->nid",
         'attributes' => array('title' => t('Jump to the first comment of this posting.')),
         'fragment' => 'comments'

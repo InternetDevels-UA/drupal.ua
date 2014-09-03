@@ -510,7 +510,7 @@ function examples_ctools_modal_review($js = FALSE) {
    'ajax'  => TRUE,
   );
   $form_state['build_info']['args'] = array($node);
-  $output = ctools_modal_form_wrapper($type . '_node_form', $form_state);
+  $output = ctools_modal_form_wrapper('resource_node_form', $form_state);
   // Actions after form submit. 
   if (!empty($form_state['executed'])) {
    $output = array();
