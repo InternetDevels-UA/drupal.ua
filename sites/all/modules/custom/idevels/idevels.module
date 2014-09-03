@@ -21,6 +21,11 @@ function idevels_menu() {
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
+  $items['add/%/resource'] = array(
+   'page callback'    => 'examples_ctools_modal_review',
+   'page arguments'   => array(1),
+   'access arguments' => TRUE,
+ );
   return $items;
 }
 
@@ -345,6 +350,20 @@ function idevels_preprocess_views_view(&$vars) {
         $vars['header'] .= l(t('new user'), 'users-lists/users_created_day/'.$revnew, array('attributes'=>array('class'=>$classNew)));
     }
   }
+  elseif ($vars['view']->name == 'Resources') {
+    if ($vars['view']->current_display == 'page_1') {
+      ctools_include('node.pages', 'node', '');
+      ctools_include('modal');
+      ctools_include('ajax');
+      ctools_modal_add_js();
+      $header = $vars['header'];
+      $start = strrpos($header,"<a");
+      $finish = strrpos($header,"/a>");
+      $link = l(t('Add content'), "add/nojs/resource", array('html' => TRUE, 'attributes' => array('class' => "ctools-use-modal")));
+      $header = substr($header, 0, $start) . $link . substr($header, $finish+3, strlen($header));
+      $vars['header'] = $header;
+    }
+  }
 }
 
 /**
@@ -426,6 +445,10 @@ function idevels_views_query_alter(&$view, &$query) {
   }
 }
 
+/**
+ * Implementation of hook_form_views_exposed_form_alter().
+ * For cities autocomplate;
+ */
 function idevels_form_views_exposed_form_alter(&$form, &$form_state) {
   if (($form_state['view']->name == 'Events' AND $form['#id'] == 'views-exposed-form-Events-page-1') OR
       ($form_state['view']->name == 'Events' AND $form['#id'] == 'views-exposed-form-Events-page-2') OR
@@ -448,10 +471,56 @@ function idevels_form_views_exposed_form_alter(&$form, &$form_state) {
   }
 }
 
+/**
+ * Implementation of hook_form_validate().
+ * For cities autocomplate;
+ */
 function idevels_cities_autocomplete_validate(&$form, &$form_state) {
   if (isset($form_state['values']['city']) AND $form_state['values']['city'] != 'All') {
     $form_state['values']['city'] = str_replace('"', "", $form_state['values']['city']);
     $temp_array = taxonomy_get_term_by_name($form_state['values']['city']);
     $form_state['values']['city'] = $temp_array[0]->tid;
   }
+}
+
+/**
+ * Implementation of ctools Modal API.
+ * For add Resurses;
+ */
+function examples_ctools_modal_review($js = FALSE) {
+  dsm($js);
+  ctools_include('node.pages', 'node', '');
+  ctools_include('modal');
+  ctools_include('ajax');
+  ctools_modal_add_js();
+  global $user;
+  $type = 'resurses';
+/*  $node = (object) array(
+    'uid' => $user->uid,  
+    'name' => (isset($user->name) ? $user->name : ''),  
+    'type' => $type,  
+    'language' => LANGUAGE_NONE);*/
+  // Loading node form with disabled scripts.
+  if (!$js) {
+    return drupal_get_form($type . '_node_form'/*, $node*/);
+  }
+  // Create array $form_state.
+  $form_state = array(
+   'title' => t('Add content'),
+   'ajax'  => TRUE,
+  );
+  $form_state['build_info']['args'] = array($node);
+  $output = ctools_modal_form_wrapper($type . '_node_form', $form_state);
+  // Actions after form submit. 
+  if (!empty($form_state['executed'])) {
+   $output = array();
+   // Close pop up.
+   $output[] = ctools_modal_command_dismiss();
+   $news_id = arg(3);
+   // Insert  updated  view into a  page.
+   if (is_numeric(arg(3))) {
+     $output[] = ajax_command_html('.latest-reviews-full-style ', views_embed_view('reviews', 'block', arg(3)));
+   }
+  }
+  print ctools_ajax_render($output);
 }

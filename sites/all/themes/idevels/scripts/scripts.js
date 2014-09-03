@@ -124,4 +124,9 @@ $(function () {
       obj.slice(-count).hide();
     }
   }
+
+  //If you see what this code string is comment - delete them 
+  //Add form for create Resurse
+  //$( ".view-Resources" ).append( '<div><p>Виберіть тип матеріалу, який ви хочете добавити:</p><ul><li>Книга</li><li>Стаття</li><li>Сайт</li><li>Посилання</li></ul><form><input type="text" maxlength="255" name="title" id="edit-title" size="60" value="" class="form-text required"><input type="text" maxlength="2048" name="field_link[0][url]" id="edit-field-link-0-url" size="60" value="" class="form-text"><textarea cols="60" rows="20" name="body" id="edit-body" class="form-textarea resizable textarea-processed"></textarea><input type="submit" name="op" id="edit-submit" value="Зберегти" class="form-submit"></form></div>' );
+
 });
