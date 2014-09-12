@@ -24,8 +24,15 @@ function idevels_menu() {
   $items['add/%/resource'] = array(
    'page callback'    => 'examples_ctools_modal_review',
    'page arguments'   => array(1),
-   'access arguments' => TRUE,
+   'access arguments' => array('create resources'),
  );
+  $items['admin/settings/change_bg_image'] = array(
+    'title' => t('Change background image'), //page title
+    'description' => 'A form to change background image.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('idevels_change_header_image_form'),
+    'access callback' => TRUE
+  );
   return $items;
 }
 
@@ -258,6 +265,9 @@ function idevels_views_pre_render(&$view) {
  * Add Always show checbox for add access to link.
  **/
 function idevels_form_alter(&$form, &$form_state, $form_id) {
+/*dsm($form);
+dsm($form_state);
+dsm($form_id);*/
   if ($form_id == 'menu_edit_item' || $form_id == 'og_menu_edit_item_form') {
     $form['menu']['always_visible'] = array(
       '#title' => t('Always show this menu item.'),
@@ -267,6 +277,9 @@ function idevels_form_alter(&$form, &$form_state, $form_id) {
     );
     array_unshift($form['#submit'], 'idevels_menu_edit_form_submit');
   }
+/*  elseif ($form_id == 'idevels_add_resurses_form') {
+    $form['#action'] = '/node/add/resource';
+  }*/
 }
 
 /**
@@ -350,18 +363,21 @@ function idevels_preprocess_views_view(&$vars) {
         $vars['header'] .= l(t('new user'), 'users-lists/users_created_day/'.$revnew, array('attributes'=>array('class'=>$classNew)));
     }
   }
+  // Modal link to resources 
   elseif ($vars['view']->name == 'Resources') {
     if ($vars['view']->current_display == 'page_1') {
-      ctools_include('node.pages', 'node', '');
-      ctools_include('modal');
-      ctools_include('ajax');
-      ctools_modal_add_js();
-      $header = $vars['header'];
-      $start = strrpos($header,"<a");
-      $finish = strrpos($header,"/a>");
-      $link = l(t('Add content'), "add/nojs/resource", array('html' => TRUE, 'attributes' => array('class' => "ctools-use-modal")));
-      $header = substr($header, 0, $start) . $link . substr($header, $finish+3, strlen($header));
-      $vars['header'] = $header;
+      if ( user_is_logged_in() ) {
+        ctools_include('node.pages', 'node', '');
+        ctools_include('modal');
+        ctools_include('ajax');
+        ctools_modal_add_js();
+        $header = $vars['header'];
+        $start = strrpos($header,"<a");
+        $finish = strrpos($header,"/a>");
+        $link = l(t('Add content'), "add/nojs/resource", array('html' => TRUE, 'attributes' => array('class' => "ctools-use-modal")));
+        $header = substr($header, 0, $start) . $link . substr($header, $finish+3, strlen($header));
+        $vars['header'] = $header;
+      }
     }
   }
 }
@@ -483,44 +499,216 @@ function idevels_cities_autocomplete_validate(&$form, &$form_state) {
   }
 }
 
+function idevels_change_header_image_form(&$form_state) {
+  $form = array();  
+  $form['file'] = array(
+    '#attributes' => array('enctype' => 'multipart/form-data'),
+    '#type' => 'file',
+    '#title' => t('Image'),
+    '#description' => t('Image should be of minimum 50x50px width and should be of type png or jpg'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+    '#size' => 48,
+  );
+  $form['#attributes']['enctype'] = "multipart/form-data";
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Submit',   
+  );
+  return $form;
+}
+
+function idevels_change_header_image_form_validate($form, $form_state) {
+  if (!($file = file_save_upload('file', array()))) {
+    form_set_error('file', t('Please choose file'));
+  }
+  elseif (file_validate_is_image($file)) {
+    form_set_error('file', t('Please choose image'));
+  }
+  elseif ($file->filesize > 512000) {
+    form_set_error('file', t("File can't be more than 512kb"));
+  }
+}
+
+function idevels_change_header_image_form_submit($form, &$form_state) {
+  $file = file_save_upload('file', array());
+  file_put_contents('sites/all/themes/idevels/images/map.png', file_get_contents($file->filepath));
+  $form_state['redirect'] = '';
+}
+
 /**
  * Implementation of ctools Modal API.
  * For add Resurses;
  */
 function examples_ctools_modal_review($js = FALSE) {
-  dsm($js);
+  $form_id = 'user_login';
+  if (!$js) {
+    return drupal_get_form($form_id);
+  }
   ctools_include('node.pages', 'node', '');
   ctools_include('modal');
   ctools_include('ajax');
   ctools_modal_add_js();
-  global $user;
-  $type = 'resurses';
+  //global $user;
+  //$type = 'resurses';
 /*  $node = (object) array(
     'uid' => $user->uid,  
     'name' => (isset($user->name) ? $user->name : ''),  
     'type' => $type,  
     'language' => LANGUAGE_NONE);*/
   // Loading node form with disabled scripts.
-  if (!$js) {
-    return drupal_get_form($type . '_node_form'/*, $node*/);
-  }
+  //if (!$js) {
+    //return drupal_get_form('resource_node_form'/*, $node*/);
+  //}
   // Create array $form_state.
   $form_state = array(
    'title' => t('Add content'),
    'ajax'  => TRUE,
   );
-  $form_state['build_info']['args'] = array($node);
-  $output = ctools_modal_form_wrapper('resource_node_form', $form_state);
+  //$form_state['build_info']['args'] = array($node);
+  //$output = ctools_modal_form_wrapper(drupal_get_form('resource_node_form'), $form_state);
+  $output = ctools_modal_form_wrapper('idevels_add_resurses_form', $form_state);
+  //$output = ctools_modal_form_wrapper('resource_node_form', $form_state);
   // Actions after form submit. 
   if (!empty($form_state['executed'])) {
-   $output = array();
-   // Close pop up.
-   $output[] = ctools_modal_command_dismiss();
-   $news_id = arg(3);
-   // Insert  updated  view into a  page.
-   if (is_numeric(arg(3))) {
+    $output = array();
+    // Close pop up.
+    $output[] = ctools_modal_command_dismiss();
+    $news_id = arg(3);
+    // Insert  updated  view into a  page.
+    if (is_numeric(arg(3))) {
      $output[] = ajax_command_html('.latest-reviews-full-style ', views_embed_view('reviews', 'block', arg(3)));
-   }
+    }
   }
+  print ctools_ajax_render($output);
+}
+
+function idevels_add_resurses_form(&$form_state) {
+  /*$form_state['redirect'] = 'resources';*/
+  $form = array();
+  $form['taxonomy[12]'] = array(
+    '#type' => 'radios',
+    '#title' => t('Select the type of material you want to add'),
+    2491 => array(
+      '#type' => 'radio',
+      '#title' => t('Book'),
+      '#return_value' => 2491,
+      '#parents' => array('resource_type'),
+      '#spawned' => TRUE,
+      '#default_value' => 2491,
+    ),
+    2492 => array(
+      '#type' => 'radio',
+      '#title' => t('Article'),
+      '#return_value' => 2492,
+      '#parents' => array('resource_type'),
+      '#spawned' => TRUE,
+    ),
+    2493 => array(
+      '#type' => 'radio',
+      '#title' => t('Site'),
+      '#return_value' => 2493,
+      '#parents' => array('resource_type'),
+      '#spawned' => TRUE,
+    ),
+    2494 => array(
+      '#type' => 'radio',
+      '#title' => t('Link'),
+      '#return_value' => 2494,
+      '#parents' => array('resource_type'),
+      '#spawned' => TRUE,
+    ),
+  );
+  //name="title" id="edit-title"
+  $form['title'] = array(
+    '#type' => 'textfield',
+    '#attributes' =>array('placeholder' => t('Name of book')),
+    '#size' => 60,
+    '#required' => TRUE,
+  );
+  $form['field_link'] = array(
+    '#type' => 'textfield',
+    '#attributes' =>array('placeholder' => t('Author of the book')),
+    '#size' => 60,
+  );
+  $form['body'] = array(
+    '#type' => 'textarea',
+    '#attributes' =>array('placeholder' => t('About this')),
+    '#rows' => 7,
+    '#cols' => 60,
+    '#required' => TRUE,
+  );
+  $form['field_book_0'] = array(
+    '#attributes' => array('enctype' => 'multipart/form-data'),
+    '#type' => 'file',
+    '#title' => t('Download book'),
+/*    '#upload_validators' => array(
+      'file_validate_extensions' => array('txt pdf mobi epub doc docx fb2 ibooks djvu rtf lit html htm chm'),
+      'file_validate_size' => array(100*1024*1024),
+    ),*/
+    '#size' => 48,
+  );
+  $form['#attributes']['enctype'] = "multipart/form-data";
+  $form['#validate'][] = 'idevels_add_resurses_form_validate';
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Add'), 
+  );
+  return $form;
+}
+
+function idevels_add_resurses_form_validate($form, &$form_state) {
+  if ($form_state['values']['resource_type'] == '2491') {
+    $extensions = array('txt', 'pdf', 'mobi', 'epub', 'doc', 'docx', 'fb2', 'ibooks', 'djvu', 'rtf', 'lit', 'html', 'htm', 'chm');
+    if (!($file = file_save_upload('field_book_0', array(), file_directory_path() . '/books'))) {
+      form_set_error('field_book_0', t('Please choose file'));
+    }
+    elseif (!in_array(pathinfo($file->filepath, PATHINFO_EXTENSION), $extensions) OR !in_array(end(explode(".", $file->filename)), $extensions) OR substr($file->filename, -5, 5) == '_.txt') {
+      file_delete($file->filepath);
+      form_set_error('field_book_0', t('File extensions not allowed'));
+    }
+    elseif ($file->filesize > 100000000) {
+      file_delete($file->filepath);
+      form_set_error('field_book_0', t("File can't be more than 100Mb"));
+    }
+  }
+}
+
+function idevels_add_resurses_form_submit($form, &$form_state) {
+  global $user;
+  module_load_include('inc', 'node', 'taxonomy', 'node.pages'); // required
+  $tid = (int) $form_state['values']['resource_type'];
+  $file = file_save_upload('field_book_0');
+  if ($form_state['values']['resource_type'] == '2491') {
+    $node = (object) array(
+      'type' => 'resource',
+      'uid' => $user->uid,
+      'name' => (isset($user->name) ? $user->name : ''),
+      'title' => $form_state['input']['title'],
+      'body' => $form_state['input']['body'],
+      'teaser' => $form_state['input']['body'],
+      'field_book_autor' => array(0 => array('value' => $form_state['input']['field_link'])),
+      'taxonomy' => array($tid => (object) taxonomy_get_term($tid)),
+      'field_book' => array(0 => (array) $file),
+    );
+  }
+  else {
+    $node = (object) array(
+      'type' => 'resource',
+      'uid' => $user->uid,
+      'name' => (isset($user->name) ? $user->name : ''),
+      'title' => $form_state['input']['title'],
+      'body' => $form_state['input']['body'],
+      'teaser' => $form_state['input']['body'],
+      'field_link' => array(0 => array('url' => $form_state['input']['field_link'])),
+      'taxonomy' => array($tid => (object) taxonomy_get_term($tid)),
+      'field_book' => array(0 => (array) $file),
+    );
+  }
+  node_object_prepare($node);
+  node_save($node);
+  $output = array();
+  $output[] = ctools_modal_command_dismiss();
+  $output[] = ctools_ajax_command_redirect('resources');
   print ctools_ajax_render($output);
 }

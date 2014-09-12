@@ -494,7 +494,7 @@ function theme_drua_block_avatar($photo = '', $uid_profile = FALSE) {
   global $user;
   $output = '
 <div>';
-  $path_theme = drupal_get_path('theme', 'drua');
+  $path_theme = drupal_get_path('theme', 'idevels');
   if (!is_array($photo) || !isset($photo['filepath']) || !is_file($photo['filepath'])) {
     if ($uid_profile) {
       $output .= '<img src="/'. $path_theme .'/images/icons/avatar-no.png" alt="' .

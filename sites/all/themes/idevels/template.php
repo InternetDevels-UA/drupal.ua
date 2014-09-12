@@ -210,11 +210,12 @@ function idevels_username($object) {
     else {
       $name = $object->name;
     }
-
     $profile = content_profile_load('profile', $object->uid);
     if ($profile->field_image[0]) {
       $picture = $profile->field_image[0];
-      $avatar = theme('imagecache', 'tiny', $picture['filepath'], $picture['data']['alt'], $picture['data']['title']);
+      if (!drupal_is_front_page()) {
+        $avatar = theme('imagecache', 'tiny', $picture['filepath'], $picture['data']['alt'], $picture['data']['title']);
+      }
     }
 
     if (user_access('access user profiles')) {
