@@ -650,11 +650,19 @@ function idevels_add_resurses_form(&$form_state) {
   );
   $form['#attributes']['enctype'] = "multipart/form-data";
   $form['#validate'][] = 'idevels_add_resurses_form_validate';
+  $form['#attached']['js'] = array(
+    drupal_get_path('module', 'idevels') . '/formdecorator.js',
+  );
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Add'), 
   );
   return $form;
+}
+
+function idevels_add_resurses_form_alter($form, &$form_state) {
+  dsm($form);
+  drupal_add_js('alert("kdjhfg")');
 }
 
 function idevels_add_resurses_form_validate($form, &$form_state) {
@@ -672,10 +680,12 @@ function idevels_add_resurses_form_validate($form, &$form_state) {
       form_set_error('field_book_0', t("File can't be more than 100Mb"));
     }
   }
+/*  drupal_add_js('alert("kdjhfg")');*/
 }
 
 function idevels_add_resurses_form_submit($form, &$form_state) {
   global $user;
+/*  drupal_add_js('alert("kdjhfg")');*/
   module_load_include('inc', 'node', 'taxonomy', 'node.pages'); // required
   $tid = (int) $form_state['values']['resource_type'];
   $file = file_save_upload('field_book_0');

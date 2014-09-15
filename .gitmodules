@@ -301,3 +301,9 @@
 [submodule "sites/all/modules/contrib/masquerade"]
 	path = sites/all/modules/contrib/masquerade
 	url = http://git.drupal.org/project/masquerade.git
+[submodule "sites/all/modules/contrib/spambot"]
+	path = sites/all/modules/contrib/spambot
+	url = http://git.drupal.org/project/spambot.git
+[submodule "sites/all/modules/contrib/mollom"]
+	path = sites/all/modules/contrib/mollom
+	url = http://git.drupal.org/project/mollom.git
