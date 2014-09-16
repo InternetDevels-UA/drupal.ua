@@ -115,7 +115,7 @@ function drua_profile_block($op = 'list', $delta = 0) {
               'value' => $user_fields['country_name'] .', '. $user_fields['city'],
               'class' => 'field-flag field-flag-'. $user_fields['country'],
               'style' => 'background: transparent url('. base_path() .
-                drupal_get_path('theme', 'drua') .'/images/flags/ua.png) 0 0 no-repeat;',
+                drupal_get_path('theme', 'drua') .'/images/flags/' . $user_fields['country'] . '.png) 0 0 no-repeat;',
             );
           }
           unset($user_fields['country']);

@@ -1621,6 +1621,9 @@ p.empty-icon a.icon-no-about {
 
 .skype-block {
   text-align: center;
+  border: 2px solid #56c6f5;
+  border-radius: 10px;
+  padding: 10px;
 }
 
 /************************************
@@ -3006,7 +3009,8 @@ h3.pane-title{
   position: relative;
 }
 .footer-first .views-field-picture img,
-.footer-first .views-field-field-image-fid img {
+.footer-first .views-field-field-image-fid img,
+.footer-first .views-field-uid img {
   width: auto;
   height: 35px;
   margin-left: 15px;
@@ -3209,10 +3213,11 @@ element.style {
   width: auto;
 float: none;
 }
-.footer-first .view-group-comments .views-row .views-field-picture,
+.footer-first .view-group-comments .views-row .views-field-uid,
 .footer-first .view-group-comments .views-row .views-field-name-1,
 .footer-first .view-group-comments .views-row .views-field-title,
-.footer-first .view-group-comments .views-field-field-image-fid {
+.footer-first .view-group-comments .views-field-field-image-fid,
+.footer-first .view-group-comments .views-field-name-1 {
   display: inline-block;
 }
 .footer-first .view-group-comments .views-row .views-field-name-1 {
