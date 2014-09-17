@@ -121,7 +121,7 @@ ul { list-style-position:inside; }
 /* Sticky footer
 /************************************/
 
-* {margin:0;padding:0;} 
+* {margin:0;padding:0;}
 html, body, .body-wrapper {height: 100%;}
 body > .body-wrapper {height: auto; min-height: 100%;}
 /*.page {padding-bottom: 240px;}  *//* must be same height as the footer */
@@ -527,7 +527,7 @@ h1 .tag a, h2 .tag a, h1 .tag em, h2 .tag em {
   margin:-3em 0 0 0;
 }
 
-.comment .vote-up-down-widget { 
+.comment .vote-up-down-widget {
   position:absolute;
   right:101%;
   top:0;
@@ -1343,7 +1343,7 @@ p.empty-icon a.icon-no-about {
   line-height: 16px;
   background: transparent url(../images/icons/icons_contact.gif) 0 0 no-repeat;
 }
-  
+
   .profile-avatar-wrap-head {
     width: 192px;
   }
@@ -1377,7 +1377,7 @@ p.empty-icon a.icon-no-about {
         width: 40px;
         height: 40px;
       }
-    
+
   .profile-avatar-wrap-head .g-avatar .profile-status {
     position: absolute;
     top: 0;
@@ -1394,7 +1394,7 @@ p.empty-icon a.icon-no-about {
     .profile-avatar-wrap-head .g-avatar .profile-status .status-offline {
       background-color: #C32E3F;
     }
-  
+
   .profile-avatar-wrap-head .g-medal {
     width: 22px;
     float: right;
@@ -1459,7 +1459,7 @@ p.empty-icon a.icon-no-about {
     line-height: 22px;
     font-size: 13px;
   }
-  
+
   .profile-avatar-wrap-head .g-rating .profile-karma {
     margin-left: 30px;
     width: 71px;
@@ -1500,7 +1500,7 @@ p.empty-icon a.icon-no-about {
   .full-block-contact .field-flag {
     background: none;
   }
-  
+
   .full-block-contact .field-skype {
     background-position: 0 -32px;
   }
@@ -1522,7 +1522,7 @@ p.empty-icon a.icon-no-about {
   .full-block-contact .field-twitter {
     background-position: 0 -64px;
   }
-  
+
   .drupal_activity .domen_wrap {
     margin-bottom: 15px;
   }
@@ -1566,7 +1566,7 @@ p.empty-icon a.icon-no-about {
   .drupal_activity .project_org_wrap .project_theme {
     background-position: 0 -112px;
   }
-  
+
   .view-profile-activity .views-row {
     clear: both;
   }
@@ -1598,7 +1598,7 @@ p.empty-icon a.icon-no-about {
         color: #999;
         font-size: 0.5em;
       }
-      
+
   .view-profile-activity .views-field-message {
     width: 416px;
   }
@@ -1717,7 +1717,7 @@ p.empty-icon a.icon-no-about {
 
 .imagecache-showcase_sticky_crop, .imagecache-showcase_crop, .imagecache-showcase_resize {
   border:1px solid #D9D8D8;
-  padding:5px; 
+  padding:5px;
   margin-top: 5px;
 }
 
@@ -1798,7 +1798,7 @@ a.showcase_info_link, .showcase_body {
 /************************************/
 
 /**
- * License 
+ * License
  */
 li.li-stg {
   color: #266B7B;
@@ -2182,7 +2182,7 @@ div.geshifilter, table .geshifilter td {
 }
 .vk_share_link td,
 #vk_login td {
-  padding: 0px !important; 
+  padding: 0px !important;
 }
 .social-button .fb {
   background: transparent url(../images/knopki.jpg) no-repeat scroll -240px -137px;
@@ -3007,6 +3007,7 @@ h3.pane-title{
   box-shadow: 1px 1px 3px 0px #dadada;
   font-style: italic;
   position: relative;
+  overflow: hidden;
 }
 .footer-first .views-field-picture img,
 .footer-first .views-field-field-image-fid img,
