@@ -307,3 +307,7 @@
 [submodule "sites/all/modules/contrib/mollom"]
 	path = sites/all/modules/contrib/mollom
 	url = http://git.drupal.org/project/mollom.git
+[submodule "sites/all/modules/contrib/elysia_cron"]
+	path = sites/all/modules/contrib/elysia_cron
+	url = http://git.drupal.org/project/elysia_cron.git
+	branch = 6.x-2.x
