@@ -14,7 +14,6 @@ $("body").bind("append", function(e) {
   if ($("#modal-content").length) {
     $("#modal-content").bind("append", function(e) {
       if ($(".error").length) {
-        console.log(e);
         modalFormDecorator();
       };
     });
@@ -52,5 +51,3 @@ function modalFormDecorator() {
   });
   return true;
 };
-
-modalFormDecorator();

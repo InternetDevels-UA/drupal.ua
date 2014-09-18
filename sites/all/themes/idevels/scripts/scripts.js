@@ -144,4 +144,12 @@ $(function () {
     }
   });
 
+  // Decorate popup on click
+
+  $( ".ctools-use-modal" ).click(function() {
+    setTimeout(function(){
+      modalFormDecorator();
+    },1000);
+  });
+
 });
