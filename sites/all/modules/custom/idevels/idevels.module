@@ -265,9 +265,6 @@ function idevels_views_pre_render(&$view) {
  * Add Always show checbox for add access to link.
  **/
 function idevels_form_alter(&$form, &$form_state, $form_id) {
-/*dsm($form);
-dsm($form_state);
-dsm($form_id);*/
   if ($form_id == 'menu_edit_item' || $form_id == 'og_menu_edit_item_form') {
     $form['menu']['always_visible'] = array(
       '#title' => t('Always show this menu item.'),
@@ -277,9 +274,6 @@ dsm($form_id);*/
     );
     array_unshift($form['#submit'], 'idevels_menu_edit_form_submit');
   }
-/*  elseif ($form_id == 'idevels_add_resurses_form') {
-    $form['#action'] = '/node/add/resource';
-  }*/
 }
 
 /**
@@ -650,9 +644,10 @@ function idevels_add_resurses_form(&$form_state) {
   );
   $form['#attributes']['enctype'] = "multipart/form-data";
   $form['#validate'][] = 'idevels_add_resurses_form_validate';
-  $form['#attached']['js'] = array(
+/*  $form['#attached']['js'] = array(
     drupal_get_path('module', 'idevels') . '/formdecorator.js',
-  );
+  );*/
+  $form['#after_build'][] = '_load_my_javascript';
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Add'), 
@@ -660,9 +655,11 @@ function idevels_add_resurses_form(&$form_state) {
   return $form;
 }
 
-function idevels_add_resurses_form_alter($form, &$form_state) {
-  dsm($form);
-  drupal_add_js('alert("kdjhfg")');
+function _load_my_javascript($element){
+  drupal_add_js(
+    drupal_get_path('module', 'idevels') . '/formdecorator.js'
+  );
+  return($element);
 }
 
 function idevels_add_resurses_form_validate($form, &$form_state) {
@@ -680,40 +677,28 @@ function idevels_add_resurses_form_validate($form, &$form_state) {
       form_set_error('field_book_0', t("File can't be more than 100Mb"));
     }
   }
-/*  drupal_add_js('alert("kdjhfg")');*/
 }
 
 function idevels_add_resurses_form_submit($form, &$form_state) {
   global $user;
-/*  drupal_add_js('alert("kdjhfg")');*/
   module_load_include('inc', 'node', 'taxonomy', 'node.pages'); // required
   $tid = (int) $form_state['values']['resource_type'];
   $file = file_save_upload('field_book_0');
+  $node = (object) array(
+    'type' => 'resource',
+    'uid' => $user->uid,
+    'name' => (isset($user->name) ? $user->name : ''),
+    'title' => $form_state['input']['title'],
+    'body' => $form_state['input']['body'],
+    'teaser' => $form_state['input']['body'],
+    'taxonomy' => array($tid => (object) taxonomy_get_term($tid)),
+  );
   if ($form_state['values']['resource_type'] == '2491') {
-    $node = (object) array(
-      'type' => 'resource',
-      'uid' => $user->uid,
-      'name' => (isset($user->name) ? $user->name : ''),
-      'title' => $form_state['input']['title'],
-      'body' => $form_state['input']['body'],
-      'teaser' => $form_state['input']['body'],
-      'field_book_autor' => array(0 => array('value' => $form_state['input']['field_link'])),
-      'taxonomy' => array($tid => (object) taxonomy_get_term($tid)),
-      'field_book' => array(0 => (array) $file),
-    );
+    $node->field_book_autor = array(0 => array('value' => $form_state['input']['field_link']));
+    $node->field_book = array(0 => (array) $file);
   }
   else {
-    $node = (object) array(
-      'type' => 'resource',
-      'uid' => $user->uid,
-      'name' => (isset($user->name) ? $user->name : ''),
-      'title' => $form_state['input']['title'],
-      'body' => $form_state['input']['body'],
-      'teaser' => $form_state['input']['body'],
-      'field_link' => array(0 => array('url' => $form_state['input']['field_link'])),
-      'taxonomy' => array($tid => (object) taxonomy_get_term($tid)),
-      'field_book' => array(0 => (array) $file),
-    );
+    $node->field_link = array(0 => array('url' => $form_state['input']['field_link']));
   }
   node_object_prepare($node);
   node_save($node);

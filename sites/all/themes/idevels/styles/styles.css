@@ -3889,6 +3889,9 @@ float: none;
 .page-resources #modalContent .modal-header {
   height: 0;
 }
+.page-resources #modalContent div.error   {
+  margin-bottom: 30px;
+}
 .page-resources #modalContent .modal-header span {
   display: none;
 }
@@ -3982,4 +3985,5 @@ float: none;
   background-color: #ccc;
   border: 1px solid black;
   border-radius: 5px;
+  cursor: pointer;
 }

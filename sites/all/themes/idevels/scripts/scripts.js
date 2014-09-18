@@ -135,55 +135,13 @@ $(function () {
     if ($this.val() == 2491) {
       $( ".link-field-subrow" ).hide();
       $( ".filefield-element" ).show();
+      $( "#edit-field-book-autor-0-value-wrapper" ).show();
     }
     else {
       $( ".link-field-subrow" ).show();
-      $( ".filefield-element" ).hide();
+      $( "#edit-field-book-0-upload-wrapper" ).hide();
+      $( "#edit-field-book-autor-0-value-wrapper" ).hide();
     }
   });
-
-  // Function for change fields in add resources popup
-
-  function modalFormDecorator() {
-    $( " .page-resources #modal-content form .form-radios input:checked" ).parent().addClass('cselected');
-    $( " .page-resources #modal-content form .form-radios input").change(function(){
-      $this = $(this);
-      $this.parents('.form-radios').find('.cselected').removeClass('cselected');
-      $this.parent().addClass('cselected');
-      if ($this.attr("id") == 'edit-resource-type') {
-        $this.parents('form').removeClass('notbook');
-        $( "#modal-content #edit-title" ).attr("placeholder", "Назва книги");
-        $( "#modal-content #edit-field-link" ).attr("placeholder", "Автор книги");
-      }
-      else if ($this.attr("id") == 'edit-resource-type-1') {
-        $this.parents('form').addClass('notbook');
-        $( "#modal-content #edit-title" ).attr("placeholder", "Назва статті");
-        $( "#modal-content #edit-field-link" ).attr("placeholder", "Посилання");
-      }
-      else if ($this.attr("id") == 'edit-resource-type-2') {
-        $this.parents('form').addClass('notbook');
-        $( "#modal-content #edit-title" ).attr("placeholder", "Назва сайту");
-        $( "#modal-content #edit-field-link" ).attr("placeholder", "Посилання");
-      }
-      else if ($this.attr("id") == 'edit-resource-type-3') {
-        $this.parents('form').addClass('notbook');
-        $( "#modal-content #edit-title" ).attr("placeholder", "Заголовок");
-        $( "#modal-content #edit-field-link" ).attr("placeholder", "Посилання");
-      };
-    });
-  };
-
-  $( ".ctools-use-modal" ).click(function() {
-    setTimeout(function(){
-      modalFormDecorator();
-    },1000);
-  });
-
-/*    $( ".page-resources #modal-content form .form-radios label" ).click(function() {
-      $(this).css('background', '#aaa')
-    });*/
-  //If you see what this code string is comment - delete them 
-  //Add form for create Resurse
-  //$( ".view-Resources" ).append( '<div><p>Виберіть тип матеріалу, який ви хочете добавити:</p><ul><li>Книга</li><li>Стаття</li><li>Сайт</li><li>Посилання</li></ul><form><input type="text" maxlength="255" name="title" id="edit-title" size="60" value="" class="form-text required"><input type="text" maxlength="2048" name="field_link[0][url]" id="edit-field-link-0-url" size="60" value="" class="form-text"><textarea cols="60" rows="20" name="body" id="edit-body" class="form-textarea resizable textarea-processed"></textarea><input type="submit" name="op" id="edit-submit" value="Зберегти" class="form-submit"></form></div>' );
 
 });
