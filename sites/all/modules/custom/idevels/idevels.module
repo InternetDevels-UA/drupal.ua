@@ -31,7 +31,7 @@ function idevels_menu() {
     'description' => 'A form to change background image.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('idevels_change_header_image_form'),
-    'access callback' => TRUE
+    'access arguments' => array('access administration pages'),
   );
   return $items;
 }
