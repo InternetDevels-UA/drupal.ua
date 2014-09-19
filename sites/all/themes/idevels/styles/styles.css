@@ -3990,3 +3990,6 @@ float: none;
 .node-type-group h2.title {
   margin-top: 30px;
 }
+form[action="/feedback"] .editor-container *+*+* {
+  display: none;
+}
