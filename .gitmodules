@@ -314,3 +314,6 @@
 	path = sites/all/modules/contrib/simplemeta
 	url = http://git.drupal.org/project/simplemeta.git
 	branch = 6.x-2.x
+[submodule "sites/all/modules/contrib/xmlsitemap"]
+	path = sites/all/modules/contrib/xmlsitemap
+	url = http://git.drupal.org/project/xmlsitemap.git
