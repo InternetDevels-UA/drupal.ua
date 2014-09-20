@@ -317,3 +317,7 @@
 [submodule "sites/all/modules/contrib/xmlsitemap"]
 	path = sites/all/modules/contrib/xmlsitemap
 	url = http://git.drupal.org/project/xmlsitemap.git
+[submodule "sites/all/modules/contrib/admin_theme"]
+	path = sites/all/modules/contrib/admin_theme
+	url = http://git.drupal.org/project/admin_theme.git
+	branch = 6.x-1.x
