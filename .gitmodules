@@ -325,3 +325,7 @@
 	path = sites/all/themes/rubik
 	url = http://git.drupal.org/project/rubik.git
 	branch = 6.x-3.x
+[submodule "sites/all/themes/tao"]
+	path = sites/all/themes/tao
+	url = http://git.drupal.org/project/tao.git
+	branch = 6.x-3.x
