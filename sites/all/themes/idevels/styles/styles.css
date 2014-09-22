@@ -2621,7 +2621,8 @@ h3.pane-title{
   /*font-family: 'open-sans', Verdana, Arial;*/
   color: #1f1f1f;
 }
-.pane-question .pane-title a {
+.pane-question .pane-title a,
+#block-views-question-block_2 .block-title a {
   /*font-family: open_sans_bold, Open Sans, Verdana, Arial;*/
   font-family: 'PT Sans Narrow',Arial,sans-serif;
   font-weight: bold;
@@ -2683,11 +2684,11 @@ h3.pane-title{
   /*font-weight: 700;*/
   font-style: italic;
 }
-.view-question .views-row .views-field-created-1 span {
+.view-question .views-field-created-1 span {
   font-size: 11px!important;
 /*  color: #ffffff;*/
   /*font-family: Open Sans;*/
-  font-family: 'Pt Sans',Arial,Verdana,sans-serif;
+  font-family: 'Pt Sans',Arial,Verdana,sans-serif !important;;
 /*  font-weight: bold;
   text-transform: uppercase;*/
   color: #999;
