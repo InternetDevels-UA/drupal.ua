@@ -3993,3 +3993,9 @@ float: none;
 form[action="/feedback"] .editor-container *+*+* {
   display: none;
 }
+form[action="/feedback"] #webform-component-povidomlennya textarea {
+  resize: vertical;
+}
+form[action="/feedback"] .captcha {
+  width: 785px;
+}
