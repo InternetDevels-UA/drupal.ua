@@ -321,3 +321,7 @@
 	path = sites/all/modules/contrib/admin_theme
 	url = http://git.drupal.org/project/admin_theme.git
 	branch = 6.x-1.x
+[submodule "sites/all/themes/rubik"]
+	path = sites/all/themes/rubik
+	url = http://git.drupal.org/project/rubik.git
+	branch = 6.x-3.x
