@@ -310,4 +310,10 @@
 [submodule "sites/all/modules/contrib/elysia_cron"]
 	path = sites/all/modules/contrib/elysia_cron
 	url = http://git.drupal.org/project/elysia_cron.git
+[submodule "sites/all/modules/contrib/simplemeta"]
+	path = sites/all/modules/contrib/simplemeta
+	url = http://git.drupal.org/project/simplemeta.git
 	branch = 6.x-2.x
+[submodule "sites/all/modules/contrib/xmlsitemap"]
+	path = sites/all/modules/contrib/xmlsitemap
+	url = http://git.drupal.org/project/xmlsitemap.git
