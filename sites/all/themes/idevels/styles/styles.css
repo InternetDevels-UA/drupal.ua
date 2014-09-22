@@ -1,3 +1,5 @@
+@import url('http://fonts.googleapis.com/css?family=PT+Sans+Narrow:700|PT+Sans:400,400italic,700&subset=latin,cyrillic');
+
 * {
   box-sizing: border-box;
   -webkit-transition: .2s;-moz-transition: .2s;-ms-transition: .2s;-o-transition: .2s;transition: .2s;
@@ -5,6 +7,7 @@
 /************************************
 /* General
 /************************************/
+
 @font-face {
   font-family: 'Days';
   src: url('../fonts/days/days-webfont.ttf');
@@ -2600,7 +2603,8 @@ a.ask.question:hover{
 }
 h3.pane-title{
   font-size: 36px;
-  font-family: open_sans_bold, Open Sans, Verdana, Arial;
+  /*font-family: open_sans_bold, Open Sans, Verdana, Arial;*/
+  font-family:'PT Sans Narrow',Arial,sans-serif;
   /*font-weight: 900;*/
   margin-bottom: 35px;
   position: relative;
@@ -2616,6 +2620,12 @@ h3.pane-title{
   position: relative;
   /*font-family: 'open-sans', Verdana, Arial;*/
   color: #1f1f1f;
+}
+.pane-question .pane-title a {
+  /*font-family: open_sans_bold, Open Sans, Verdana, Arial;*/
+  font-family: 'PT Sans Narrow',Arial,sans-serif;
+  font-weight: bold;
+  font-size: 28px;
 }
 .front .pane-question .pane-title{
   color: #000000;
@@ -2635,20 +2645,20 @@ h3.pane-title{
   box-shadow: 2px 2px 0px 0px #e0e0e0;
 }
 .view-question .views-row {
-  margin-bottom: 21px;
-  padding-bottom: 21px;
+  margin-bottom: 15px;
+/*  padding-bottom: 21px;
   background-image: url("../images/dot-h-2.png" );
   background-position: left bottom;
   background-repeat: repeat-x;
   overflow: hidden;
-  padding-bottom: 16px;
+  padding-bottom: 16px;*/
 }
 
 .question-lastposts-content {
   width: 400px;
   line-height: 1.2em;
   display: block;
-  border-left: 4px solid #dfdfdf;
+  /*border-left: 4px solid #dfdfdf;*/
   float: left;
   margin-left: 8px;
   padding-left: 16px;
@@ -2657,40 +2667,70 @@ h3.pane-title{
   font-size: 18px;
 }
 .view-question .question-lastposts-content {
-  width: 250px;
+/*  width: 250px;*/
 }
 .view-question a{
   text-decoration: none;
 }
 .view-question .views-row .views-field-title a{
-  font-size: 19px;
+  font-size: 16px;
   line-height: 1.2em;
-  color: #3e3e3e;
+  color: #1876ac;
   display: block;
   margin-top: -5px;
-  font-family: 'open_sans';
+  /*font-family: 'open_sans';*/
+  font-family: 'Pt Sans',Arial,Verdana,sans-serif;
   /*font-weight: 700;*/
   font-style: italic;
 }
-.view-question .views-row .views-field-created-1 {
-  font-size: 11px!important;
-  color: #ffffff;
-  font-family: Open Sans;
-  font-weight: bold;
-  text-transform: uppercase;
-}
 .view-question .views-row .views-field-created-1 span {
+  font-size: 11px!important;
+/*  color: #ffffff;*/
+  /*font-family: Open Sans;*/
+  font-family: 'Pt Sans',Arial,Verdana,sans-serif;
+/*  font-weight: bold;
+  text-transform: uppercase;*/
+  color: #999;
+  margin-bottom: 5px;
+}
+/*.view-question .views-row .views-field-created-1 span {
   background: #c8c8c8;
   padding: 2px 5px;
+}*/
+.view-question .views-row .views-field-title,
+.view-question .views-row .views-field-comment-count {
+  display: inline-block;
 }
-.view-question .views-row .views-field-created-1 span a {
+.view-question .views-row .views-field-comment-count {
+  width: 24px;
+  padding-top: 2px;
+  text-align: center;
+  font-size: 10px;
+  background-image: url("../images/comments.png" );
+  background-repeat: no-repeat;
+  background-position: 2px -1px;
+}
+#sidebar-right #block-views-question-block_2 .field-content{
+  font-size: 10px;
+  font-family: Open Sans;
+}
+.view-question .views-row .views-field-comment-count a {
+  color: white;
+  font-weight: bold;
+  font-family: 'Pt Sans',Arial,Verdana,sans-serif;
+}
+.view-question .views-row .views-field-comment-count a:hover,
+.view-question .views-row .views-field-comment-count a:visited {
+  color: #f77;
+}
+/*.view-question .views-row .views-field-created-1 span a {
   font-style: normal;
   font-size: 11px!important;
   color: #ffffff;
   font-family: Open Sans;
   font-weight: bold;
   text-transform: uppercase;
-}
+}*/
 .buckle-up {
   height: 4px;
   width: 7px;
@@ -2940,18 +2980,18 @@ h3.pane-title{
 
 .content-center{
   background-image: url('../images/dot-v.png');
-  background-position: 632px top;
+  background-position: 870px top;
   background-repeat: repeat-y;
   overflow: hidden;
   padding-bottom: 50px;
 }
 .center-left{
-  width: 610px;
+  width: 850px;
   float: left;
   margin-top: 20px;
 }
 .center-right{
-  width: 570px;
+  width: 330px;
   float: right;
   margin-top: 20px;
 }

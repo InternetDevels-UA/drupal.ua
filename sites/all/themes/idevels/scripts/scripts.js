@@ -3,11 +3,11 @@ $(function () {
 
 
   // For right question block
-  $('.view-question .views-row').each(function () {
+  /*$('.view-question .views-row').each(function () {
     $('> .views-field-title, > .views-field-created-1', this).wrapAll('<div class="question-lastposts-content"></div>');
   });
   $('.view-question .question-lastposts-content').prepend("<div class='buckle-up'></div>");
-  $('.view-question .question-lastposts-content').prepend("<div class='buckle-down'></div>");
+  $('.view-question .question-lastposts-content').prepend("<div class='buckle-down'></div>");*/
 //$('.view-question .view-content > .views-row').wrap('<div class="question-lastposts-content"></div>');
   $('#block-menu-secondary-links .menu li a').each(function () {
     $(this).wrapInner('<span class="tile-title"></span>');
