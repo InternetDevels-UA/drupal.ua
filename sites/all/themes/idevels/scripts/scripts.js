@@ -144,6 +144,22 @@ $(function () {
     }
   });
 
+  $('.view-question .views-field-created-1 span').each(function() {
+    var text = $(this).text();
+    $(this).text(text.replace('Січень', 'січня'));
+    $(this).text(text.replace('Лютий', 'лютого'));
+    $(this).text(text.replace('Березень', 'березня'));
+    $(this).text(text.replace('Квітень', 'вересня'));
+    $(this).text(text.replace('Травень', 'вересня'));
+    $(this).text(text.replace('Червень', 'вересня'));
+    $(this).text(text.replace('Липень', 'вересня'));
+    $(this).text(text.replace('Серпень', 'вересня'));
+    $(this).text(text.replace('Вересень', 'вересня'));
+    $(this).text(text.replace('Жовтень', 'вересня'));
+    $(this).text(text.replace('Листопад', 'вересня'));
+    $(this).text(text.replace('Грудень', 'вересня'));
+  });
+
   // Decorate popup on click
 
   $( ".ctools-use-modal" ).click(function() {
