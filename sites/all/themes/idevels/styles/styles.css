@@ -4084,3 +4084,59 @@ form[action="/feedback"] #webform-component-povidomlennya textarea,
 form[action="/feedback"] .captcha {
   width: 785px;
 }
+/*Upcoming-events And Frontpage*/
+body.front .center-left {
+  width: 60%;
+}
+
+body.front .center-right {
+  width: 40%;
+}
+
+body.front .content-center {
+  background-position: 730px top;
+}
+body.front .small-button.browse-all{
+  right:35px;
+}
+.view-upcoming-events .views-field-field-events-logo-fid {
+  clear: left;
+  float: left;
+  margin: 0px 20px 80px 0px;
+  width: 80px;
+  height: auto;
+  min-height: 80px;
+}
+
+.view-upcoming-events .views-row {
+  padding-bottom: 33px;
+}
+
+.view-upcoming-events .views-field-field-events-logo-fid {
+}
+
+.view-upcoming-events .views-field-field-event-date-value {
+  margin-right: 11px;
+  font-size: 13px;
+  color: #999;
+  font: 'Pt Sans',Arial,Verdana,sans-serif;
+}
+
+.view-upcoming-events .views-field-field-city-value {
+  font-size: 13px;
+  color: #999;
+  font: 'Pt Sans',Arial,Verdana,sans-serif;
+}
+
+.view-upcoming-events .views-field-title a {
+  font: 'Pt Sans',Arial,Verdana,sans-serif;
+  font-size: 18px;
+  line-height: 25px;
+}
+
+.view-upcoming-events .views-field-body {
+  font-size: 15px;
+  line-height: 22px;
+  color: #0d0d0d;
+  font: 'Pt Sans',Arial,Verdana,sans-serif;
+}
