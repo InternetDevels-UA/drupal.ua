@@ -3996,6 +3996,7 @@ form[action="/feedback"] .editor-container *+*+* {
 form[action="/feedback"] #webform-component-povidomlennya textarea {
   resize: vertical;
 }
+form[action="/feedback"] #webform-component-povidomlennya textarea,
 form[action="/feedback"] .captcha {
   width: 785px;
 }
