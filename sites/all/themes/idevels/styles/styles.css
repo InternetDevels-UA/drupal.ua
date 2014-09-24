@@ -2743,13 +2743,14 @@ h3.pane-title{
   display: inline-block;
 }
 .view-question .views-row .views-field-comment-count {
-  width: 24px;
+  width: 15px;
+  margin-left: 5px;
   padding-top: 2px;
   text-align: center;
   font-size: 10px;
   background-image: url("../images/comments.png" );
   background-repeat: no-repeat;
-  background-position: 4px -1px;
+  background-position: 0 -1px;
 }
 #sidebar-right #block-views-question-block_2 .field-content{
   font-size: 10px;
