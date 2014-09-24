@@ -854,7 +854,42 @@ h1 .tag a, h2 .tag a, h1 .tag em, h2 .tag em {
   background-position: -54px -16px;
   color: transparent;
 }
-
+#footer #block-drua_profile-idevels_blockfooter {
+    width: 100%;
+    margin: 0;
+    min-width: 1200px;
+    padding-bottom: 30px;
+    font-family: 'PT Sans';
+}
+#footer #block-drua_profile-idevels_blockfooter .lc,
+#footer #block-drua_profile-idevels_blockfooter .mc {
+    float: left;
+    width: 37%;
+}
+#footer #block-drua_profile-idevels_blockfooter .rc {
+    width: 200px;
+    float: right;
+}
+#footer #block-drua_profile-idevels_blockfooter .mc .social a {
+    color: transparent;
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    border-radius: 7px;
+    background: url('/sites/all/themes/idevels/images/social.png');
+    background-position: 0 -1px;
+    overflow: hidden;
+    margin-bottom: -7px;
+}
+#footer #block-drua_profile-idevels_blockfooter .mc .social span {
+    margin-right: 5px;
+}
+#footer #block-drua_profile-idevels_blockfooter .mc .social .fb a {
+    background-position: 48px -1px;
+}
+#footer #block-drua_profile-idevels_blockfooter .mc .social .tw a {
+    background-position: 22px -1px;
+}
 /************************************
 /* Tabs
 /************************************/
