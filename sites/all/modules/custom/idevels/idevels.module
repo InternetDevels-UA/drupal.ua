@@ -24,7 +24,7 @@ function idevels_menu() {
   $items['add/%/resource'] = array(
    'page callback'    => 'examples_ctools_modal_review',
    'page arguments'   => array(1),
-   'access arguments' => array('create resources'),
+   'access arguments' => array('create resource content'),
  );
   $items['admin/settings/change_bg_image'] = array(
     'title' => t('Change background image'), //page title
