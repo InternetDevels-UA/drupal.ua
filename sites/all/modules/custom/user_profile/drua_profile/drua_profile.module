@@ -280,19 +280,19 @@ function drua_profile_block($op = 'list', $delta = 0) {
           $fb = l('facebook', 'https://www.facebook.com/groups/104220905217', array(
             'attributes' => array(
               'rel'    => 'nofollow',
-              'target' => 'blank'
+              'target' => '_blank'
             )
           ));
           $vk = l('vkontakte', 'https://vk.com/drupalua', array(
             'attributes' => array(
               'rel'    => 'nofollow',
-              'target' => 'blank'
+              'target' => '_blank'
             )
           ));
           $tw = l('twitter', 'https://twitter.com/drupalua', array(
             'attributes' => array(
               'rel'    => 'nofollow',
-              'target' => 'blank'
+              'target' => '_blank'
             )
           ));
           $output = '<div class="lc"><div class="copyright">' . t('© 2010—2014 ') . l('Drupal.ua', 'http://www.drupal.ua') . '</div>
@@ -305,7 +305,7 @@ function drua_profile_block($op = 'list', $delta = 0) {
               'absolute'   => TRUE,
               'attributes' => array(
                 'rel'    => 'nofollow',
-                'target' => 'blank'
+                'target' => '_blank'
               )
             )) . '</div></div>';
 
