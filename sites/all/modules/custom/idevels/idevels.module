@@ -274,6 +274,14 @@ function idevels_form_alter(&$form, &$form_state, $form_id) {
     );
     array_unshift($form['#submit'], 'idevels_menu_edit_form_submit');
   }
+  if ($form_id == 'user_register') {
+    $form['account']['#title'] = '';
+    $form['simplenews']['#title'] = '';
+    $form['account']['name']['#title'] = '';
+    $form['account']['name']['#attributes']['placeholder'] = t('Username');
+    $form['account']['mail']['#title'] = '';
+    $form['account']['mail']['#attributes']['placeholder'] = t('Email');
+  }
 }
 
 /**

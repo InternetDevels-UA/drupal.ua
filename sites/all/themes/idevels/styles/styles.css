@@ -3200,6 +3200,48 @@ element.style {
   position: relative;
   top: 3px;
 }
+form#user-register {
+  font-family: 'PT Sans' !important;
+}
+form#user-register .description {
+  color: #000;
+  width: 400px;
+}
+form#user-register .password-description.error {
+  width: 400px;
+}
+form#user-register fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+form#user-register .form-item {
+  margin-top: 0;
+}
+form#user-register input {
+  border-radius: 4px;
+}
+form#user-register input[type=text],
+form#user-register input[type=password] {
+  height: 45px;
+  width: 400px;
+}
+form#user-register input[type=password] {
+  margin-right: 10px;
+}
+form#user-register input.form-submit {
+  height: 40px;
+  background: #F3F3F3;
+  color: #524949;
+  font-weight: bold;
+  border: 1px solid #BBB;
+}
+form#user-register #edit-pass-wrapper label {
+  display: none;
+}
+form#user-register #edit-legal-accept-wrapper strong {
+  font-weight: normal;
+}
 .block-menu-userprofile {
 /*  position: absolute;
   top: 8px;
