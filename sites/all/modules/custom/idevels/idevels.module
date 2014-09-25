@@ -9,6 +9,11 @@
 function idevels_menu_alter(&$items) {
   $items['vk/login']['page callback'] = 'idevels_vk_login';
   $items['node']['access callback'] = FALSE;
+  if (isset($items['node/add/helper'])) {
+    $items['node/add/question'] = $items['node/add/helper'];
+    $items['node/add/question']['page arguments'] = array('helper');
+    unset($items['node/add/helper']);
+  }
 }
 
 /**
@@ -231,7 +236,7 @@ function idevels_views_pre_render(&$view) {
     // if (empty($view->result)) {
     $attachment = '<p class="empty-questions">' . t('Having problems with Drupal? Ask a question about the community!') . '</p>';
     $attachment .= '<span class="button ask">';
-    $attachment .= l(t('Ask question'), 'node/add/helper', array('attributes' => array('class' => 'button-helper helper')));
+    $attachment .= l(t('Ask question'), 'node/add/question', array('attributes' => array('class' => 'button-helper helper')));
     $attachment .= '</span>';
     // $view->attachment_after = $attachment;
     // }
@@ -714,4 +719,16 @@ function idevels_add_resurses_form_submit($form, &$form_state) {
   $output[] = ctools_modal_command_dismiss();
   $output[] = ctools_ajax_command_redirect('resources');
   print ctools_ajax_render($output);
+}
+
+function idevels_init() {
+  $path=request_uri();
+  if ($path=='/node/add/question' ||$path=='/node/add/question/-'){
+  $path = trim($path, '/');
+  $breadcrumb = array();
+  $breadcrumb[] = l(t('Home'), '<front>');
+  $breadcrumb[] = l(t('Ask a questions'), $path); // Link to current URL
+// Set Breadcrumbs
+  drupal_set_breadcrumb($breadcrumb);
+  }
 }
