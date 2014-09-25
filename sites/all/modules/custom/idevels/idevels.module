@@ -680,9 +680,9 @@ function idevels_add_resurses_form_validate($form, &$form_state) {
       file_delete($file->filepath);
       form_set_error('field_book_0', t('File extensions not allowed'));
     }
-    elseif ($file->filesize > 100000000) {
+    elseif ($file->filesize > 20000000) {
       file_delete($file->filepath);
-      form_set_error('field_book_0', t("File can't be more than 100Mb"));
+      form_set_error('field_book_0', t("File can't be more than 20Mb"));
     }
   }
 }
