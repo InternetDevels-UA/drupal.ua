@@ -40,15 +40,40 @@ function idevels_menu() {
  * Custom autocomplete for cities
  */
 function idevels_taxonomy_autocomplete($vid, $string = '') {
+  global $channel;
+  // This key from scripts.js from idevels theme
+  $key = '                                                                                                    |events|';
+  // Cities autocomplete is a litle diferent
+  if ($vid == 11 AND strpos($string, $key) !== FALSE) {
+    $event_page = TRUE;
+    $string = str_replace($key, '', $string);
+  }
+  else {
+    $event_page = FALSE; 
+  }
+  module_load_include('views');
   // The user enters a comma-separated list of tags. We only autocomplete the last tag.
   $array = drupal_explode_tags($string);
 
   // Fetch last tag
   $last_string = trim(array_pop($array));
-  $matches = array();
+  $matches = array('');
   if ($last_string != '') {
-    $result = db_query_range(db_rewrite_sql("SELECT t.tid, t.name FROM {term_data} t WHERE t.vid = %d AND LOWER(t.name) LIKE LOWER('%%%s%%')", 't', 'tid'), $vid, $last_string, 0, 10);
-
+    // Cities autocomplete have own sql query
+    if ($event_page) {
+        $result = db_query(
+          "SELECT  `term_data`.`name`
+          FROM  `content_type_events` 
+          INNER JOIN  `term_data` ON  `content_type_events`.`field_city_value` =  `term_data`.`tid`
+          WHERE LOWER(`term_data`.`name`) LIKE LOWER('%%%s%%')
+          GROUP BY  `field_city_value` 
+          ORDER BY COUNT(  `field_city_value` ) DESC 
+          LIMIT 0 , 10"
+        , $last_string);
+    }
+    else {
+      $result = db_query_range(db_rewrite_sql("SELECT t.tid, t.name FROM {term_data} t WHERE t.vid = %d AND LOWER(t.name) LIKE LOWER('%%%s%%')", 't', 'tid'), $vid, $last_string, 0, 10);
+    }
     $prefix = count($array) ? implode(', ', $array) .', ' : '';
 
     while ($tag = db_fetch_object($result)) {
@@ -57,6 +82,8 @@ function idevels_taxonomy_autocomplete($vid, $string = '') {
       if (strpos($tag->name, ',') !== FALSE || strpos($tag->name, '"') !== FALSE) {
         $n = str_replace('"', '""', $tag->name);
       }
+      $display = views_get_page_view();
+      $view = $display->view;
       $matches[$prefix . $n] = check_plain($tag->name);
     }
   }

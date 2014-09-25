@@ -2215,7 +2215,12 @@ div.geshifilter, table .geshifilter td {
   text-align: left;
   text-decoration: underline;
 }
-.view-display-id-block_1 .views-row {
+#block-drua_profile-top_cities_by_events {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+.view-display-id-block_1 .views-row,
+#block-drua_profile-top_cities_by_events .views-row {
   margin: 10px 5px;
 }
 .vk_share_link td,
