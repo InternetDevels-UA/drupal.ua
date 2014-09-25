@@ -1,3 +1,22 @@
+// function for find caret position
+
+(function ($, undefined) {
+  $.fn.getCursorPosition = function() {
+    var el = $(this).get(0);
+    var pos = 0;
+    if('selectionStart' in el) {
+        pos = el.selectionStart;
+    } else if('selection' in document) {
+        el.focus();
+        var Sel = document.selection.createRange();
+        var SelLength = document.selection.createRange().text.length;
+        Sel.moveStart('character', -el.value.length);
+        pos = Sel.text.length - SelLength;
+    }
+    return pos;
+ }
+})(jQuery);
+
 $(function () {
   hideNonLine($('.user-front .view-Users-front-profiles .views-row'));
 
@@ -151,8 +170,49 @@ $(function () {
       modalFormDecorator();
     },1000);
   });
+
   if ($('#edit-pass-pass1').length) {
     $('#edit-pass-pass1').attr('placeholder', Drupal.t('Password'));
     $('#edit-pass-pass2').attr('placeholder', Drupal.t('Confirm password'));
   }
+
+  $( ".page-events #edit-city-wrapper .form-autocomplete").attr('maxlength','256');
+
+  // Add page argument to autocoplite field on keypress (before ajax request)
+
+  $( ".page-events #edit-city-wrapper .form-autocomplete").keypress(function(e){
+    key_presed = e.which || e.keyCode;
+    igrore_keys = new Array(33, 34, 35, 36, 37, 38, 39, 40, 45);
+    if ((key_presed > 32 || key_presed == 8) && igrore_keys.indexOf(key_presed) == -1) {
+      $this = $(this);
+      var key = '                                                                                                    |events|';
+      if ($this.val().indexOf(key) == -1) {
+        pos = $this.getCursorPosition();
+        $this.val($this.val() + key);
+        $this.attr({
+          selectionStart : pos,
+          selectionEnd   : pos
+        });
+      };
+    };
+  });
+
+  // Remove page argument from autocoplite field after keyup
+
+  $( ".page-events #edit-city-wrapper .form-autocomplete").keyup(function(e){
+    $this = $(this);
+    var key_presed = e.which || e.keyCode;
+    if ((key_presed > 32 || key_presed == 8) && key_presed != 46 && igrore_keys.indexOf(key_presed) == -1 && $this.val().indexOf(key) != -1) {
+      var delta = 1;
+      if (key_presed == 8) {
+        delta = -1;
+      }
+      $this.val($this.val().replace(key, ''));
+      $this.attr({
+        selectionStart : pos + delta,
+        selectionEnd   : pos + delta
+      });
+    };
+  });
+
 });
