@@ -2765,6 +2765,10 @@ h3.pane-title{
 .view-question .views-row .views-field-comment-count a:visited {
   color: orange;
 }
+.view-question .view-footer a {
+  color: black;
+  text-decoration: underline;
+}
 /*.view-question .views-row .views-field-created-1 span a {
   font-style: normal;
   font-size: 11px!important;
