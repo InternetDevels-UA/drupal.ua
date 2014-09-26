@@ -39,18 +39,8 @@ function idevels_menu() {
 /**
  * Custom autocomplete for cities
  */
-function idevels_taxonomy_autocomplete($vid, $string = '') {
+function idevels_taxonomy_autocomplete($vid, $string = '', $event_page = FALSE) {
   global $channel;
-  // This key from scripts.js from idevels theme
-  $key = '                                                                                                    |events|';
-  // Cities autocomplete is a litle diferent
-  if ($vid == 11 AND strpos($string, $key) !== FALSE) {
-    $event_page = TRUE;
-    $string = str_replace($key, '', $string);
-  }
-  else {
-    $event_page = FALSE; 
-  }
   module_load_include('views');
   // The user enters a comma-separated list of tags. We only autocomplete the last tag.
   $array = drupal_explode_tags($string);
@@ -85,6 +75,9 @@ function idevels_taxonomy_autocomplete($vid, $string = '') {
       $display = views_get_page_view();
       $view = $display->view;
       $matches[$prefix . $n] = check_plain($tag->name);
+    }
+    if (count($matches) < 2 AND $event_page) {
+      $matches[$prefix] = check_plain(t('Подій не знайдено'));
     }
   }
 
