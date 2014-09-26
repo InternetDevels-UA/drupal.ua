@@ -1,22 +1,3 @@
-// function for find caret position
-
-(function ($, undefined) {
-  $.fn.getCursorPosition = function() {
-    var el = $(this).get(0);
-    var pos = 0;
-    if('selectionStart' in el) {
-        pos = el.selectionStart;
-    } else if('selection' in document) {
-        el.focus();
-        var Sel = document.selection.createRange();
-        var SelLength = document.selection.createRange().text.length;
-        Sel.moveStart('character', -el.value.length);
-        pos = Sel.text.length - SelLength;
-    }
-    return pos;
- }
-})(jQuery);
-
 $(function () {
   hideNonLine($('.user-front .view-Users-front-profiles .views-row'));
 
@@ -176,43 +157,47 @@ $(function () {
     $('#edit-pass-pass2').attr('placeholder', Drupal.t('Confirm password'));
   }
 
-  $( ".page-events #edit-city-wrapper .form-autocomplete").attr('maxlength','256');
+  // Rewrite autocoplit submit function for event page
 
-  // Add page argument to autocoplite field on keypress (before ajax request)
+  if ($("body").hasClass("page-events")) {
+    Drupal.ACDB.prototype.search = function (searchString) {
+      var db = this;
+      this.searchString = searchString;
 
-  $( ".page-events #edit-city-wrapper .form-autocomplete").keypress(function(e){
-    key_presed = e.which || e.keyCode;
-    igrore_keys = new Array(33, 34, 35, 36, 37, 38, 39, 40, 45);
-    if ((key_presed > 32 || key_presed == 8) && igrore_keys.indexOf(key_presed) == -1) {
-      $this = $(this);
-      var key = '                                                                                                    |events|';
-      if ($this.val().indexOf(key) == -1) {
-        pos = $this.getCursorPosition();
-        $this.val($this.val() + key);
-        $this.attr({
-          selectionStart : pos,
-          selectionEnd   : pos
-        });
-      };
-    };
-  });
-
-  // Remove page argument from autocoplite field after keyup
-
-  $( ".page-events #edit-city-wrapper .form-autocomplete").keyup(function(e){
-    $this = $(this);
-    var key_presed = e.which || e.keyCode;
-    if ((key_presed > 32 || key_presed == 8) && key_presed != 46 && igrore_keys.indexOf(key_presed) == -1 && $this.val().indexOf(key) != -1) {
-      var delta = 1;
-      if (key_presed == 8) {
-        delta = -1;
+      // See if this key has been searched for before
+      if (this.cache[searchString]) {
+        return this.owner.found(this.cache[searchString]);
       }
-      $this.val($this.val().replace(key, ''));
-      $this.attr({
-        selectionStart : pos + delta,
-        selectionEnd   : pos + delta
-      });
+
+      // Initiate delayed search
+      if (this.timer) {
+        clearTimeout(this.timer);
+      }
+      this.timer = setTimeout(function() {
+        db.owner.setStatus('begin');
+
+        // Ajax GET request for autocompletion
+        $.ajax({
+          type: "GET",
+          // There I add "event" to GET qecuest
+          url: db.uri +'/'+ Drupal.encodeURIComponent(searchString) + '/event',
+          dataType: 'json',
+          success: function (matches) {
+            if (typeof matches['status'] == 'undefined' || matches['status'] != 0) {
+              db.cache[searchString] = matches;
+              // Verify if these are still the matches the user wants to see
+              if (db.searchString == searchString) {
+                db.owner.found(matches);
+              }
+              db.owner.setStatus('found');
+            }
+          },
+          error: function (xmlhttp) {
+            alert(Drupal.ahahError(xmlhttp, db.uri));
+          }
+        });
+      }, this.delay);
     };
-  });
+  };
 
 });
