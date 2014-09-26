@@ -4016,8 +4016,21 @@ form#user-register #edit-legal-accept-wrapper strong {
 #main-content form[action="/contacts"] #edit-actions {
   width: 530px;
 }
-.view-users-tracker .views-table .views-field-last-comment-timestamp {
-  width: 120px;
+.view-group-comments.view-display-id-page_1 .views-row {
+  position: relative;
+  margin: 0 10px;
+}
+.view-group-comments.view-display-id-page_1 .view-content > div+div {
+  padding-top: 10px;
+  background-image: url("../images/dot-h-2.png" );
+  background-position: left top;
+  background-repeat: repeat-x;
+}
+.view-group-comments.view-display-id-page_1 .views-field-uid {
+  position: absolute;
+}
+.view-group-comments.view-display-id-page_1 .views-row > div+div {
+  margin-left: 70px;
 }
 .page-resources #modalContent {
   display: block;
