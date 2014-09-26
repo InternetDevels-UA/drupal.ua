@@ -2774,6 +2774,9 @@ h3.pane-title{
   color: black;
   text-decoration: underline;
 }
+.view-question .view-footer a:hover {
+  text-decoration: none;
+}
 /*.view-question .views-row .views-field-created-1 span a {
   font-style: normal;
   font-size: 11px!important;
