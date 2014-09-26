@@ -4191,3 +4191,32 @@ body.front .small-button.browse-all{
   color: #0d0d0d;
   font: 15px 'Pt Sans',Arial,Verdana,sans-serif;
 }
+div#not_found_page {
+  width: 1240px;
+}
+div#not_found_page > div:first-child {
+  float: left;
+  width: 795px;
+}
+div#not_found_page > div+div {
+  float: left;
+  width: 380px;
+}
+div#not_found {
+  position: relative;
+  width: 588px;
+  height: 216px;
+  background-image: url("../images/Page_Not_Found.png" );
+  background-repeat: no-repeat;
+  font-family: 'Pt Sans',Arial,Verdana,sans-serif;
+  color: #777;
+}
+div#not_found > div {
+  position: absolute;
+  top: 40px;
+  left: 250px;
+  font-size: 20px;
+}
+div#not_found #not_found_text {
+  margin-bottom: 0;
+}
