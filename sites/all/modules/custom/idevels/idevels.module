@@ -317,7 +317,13 @@ function idevels_form_alter(&$form, &$form_state, $form_id) {
       '#suffix' => '</span>'
     );
   }
-
+  if ($form_id == 'user_login') {
+    $form['name']['#attributes']=array('placeholder'=>t('login'));
+    $form['pass']['#attributes']=array('placeholder'=>$form['pass']['#title']);
+    $form['#attributes']=array('class'=>'custom-user-login-page');
+    unset($form['name']['#title']);
+    unset($form['pass']['#title']);
+  }
 }
 
 /**

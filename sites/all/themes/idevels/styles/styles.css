@@ -4191,7 +4191,7 @@ body.front .small-button.browse-all{
   color: #0d0d0d;
   font: 15px 'Pt Sans',Arial,Verdana,sans-serif;
 }
-<<<<<<< HEAD
+
 div#not_found_page {
   width: 1240px;
 }
@@ -4224,4 +4224,57 @@ div#not_found #not_found_text {
 
 .helper-label{
   font: 15px 'Pt Sans',Arial,Verdana,sans-serif;
+}
+
+/* Custom-user-login-page */
+.custom-user-login-page input.form-text {
+  padding: 1em 1.9em 0.9em 1em;
+  color: #4D4949;
+  font-size: 15px;
+  outline: none;
+  border: 1px solid #EBEBEB;
+  cursor: auto;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+  background-color: white;
+  margin-bottom: 10px;
+  -webkit-border-radius: 0.3em;
+  -webkit-appearance: textfield;
+  -webkit-rtl-ordering: logical;
+  -webkit-user-select: text;
+}
+
+.custom-user-login-page input.form-text:focus {
+  border: 1px solid #EBEBEB;
+  background-color: #fff;
+}
+
+.custom-user-login-page .form-item .description {
+  font-size: 13px;
+  font-weight: 600;
+  color: #363535;
+  display: block;
+}
+
+.custom-user-login-page input.form-submit:hover {
+  background: #2E2D2D;
+  color: #fff;
+  padding: 8px 19px;
+}
+
+.custom-user-login-page input.form-submit {
+  padding: 8px 19px;
+  border-radius: 0.3em;
+  border: none;
+  outline: none;
+  -webkit-border-radius: 0.3em;
+  font-weight: bold;
+  font-size: 15px;
+  margin-top: -3px;
+  cursor: pointer;
 }
