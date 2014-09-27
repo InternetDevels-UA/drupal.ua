@@ -307,6 +307,17 @@ function idevels_form_alter(&$form, &$form_state, $form_id) {
     $form['account']['mail']['#title'] = '';
     $form['account']['mail']['#attributes']['placeholder'] = t('Email');
   }
+  if ($form_id == 'helper_node_form') {
+    $form['title'] += array(
+      '#prefix' => '<span class="helper-label">',
+      '#suffix' => '</span>'
+    );
+    $form['body_field']['body'] += array(
+      '#prefix' => '<span class="helper-label">',
+      '#suffix' => '</span>'
+    );
+  }
+
 }
 
 /**
@@ -743,7 +754,7 @@ function idevels_add_resurses_form_submit($form, &$form_state) {
 
 function idevels_init() {
   $path=request_uri();
-  if ($path=='/node/add/question' ||$path=='/node/add/question/-'){
+  if ($path=='/node/add/question' ||$path=='/node/add/question/'){
   $path = trim($path, '/');
   $breadcrumb = array();
   $breadcrumb[] = l(t('Home'), '<front>');

@@ -4191,6 +4191,7 @@ body.front .small-button.browse-all{
   color: #0d0d0d;
   font: 15px 'Pt Sans',Arial,Verdana,sans-serif;
 }
+<<<<<<< HEAD
 div#not_found_page {
   width: 1240px;
 }
@@ -4219,4 +4220,8 @@ div#not_found > div {
 }
 div#not_found #not_found_text {
   margin-bottom: 0;
+}
+
+.helper-label{
+  font: 15px 'Pt Sans',Arial,Verdana,sans-serif;
 }
