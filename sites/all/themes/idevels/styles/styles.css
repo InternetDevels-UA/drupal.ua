@@ -4228,7 +4228,7 @@ div#not_found #not_found_text {
 
 /* Custom-user-login-page */
 .custom-user-login-page input.form-text {
-  padding: 1em 1.9em 0.9em 1em;
+  padding: 0.5em 1.9em 0.5em 0.75em;
   color: #4D4949;
   font-size: 15px;
   outline: none;
@@ -4248,6 +4248,7 @@ div#not_found #not_found_text {
   -webkit-appearance: textfield;
   -webkit-rtl-ordering: logical;
   -webkit-user-select: text;
+  width:335px;
 }
 
 .custom-user-login-page input.form-text:focus {
