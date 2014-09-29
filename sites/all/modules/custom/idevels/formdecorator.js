@@ -51,3 +51,14 @@ function modalFormDecorator() {
   });
   return true;
 };
+
+$('#edit-field-book-0').bind('change', function() {
+  $this = $(this);
+  if (this.files[0].size > 20000000) {
+    $this.replaceWith( $this = $this.clone( true ) );
+    alert('Розмір файла має бути не більшим 20Mb');
+  };
+
+});
+
+
