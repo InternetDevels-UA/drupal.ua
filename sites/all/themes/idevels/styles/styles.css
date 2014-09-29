@@ -42,7 +42,7 @@ body {
   background: #ffffff;
   color: #333333;
   font-size: 14px;
-  font-family: open_sans, Open Sans, Tahoma, Verdana, sans-serif;
+  font-family: 'Pt Sans',Arial,Verdana,sans-serif;
   padding: 0px;
 }
 p, dl, hr, h1, h2, h3, h4, h5, h6, ol, ul, pre, table, address, fieldset {
@@ -2425,7 +2425,7 @@ h1, h2, h3, h4, h5, h6,
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a{
   margin: 5px 0 15px 0;
   line-height: 1.2em;
-  font-family: 'open_sans';
+  font-family: 'Pt Sans',Arial,Verdana,sans-serif;
   color: #252525;
 }
 h2.title a{
@@ -4216,4 +4216,7 @@ div#not_found > div {
 }
 div#not_found #not_found_text {
   margin-bottom: 0;
+}
+#search-form * {
+  font-family: 'Pt Sans',Arial,Verdana,sans-serif;
 }
