@@ -4186,3 +4186,9 @@ body.front .small-button.browse-all{
 .helper-label{
   font: 15px 'Pt Sans',Arial,Verdana,sans-serif;
 }
+.helper-node-form-cancel{
+  margin-left:15px;
+}
+a.helper-node-form-cancel{
+  font: 15px 'Pt Sans',Arial,Verdana,sans-serif;
+}
