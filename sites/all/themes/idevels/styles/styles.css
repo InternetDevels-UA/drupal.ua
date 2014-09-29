@@ -4318,3 +4318,11 @@ a.karma.up::after {
 .karma {
   padding: 5px 30px 5px 5px;
 }
+
+.helper-node-form-cancel{
+  margin-left:15px;
+}
+a.helper-node-form-cancel{
+  font: 15px 'Pt Sans',Arial,Verdana,sans-serif;
+}
+
