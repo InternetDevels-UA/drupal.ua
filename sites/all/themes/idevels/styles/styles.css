@@ -4243,6 +4243,7 @@ div#not_found #not_found_text {
   text-align: start;
   background-color: white;
   margin-bottom: 10px;
+  font-family: 'PT Sans';
   -webkit-border-radius: 0.3em;
   -webkit-appearance: textfield;
   -webkit-rtl-ordering: logical;
@@ -4256,13 +4257,13 @@ div#not_found #not_found_text {
 
 .custom-user-login-page .form-item .description {
   font-size: 13px;
-  font-weight: 600;
+  font-weight: normal;
   color: #363535;
   display: block;
 }
 
 .custom-user-login-page input.form-submit:hover {
-  background: #2E2D2D;
+  background: #0080C5;
   color: #fff;
   padding: 8px 19px;
 }
@@ -4277,4 +4278,25 @@ div#not_found #not_found_text {
   font-size: 15px;
   margin-top: -3px;
   cursor: pointer;
+  font-family: 'PT Sans';
+}
+
+.page-user .title,
+.page-user .column,
+.page-user .region{
+  font-family: 'PT Sans';
+}
+
+::-webkit-input-placeholder {
+  font-family: 'PT Sans';
+}
+
+::-moz-placeholder {
+  font-family: 'PT Sans';
+} /* firefox 19+ */
+:-ms-input-placeholder {
+  font-family: 'PT Sans';
+} /* ie */
+input:-moz-placeholder {
+  font-family: 'PT Sans';
 }
