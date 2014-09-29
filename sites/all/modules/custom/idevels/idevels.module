@@ -383,7 +383,7 @@ function idevels_preprocess_views_view(&$vars) {
         $revnew = 'asc';
       }
       switch (arg(1)) {
-        case 'poplular':
+        case 'popular':
           if (arg(2) == 'desc') {
             $reverse = 'asc';
             $class = 'karma down';
