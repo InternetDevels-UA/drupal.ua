@@ -378,17 +378,26 @@ function idevels_preprocess_views_view(&$vars) {
     if ($vars['view']->current_display == 'page_1') {
       $vars['header'] = t('Order By: ');
       $req = arg(2);
+      $arg1 = arg(1);
       if (empty($req)) {
         $reverse = 'asc';
         $revnew = 'asc';
+      }
+      if (empty($arg1)) {
+        $class = 'karma down';
       }
       switch (arg(1)) {
         case 'popular':
           if (arg(2) == 'desc') {
             $reverse = 'asc';
             $class = 'karma down';
-
-          }else {
+            $revnew = 'desc';
+          }
+          elseif (empty($req)) {
+            $class = 'karma down';
+          }
+          else {
+            $revnew = 'desc';
             $reverse = 'desc';
             $class = 'karma up';
           }
@@ -396,15 +405,21 @@ function idevels_preprocess_views_view(&$vars) {
         case 'created':
           if (arg(2) == 'desc') {
             $revnew = 'asc';
+            $reverse = 'desc';
             $classNew = 'karma down';
-          }else {
+          }
+          elseif (empty($req)) {
+            $classNew = 'karma down';
+          }
+          else {
+            $reverse = 'desc';
             $revnew = 'desc';
             $classNew = 'karma up';
           }
           break;
       }
-        $vars['header'] .=  l(t('karma'), 'users-lists/popular/'.$reverse, array('attributes'=>array('class'=>$class)));
-        $vars['header'] .= l(t('new user'), 'users-lists/created/'.$revnew, array('attributes'=>array('class'=>$classNew)));
+      $vars['header'] .= l(t('karma'), 'users-lists/popular/' . $reverse, array('attributes' => array('class' => $class)));
+      $vars['header'] .= l(t('new user'), 'users-lists/created/' . $revnew, array('attributes' => array('class' => $classNew)));
     }
   }
   // Modal link to resources 

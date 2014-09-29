@@ -4278,3 +4278,24 @@ div#not_found #not_found_text {
   margin-top: -3px;
   cursor: pointer;
 }
+
+.karma.down,.karma.up {
+  background-image: none;
+  position: relative;
+}
+
+a.karma.down::after {
+  content: "▼";
+  position: absolute;
+  right: 10px;
+}
+
+a.karma.up::after {
+  content: "▲";
+  position: absolute;
+  right: 10px;
+}
+
+.karma {
+  padding: 5px 30px 5px 5px;
+}
