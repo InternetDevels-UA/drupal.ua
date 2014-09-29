@@ -4185,14 +4185,14 @@ body.front .small-button.browse-all{
 .view-upcoming-events .views-field-field-events-logo-fid {
   clear: left;
   float: left;
-  margin: 0px 20px 80px 0px;
+  margin: 0px 20px 60px 0px;
   width: 80px;
   height: auto;
-  min-height: 80px;
+  min-height: 60px;
 }
 
 .view-upcoming-events .views-row {
-  padding-bottom: 33px;
+  padding-bottom: 10px;
 }
 
 .view-upcoming-events .views-field-field-events-logo-fid {
