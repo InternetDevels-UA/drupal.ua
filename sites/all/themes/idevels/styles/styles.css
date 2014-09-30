@@ -42,7 +42,7 @@ body {
   background: #ffffff;
   color: #333333;
   font-size: 14px;
-  font-family: open_sans, Open Sans, Tahoma, Verdana, sans-serif;
+  font-family: 'Pt Sans',Arial,Verdana,sans-serif;
   padding: 0px;
 }
 p, dl, hr, h1, h2, h3, h4, h5, h6, ol, ul, pre, table, address, fieldset {
@@ -2428,7 +2428,7 @@ h1, h2, h3, h4, h5, h6,
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a{
   margin: 5px 0 15px 0;
   line-height: 1.2em;
-  font-family: 'open_sans';
+  font-family: 'Pt Sans',Arial,Verdana,sans-serif;
   color: #252525;
 }
 h2.title a{
@@ -4206,4 +4206,36 @@ body.front .small-button.browse-all{
   line-height: 22px;
   color: #0d0d0d;
   font: 15px 'Pt Sans',Arial,Verdana,sans-serif;
+}
+div#not_found_page {
+  width: 1240px;
+}
+div#not_found_page > div:first-child {
+  float: left;
+  width: 795px;
+}
+div#not_found_page > div+div {
+  float: left;
+  width: 380px;
+}
+div#not_found {
+  position: relative;
+  width: 588px;
+  height: 216px;
+  background-image: url("../images/Page_Not_Found.png" );
+  background-repeat: no-repeat;
+  font-family: 'Pt Sans',Arial,Verdana,sans-serif;
+  color: #777;
+}
+div#not_found > div {
+  position: absolute;
+  top: 40px;
+  left: 250px;
+  font-size: 20px;
+}
+div#not_found #not_found_text {
+  margin-bottom: 0;
+}
+#search-form * {
+  font-family: 'Pt Sans',Arial,Verdana,sans-serif;
 }
