@@ -317,3 +317,7 @@
 [submodule "sites/all/modules/contrib/xmlsitemap"]
 	path = sites/all/modules/contrib/xmlsitemap
 	url = http://git.drupal.org/project/xmlsitemap.git
+[submodule "sites/all/modules/contrib/ckeditor"]
+	path = sites/all/modules/contrib/ckeditor
+	url = http://git.drupal.org/project/ckeditor.git
+	branch = 6.x-1.x
