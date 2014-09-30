@@ -4051,9 +4051,13 @@ form#user-register #edit-legal-accept-wrapper strong {
   display: none;
 }
 .page-resources #modalContent .modal-header .close {
-  content: url('../images/answers/b_close.png');
   width: 30px;
+  height: 30px;
+  overflow: hidden;
   margin-bottom: -5px;
+}
+.page-resources #modalContent .modal-header .close:before {
+  content: url('../images/answers/b_close.png');
 }
 .page-resources #modalContent .ctools-modal-content {
   border: 2px solid #ccc;
@@ -4131,6 +4135,7 @@ form#user-register #edit-legal-accept-wrapper strong {
 .page-resources #modal-content form .resizable-textarea textarea {
   padding-left: 10px;
   border: 2px solid #ccc;
+  resize: vertical;
 }
 .page-resources #modal-content form input[type="submit"] {
   float: right;
