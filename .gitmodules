@@ -333,3 +333,6 @@
 	path = sites/all/modules/contrib/imageapi_optimize
 	url = http://git.drupal.org/project/imageapi_optimize.git
 	branch = 6.x-1.x
+[submodule "sites/all/modules/contrib/ckeditor"]
+	path = sites/all/modules/contrib/ckeditor
+	url = http://git.drupal.org/project/ckeditor.git
