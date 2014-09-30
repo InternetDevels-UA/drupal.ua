@@ -2143,7 +2143,8 @@ div.geshifilter, table .geshifilter td {
 .view-question.view-display-id-page_1 .views-field-name,
 .pane-addthis-0 {
   float: left;
-  margin-right: 63px;
+  /*margin-right: 63px;*/
+  margin-bottom: 5px;
 }
 .page-question .meta-links .meta {
   float: left;
@@ -2514,9 +2515,9 @@ h2.title{
   margin-top: 30px;
   padding-bottom: 25px;
   margin-bottom: -20px;
-  background-image: url('../images/dot-h-2.png');
-  background-position: left bottom;
-  background-repeat: repeat-x;
+}
+.node .meta-links .pane-addthis-0 {
+  margin-top: -18px;
 }
 .node-type-webform .node .meta-links {
   background-image: none;
@@ -3950,6 +3951,10 @@ form#user-register #edit-legal-accept-wrapper strong {
 }
 .pane-node-comment-form {
   margin-top: 20px;
+  clear: both;
+  background-image: url('../images/dot-h-2.png');
+  background-position: left top;
+  background-repeat: repeat-x;
 }
 .pane-node-comment-form h3{
   width: 182px;
@@ -3960,6 +3965,8 @@ form#user-register #edit-legal-accept-wrapper strong {
 }
 .page-node .pane-custom{
   margin-right: 15px;
+  margin-top: 10px;
+  height: 24px;
 }
 /*
 * contact form
