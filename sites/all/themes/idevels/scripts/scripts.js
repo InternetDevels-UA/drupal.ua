@@ -152,6 +152,11 @@ $(function () {
     },1000);
   });
 
+  if ($('#edit-pass-pass1').length) {
+    $('#edit-pass-pass1').attr('placeholder', Drupal.t('Password'));
+    $('#edit-pass-pass2').attr('placeholder', Drupal.t('Confirm password'));
+  }
+
   // Rewrite autocoplit submit function for event page
 
   if ($("body").hasClass("page-events")) {
