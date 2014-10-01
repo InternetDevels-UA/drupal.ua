@@ -4201,7 +4201,7 @@ display:none;
 }
 
 .grippie {
-  display: none;
+  display: none !important;
 }
 
 .helper-node-form input[type=submit]{
