@@ -25,15 +25,16 @@ function groups_form_changes_form_alter(&$form, $form_state, $form_id) {
         $form['buttons']['submit']['#value'] = t('Save question');
         $form['buttons']['cancel'] = array(
           '#type' => 'markup',
-          '#suffix'=>'<span class="helper-node-form-cancel">',
-          '#prefix'=>'<span class="helper-node-form-cancel">',
+          '#suffix' => '</span>',
+          '#prefix' => '<span class="helper-node-form-cancel">',
           '#value' => l(t('Cancel question'), 'question'),
           '#weight' => 20,
           '#access' => TRUE,
         );
         $form['buttons']['submit']['#access'] = TRUE;
         $form['buttons']['preview']['#access'] = FALSE;
-
+        $form['#prefix'] = '<span class="helper-node-form">';
+        $form['#suffix'] = '</span>';
       }
       else {
         if ($new == $new_translated) {
