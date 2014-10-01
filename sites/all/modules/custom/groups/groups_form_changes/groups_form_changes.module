@@ -35,6 +35,7 @@ function groups_form_changes_form_alter(&$form, $form_state, $form_id) {
         $form['buttons']['preview']['#access'] = FALSE;
         $form['#prefix'] = '<span class="helper-node-form">';
         $form['#suffix'] = '</span>';
+        $form['body_field']['body']['#rows'] = 11;
       }
       else {
         if ($new == $new_translated) {
