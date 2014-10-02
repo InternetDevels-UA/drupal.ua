@@ -53,6 +53,8 @@ function drua_profile_block($op = 'list', $delta = 0) {
       	'profile_activity' => array('info' => t('Profile: Drupal activity')),
         'profile_group' => array('info' => t('Profile: User groups')),
         'profile_bookmarks' => array('info' => t('Profile: User bookmarks')),
+        'idevels_blockfooter' => array('info' => t('Footer: Block with all information.')),
+        'top_cities_by_events' => array('info' => t('Top cities by events')),
       );
 
     case 'view':
@@ -274,11 +276,70 @@ function drua_profile_block($op = 'list', $delta = 0) {
               }
             }
             break;
+        case 'idevels_blockfooter':
+          $count = db_result(db_query("SELECT COUNT(uid) FROM {users} u WHERE u.status = 1"));
+          $fb = l('facebook', 'https://www.facebook.com/groups/104220905217', array(
+            'attributes' => array(
+              'rel'    => 'nofollow',
+              'target' => '_blank'
+            )
+          ));
+          $vk = l('vkontakte', 'https://vk.com/drupalua', array(
+            'attributes' => array(
+              'rel'    => 'nofollow',
+              'target' => '_blank'
+            )
+          ));
+          $tw = l('twitter', 'https://twitter.com/drupalua', array(
+            'attributes' => array(
+              'rel'    => 'nofollow',
+              'target' => '_blank'
+            )
+          ));
+          $output = '<div class="lc"><div class="copyright">' . t('© 2010—2014 ') . l('Drupal.ua', 'http://www.drupal.ua') . '</div>
+                     <div class="count">' . t('Our ') . l(t('!count professionals', array('!count' => $count)), 'users-lists') . '</div></div>';
+          $output .= '<div class="mc"><div class="social">
+                      <span class="we-in-soc">' . t('We are in social networks:') . '</span><span class="fb">' . $fb . '</span><span class="vk">' . $vk . '</span><span class="tw">' . $tw . '</span></div>
+                      <div class="work">' . l(t('Jobs at Drupal.ua'), 'vacations') . '</div></div>';
+          $output .= '<div class="rc"><div class="contacts">' . l(t('Contacts'), 'contacts') . '</div>
+                      <div class="mail">' . t('Write to us ') . l(t('support@drupal.ua'), 'mailto:support@drupal.ua', array(
+              'absolute'   => TRUE,
+              'attributes' => array(
+                'rel'    => 'nofollow',
+                'target' => '_blank'
+              )
+            )) . '</div></div>';
+
+          return array(
+            'title'   => '',
+            'content' => $output,
+          );
+          break;
+        case 'top_cities_by_events':
+          return array(
+            'title' => t('Cities'),
+            'content' => _drua_profile_top_cities_by_events(),
+          );
       }
       break;
   }
 }
 
+function _drua_profile_top_cities_by_events() {
+  $result = db_query(
+    'SELECT  `term_data`.`name`
+    FROM  `content_type_events` 
+    INNER JOIN  `term_data` ON  `content_type_events`.`field_city_value` =  `term_data`.`tid` 
+    GROUP BY  `field_city_value` 
+    ORDER BY COUNT(  `field_city_value` ) DESC 
+    LIMIT 0 , 10'
+  );
+  while ($row = db_fetch_array($result)) {
+    $city = reset(explode(',', $row['name']));
+    $cities[] = "<div class='views-row'><div class='views-field-name'><span class='field-content'><a href='/events?city={$row['name']}'>{$city}</a></span></div></div>";
+  }
+  return implode($cities);
+}
 
 /**
  * Load the field values for the Content_profile.
