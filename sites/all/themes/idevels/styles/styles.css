@@ -4005,3 +4005,41 @@ form[action="/feedback"] #webform-component-povidomlennya textarea {
 form[action="/feedback"] .captcha {
   width: 785px;
 }
+div.geshifilter {
+  padding-top: 22px;
+}
+.geshifilter pre {
+  position: relative;
+}
+.geshifilter pre:before {
+  position: absolute;
+  right: 0;
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+  -webkit-user-select: none; /* Chrome/Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+  -o-user-select: none;
+  user-select: none;
+}
+div.geshifilter pre:before {
+  top: -16px;
+}
+div.geshifilter pre.php:before {
+  content: 'php';
+}
+div.geshifilter pre.javascript:before {
+  content: 'javascript';
+}
+div.geshifilter pre.html4:before {
+  content: 'html';
+}
+div.geshifilter pre.mysql:before {
+  content: 'mysql';
+}
+div.geshifilter pre.css:before {
+  content: 'css';
+}
+div.geshifilter pre.javascript:before {
+  content: 'javascript';
+}
