@@ -3203,8 +3203,12 @@ element.style {
 form#user-register {
   font-family: 'PT Sans' !important;
 }
+form#user-register>div {
+  width: 400px;
+  margin: auto;
+}
 form#user-register .description {
-  color: #000;
+  color: #999;
   width: 400px;
 }
 form#user-register .password-description.error {
@@ -3224,7 +3228,9 @@ form#user-register input {
 form#user-register input[type=text],
 form#user-register input[type=password] {
   height: 45px;
+  padding-left: 10px;
   width: 400px;
+  font-family: 'PT Sans';
 }
 form#user-register input[type=password] {
   margin-right: 10px;
@@ -3235,6 +3241,7 @@ form#user-register input.form-submit {
   color: #524949;
   font-weight: bold;
   border: 1px solid #BBB;
+  font-family: "PT Sans";
 }
 form#user-register #edit-pass-wrapper label {
   display: none;
