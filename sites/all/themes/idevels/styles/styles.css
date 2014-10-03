@@ -870,6 +870,10 @@ h1 .tag a, h2 .tag a, h1 .tag em, h2 .tag em {
 #footer #block-drua_profile-idevels_blockfooter a {
   text-decoration: underline;
 }
+#footer #block-drua_profile-idevels_blockfooter a:hover {
+  color: #000;
+  text-decoration: none;
+}
 #footer #block-drua_profile-idevels_blockfooter .lc,
 #footer #block-drua_profile-idevels_blockfooter .mc {
   float: left;
