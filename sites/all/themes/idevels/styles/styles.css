@@ -4356,3 +4356,20 @@ input:-moz-placeholder {
 #search-form * {
   font-family: 'Pt Sans',Arial,Verdana,sans-serif;
 }
+.most-popular-groups,
+.all-most-popular-groups {
+  font-family: 'PT Sans';
+  font-size: 16px;
+  display: block;
+  padding: 10px 0;
+}
+
+.all-most-popular-groups a {
+  color: black;
+  text-decoration: underline;
+  font-size: 14px;
+}
+
+.all-most-popular-groups a:hover {
+  text-decoration: none;
+}
