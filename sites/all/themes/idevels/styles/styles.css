@@ -273,7 +273,7 @@ ul.secondary-menu li a, ul.secondary-menu li.active-trail a {
 }
 
 .node .meta {
-  margin:0 30px 1em 0;
+  margin:0 10px 1em 0;
   color:#ccc;
   float:left;
 }
@@ -301,7 +301,7 @@ ul.secondary-menu li a, ul.secondary-menu li.active-trail a {
   float:right;
   text-align:right;
   cursor:default;
-  width:200px;
+  max-width:200px;
   vertical-align:top;
 }
 
@@ -437,7 +437,6 @@ h1 .tag a, h2 .tag a, h1 .tag em, h2 .tag em {
   display:inline-block;
   padding-left: 20px;
 }
-
 .node-group-link {
   margin-left: 20px;
 }
@@ -451,7 +450,7 @@ h1 .tag a, h2 .tag a, h1 .tag em, h2 .tag em {
 .link-answers { background:url("../images/answers/question-not-answered.gif") no-repeat scroll 0 50% transparent; }
 .link-best-answers { background:url("../images/answers/question-answered.gif") no-repeat scroll 0 50% transparent; }
 .link-add-answer { background:url("../images/answers/question-add.gif") no-repeat scroll 0 50% transparent; }
-.comment_comments a, .count-comments { background:url("../images/answers/question-answers.gif") no-repeat scroll 0 50% transparent; }
+.comment_comments a, .count-comments { background:url("../images/comments.png") no-repeat 0 0 transparent; }
 .comment_add a { background:url("../images/answers/balloon--plus.png") no-repeat scroll 0 50% transparent; }
 .webform_goto a { background:url("../images/answers/ui-scroll-pane-form.png") no-repeat scroll 0 50% transparent; }
 .statistics_counter span { background:url("../images/answers/eye.png") no-repeat scroll 0 50% transparent; }
@@ -770,9 +769,6 @@ h1 .tag a, h2 .tag a, h1 .tag em, h2 .tag em {
   overflow: hidden;
   padding-top: 15px;
   /*padding-bottom: 15px;*/
-  background-image: url('../images/dot-h.png');
-  background-position: left top;
-  background-repeat: repeat-x;
 }
 #footer p {
   font-size:11px;
@@ -2192,9 +2188,6 @@ div.geshifilter, table .geshifilter td {
   height: 1px;
   position: absolute;
   z-index: 2;
-  background-image: url("../images/dot-h.png");
-  background-position: left bottom;
-  background-repeat: repeat-x;
   font-size: 0;
 }
 #block-views-question-block_1 .block-title,
@@ -2318,10 +2311,7 @@ div.geshifilter, table .geshifilter td {
   text-decoration: none;
 }
 #block-menu-primary-links .content{
-  /*background-image: url('../images/dot-h.png');
-  background-position: left bottom;
-  background-repeat: repeat-x;
-  padding: 0px 0 0 0;
+  /*padding: 0px 0 0 0;
   display: table;
   *//*width: 100%;*//*
   margin-top: 5px;
@@ -2329,9 +2319,6 @@ div.geshifilter, table .geshifilter td {
   /*width: 100%;*/
 }
 #page{
-  background-image: url('../images/dot-h.png');
-  background-position: left 42px;
-  background-repeat: repeat-x;
   /*padding: 0px 0 0 0;*/
   /*display: table;*/
   /*width: 100%;*/
@@ -2439,7 +2426,7 @@ h2.title a{
   color: #252525;
   font-size: 34px;
   margin-bottom: 10px;
-  font-family: 'open_sans';
+  font-family: 'Pt Sans Narrow',Arial,Verdana,sans-serif;
   font-weight: bold;
 }
 h2.title a:hover{
@@ -2450,9 +2437,6 @@ h2.title{
   color: #252525;
   margin-bottom: 30px;
   padding-bottom: 18px;
-  background-image: url('../images/dot-h-2.png');
-  background-position: left bottom;
-  background-repeat: repeat-x;
 }
 
 .button{
@@ -2585,9 +2569,6 @@ div.panel-pane div.node {
   overflow: hidden;
   line-height: 1.5em;
   font-size: 13px;
-  background-image: url("../images/dot-h-2.png" );
-  background-position: left bottom;
-  background-repeat: repeat-x;
   padding-bottom: 40px;
   text-align: center;
   font-size: 14px;
@@ -2692,9 +2673,6 @@ h3.pane-title{
 .view-question .views-row {
   margin-bottom: 15px;
   /*  padding-bottom: 21px;
-    background-image: url("../images/dot-h-2.png" );
-    background-position: left bottom;
-    background-repeat: repeat-x;
     overflow: hidden;
     padding-bottom: 16px;*/
 }
@@ -2761,6 +2739,12 @@ h3.pane-title{
   background-repeat: no-repeat;
   background-position: 0 -1px;
 }
+.node .node-links .comment_comments a {
+  font-size: 10px;
+  width: 15px;
+  padding-left: 0;
+  text-align: center;
+}
 #sidebar-right #block-views-question-block_2 .field-content{
   font-size: 10px;
   font-family: Open Sans;
@@ -2770,9 +2754,14 @@ h3.pane-title{
   font-weight: bold;
   font-family: 'Pt Sans',Arial,Verdana,sans-serif;
 }
+.node .node-links .comment_comments a {
+  color: white;
+}
+.node .node-links .comment_comments a:hover,
 .view-question .views-row .views-field-comment-count a:hover,
 .view-question .views-row .views-field-comment-count a:visited {
   color: orange;
+  text-decoration: none;
 }
 .view-question .view-footer a {
   color: black;
@@ -2980,9 +2969,6 @@ h3.pane-title{
   display: table;
   margin-bottom: 10px;
   padding: 15px 0 0 0;
-  background-image: url('../images/dot-h.png');
-  background-position: left bottom;
-  background-repeat: repeat-x;
 }
 
 .view-group .views-row{
@@ -3037,9 +3023,6 @@ h3.pane-title{
 }
 
 .content-center{
-  background-image: url('../images/dot-v.png');
-  background-position: 870px top;
-  background-repeat: repeat-y;
   overflow: hidden;
   padding-bottom: 50px;
 }
@@ -3418,32 +3401,64 @@ form#user-register #edit-legal-accept-wrapper strong {
 .node-type-webform .node .node-links{
   display: none;
 }
-.vud-widget-stackoverflow{
-  margin-left: -55px;
+.content > .vud-widget-upanddown {
+  display: none; /* without js we don't show this element */
 }
-.stackoverflow-widget.vud-widget-stackoverflow a{
-  display: block;
-  background-image: url('../images/icons/sprites.png');
-  /*font-size: 0px;*/
-  text-indent: -9999px;
+.meta-links .vud-widget-upanddown {
+  margin-top: -5px;
+  float: left;
 }
-.stackoverflow-widget.vud-widget-stackoverflow a.ctools-ajaxing{
-  border: none;
-  width: 100%;
+.vud-widget > div {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
 }
-.stackoverflow-widget.vud-widget-stackoverflow .vud-link-up{
+.vud-widget > div > span {
+  position: absolute;
+  height: 24px;
+  width: 24px;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: center !important;
+  line-height: 24px;
+}
+.vud-widget .up-score {
+  color: green;
+}
+.vud-widget .down-score {
+  color: red;
+}
+.vud-widget-upanddown .up-inactive,
+.vud-widget-upanddown .up-active,
+.vud-widget-upanddown .down-inactive,
+.vud-widget-upanddown .down-active {
+  width: 57px;
+  height: 24px;
+  background-color: transparent;
+  background-image: url('../images/vote_up_down.png');
+  background-repeat: no-repeat;
+  -webkit-transition: all 0ms;
+  -moz-transition: all 0ms;
+  -ms-transition: all 0ms;
+  -o-transition: all 0ms;
+  transition: all 0ms;
+}
+.vud-widget-upanddown .up-inactive {
+  background-position: -57px 0;
+}
+.vud-widget-upanddown .up-inactive:hover,
+.vud-widget-upanddown .up-active {
   background-position: 0 0;
 }
-.stackoverflow-widget.vud-widget-stackoverflow .vud-link-down{
-  background-position: 0 20px;
+.vud-widget-upanddown .down-inactive {
+  background-position: -57px -24px;
 }
-.vud-widget-stackoverflow .stackoverflow-score{
-  border: none;
-  padding-top: 0px;
-  margin-bottom: 0px;
+.vud-widget-upanddown .down-inactive:hover,
+.vud-widget-upanddown .down-active {
+  background-position: 0 -24px;
 }
-.stackoverflow-current-score{
-  font-size: 20px;
+.vud-widget-upanddown .reset-active {
+  display: none;
 }
 
 .view-users .views-row{
@@ -3557,18 +3572,13 @@ form#user-register #edit-legal-accept-wrapper strong {
 }
 
 .view-users .views-row {
-  background-image: url('../images/dot-h-2.png');
-  background-position: left bottom;
-  background-repeat: repeat-x;
   /*overflow: hidden;*/
   height: 100px;
 }
 .view-users .view-content{
   padding-top: 10px;
   margin-top: 10px;
-  background-image: url('../images/dot-h-2.png');
-  background-position: left top;
-  background-repeat: repeat-x;
+
 }
 .view-users .views-field-field-image-fid img{
   width: 80px;
@@ -3583,9 +3593,6 @@ form#user-register #edit-legal-accept-wrapper strong {
 }
 #sidebar-right{
   width: 380px;
-  background-image: url("../images/dot-v-2.png" );
-  background-repeat: repeat-y;
-  background-position: top left;
   padding-left: 40px;
 }
 
@@ -3601,9 +3608,6 @@ form#user-register #edit-legal-accept-wrapper strong {
   font-family: sans-serif;
 }
 #sidebar-right .block{
-  background-image: url("../images/dot-h-2.png" );
-  background-repeat: repeat-x;
-  background-position: bottom left;
   /*padding-bottom: 30px;*/
 }
 #sidebar-right .block:first-child {
@@ -3703,9 +3707,7 @@ form#user-register #edit-legal-accept-wrapper strong {
 }
 .view-Events .views-row{
   padding-left: 60px;
-  background-image: url("../images/dot-h-2.png" );
-  background-position: left bottom;
-  background-repeat: repeat-x;
+
   padding-top: 22px;
   padding-bottom: 22px;
 }
@@ -3912,9 +3914,7 @@ form#user-register #edit-legal-accept-wrapper strong {
 .not-front #main-content {
   width: 795px;
   float: left;
-  background-image: url("../images/dot-h-2.png" );
-  background-position: left top;
-  background-repeat: repeat-x;
+
   padding-top: 10px;
 }
 .view-Events .views-label-address{
@@ -3934,9 +3934,6 @@ form#user-register #edit-legal-accept-wrapper strong {
 .node-type-events .views-field-address{
   margin-top: 25px;
   padding-top: 20px;
-  background-image: url("../images/dot-h-2.png" );
-  background-position: left top;
-  background-repeat: repeat-x;
 }
 .views-label-address{
   margin-right: 5px;
@@ -3952,9 +3949,6 @@ form#user-register #edit-legal-accept-wrapper strong {
 .pane-node-comment-form {
   margin-top: 20px;
   clear: both;
-  background-image: url('../images/dot-h-2.png');
-  background-position: left top;
-  background-repeat: repeat-x;
 }
 .pane-node-comment-form h3{
   width: 182px;
@@ -4032,9 +4026,7 @@ form#user-register #edit-legal-accept-wrapper strong {
 }
 .view-group-comments.view-display-id-page_1 .view-content > div+div {
   padding-top: 10px;
-  background-image: url("../images/dot-h-2.png" );
-  background-position: left top;
-  background-repeat: repeat-x;
+
 }
 .view-group-comments.view-display-id-page_1 .views-field-uid {
   position: absolute;
@@ -4353,4 +4345,14 @@ a.karma.up::after {
 
 .karma {
   padding: 5px 30px 5px 5px;
+}
+.page-groups .group-subtitle {
+  position: relative;
+  top: -40px;
+}
+.page-groups .group-subtitle a:first-child {
+  color: black;
+}
+.page-groups .group-subtitle a:last-child {
+  font-style: italic;
 }
