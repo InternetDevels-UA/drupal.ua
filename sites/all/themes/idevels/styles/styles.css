@@ -4511,3 +4511,14 @@ body.front
   padding-left: 0px;
   float: right;
 }
+
+.all-upcoming-events {
+  color: black;
+  text-decoration: underline;
+  font-size: 14px;
+  font-family: "Pt sans";
+}
+
+.all-upcoming-events:hover {
+  text-decoration: none;
+}
