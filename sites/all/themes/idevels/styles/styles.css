@@ -3356,7 +3356,7 @@ form#user-register #edit-legal-accept-wrapper strong {
 }
 .footer-first .view-group-comments .views-row .views-field-uid,
 .footer-first .view-group-comments .views-row .views-field-name-1,
-.footer-first .view-group-comments .views-row .views-field-title,
+.footer-first .view-group-comments .views-row .views-field-subject,
 .footer-first .view-group-comments .views-field-field-image-fid,
 .footer-first .view-group-comments .views-field-name-1 {
   display: inline-block;
@@ -3376,11 +3376,13 @@ form#user-register #edit-legal-accept-wrapper strong {
   font-size: 14px;
   font-weight: 900;
 }
-.footer-first .view-group-comments .views-row .views-field-title{
+.footer-first .view-group-comments .views-row .views-field-subject {
   margin-bottom: 10px;
   padding-left: 15px;
+  display: inline-flex;
+  width: 290px;
 }
-.footer-first .view-group-comments .views-row .views-field-title a{
+.footer-first .view-group-comments .views-row .views-field-subject a{
   color: #1d1d1d;
   font-size: 14px;
   font-weight: 900;
