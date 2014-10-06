@@ -3428,6 +3428,8 @@ form#user-register #edit-legal-accept-wrapper strong {
 .vud-widget .down-score {
   color: red;
 }
+.not-logged-in .vud-widget-upanddown .up-score,
+.not-logged-in .vud-widget-upanddown .down-score,
 .vud-widget-upanddown .up-inactive,
 .vud-widget-upanddown .up-active,
 .vud-widget-upanddown .down-inactive,
@@ -3446,6 +3448,7 @@ form#user-register #edit-legal-accept-wrapper strong {
 .vud-widget-upanddown .up-inactive {
   background-position: -57px 0;
 }
+.not-logged-in .vud-widget-upanddown .up-score,
 .vud-widget-upanddown .up-inactive:hover,
 .vud-widget-upanddown .up-active {
   background-position: 0 0;
@@ -3453,6 +3456,7 @@ form#user-register #edit-legal-accept-wrapper strong {
 .vud-widget-upanddown .down-inactive {
   background-position: -57px -24px;
 }
+.not-logged-in .vud-widget-upanddown .down-score,
 .vud-widget-upanddown .down-inactive:hover,
 .vud-widget-upanddown .down-active {
   background-position: 0 -24px;
