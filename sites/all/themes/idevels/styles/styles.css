@@ -3612,8 +3612,12 @@ form#user-register #edit-legal-accept-wrapper strong {
   margin: 5px;
 }
 #sidebar-right{
-  width: 380px;
-  padding-left: 40px;
+  width: 310px;
+  padding-left: 0px;
+  float: right;
+  background-image: url("../images/dot-v-2.png" );
+  background-repeat: repeat-y;
+  background-position: top left;
 }
 
 #sidebar-right h3{
@@ -3932,7 +3936,7 @@ form#user-register #edit-legal-accept-wrapper strong {
   margin-left: 10px;
 }
 .not-front #main-content {
-  width: 795px;
+  width: 905px;
   float: left;
 
   padding-top: 10px;
