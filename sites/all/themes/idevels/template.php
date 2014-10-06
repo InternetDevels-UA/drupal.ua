@@ -210,6 +210,7 @@ function idevels_preprocess_comment(&$vars) {
       break;
   }
   $vars['user'] = theme('username', $comment);
+  $vars['cid'] = $vars['comment']->cid;
 }
 
 /**
