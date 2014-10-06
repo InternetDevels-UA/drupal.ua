@@ -2512,7 +2512,7 @@ h2.title{
   max-width: 1240px;
 }
 .node .meta-links{
-  margin-top: 30px;
+  /*margin-top: 30px;*/
   padding-bottom: 25px;
   margin-bottom: -20px;
 }
@@ -4353,4 +4353,7 @@ a.karma.up::after {
 
 .karma {
   padding: 5px 30px 5px 5px;
+}
+.page-groups .container-12 {
+  width: 100%;
 }
