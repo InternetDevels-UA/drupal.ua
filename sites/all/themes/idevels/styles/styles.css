@@ -2503,7 +2503,7 @@ h2.title{
   max-width: 1240px;
 }
 .node .meta-links{
-  margin-top: 30px;
+  /*margin-top: 30px;*/
   padding-bottom: 25px;
   margin-bottom: -20px;
 }
@@ -4471,4 +4471,7 @@ div.geshifilter pre.javascript:before {
 }
 .page-groups .group-subtitle a:last-child {
   font-style: italic;
+}
+.page-groups .container-12 {
+  width: 100%;
 }
