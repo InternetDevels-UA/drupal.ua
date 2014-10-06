@@ -3769,6 +3769,11 @@ form#user-register #edit-legal-accept-wrapper strong {
 .view-vacations .views-field-body .field-content {
   clear: both;
 }
+.view-Resources .menu-links {
+  float: left;
+  clear: both;
+  width: 100%;
+}
 .view-Resources .menu-links a {
   float: left;
   margin: 0 5px;
