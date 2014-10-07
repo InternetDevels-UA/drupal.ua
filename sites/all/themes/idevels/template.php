@@ -98,7 +98,7 @@ function idevels_preprocess_node(&$vars) {
     case 'ru':
     case 'uk':
       if (function_exists('ua_month_perfecty')) {
-        $vars['date'] = ua_month_perfecty(format_date($node->created, 'custom', "j F, Y"));
+        $vars['date'] = ua_month_perfecty($vars['node']->created);
       }
       else {
         $vars['date'] = format_date($node->created, 'custom', "j F, Y");
@@ -197,7 +197,7 @@ function idevels_preprocess_comment(&$vars) {
     case 'ru':
     case 'uk':
       if (function_exists('ua_month_perfecty')) {
-        $vars['date'] = ua_month_perfecty(format_date($comment->timestamp, 'custom', "j F, Y - H:i"));
+        $vars['date'] = ua_month_perfecty($comment->timestamp);
       }
       else {
         $vars['date'] = format_date($comment->timestamp, 'custom', "j F, Y - H:i");
@@ -555,22 +555,21 @@ function idevels_preprocess_views_view_field__og_most_popular_groups_by_term__ti
 }
 
 /**
- * Theming datetime field.
- * Make months looks better global. 
+ * Theming group_comments__panel_pane_2__timestamp.
+ * Make months looks better. 
  */
-function idevels_preprocess_views_view_field__timestamp(&$vars) {
+function idevels_preprocess_views_view_field__group_comments__panel_pane_2__timestamp(&$vars) {
   if (function_exists('ua_month_perfecty')) {
-    $vars['output'] = ua_month_perfecty($vars['output']);
+    $vars['output'] = ua_month_perfecty($vars['row']->comments_timestamp);
   }
 }
 
 /**
- * Theming datetime field.
- * Make months looks better for question__block_2__created_1
- * in this case _preprocess_views_view_field__timestamp not work. 
+ * Theming question__block_2__created_1.
+ * Make months looks better. 
  */
 function idevels_preprocess_views_view_field__question__block_2__created_1(&$vars) {
   if (function_exists('ua_month_perfecty')) {
-    $vars['output'] = ua_month_perfecty($vars['output']);
+    $vars['output'] = ua_month_perfecty($vars['view']->result[$vars['id']-1]->node_created);
   }
 }
