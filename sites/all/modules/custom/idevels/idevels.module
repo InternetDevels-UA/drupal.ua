@@ -785,23 +785,13 @@ function idevels_init() {
   }
 }
 
-function ua_month_perfecty($output) {
-  $months = array(
-    'Січень' => 'січня',
-    'Лютий' => 'лютого',
-    'Березень' => 'березня',
-    'Квітень' => 'квітня',
-    'Травень' => 'травня',
-    'Червень' => 'червня',
-    'Липень' => 'липня',
-    'Серпень' => 'серпня',
-    'Вересень' => 'вересня',
-    'Жовтень' => 'жовтня',
-    'Листопад' => 'листопада',
-    'Грудень' => 'грудня',
-  );
-  foreach ($months as $key => $value) {
-    $output = str_replace($key, $value, $output);
-  }
+function ua_month_perfecty($timestamp) {
+  $month_english = date('F', $timestamp);
+  $month_translated = t($month_english);
+  $output = t("@d {$month_english} @g:@i", array(
+    '@d' => format_date($timestamp, 'custom', 'd'),
+    '@g' => format_date($timestamp, 'custom', 'g'),
+    '@i' => format_date($timestamp, 'custom', 'i'),
+  ));
   return $output;
 }
