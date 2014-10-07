@@ -1,7 +1,5 @@
 <?php
 
-include __DIR__.'/ua_month_perfecty.php';
-
 /**
  * Implementation of hook_theme().
  */
@@ -99,10 +97,10 @@ function idevels_preprocess_node(&$vars) {
   switch ($language->language) {
     case 'ru':
     case 'uk':
-      try {
+      if (function_exists('ua_month_perfecty')) {
         $vars['date'] = ua_month_perfecty(format_date($node->created, 'custom', "j F, Y"));
       }
-      catch(Exception $e) {
+      else {
         $vars['date'] = format_date($node->created, 'custom', "j F, Y");
       }
       break;
@@ -198,10 +196,10 @@ function idevels_preprocess_comment(&$vars) {
   switch ($language->language) {
     case 'ru':
     case 'uk':
-      try {
+      if (function_exists('ua_month_perfecty')) {
         $vars['date'] = ua_month_perfecty(format_date($comment->timestamp, 'custom', "j F, Y - H:i"));
       }
-      catch(Exception $e) {
+      else {
         $vars['date'] = format_date($comment->timestamp, 'custom', "j F, Y - H:i");
       }
       break;
@@ -557,14 +555,23 @@ function idevels_preprocess_views_view_field__og_most_popular_groups_by_term__ti
     'taxonomy/term/'. $vars['row']->term_data_tid);
 }
 
+/**
+ * Theming datetime field.
+ * Make months looks better global. 
+ */
+function idevels_preprocess_views_view_field__timestamp(&$vars) {
+  if (function_exists('ua_month_perfecty')) {
+    $vars['output'] = ua_month_perfecty($vars['output']);
+  }
+}
 
 /**
  * Theming datetime field.
- * Make months looks better. 
+ * Make months looks better for question__block_2__created_1
+ * in this case _preprocess_views_view_field__timestamp not work. 
  */
 function idevels_preprocess_views_view_field__question__block_2__created_1(&$vars) {
-  try {
+  if (function_exists('ua_month_perfecty')) {
     $vars['output'] = ua_month_perfecty($vars['output']);
   }
-  catch(Exception $e) {}
 }

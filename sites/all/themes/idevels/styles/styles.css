@@ -2442,8 +2442,8 @@ h2.title a:hover{
 h2.title{
   line-height: 32px;
   color: #252525;
-  margin-bottom: 30px;
-  padding-bottom: 18px;
+  margin-bottom: 15px;
+/*  padding-bottom: 18px;*/
 }
 
 .button{
@@ -4483,7 +4483,7 @@ div.geshifilter pre.javascript:before {
 }
 .page-groups .group-subtitle {
   position: relative;
-  top: -40px;
+  top: -15px;
 }
 .page-groups .group-subtitle a:first-child {
   color: black;
