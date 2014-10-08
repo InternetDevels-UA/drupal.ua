@@ -37,6 +37,54 @@ function drua_profile_views_api() {
   );
 }
 
+/**
+ *  Implements hook_menu().
+ */
+function drua_profile_menu() {
+  $items['user/%user_category/edit/password'] = array(
+    'title'           => 'Password',
+    'description'     => 'A form to change user password.',
+    'page callback'   => 'drupal_get_form',
+    'type'            => MENU_LOCAL_TASK,
+    'page arguments'  => array('drua_profile_change_password'),
+    'access callback' => 'drua_profile_tab',
+    'weight'          => 20,
+  );
+  $items['user/%user_category/edit/email'] = array(
+    'title'           => 'Email',
+    'description'     => 'A form to change user email.',
+    'page callback'   => 'drupal_get_form',
+    'type'            => MENU_LOCAL_TASK,
+    'page arguments'  => array('drua_profile_change_email'),
+    'access callback' => 'drua_profile_tab',
+    'weight'          => 19,
+  );
+  $items['user/%/mail/%'] = array(
+    'title'           => t('Email check'),
+    'description'     => 'A page to check hash and change user email.',
+    'page callback'   => 'drua_profile_checknewmail',
+    'access callback' => TRUE,
+    'type'            => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ *  Implements hook_menu_alter().
+ */
+function drua_profile_menu_alter(&$items) {
+  $items['user/%user_category/edit']['access callback'] = FALSE;
+}
+
+/**
+ *  Show tabs edit password and edit email only in current user profile.
+ */
+function drua_profile_tab() {
+  global $user;
+
+  return ($user->uid == arg(1)) ? TRUE : FALSE;
+}
 
 /**
  * Implementation of hook_block().
@@ -53,6 +101,7 @@ function drua_profile_block($op = 'list', $delta = 0) {
       	'profile_activity' => array('info' => t('Profile: Drupal activity')),
         'profile_group' => array('info' => t('Profile: User groups')),
         'profile_bookmarks' => array('info' => t('Profile: User bookmarks')),
+        'profile_change_avatar' => array('info' => t('Profile: Change avatar')),
       );
 
     case 'view':
@@ -274,11 +323,325 @@ function drua_profile_block($op = 'list', $delta = 0) {
               }
             }
             break;
+        case 'profile_change_avatar':
+          if (arg(0) == 'user' && arg(2) == 'edit') {
+            return array(
+              'subject' => t('Photo'),
+              'content' => drupal_get_form('avatar_profile_form'),
+            );
+          }
+
+          break;
       }
       break;
   }
 }
 
+function avatar_profile_form () {
+  $form = array();
+  $form['#attributes']['enctype'] = 'multipart/form-data';
+  $form['#validate'][] = 'avatar_profile_form_validate';
+  $form['#submit'][] = 'avatar_profile_form_submit';
+  $node = node_load(array(
+    'uid'  => arg(1),
+    'type' => 'profile',
+  ));
+  if ($node->field_image[0]) {
+    $form['image'] = array(
+      '#value'  => theme_imagecache('100x100', $node->field_image[0]['filepath']),
+      '#prefix' => '<div class="image">',
+      '#suffix' => '</div>',
+    );
+    $form['link'] = array(
+      '#value'  => l(t('Change image'), 'javascript:', array(
+        'external'   => TRUE,
+        'attributes' => array('id' => 'image-link')
+      )),
+      '#suffix' => '<div class="description">' . t('Transform into a square 100×100') . '</div>',
+    );
+  }
+  else {
+    $form['link'] = array(
+      '#value'  => l(t('Add image'), 'javascript:', array(
+        'external'   => TRUE,
+        'attributes' => array('id' => 'image-link')
+      )),
+      '#suffix' => '<div class="description">' . t('Transform into a square 100×100') . '</div>',
+    );
+  }
+  $form['file'] = array(
+    '#type'  => 'file',
+    '#title' => '',
+  );
+  $form['submit'] = array(
+    '#type'  => 'submit',
+    '#value' => t('Upload'),
+  );
+
+  return $form;
+}
+
+/**
+ * Validate inputted file.
+ */
+function avatar_profile_form_validate($form, &$form_state) {
+    // Allowed extensions
+  $ext_post = array('image/png', 'image/gif', 'image/jpg', 'image/jpeg');
+  $ext = 'png gif jpg jpeg';
+  if (!in_array($_FILES['files']['type']['file'], $ext_post)) {
+    form_set_error('file', t('Upload image file (!ext).', array('!ext' => $ext)));
+
+    return FALSE;
+  }
+  $validators = array(
+    'file_validate_extensions' => array($ext),
+  );
+  $dir = file_directory_path();
+  $dir .= '/imagefield_thumbs/images/avatars';
+  if ($file = file_save_upload('file', $validators, $dir)) {
+    $form_state['values']['file'] = $file;
+  }
+  else {
+    form_set_error('file', t('File was not upload.'));
+  }
+}
+
+/**
+ * Saving file after success validation.
+ */
+function avatar_profile_form_submit($form, &$form_state) {
+  $node = node_load(array(
+    'uid' => arg(1),
+    'type' => 'profile',
+  ));
+  $img = (object)field_file_load($node->field_image[0]);
+  field_file_delete($img);
+  $file = $form_state['values']['file'];
+  $file->status = FILE_STATUS_PERMANENT;
+  $node->field_image[0]['fid'] = $file->fid;
+  node_save($node);
+  drupal_set_message(t('Photo changed.'));
+}
+
+/**
+ *  Implements hook_form_alter().
+ */
+function drua_profile_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'profile_node_form') {
+    $form['#pre_render'][] = 'drua_profile_add_description';
+    $form['field_image']['#type'] = 'hidden';
+    unset($form['language']);
+  }
+  if ($form_id == 'user_admin_settings') {
+    $defaults = variable_get('new_email_message', array());
+    $email_token_help = t('Available variables are:') . ' !username, !site, !password, !uri, !uri_brief, !mailto, !date, !login_uri, !edit_uri, !login_url., !new_email_link';
+    $form['email']['new_email_message'] = array(
+      '#type'        => 'fieldset',
+      '#title'       => t('New email message send'),
+      '#collapsible' => TRUE,
+      '#collapsed'   => TRUE,
+      '#tree'        => TRUE,
+      '#description' => t('Customize new email confirmation messages .') . ' ' . $email_token_help,
+    );
+    $form['email']['new_email_message']['new_email_subject'] = array(
+      '#type'          => 'textfield',
+      '#title'         => t('Subject'),
+      '#default_value' => isset($defaults['new_email_subject']) ? $defaults['new_email_subject'] : '',
+      '#description'   => '',
+    );
+    $form['email']['new_email_message']['new_email_message_body'] = array(
+      '#type'          => 'textarea',
+      '#title'         => t('Text'),
+      '#default_value' => isset($defaults['new_email_message_body']) ? $defaults['new_email_message_body'] : '',
+    );
+  }
+}
+
+/**
+ *  Add description text to fields first name and last name.
+ */
+function drua_profile_add_description($form) {
+  $genders = array_keys($form['group_personal']['field_gender']['value']['#options']);
+  $form['group_personal']['field_gender']['value'][$genders[0]]['#title'] = t('male');
+  $form['group_personal']['field_gender']['value'][$genders[1]]['#title'] = t('female');
+  $form['group_personal']['field_first_name']['#weight'] = 7;
+  $form['group_personal']['field_last_name']['#weight'] = 8;
+  $form['group_personal']['name_description'] = array(
+    '#value'  => t('The portal introduced a policy of real names, read !link. This information can be ignored, but then you will not be able to comment on Lenta.', array('!link' => l(t('information about the new rules'), ''))),
+    '#weight' => 9,
+    '#prefix' => '<div class="description">',
+    '#suffix' => '</div>',
+  );
+
+  return $form;
+}
+/**
+ *  Display form for change user email.
+ */
+function drua_profile_change_email() {
+  global $user;
+
+  $form = array();
+  $form['#validate'][] = 'drua_profile_change_email_validate';
+  $form['#submit'][] = 'drua_profile_change_email_submit';
+  if ($user->mail) {
+    $form['current_email'] = array(
+      '#value' => t('Acting-mail - !email', array('!email' => $user->mail)),
+    );
+  }
+  $form['new_email'] = array(
+    '#type'          => 'textfield',
+    '#title'         => t('Email'),
+    '#description'   => t('We will send a confirmation letter'),
+    '#default_value' => $user->mail,
+  );
+  $form['submit'] = array(
+    '#type'  => 'submit',
+    '#value' => t('Save'),
+  );
+
+  return $form;
+}
+
+/**
+ *  Validate email.
+ */
+function drua_profile_change_email_validate($form, $form_state) {
+  global $user;
+
+  $email = $form_state['values']['new_email'];
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    form_set_error('new_email', t('Enter valid email'));
+  }
+  if($email == $user->mail) {
+    form_set_error('new_email', t('Enter new email'));
+  }
+}
+
+/**
+ *  Change user email.
+ */
+function drua_profile_change_email_submit($form, $form_state) {
+  global $user, $base_url, $language;
+
+  $account = user_load($user->uid);
+  $tokens = user_mail_tokens($account, $language);
+  $email = $form_state['values']['new_email'];
+  $hash_email = substr(md5($user->uid), -7);
+  $data = array();
+  $data['email_confirmation'] = $hash_email;
+  $data['new_email'] = $email;
+  user_save($account, $data);
+  $vars = variable_get('new_email_message', array());
+  if ($vars) {
+    $text = $base_url . '/user/' . $account->uid . '/mail/' . $hash_email;
+    $link = l($text, 'user/' . $account->uid . '/mail/' . $hash_email, array('absolute' => TRUE));
+    $tokens['!new_email_link'] = $link;
+    $params['subject'] = strtr($vars['new_email_subject'], $tokens);
+    $params['body'] = strtr($vars['new_email_message_body'], $tokens);
+    $message = array(
+      'to'      => $email,
+      'subject' => $params['subject'],
+      'body'    => $params['body'],
+      'headers' => array(),
+    );
+    if (drupal_mail_send($message)) {
+      drupal_set_message(t('Confirmation link have send to you new email'));
+    };
+  }
+}
+
+/**
+ *  Display form for change user password.
+ */
+function drua_profile_change_password() {
+  include_once drupal_get_path('module', 'user') . '/user.pages.inc';
+  $form = drupal_retrieve_form('user_profile_form');
+  drupal_set_title(t('Password'));
+  unset($form['theme_select']);
+  unset($form['nodewords']);
+  unset($form['htmlmail']);
+  unset($form['heartbeat_activity_settings_select']);
+  unset($form['comment_notify_settings']);
+  unset($form['mimemail']);
+  unset($form['locale']);
+  unset($form['current_id']);
+  unset($form['legal']);
+  unset($form['language_value']);
+  unset($form['picture']);
+  unset($form['revision_id']);
+  unset($form['timezone']);
+  unset($form['masquerade']);
+  unset($form['account']);
+  unset($form['delete']);
+  $form['#validate'] = array('drua_profile_change_password_validate');
+  $form['#submit'][] = 'drua_profile_change_password_submit';
+  $form['current_password'] = array(
+    '#type'     => 'password',
+    '#required' => TRUE,
+    '#title'    => t('Current password'),
+  );
+  $form['pass'] = array(
+    '#type'     => 'password_confirm',
+    '#required' => TRUE,
+  );
+
+  return $form;
+}
+
+/**
+ *  Validate password.
+ */
+function drua_profile_change_password_validate($form, $form_state) {
+  global $user;
+
+  $curr_pass = $form_state['values']['current_password'];
+  $new_pass = $form_state['clicked_button']['pass1'];
+  $new_pass_conf = $form_state['clicked_button']['pass2'];
+  if (!$curr_pass) {
+    form_set_error('current_password', t('Enter current password.'));
+  }
+  if ($user->pass != md5($curr_pass)) {
+    form_set_error('current_password', t('Current password not valid.'));
+  }
+  if ($new_pass != $new_pass_conf) {
+    form_set_error('pass', t('The specified passwords do not match.'));
+  }
+}
+
+/**
+ *  Change user passsword.
+ */
+function drua_profile_change_password_submit($form, $form_state) {
+  global $user;
+
+  $account = user_load($user->uid);
+  if (user_save($account, array('pass' => $form_state['values']['pass']))) {
+    drupal_set_message(t('Password changed'));
+  };
+}
+
+/**
+ *  Check and set new email.
+ */
+function drua_profile_checknewmail() {
+  $arg = arg();
+  if ($arg[3]) {
+    $user = user_load($arg[1]);
+    $data = unserialize($user->data);
+    if (isset($data['email_confirmation']) && isset($data['new_email'])) {
+      if ($data['email_confirmation'] == $arg[3]) {
+        $data['mail'] = $data['new_email'];
+        $data['email_confirmation'] = NULL;
+        $data['new_email'] = NULL;
+        user_save($user, $data);
+        drupal_set_message(t('Email successfully changed to !email', array('!email' => $data['mail'])));
+      }
+    }
+    drupal_goto('user/' . $user->uid);
+  }
+  drupal_goto('/');
+}
 
 /**
  * Load the field values for the Content_profile.

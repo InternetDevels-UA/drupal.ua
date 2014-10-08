@@ -261,6 +261,8 @@ function idevels_preprocess_block(&$vars, $hook) {
  * output avatar and tabs, so, we need the special care here.
  */
 function idevels_preprocess_profile_header(&$vars) {
+  global $user;
+
   //$profile_vars = $vars['content_profile']->get_variables('profile', $vars['teaser'], TRUE);
   
   $vars['user_name'] = '';
@@ -273,7 +275,64 @@ function idevels_preprocess_profile_header(&$vars) {
   
   $vars['user_login'] = ($vars['user_name'] ? ' <span class="profile-aka">aka</span> ' : '')
     . $vars['account']->name;
-  $vars['tabs'] = theme('menu_local_tasks');
+  $arg = arg();
+  $tabs_arr = explode("\n", theme('menu_local_tasks'));
+  $edit_link = l(t('Edit'), 'user/' . arg(1) . '/edit/profile');
+  array_splice($tabs_arr, 2, 0, '<li>' . $edit_link . '</li>');
+  $newtabs = array(
+    'profile',
+    'newsletter',
+    'email',
+    'password'
+  );
+  if ($arg[2] == 'edit' && (in_array($arg[3], $newtabs))) {
+    $tabs_arr[2] = '<li class="active">' . $edit_link . '</li>';
+  }
+  if ($arg[2] == 'edit' && ($arg[3] == 'profile' || $arg[3] == 'newsletter')) {
+    $tabs_arr = array_reverse($tabs_arr);
+    foreach ($tabs_arr as $key => $tab) {
+      if (preg_match("/\\/user\\/" . arg(1) . "\\/edit\"/", $tab)) {
+        unset($tabs_arr[$key]);
+        break;
+      }
+    }
+    $tabs_arr = array_reverse($tabs_arr);
+  }
+  if ($arg[2] == 'edit' && ($arg[3] == 'email' || $arg[3] == 'password')) {
+
+    foreach ($tabs_arr as $key => $tab) {
+      if (preg_match("/\\/edit\\/email/", $tab)) {
+        $new_tabs = array(
+          '<li>' . l(t('Profile'), 'user/' . arg(1) . '/edit/profile') . '</li>',
+          '<li>' . l(t('Newsletters'), 'user/' . arg(1) . '/edit/newsletter') . '</li>',
+        );
+        array_splice($tabs_arr, $key, 0, $new_tabs);
+      }
+    }
+  }
+  $tabs = implode("\n", $tabs_arr);
+  /*
+   * Replace patterns for:
+   *  - user/%/edit -> user/%/edit/profile
+   *  - 'Profile' -> t('Profile')
+   *  - 'Newsletter' -> t('Newsletter')
+   *  - 'View' -> t('View')
+   */
+  $user_link = drupal_get_path_alias('user/' . $user->uid);
+  $patterns = array(
+    "/\\/user\\/" . arg(1) . "\\/edit\"/",
+    "/Profile/",
+    "/edit\\/newsletter\"( class=\"active\")?>(.*)<\\/a><\\/li>/",
+    "/" . preg_quote($user_link, '/') . "\"( class=\"active\")?>(.*)<\\/a><\\/li>/",
+  );
+  $replacements = array(
+    '/user/' . arg(1) . '/edit/profile"',
+    t('Profile'),
+    'edit/newsletter"$1>' . t('Newsletters') . '</a></li>',
+    $user_link . '"$1>' . t('View') . '</a></li>',
+  );
+  $links = preg_replace($patterns, $replacements, $tabs);
+  $vars['tabs'] = $links;
 }
 
 ///**
@@ -537,4 +596,84 @@ function idevels_preprocess_views_view_field__og_most_popular_groups_by_term__ti
   $vars['output'] = l(tt('taxonomy:term:'. $vars['row']->term_data_tid .':name',
     $vars['row']->term_data_name, $language->language),
     'taxonomy/term/'. $vars['row']->term_data_tid);
+}
+
+function idevels_content_multiple_values($element) {
+  $field_name = $element['#field_name'];
+  $field = content_fields($field_name);
+  $output = '';
+
+  if ($field['multiple'] >= 1) {
+    $table_id = $element['#field_name'] . '_values';
+    $order_class = $element['#field_name'] . '-delta-order';
+    $required = !empty($element['#required']) ? '<span class="form-required" title="' . t('This field is required.') . '">*</span>' : '';
+
+    $header = array(
+      array(
+        'data' => t('!title: !required', array('!title' => $element['#title'], '!required' => $required)),
+        'colspan' => 2,
+      ),
+      array(
+        'data' => t('Order'),
+        'class' => 'content-multiple-weight-header',
+      ),
+    );
+    $rows = array();
+
+    // Sort items according to '_weight' (needed when the form comes back after
+    // preview or failed validation)
+    $items = array();
+    foreach (element_children($element) as $key) {
+      if ($key !== $element['#field_name'] . '_add_more') {
+        $items[$element[$key]['#delta']] = &$element[$key];
+      }
+    }
+    uasort($items, '_content_sort_items_value_helper');
+    $element[$element['#field_name'] . '_add_more']['#value'] = '';
+
+    // Add the items as table rows.
+    foreach ($items as $delta => $item) {
+      $item['_weight']['#attributes']['class'] = $order_class;
+      $delta_element = drupal_render($item['_weight']);
+      $cells = array(
+        array(
+          'data' => '',
+          'class' => 'content-multiple-drag',
+        ),
+        drupal_render($item),
+        array(
+          'data' => $delta_element,
+          'class' => 'delta-order',
+        ),
+      );
+      if ($delta != end(array_keys($items))) {
+        $cells[] = array(
+          'data'  => '<div></div>',
+          'class' => 'row-remove',
+        );
+      } else {
+        $cells[] = array(
+          'data'  => drupal_render($element[$element['#field_name'] . '_add_more']),
+          'class' => 'row-add',
+        );
+      }
+      $row_class = 'draggable';
+      $rows[] = array(
+        'data' => $cells,
+        'class' => $row_class,
+      );
+    }
+    $output .= theme('table', $header, $rows, array('id' => $table_id, 'class' => 'content-multiple-table'));
+    $output .= $element['#description'] ? '<div class="description">' . $element['#description'] . '</div>' : '';
+
+    drupal_add_tabledrag($table_id, 'order', 'sibling', $order_class);
+    drupal_add_js(drupal_get_path('module', 'content') . '/js/content.node_form.js');
+  }
+  else {
+    foreach (element_children($element) as $key) {
+      $output .= drupal_render($element[$key]);
+    }
+  }
+
+  return $output;
 }

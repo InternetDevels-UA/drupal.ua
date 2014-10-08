@@ -151,5 +151,23 @@ $(function () {
       modalFormDecorator();
     },1000);
   });
-
+// Right block user avatar.
+  $('#image-link').click(function (e) {
+    e.preventDefault();
+    $('#avatar-profile-form #edit-file').trigger('click');
+  });
+  $('#avatar-profile-form #edit-file').change(function () {
+    $('#avatar-profile-form .form-submit').trigger('click');
+  });
+  // Page change password.
+  $('#drua-profile-change-password input.required').attr('required', 'true');
+  // Page profile sites remove button.
+  $('.group-contacts #field_personal_website_values tbody tr .row-remove div').click(function (e) {
+    $(this).parent().parent().remove();
+  });
+  $(document).ajaxStop(function() {
+    $('.group-contacts #field_personal_website_values tbody tr .row-remove div').click(function (e) {
+      $(this).parent().parent().remove();
+    });
+  });
 });
