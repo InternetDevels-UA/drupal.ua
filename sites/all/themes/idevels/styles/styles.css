@@ -4527,6 +4527,8 @@ body.front
   text-decoration: underline;
   font-size: 14px;
   font-family: "Pt sans";
+  margin-top: -8px;
+  display: block;
 }
 
 .all-upcoming-events:hover {
