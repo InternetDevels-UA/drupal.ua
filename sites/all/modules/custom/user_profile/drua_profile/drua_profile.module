@@ -711,8 +711,8 @@ function drua_profile_change_password() {
  *  Validate password.
  */
 function drua_profile_change_password_validate($form, $form_state) {
-  $new_pass = $form_state['clicked_button']['pass1'];
-  $new_pass_conf = $form_state['clicked_button']['pass2'];
+  $new_pass = $form_state['clicked_button']['#post']['pass']['pass1'];
+  $new_pass_conf = $form_state['clicked_button']['#post']['pass']['pass2'];
   if (!$new_pass || !$new_pass_conf) {
     form_set_error('pass', t('Insert new passwords.'));
   }
