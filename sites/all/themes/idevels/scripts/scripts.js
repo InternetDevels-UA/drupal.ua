@@ -3,11 +3,11 @@ $(function () {
 
 
   // For right question block
-  $('.view-question .views-row').each(function () {
+  /*$('.view-question .views-row').each(function () {
     $('> .views-field-title, > .views-field-created-1', this).wrapAll('<div class="question-lastposts-content"></div>');
   });
   $('.view-question .question-lastposts-content').prepend("<div class='buckle-up'></div>");
-  $('.view-question .question-lastposts-content').prepend("<div class='buckle-down'></div>");
+  $('.view-question .question-lastposts-content').prepend("<div class='buckle-down'></div>");*/
 //$('.view-question .view-content > .views-row').wrap('<div class="question-lastposts-content"></div>');
   $('#block-menu-secondary-links .menu li a').each(function () {
     $(this).wrapInner('<span class="tile-title"></span>');
@@ -170,4 +170,57 @@ $(function () {
       $(this).parent().parent().remove();
     });
   });
+
+  if ($('#edit-pass-pass1').length) {
+    $('#edit-pass-pass1').attr('placeholder', Drupal.t('Password'));
+    $('#edit-pass-pass2').attr('placeholder', Drupal.t('Confirm password'));
+  }
+
+  // Rewrite autocoplit submit function for event page
+
+  if ($("body").hasClass("page-events")) {
+    Drupal.ACDB.prototype.search = function (searchString) {
+      var db = this;
+      this.searchString = searchString;
+
+      // See if this key has been searched for before
+      if (this.cache[searchString]) {
+        return this.owner.found(this.cache[searchString]);
+      }
+
+      // Initiate delayed search
+      if (this.timer) {
+        clearTimeout(this.timer);
+      }
+      this.timer = setTimeout(function() {
+        db.owner.setStatus('begin');
+
+        // Ajax GET request for autocompletion
+        $.ajax({
+          type: "GET",
+          // There I add "event" to GET qecuest
+          url: db.uri +'/'+ Drupal.encodeURIComponent(searchString) + '/event',
+          dataType: 'json',
+          success: function (matches) {
+            if (typeof matches['status'] == 'undefined' || matches['status'] != 0) {
+              db.cache[searchString] = matches;
+              // Verify if these are still the matches the user wants to see
+              if (db.searchString == searchString) {
+                db.owner.found(matches);
+              }
+              db.owner.setStatus('found');
+            }
+          },
+          error: function (xmlhttp) {
+            alert(Drupal.ahahError(xmlhttp, db.uri));
+          }
+        });
+      }, this.delay);
+    };
+  };
+
+  $(".vud-widget-upanddown").each(function(){
+    $(this).parent().parent().find('.meta-links > .meta').after($(this));
+  });
+
 });

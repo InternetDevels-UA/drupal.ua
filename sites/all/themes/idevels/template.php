@@ -97,7 +97,12 @@ function idevels_preprocess_node(&$vars) {
   switch ($language->language) {
     case 'ru':
     case 'uk':
-      $vars['date'] = format_date($node->created, 'custom', "j F, Y");
+      if (function_exists('ua_month_perfecty')) {
+        $vars['date'] = ua_month_perfecty($vars['node']->created);
+      }
+      else {
+        $vars['date'] = format_date($node->created, 'custom', "j F, Y");
+      }
       break;
     case 'en':
       $vars['date'] = format_date($node->created, 'custom', "F jS, Y");
@@ -161,8 +166,14 @@ function idevels_preprocess_node(&$vars) {
               }
             }
           }
+          $gnode = node_load($gid);
+          if ($gnode->field_group_image[0]['filepath']) {
+            $vars['group_logo'] = theme('imagecache', 'tiny', $gnode->field_group_image[0]['filepath'], $prefix);
+          }
+          $description = $gnode->body;
           $prefix = implode(' : ', $og);
           $vars['title_prefix'] = $prefix;
+          $vars['group_description'] = $description;
         }
       }
     }
@@ -185,14 +196,19 @@ function idevels_preprocess_comment(&$vars) {
   switch ($language->language) {
     case 'ru':
     case 'uk':
-      $vars['date'] = format_date($comment->timestamp, 'custom', "j F, Y - H:i");
+      if (function_exists('ua_month_perfecty')) {
+        $vars['date'] = ua_month_perfecty($comment->timestamp);
+      }
+      else {
+        $vars['date'] = format_date($comment->timestamp, 'custom', "j F, Y - H:i");
+      }
       break;
     case 'en':
       $vars['date'] = format_date($comment->timestamp, 'custom', "F jS, Y - H:i");
       break;
   }
-
   $vars['user'] = theme('username', $comment);
+  $vars['cid'] = $vars['comment']->cid;
 }
 
 /**
@@ -602,24 +618,24 @@ function idevels_content_multiple_values($element) {
   $field_name = $element['#field_name'];
   $field = content_fields($field_name);
   $output = '';
-
   if ($field['multiple'] >= 1) {
     $table_id = $element['#field_name'] . '_values';
     $order_class = $element['#field_name'] . '-delta-order';
     $required = !empty($element['#required']) ? '<span class="form-required" title="' . t('This field is required.') . '">*</span>' : '';
-
     $header = array(
       array(
-        'data' => t('!title: !required', array('!title' => $element['#title'], '!required' => $required)),
+        'data'    => t('!title: !required', array(
+            '!title'    => $element['#title'],
+            '!required' => $required
+          )),
         'colspan' => 2,
       ),
       array(
-        'data' => t('Order'),
+        'data'  => t('Order'),
         'class' => 'content-multiple-weight-header',
       ),
     );
     $rows = array();
-
     // Sort items according to '_weight' (needed when the form comes back after
     // preview or failed validation)
     $items = array();
@@ -630,19 +646,18 @@ function idevels_content_multiple_values($element) {
     }
     uasort($items, '_content_sort_items_value_helper');
     $element[$element['#field_name'] . '_add_more']['#value'] = '';
-
     // Add the items as table rows.
     foreach ($items as $delta => $item) {
       $item['_weight']['#attributes']['class'] = $order_class;
       $delta_element = drupal_render($item['_weight']);
       $cells = array(
         array(
-          'data' => '',
+          'data'  => '',
           'class' => 'content-multiple-drag',
         ),
         drupal_render($item),
         array(
-          'data' => $delta_element,
+          'data'  => $delta_element,
           'class' => 'delta-order',
         ),
       );
@@ -651,7 +666,8 @@ function idevels_content_multiple_values($element) {
           'data'  => '<div></div>',
           'class' => 'row-remove',
         );
-      } else {
+      }
+      else {
         $cells[] = array(
           'data'  => drupal_render($element[$element['#field_name'] . '_add_more']),
           'class' => 'row-add',
@@ -659,13 +675,14 @@ function idevels_content_multiple_values($element) {
       }
       $row_class = 'draggable';
       $rows[] = array(
-        'data' => $cells,
+        'data'  => $cells,
         'class' => $row_class,
       );
     }
-    $output .= theme('table', $header, $rows, array('id' => $table_id, 'class' => 'content-multiple-table'));
+    $output .= theme('table', $header, $rows, array('id'    => $table_id,
+                                                    'class' => 'content-multiple-table'
+      ));
     $output .= $element['#description'] ? '<div class="description">' . $element['#description'] . '</div>' : '';
-
     drupal_add_tabledrag($table_id, 'order', 'sibling', $order_class);
     drupal_add_js(drupal_get_path('module', 'content') . '/js/content.node_form.js');
   }
@@ -676,4 +693,23 @@ function idevels_content_multiple_values($element) {
   }
 
   return $output;
+}
+/**
+ * Theming group_comments__panel_pane_2__timestamp.
+ * Make months looks better. 
+ */
+function idevels_preprocess_views_view_field__group_comments__panel_pane_2__timestamp(&$vars) {
+  if (function_exists('ua_month_perfecty')) {
+    $vars['output'] = ua_month_perfecty($vars['row']->comments_timestamp);
+  }
+}
+
+/**
+ * Theming question__block_2__created_1.
+ * Make months looks better. 
+ */
+function idevels_preprocess_views_view_field__question__block_2__created_1(&$vars) {
+  if (function_exists('ua_month_perfecty')) {
+    $vars['output'] = ua_month_perfecty($vars['view']->result[$vars['id']-1]->node_created);
+  }
 }
