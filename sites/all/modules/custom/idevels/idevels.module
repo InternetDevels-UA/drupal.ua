@@ -268,6 +268,18 @@ function idevels_views_pre_render(&$view) {
   elseif ($view->name == 'Events' && $view->current_display == 'page_2') {
     drupal_set_title(t('Past Events'));
   }
+  elseif ($view->name == 'og_posts_list' && $view->current_display == 'block_1') {
+    drupal_set_breadcrumb(array(
+      l(t('Home'), NULL),
+      t('Groups')
+    ));
+  }
+  elseif ($view->name == 'users' && $view->current_display == 'page_1') {
+    drupal_set_breadcrumb(array(
+      l(t('Home'), NULL),
+      t('Users')
+    ));
+  }
   elseif ($view->name == 'vacations' && $view->current_display == 'page_1') {
     drupal_set_title(t('Vacations'));
   }
