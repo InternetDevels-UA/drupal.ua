@@ -3,12 +3,6 @@
 
 define ('OG_VOCABULARY', 6);  //Vocabulary for node of type = post
 /**
- * Redirect to page question.
- */
-function _groups_form_cancel() {
-  drupal_goto('question');
-}
-/**
  * Implementation of hook_form_alter().
  */
 function groups_form_changes_form_alter(&$form, $form_state, $form_id) {
@@ -30,17 +24,18 @@ function groups_form_changes_form_alter(&$form, $form_state, $form_id) {
         drupal_set_title($types[$type]->name);
         $form['buttons']['submit']['#value'] = t('Save question');
         $form['buttons']['cancel'] = array(
-          '#type' => 'submit',
-          '#value' => t('Cancel question'),
+          '#type' => 'markup',
+          '#suffix' => '</span>',
+          '#prefix' => '<span class="helper-node-form-cancel">',
+          '#value' => l(t('Cancel question'), 'question'),
           '#weight' => 20,
-          '#executes_submit_callback' => TRUE,
-          '#access' => FALSE,
-          '#submit' => array('_groups_form_cancel'),
+          '#access' => TRUE,
         );
-        if ($form_state['process_input']) {
-          $form['buttons']['cancel']['#access'] = TRUE;
-          $form['buttons']['preview']['#access'] = FALSE;
-        }
+        $form['buttons']['submit']['#access'] = TRUE;
+        $form['buttons']['preview']['#access'] = FALSE;
+        $form['#prefix'] = '<span class="helper-node-form">';
+        $form['#suffix'] = '</span>';
+        $form['body_field']['body']['#rows'] = 11;
       }
       else {
         if ($new == $new_translated) {
