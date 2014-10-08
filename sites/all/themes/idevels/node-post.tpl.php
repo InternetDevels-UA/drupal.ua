@@ -1,6 +1,7 @@
 <div class="node<?php if (!$status) { print ' node-unpublished'; } ?>">
   <?php if ($page == 0): ?>
-    <h2 class="title"><?php if ($title_prefix): ?><span class="node-title-prefix"><?php print $title_prefix; ?>&nbsp;&#8594;&nbsp;</span><?php endif; ?><a class="node-title" href="<?php print $node_url ?>"><?php print $title; ?></a></h2>
+    <h2 class="title"><a class="node-title" href="<?php print $node_url ?>"><?php print $title; ?></a></h2>
+    <?php if ($title_prefix): ?><span class="node-title-prefix group-subtitle"><?php print $group_logo; ?><?php print $title_prefix . ', '; ?><?php print $group_description; ?></span><?php endif; ?>
   <?php endif; ?>
 
   <div class="content">
