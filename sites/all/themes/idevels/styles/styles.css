@@ -4241,7 +4241,7 @@ fieldset.group-drupal legend {
   font-style: italic;
 }
 fieldset.group-personal fieldset.location > legend,
-fieldset.group-personal fieldset.location > div:last-of-type {
+fieldset.group-personal fieldset.location #edit-field-location-0-delete-location-wrapper {
   display: none;
 }
 fieldset.group-personal fieldset.location select.location_auto_country {
