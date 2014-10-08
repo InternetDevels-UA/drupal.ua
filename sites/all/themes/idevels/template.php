@@ -714,23 +714,3 @@ function idevels_content_multiple_values($element) {
 
   return $output;
 }
-
-/**
- * Theming group_comments__panel_pane_2__timestamp.
- * Make months looks better. 
- */
-function idevels_preprocess_views_view_field__group_comments__panel_pane_2__timestamp(&$vars) {
-  if (function_exists('ua_month_perfecty')) {
-    $vars['output'] = ua_month_perfecty($vars['row']->comments_timestamp);
-  }
-}
-
-/**
- * Theming question__block_2__created_1.
- * Make months looks better. 
- */
-function idevels_preprocess_views_view_field__question__block_2__created_1(&$vars) {
-  if (function_exists('ua_month_perfecty')) {
-    $vars['output'] = ua_month_perfecty($vars['view']->result[$vars['id']-1]->node_created);
-  }
-}
