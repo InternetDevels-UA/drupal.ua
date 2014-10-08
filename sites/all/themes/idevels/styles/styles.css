@@ -927,7 +927,7 @@ ul.quicktabs-style-nostyle li.active:hover a  { background:url(../images/tabs-bi
 ul.quicktabs-style-nostyle li.active:active { background:url(../images/tabs-big.png) right -56px no-repeat; }
 ul.quicktabs-style-nostyle li.active:active a { background:url(../images/tabs-big.png) 0 -56px no-repeat; }
 
-ul.primary, ul.primary li, ul.primary li a { padding:0; margin:0; }
+ul.primary, ul.primary li, ul.primary li a { padding:0; margin:0; font-family: "PT Sans";}
 ul.primary, ul.primary li, ul.primary li a, ul.primary li.active, ul.primary li.active a { line-height:28px !important; display:inline-block; border:none; }
 .tabs-wrapper { margin: 1em 0; }
 ul.primary { margin: 0; display:block; }
@@ -947,7 +947,7 @@ ul.primary li.active:active { background:url(../images/tabs-big.png) right -56px
 ul.primary li.active:active a { background:url(../images/tabs-big.png) 0 -56px no-repeat; }
 
 ul.secondary { border:none; margin: 1em 0 2em; padding:0; }
-ul.secondary li, ul.secondary li a { padding:0; margin:0; }
+ul.secondary li, ul.secondary li a { padding:0; margin:0; font-family: "PT Sans"}
 ul.secondary li { display:inline-block;margin-right:20px; border-right:none; }
 ul.secondary a.active { border-bottom:4px solid #286596; }
 
@@ -1323,6 +1323,15 @@ h1.user-name {
   color: #000;
 }
 h1.user-name span.user-login {
+  font-weight: normal;
+  font-size: 28px;
+}
+h1.user-name span.profile-aka {
+  font-size: 20px;
+  color: #999;
+}
+h1.user-name span.user-login {
+  font-family: 'PT Sans Narrow', Arial, sans-serif;
   font-weight: normal;
   font-size: 28px;
 }
@@ -4195,6 +4204,7 @@ form[action="/feedback"] #webform-component-povidomlennya textarea,
 form[action="/feedback"] .captcha {
   width: 785px;
 }
+<<<<<<< HEAD
 /*Upcoming-events And Frontpage*/
 body.front .center-left {
   width: 60%;
@@ -4548,4 +4558,179 @@ body > .body-wrapper {
   -webkit-box-shadow: -2px 2px 10px 4px rgba(137, 137, 137, 0.43);
   -moz-box-shadow: -2px 2px 10px 4px rgba(137, 137, 137, 0.43);
   box-shadow: -2px 2px 10px 4px rgba(137, 137, 137, 0.43);
+}
+
+/*
+* Right block with avatar
+*/
+#block-drua_profile-profile_change_avatar * {
+  font-family: 'PT Sans' !important;
+}
+#block-drua_profile-profile_change_avatar #edit-file-wrapper,
+#block-drua_profile-profile_change_avatar .form-submit {
+  display: none;
+}
+#block-drua_profile-profile_change_avatar .block-title {
+  font-weight: 100;
+  font-style: italic;
+  font-family: 'PT Sans Narrow', Arial, sans-serif !important;
+}
+/*
+* Profile tabs
+*/
+form#drua-profile-change-password *,
+form#drua-profile-change-email *,
+form#user-profile-form *,
+form#node-form * {
+  font-family: "PT Sans" !important;
+}
+fieldset.group-personal input[type=text],
+fieldset.group-personal .form-item textarea,
+fieldset.group-personal select.location_auto_country,
+fieldset.group-contacts input[type=text],
+fieldset.group-drupal input[type=text] {
+  width: 390px;
+}
+fieldset.group-personal,
+fieldset.group-contacts,
+fieldset.group-drupal,
+fieldset.group-drupal fieldset,
+fieldset.group-personal fieldset.location {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+fieldset.group-personal,
+fieldset.group-contacts,
+fieldset.group-drupal {
+  margin: 0 0 30px 0;
+}
+fieldset.group-personal > legend,
+fieldset.group-contacts > legend,
+fieldset.group-drupal legend {
+  padding: 0;
+  font-style: italic;
+}
+fieldset.group-personal fieldset.location > legend,
+fieldset.group-personal fieldset.location > div:last-of-type {
+  display: none;
+}
+fieldset.group-personal fieldset.location select.location_auto_country {
+  margin: 0;
+}
+fieldset.group-personal fieldset.location #edit-field-location-0-city-wrapper,
+fieldset.group-personal fieldset.location #edit-field-location-0-city-wrapper input {
+  margin-bottom: 0;
+}
+fieldset.group-personal #edit-field-first-name-0-value-wrapper,
+fieldset.group-personal #edit-field-last-name-0-value-wrapper {
+  float: left;
+  margin-bottom: 0;
+  width: 50%;
+}
+fieldset.group-personal #edit-field-first-name-0-value-wrapper input[type=text],
+fieldset.group-personal #edit-field-last-name-0-value-wrapper input[type=text] {
+  width: 390px;
+}
+fieldset.group-personal .description {
+  clear: both;
+  margin-bottom: 10px;
+}
+fieldset.group-personal .date-clear-block {
+  width: 327px;
+}
+fieldset.group-personal .date-clear-block > .form-item > label {
+  float: left;
+}
+fieldset.group-personal .date-clear-block > .form-item > div {
+  float: right;
+}
+fieldset.group-personal .date-clear-block > .form-item > div label {
+  display: none;
+}
+fieldset.group-personal > div.form-item:nth-of-type(5) {
+  clear: both;
+}
+fieldset.group-personal > div.form-item:nth-of-type(5) label,
+fieldset.group-personal > div.form-item#edit-field-profile-company-0-value-wrapper > label,
+fieldset.group-personal > div.form-item#edit-field-job-title-0-value-wrapper > label,
+fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper > label,
+fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper > label,
+fieldset.group-contacts > div.form-item > label,
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values thead th {
+  float: left;
+  padding-right: 10px;
+  width: 140px;
+}
+fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper,
+fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper {
+  clear: both;
+}
+fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper textarea,
+fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper textarea {
+  float: left;
+}
+fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper .grippie,
+fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper .grippie {
+  display: none;
+}
+fieldset.group-personal > fieldset:nth-of-type(2) {
+  clear: both;
+}
+fieldset.group-contacts > div#field-personal-website-items table.sticky-header {
+  display: none !important;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values {
+  border-bottom: none;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values thead {
+  float: left;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values thead th {
+  display: block;
+  float: left;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values tbody {
+  display: block;
+  float: left;
+}
+fieldset.group-contacts > div#field-personal-website-items .description {
+  margin-left: 190px;
+}
+fieldset.group-contacts > div#field-personal-website-items input[type=text] {
+  width: 340px;
+}
+body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr {
+  background: #FFF;
+}
+body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit],
+body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr .row-remove div {
+  margin-top: 3px;
+  width: 28px;
+  height: 28px;
+  border: none;
+  cursor: pointer;
+  transition: none;
+}
+body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit] {
+  background: url('/sites/all/themes/idevels/images/add-remove-buttons.png') no-repeat;
+}
+body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit]:hover {
+  background-position: -34px 0;
+}
+body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit]:active {
+  background-position: -68px 0;
+}
+body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr .row-remove div {
+  background: url('/sites/all/themes/idevels/images/add-remove-buttons.png') no-repeat 0 -32px;
+}
+body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr .row-remove div:hover {
+  background-position: -34px -32px;
+}
+body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr .row-remove div:active {
+  background-position: -68px -32px;
 }
