@@ -4269,6 +4269,69 @@ div#not_found #not_found_text {
   font: 15px 'Pt Sans',Arial,Verdana,sans-serif;
 }
 
+.helper-node-form-cancel {
+  margin-left: 15px;
+}
+
+a.helper-node-form-cancel {
+  font: 15px 'Pt Sans', Arial, Verdana, sans-serif;
+}
+
+.teaser-checkbox {
+  display: none;
+}
+
+.helper-label .form-item label {
+  font-weight: normal;
+}
+
+.grippie {
+  display: none !important;
+}
+
+.helper-node-form input[type=submit] {
+  border: 1px solid #e3e3e3;
+  background: linear-gradient(to bottom, #f7f7f7, #edebeb);
+  padding: 0 11px;
+  height: 31px;
+  line-height: 1;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 0 #fcfcfc inset, 0 -1px 0 0 #f0eeee inset;
+  cursor: pointer;
+  position: relative;
+  font-size: 16px;
+}
+
+.helper-node-form input[type=submit]:hover {
+  border-color: #999;
+}
+
+.helper-node-form-cancel a {
+  text-decoration: underline;
+  font-style: italic;
+  font-size: 13px;
+  color: #1876ac;
+  position: relative;
+  font-family: 'PT Sans';
+}
+
+.helper-node-form-cancel a:after {
+  position: absolute;
+  content: ' →';
+  font-size: 13px;
+  margin-top: 6px;
+  margin-left: 4px;
+  ont-family: 'PT Sans';
+}
+
+.helper-node-form-cancel a:hover {
+  color: #f93703;
+}
+
+.helper-node-form input,
+.helper-node-form textarea {
+  font-family: 'PT Sans';
+}
 /* Custom-user-login-page */
 .custom-user-login-page input.form-text {
   padding: 0.5em 1.9em 0.5em 0.75em;
