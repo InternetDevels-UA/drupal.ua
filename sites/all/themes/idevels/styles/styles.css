@@ -4942,3 +4942,90 @@ body.page-user form#node-form .group-contacts #field_personal_website_values tbo
 .view-id-upcoming_events .field-content{
   min-height:60px;
 }
+
+body,
+#footer {
+  background-color: #F6F6F6;
+}
+
+body > .body-wrapper {
+  height: auto;
+  min-height: 100%;
+  margin: 0 auto;
+  width: 1240px;
+  background: white;
+  margin-bottom: 10px;
+  -webkit-box-shadow: -2px 2px 10px 4px rgba(137, 137, 137, 0.43);
+  -moz-box-shadow: -2px 2px 10px 4px rgba(137, 137, 137, 0.43);
+  box-shadow: -2px 2px 10px 4px rgba(137, 137, 137, 0.43);
+}
+
+.block ul {
+  padding: 0 0 0.25em 0px;
+}
+
+.block ul,
+#logo,
+.social-question,
+.pane-group-comments-panel-pane-2,
+.pane-group,
+#page-title,
+.breadcrumb,
+.tabs-wrapper,
+div.panel-pane div.node,
+.addthis_toolbox,
+.pane-node-comment-form,
+.pane-node-comments,
+.not-front #main-content,
+.help,
+.messages {
+  margin-left: 20px;
+}
+
+ul.menu li {
+  margin: 0px;
+}
+
+#block-menu-menu-userlogin {
+  right: 20px;
+}
+
+body.front .pane-views,
+.not-front #main-content {
+  width: 845px;
+}
+
+.view-upcoming-events .views-row,
+.pane-node-comments .pane-content,
+.view-Resources .menu-links a:last-child,
+.help,
+.messages {
+  margin-right: 20px;
+}
+
+.view-group .views-row {
+  margin: 5px 10px 10px 0px;
+}
+
+.footer-third,
+#sidebar-right {
+  margin-right: 20px;
+  width: 340px;
+}
+
+#cke_edit-submitted-povidomlennya {
+  width: 98%;
+}
+
+.container-12 .grid-12,
+.view div.node, div.panel-pane .view div.node {
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+}
+
+.content img{
+  margin:0px;
+  padding:0px;
+}
+
