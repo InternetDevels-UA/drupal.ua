@@ -1323,6 +1323,15 @@ h1.user-name {
   color: #000;
 }
 h1.user-name span.user-login {
+  font-family: 'PT Sans Narrow', Arial, sans-serif;
+  font-weight: normal;
+  font-size: 28px;
+}
+h1.user-name span.profile-aka {
+  font-size: 20px;
+  color: #999;
+}
+h1.user-name span.user-login {
   font-weight: normal;
   font-size: 28px;
 }
@@ -4204,6 +4213,217 @@ form[action="/feedback"] #webform-component-povidomlennya textarea,
 form[action="/feedback"] .captcha {
   width: 785px;
 }
+
+/*
+* Right block with avatar
+*/
+#block-drua_profile-profile_change_avatar * {
+  font-family: 'PT Sans' !important;
+}
+#block-drua_profile-profile_change_avatar #edit-file-wrapper,
+#block-drua_profile-profile_change_avatar .form-submit {
+  display: none;
+}
+#block-drua_profile-profile_change_avatar .block-title {
+  font-weight: 100;
+  font-style: italic;
+  font-family: 'PT Sans Narrow', Arial, sans-serif !important;
+}
+/*
+* Profile tabs
+*/
+form#drua-profile-change-password *,
+form#drua-profile-change-email *,
+form#user-profile-form *,
+form#node-form * {
+  font-family: "PT Sans" !important;
+}
+form#drua-profile-change-password label,
+form#drua-profile-change-email label,
+form#user-profile-form label,
+form#node-form label,
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values thead th {
+  font-weight: normal;
+}
+fieldset.group-personal input[type=text],
+fieldset.group-personal .form-item textarea,
+fieldset.group-personal select.location_auto_country,
+fieldset.group-contacts input[type=text],
+fieldset.group-drupal input[type=text] {
+  width: 390px;
+}
+fieldset.group-personal,
+fieldset.group-contacts,
+fieldset.group-drupal,
+fieldset.group-drupal fieldset,
+fieldset.group-personal fieldset.location,
+form#user-profile-form fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+fieldset.group-personal,
+fieldset.group-contacts,
+fieldset.group-drupal {
+  margin: 0 0 30px 0;
+}
+fieldset.group-personal > legend,
+fieldset.group-contacts > legend,
+fieldset.group-drupal legend,
+form#user-profile-form fieldset legend {
+  padding: 0;
+  font-style: italic;
+}
+fieldset.group-personal fieldset.location > legend,
+fieldset.group-personal fieldset.location #edit-field-location-0-delete-location-wrapper {
+  display: none;
+}
+fieldset.group-personal fieldset.location select.location_auto_country {
+  margin: 0;
+}
+fieldset.group-personal fieldset.location #edit-field-location-0-city-wrapper,
+fieldset.group-personal fieldset.location #edit-field-location-0-city-wrapper input {
+  margin-bottom: 0;
+}
+fieldset.group-personal #edit-field-first-name-0-value-wrapper,
+fieldset.group-personal #edit-field-last-name-0-value-wrapper {
+  float: left;
+  margin-bottom: 0;
+  width: 50%;
+}
+fieldset.group-personal #edit-field-first-name-0-value-wrapper input[type=text],
+fieldset.group-personal #edit-field-last-name-0-value-wrapper input[type=text] {
+  width: 370px;
+}
+fieldset.group-personal .description {
+  clear: both;
+  margin-bottom: 10px;
+}
+fieldset.group-personal .date-clear-block {
+  width: 327px;
+}
+fieldset.group-personal .date-clear-block > .form-item > label {
+  float: left;
+}
+fieldset.group-personal .date-clear-block > .form-item > div {
+  float: right;
+}
+fieldset.group-personal .date-clear-block > .form-item > div label {
+  display: none;
+}
+fieldset.group-personal > div.form-item:nth-of-type(5) {
+  clear: both;
+}
+fieldset.group-personal > div.form-item:nth-of-type(5) label,
+fieldset.group-personal > div.form-item#edit-field-profile-company-0-value-wrapper > label,
+fieldset.group-personal > div.form-item#edit-field-job-title-0-value-wrapper > label,
+fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper > label,
+fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper > label,
+fieldset.group-contacts > div.form-item > label,
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values thead th,
+fieldset.group-drupal label {
+  float: left;
+  padding-right: 10px;
+  width: 140px;
+}
+body.page-user form#node-form input[type=submit],
+body.page-user form#user-profile-form input[type=submit],
+form#drua-profile-change-email input[type=submit],
+form#drua-profile-change-password input[type=submit] {
+  border: 1px solid #E3E3E3;
+  background: linear-gradient(to bottom,#F7F7F7,#EDEBEB);
+  padding: 0 11px;
+  height: 31px;
+  line-height: 1;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 0 #FCFCFC inset,0 -1px 0 0 #F0EEEE inset;
+  cursor: pointer;
+  position: relative;
+  font-size: 16px;
+}
+body.page-user form#node-form input[type=submit]:hover,
+body.page-user form#user-profile-form input[type=submit]:hover,
+form#drua-profile-change-email input[type=submit]:hover,
+form#drua-profile-change-password input[type=submit]:hover {
+  border-color: #999;
+}
+form#node-form fieldset.group-drupal .description {
+ margin-left: 140px;
+}
+fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper,
+fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper {
+  clear: both;
+}
+fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper textarea,
+fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper textarea {
+  float: left;
+}
+fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper .grippie,
+fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper .grippie {
+  display: none;
+}
+fieldset.group-personal > fieldset:nth-of-type(2) {
+  clear: both;
+}
+fieldset.group-contacts > div#field-personal-website-items table.sticky-header {
+  display: none !important;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values {
+  border-bottom: none;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values thead {
+  float: left;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values thead th {
+  display: block;
+  float: left;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values tbody {
+  display: block;
+  float: left;
+}
+fieldset.group-contacts > div#field-personal-website-items .description {
+  margin-left: 190px;
+}
+fieldset.group-contacts > div#field-personal-website-items input[type=text] {
+  width: 340px;
+}
+body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr {
+  background: #FFF;
+}
+body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit],
+body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr .row-remove div {
+  margin-top: 4px;
+  width: 28px;
+  height: 28px;
+  border: none;
+  cursor: pointer;
+  transition: none;
+}
+body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit] {
+  margin-top: 3px;
+  height: 30px;
+  background: url('/sites/all/themes/idevels/images/add-remove-buttons.png') no-repeat 0 1px;
+}
+body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit]:hover {
+  background-position: -34px 1px;
+}
+body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit]:active {
+  background-position: -68px 1px;
+}
+body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr .row-remove div {
+  background: url('/sites/all/themes/idevels/images/add-remove-buttons.png') no-repeat 0 -32px;
+}
+body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr .row-remove div:hover {
+  background-position: -34px -32px;
+}
+body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr .row-remove div:active {
+  background-position: -68px -32px;
+}
 /*Upcoming-events And Frontpage*/
 body.front .center-left {
   width: 60%;
@@ -4567,171 +4787,79 @@ body > .body-wrapper {
 #block-drua_profile-profile_change_avatar * {
   font-family: 'PT Sans' !important;
 }
-#block-drua_profile-profile_change_avatar #edit-file-wrapper,
-#block-drua_profile-profile_change_avatar .form-submit {
-  display: none;
+.karma {
+  padding: 5px 30px 5px 5px;
 }
-#block-drua_profile-profile_change_avatar .block-title {
-  font-weight: 100;
-  font-style: italic;
-  font-family: 'PT Sans Narrow', Arial, sans-serif !important;
+.page-groups .group-subtitle {
+  position: relative;
+  top: -15px;
 }
-/*
-* Profile tabs
-*/
-form#drua-profile-change-password *,
-form#drua-profile-change-email *,
-form#user-profile-form *,
-form#node-form * {
-  font-family: "PT Sans" !important;
+.page-groups .group-subtitle a:first-child {
+  color: black;
 }
-fieldset.group-personal input[type=text],
-fieldset.group-personal .form-item textarea,
-fieldset.group-personal select.location_auto_country,
-fieldset.group-contacts input[type=text],
-fieldset.group-drupal input[type=text] {
-  width: 390px;
-}
-fieldset.group-personal,
-fieldset.group-contacts,
-fieldset.group-drupal,
-fieldset.group-drupal fieldset,
-fieldset.group-personal fieldset.location {
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
-fieldset.group-personal,
-fieldset.group-contacts,
-fieldset.group-drupal {
-  margin: 0 0 30px 0;
-}
-fieldset.group-personal > legend,
-fieldset.group-contacts > legend,
-fieldset.group-drupal legend {
-  padding: 0;
+.page-groups .group-subtitle a:last-child {
   font-style: italic;
 }
-fieldset.group-personal fieldset.location > legend,
-fieldset.group-personal fieldset.location > div:last-of-type {
-  display: none;
+.helper-node-form-cancel{
+  margin-left:15px;
 }
-fieldset.group-personal fieldset.location select.location_auto_country {
-  margin: 0;
+a.helper-node-form-cancel{
+  font: 15px 'Pt Sans',Arial,Verdana,sans-serif;
 }
-fieldset.group-personal fieldset.location #edit-field-location-0-city-wrapper,
-fieldset.group-personal fieldset.location #edit-field-location-0-city-wrapper input {
-  margin-bottom: 0;
+.teaser-checkbox {
+display:none;
 }
-fieldset.group-personal #edit-field-first-name-0-value-wrapper,
-fieldset.group-personal #edit-field-last-name-0-value-wrapper {
-  float: left;
-  margin-bottom: 0;
-  width: 50%;
+
+.helper-label .form-item label {
+  font-weight: normal;
 }
-fieldset.group-personal #edit-field-first-name-0-value-wrapper input[type=text],
-fieldset.group-personal #edit-field-last-name-0-value-wrapper input[type=text] {
-  width: 390px;
-}
-fieldset.group-personal .description {
-  clear: both;
-  margin-bottom: 10px;
-}
-fieldset.group-personal .date-clear-block {
-  width: 327px;
-}
-fieldset.group-personal .date-clear-block > .form-item > label {
-  float: left;
-}
-fieldset.group-personal .date-clear-block > .form-item > div {
-  float: right;
-}
-fieldset.group-personal .date-clear-block > .form-item > div label {
-  display: none;
-}
-fieldset.group-personal > div.form-item:nth-of-type(5) {
-  clear: both;
-}
-fieldset.group-personal > div.form-item:nth-of-type(5) label,
-fieldset.group-personal > div.form-item#edit-field-profile-company-0-value-wrapper > label,
-fieldset.group-personal > div.form-item#edit-field-job-title-0-value-wrapper > label,
-fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper > label,
-fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper > label,
-fieldset.group-contacts > div.form-item > label,
-fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values thead th {
-  float: left;
-  padding-right: 10px;
-  width: 140px;
-}
-fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper,
-fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper {
-  clear: both;
-}
-fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper textarea,
-fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper textarea {
-  float: left;
-}
-fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper .grippie,
-fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper .grippie {
-  display: none;
-}
-fieldset.group-personal > fieldset:nth-of-type(2) {
-  clear: both;
-}
-fieldset.group-contacts > div#field-personal-website-items table.sticky-header {
+
+.grippie {
   display: none !important;
 }
-fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values {
-  border-bottom: none;
-}
-fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values thead {
-  float: left;
-}
-fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values thead th {
-  display: block;
-  float: left;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: none;
-}
-fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values tbody {
-  display: block;
-  float: left;
-}
-fieldset.group-contacts > div#field-personal-website-items .description {
-  margin-left: 190px;
-}
-fieldset.group-contacts > div#field-personal-website-items input[type=text] {
-  width: 340px;
-}
-body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr {
-  background: #FFF;
-}
-body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit],
-body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr .row-remove div {
-  margin-top: 3px;
-  width: 28px;
-  height: 28px;
-  border: none;
+
+.helper-node-form input[type=submit]{
+  border: 1px solid #e3e3e3;
+  background: linear-gradient(to bottom,#f7f7f7,#edebeb);
+  padding: 0 11px;
+  height: 31px;
+  line-height: 1;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 0 #fcfcfc inset,0 -1px 0 0 #f0eeee inset;
   cursor: pointer;
-  transition: none;
-}
-body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit] {
-  background: url('/sites/all/themes/idevels/images/add-remove-buttons.png') no-repeat;
-}
-body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit]:hover {
-  background-position: -34px 0;
-}
-body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit]:active {
-  background-position: -68px 0;
-}
-body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr .row-remove div {
-  background: url('/sites/all/themes/idevels/images/add-remove-buttons.png') no-repeat 0 -32px;
-}
-body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr .row-remove div:hover {
-  background-position: -34px -32px;
+  position: relative;
+  font-size: 16px;
 }
 body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr .row-remove div:active {
   background-position: -68px -32px;
+}
+.helper-node-form input[type=submit]:hover{
+  border-color: #999;
+}
+
+.helper-node-form-cancel a {
+  text-decoration: underline;
+  font-style: italic;
+  font-size: 13px;
+  color: #1876ac;
+  position: relative;
+  font-family: 'PT Sans';
+}
+
+.helper-node-form-cancel a:after {
+  position: absolute;
+  content: ' →';
+  font-size: 13px;
+  margin-top: 6px;
+  margin-left: 4px;
+  font-family: 'PT Sans';
+}
+
+.helper-node-form-cancel a:hover {
+  color: #f93703;
+}
+
+.helper-node-form input,
+.helper-node-form textarea{
+  font-family: 'PT Sans';
 }
