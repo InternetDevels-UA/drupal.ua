@@ -522,6 +522,11 @@ function drua_profile_form_alter(&$form, &$form_state, $form_id) {
       '#default_value' => isset($defaults['new_email_message_body']) ? $defaults['new_email_message_body'] : '',
     );
   }
+  if ($form_id == 'user_profile_form') {
+    if (isset($form['subscriptions'])) {
+      unset($form['subscriptions']['#description']);
+    }
+  }
 }
 
 /**
