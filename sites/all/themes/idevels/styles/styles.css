@@ -4863,3 +4863,19 @@ body.page-user form#node-form .group-contacts #field_personal_website_values tbo
 .helper-node-form textarea{
   font-family: 'PT Sans';
 }
+
+.all-upcoming-events {
+  color: black;
+  text-decoration: underline;
+  font-size: 14px;
+  font-family: "Pt sans";
+  margin-top:-7px;
+  display: block;
+}
+
+.all-upcoming-events:hover {
+  text-decoration: none;
+}
+.view-id-upcoming_events .field-content{
+  min-height:60px;
+}
