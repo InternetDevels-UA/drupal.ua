@@ -4238,6 +4238,13 @@ form#user-profile-form *,
 form#node-form * {
   font-family: "PT Sans" !important;
 }
+form#drua-profile-change-password label,
+form#drua-profile-change-email label,
+form#user-profile-form label,
+form#node-form label,
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values thead th {
+  font-weight: normal;
+}
 fieldset.group-personal input[type=text],
 fieldset.group-personal .form-item textarea,
 fieldset.group-personal select.location_auto_country,
@@ -4249,7 +4256,8 @@ fieldset.group-personal,
 fieldset.group-contacts,
 fieldset.group-drupal,
 fieldset.group-drupal fieldset,
-fieldset.group-personal fieldset.location {
+fieldset.group-personal fieldset.location,
+form#user-profile-form fieldset {
   margin: 0;
   padding: 0;
   border: 0;
@@ -4261,7 +4269,8 @@ fieldset.group-drupal {
 }
 fieldset.group-personal > legend,
 fieldset.group-contacts > legend,
-fieldset.group-drupal legend {
+fieldset.group-drupal legend,
+form#user-profile-form fieldset legend {
   padding: 0;
   font-style: italic;
 }
@@ -4284,7 +4293,7 @@ fieldset.group-personal #edit-field-last-name-0-value-wrapper {
 }
 fieldset.group-personal #edit-field-first-name-0-value-wrapper input[type=text],
 fieldset.group-personal #edit-field-last-name-0-value-wrapper input[type=text] {
-  width: 390px;
+  width: 370px;
 }
 fieldset.group-personal .description {
   clear: both;
@@ -4311,10 +4320,35 @@ fieldset.group-personal > div.form-item#edit-field-job-title-0-value-wrapper > l
 fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper > label,
 fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper > label,
 fieldset.group-contacts > div.form-item > label,
-fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values thead th {
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values thead th,
+fieldset.group-drupal label {
   float: left;
   padding-right: 10px;
   width: 140px;
+}
+body.page-user form#node-form input[type=submit],
+body.page-user form#user-profile-form input[type=submit],
+form#drua-profile-change-email input[type=submit],
+form#drua-profile-change-password input[type=submit] {
+  border: 1px solid #E3E3E3;
+  background: linear-gradient(to bottom,#F7F7F7,#EDEBEB);
+  padding: 0 11px;
+  height: 31px;
+  line-height: 1;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 0 #FCFCFC inset,0 -1px 0 0 #F0EEEE inset;
+  cursor: pointer;
+  position: relative;
+  font-size: 16px;
+}
+body.page-user form#node-form input[type=submit]:hover,
+body.page-user form#user-profile-form input[type=submit]:hover,
+form#drua-profile-change-email input[type=submit]:hover,
+form#drua-profile-change-password input[type=submit]:hover {
+  border-color: #999;
+}
+form#node-form fieldset.group-drupal .description {
+ margin-left: 140px;
 }
 fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper,
 fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper {
@@ -4363,7 +4397,7 @@ body.page-user form#node-form .group-contacts #field_personal_website_values tbo
 }
 body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit],
 body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr .row-remove div {
-  margin-top: 3px;
+  margin-top: 4px;
   width: 28px;
   height: 28px;
   border: none;
@@ -4371,13 +4405,15 @@ body.page-user form#node-form .group-contacts #field_personal_website_values tbo
   transition: none;
 }
 body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit] {
-  background: url('/sites/all/themes/idevels/images/add-remove-buttons.png') no-repeat;
+  margin-top: 3px;
+  height: 30px;
+  background: url('/sites/all/themes/idevels/images/add-remove-buttons.png') no-repeat 0 1px;
 }
 body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit]:hover {
-  background-position: -34px 0;
+  background-position: -34px 1px;
 }
 body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit]:active {
-  background-position: -68px 0;
+  background-position: -68px 1px;
 }
 body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr .row-remove div {
   background: url('/sites/all/themes/idevels/images/add-remove-buttons.png') no-repeat 0 -32px;
