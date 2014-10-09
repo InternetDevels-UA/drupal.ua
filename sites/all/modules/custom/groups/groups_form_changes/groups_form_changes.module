@@ -3,6 +3,12 @@
 
 define ('OG_VOCABULARY', 6);  //Vocabulary for node of type = post
 /**
+ * Redirect to page question.
+ */
+function _groups_form_cancel() {
+  drupal_goto('question');
+}
+/**
  * Implementation of hook_form_alter().
  */
 function groups_form_changes_form_alter(&$form, $form_state, $form_id) {
