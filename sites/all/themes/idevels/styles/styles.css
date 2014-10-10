@@ -5152,3 +5152,32 @@ form[action="/node/add/events"] .textarea-errors {
 form[action="/node/add/events"] #edit-preview {
   display: none;
 }
+
+div.panel-pane div.node {
+  padding: 0px;
+}
+
+div.panel-pane div.node,
+.pane-node-comment-form,
+.addthis_toolbox, .grid-3,
+.pane-node-comments,
+.tabs-wrapper > ul.tabs {
+  margin-left: 0px;
+}
+
+ul.tabs, h1.user-name {
+  margin-left: 20px;
+}
+
+#main-content .container-12 ,
+.container-12 .grid-12{
+  width: 100%
+}
+
+.view-display-id-block_1 .views-row,
+.container-12 .grid-3{
+  margin: 0px;
+}
+body.front .view-display-id-block_1 .views-row{
+  margin:5px;
+}
