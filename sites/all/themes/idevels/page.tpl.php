@@ -7,7 +7,7 @@
   <?php print $head; ?>
   <?php print $styles; ?>
   <?php print $scripts; ?>
-  <script src="http://vk.com/js/api/openapi.js" type="text/javascript"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC0IajOIjtieJ67ODTICSsr1ZVjqxra4A"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1.0, user-scalable=no" />
 </head>
 
