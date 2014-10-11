@@ -5228,3 +5228,12 @@ a.contact-node-form-cancel {
 .contact-node-form-cancel a:hover {
   color: #f93703;
 }
+
+#block-menu-primary-links
+ul.menu li a{
+  font-family: 'PT Sans';
+}
+#block-menu-secondary-links
+.menu a .tile-title{
+  font-family: 'PT Sans';
+}
