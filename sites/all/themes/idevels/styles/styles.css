@@ -3804,7 +3804,7 @@ form#user-register #edit-legal-accept-wrapper strong {
 }
 .view-Resources .menu-links a {
   float: left;
-  margin: 0 5px;
+  margin: 0 10px 0 0px;
   padding: 5px 20px;
   font-size: 1.2em;
   border: solid 2px #999;
