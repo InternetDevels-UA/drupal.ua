@@ -4491,7 +4491,8 @@ body.page-user .view-id-profile_view .views-field-nothing .field-content {
 body.page-user .view-id-profile_view .views-field-city .field-content,
 body.page-user .view-id-profile_view .views-field-field-skills-value .field-content,
 body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content {
-  display: inline-block;
+  display: block;
+  overflow: hidden;
 }
 body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a {
   text-decoration: underline;
