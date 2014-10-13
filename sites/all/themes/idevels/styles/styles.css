@@ -930,7 +930,7 @@ ul.primary, ul.primary li, ul.primary li a, ul.primary li.active, ul.primary li.
 ul.primary { margin: 0; display:block; }
 ul.primary li { padding:0 15px 0 0; }
 ul.primary li a { color:#93b1bb; font-weight:normal; padding:0 11px 0 15px; margin:0; }
-ul.primary li { background:url(../images/tabs-big.png) right -84px no-repeat; margin-right:-12px; margin-left:8px; }
+/*ul.primary li { background:url(../images/tabs-big.png) right -84px no-repeat; margin-right:-12px; margin-left:8px; }
 ul.primary li a { background:url(../images/tabs-big.png) 0 -84px no-repeat; margin-left:-8px; }
 ul.primary li:hover { background:url(../images/tabs-big.png) right -112px no-repeat; }
 ul.primary li:hover a  { background:url(../images/tabs-big.png) 0 -112px no-repeat; }
@@ -941,7 +941,11 @@ ul.primary li.active a { background:url(../images/tabs-big.png) 0 0 no-repeat; c
 ul.primary li.active:hover { background:url(../images/tabs-big.png) right -28px no-repeat; }
 ul.primary li.active:hover a  { background:url(../images/tabs-big.png) 0 -28px no-repeat; }
 ul.primary li.active:active { background:url(../images/tabs-big.png) right -56px no-repeat; }
-ul.primary li.active:active a { background:url(../images/tabs-big.png) 0 -56px no-repeat; }
+ul.primary li.active:active a { background:url(../images/tabs-big.png) 0 -56px no-repeat; }*/
+
+ul.primary li:hover a { background-color: transparent; }
+ul.primary li a { background-color: transparent; text-decoration: underline; color: #333; }
+ul.primary li a.active, ul.primary li a:hover { color: red; }
 
 ul.secondary { border:none; margin: 1em 0 2em; padding:0; }
 ul.secondary li, ul.secondary li a { padding:0; margin:0; }
