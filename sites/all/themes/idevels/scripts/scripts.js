@@ -368,7 +368,7 @@ $(function () {
 
     // decorate price
     var $price = $('#edit-field-event-price-0-value');
-    $price.val(0);
+    $price.val('Безкоштовна');
     $price.hide();
 
     var arr = [
@@ -384,7 +384,7 @@ $(function () {
 
     $sel.change(function() {
       if (this.value==0) {
-        $price.val(0);
+        $price.val('Безкоштовна');
         $price.hide();
       }
       else {
