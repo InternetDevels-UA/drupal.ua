@@ -4402,9 +4402,6 @@ form[action="/node/add/events"] #edit-field-site-0-value-wrapper {
   position: relative;
   top: -57px;
 }
-form[action="/node/add/events"] .body-field-wrapper {
-  margin-top: -60px;
-}
 form[action="/node/add/events"] #show_on_map+span {
   margin-left: 5px;
 }
@@ -4489,7 +4486,8 @@ form[action="/node/add/events"] .vertical-tabs {
 body:not(.admin-menu) form[action="/node/add/events"] #edit-language-wrapper {
   display: none;
 }
-form[action="/node/add/events"] #edit-body-wrapper .resizable-textarea {
+form[action="/node/add/events"] #edit-body-wrapper .resizable-textarea,
+form[action="/node/add/events"] #edit-field-new-teaser-0-value-wrapper .resizable-textarea {
   position: relative;
 }
 form[action="/node/add/events"] .textarea-errors {

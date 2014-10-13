@@ -206,14 +206,14 @@ $(function () {
 
   if (window.location.pathname == '/node/add/events') {
     // decorate teaser
-    var $teaser = $("#edit-teaser-js");
+    var $teaser = $("#edit-field-new-teaser-0-value");
     var $body = $("#edit-body");
     var $end_date = $("#edit-field-event-date-0-value2-datepicker-popup-0");
     var $start_date = $("#edit-field-event-date-0-value-datepicker-popup-0");
-    $teaser.removeAttr("disabled");
+/*    $teaser.removeAttr("disabled");
     $teaser.parent().show();
     $teaser.parent().parent().after($teaser.parent().parent().prev());
-    $teaser.parent().parent().before('<label for="edit-teaser-js">Анонс: </label>');
+    $teaser.parent().parent().before('<label for="edit-teaser-js">Анонс: </label>');*/
 
 
     $teaser_errors = $('<span class="textarea-errors"></span>');
