@@ -336,6 +336,9 @@ function idevels_form_alter(&$form, &$form_state, $form_id) {
     unset($form['name']['#title']);
     unset($form['pass']['#title']);
   }
+  if (isset($form['field_notification_instruction'])) {
+    $form['field_notification_instruction']['#access'] = FALSE;
+  }
 }
 
 /**
@@ -787,13 +790,24 @@ function idevels_add_resurses_form_submit($form, &$form_state) {
 
 function idevels_init() {
   $path=request_uri();
+  $arg=drupal_get_destination();
   if ($path=='/node/add/question' ||$path=='/node/add/question/'){
-  $path = trim($path, '/');
+    $path = trim($path, '/');
   $breadcrumb = array();
   $breadcrumb[] = l(t('Home'), '<front>');
   $breadcrumb[] = l(t('Ask a questions'), $path); // Link to current URL
 // Set Breadcrumbs
   drupal_set_breadcrumb($breadcrumb);
+  }
+  if (preg_match('*notification-close*', $path) || $path == '/notification-accept') {
+    global $user;
+    $id = $user->current_id;
+    $profile = node_load(array('type' => 'profile', 'uid' => $id));
+    $profile->field_notification_instruction[0]['value'] = 1;
+    node_save($profile);
+    if (!empty($arg) && ($path != '/notification-accept')) {
+      drupal_goto(substr($arg, 17));
+    }
   }
 }
 
@@ -805,5 +819,73 @@ function ua_month_perfecty($timestamp) {
     '@g' => format_date($timestamp, 'custom', 'g'),
     '@i' => format_date($timestamp, 'custom', 'i'),
   ));
+  return $output;
+}
+function idevels_block($op = 'list', $delta = 0, $edit = array()) {
+  if ($op == 'list') {
+    $blocks[0] = array(
+      'info' => t('Notification about development instruction'),
+      'weight' => 0,
+      'status' => 1,
+      'region' => 'site-header',
+    );
+    return $blocks;
+  }
+  else {
+    if ($op == 'configure' && $delta == 0) {
+      $form['link'] = array(
+        '#type' => 'textarea',
+        '#title' => t('Body'),
+        '#default_value' => variable_get('notification_instruction_block_items', 0),
+        '#required' => TRUE,
+      );
+      return $form;
+    }
+    else {
+      if ($op == 'save' && $delta == 0) {
+        variable_set('notification_instruction_block_items', $edit['link']);
+      }
+      else {
+        if ($op == 'view' && $delta == 0) {
+          $block = array(
+            'subject' => '',
+            'content' => notification_instruction_block_items(),
+          );
+          global $user;
+          $id = $user->uid;
+          $profile = node_load(array('type' => 'profile', 'uid' => $id));
+
+
+          if (($profile->field_notification_instruction[0]['value'])!=1) {
+
+            $block = array(
+              'subject' => '',
+              'content' => notification_instruction_block_items(),
+            );
+            return $block;
+          }
+          else {
+            return FALSE;
+          }
+        }
+      }
+    }
+  }
+}
+
+function notification_instruction_block_items() {
+  $path = request_uri();
+  $path = trim($path, '/');
+  if ($path == '') {
+    $path = 'front';
+  }
+
+  $output = l(variable_get('notification_instruction_block_items', 0), 'notification-accept');
+  $output .= '<span class="notification-close">' . l('x', 'notification-close', array(
+        'query' => array(
+          'destination' => '' . $path,
+        )
+      )
+    ) . '</span>';
   return $output;
 }

@@ -4462,3 +4462,27 @@ a.karma.up::after {
 #block-menu-secondary-links .menu a .tile-title {
   font-family: 'PT Sans';
 }
+.block-idevels {
+  display: block;
+  height: auto;
+  background-color: red;
+  clear: both;
+  margin: 10px 0px;
+  padding: 5px 10px;
+  text-align: left;
+}
+
+#page-top {
+  z-index: 999;
+  width: 100%;
+  margin:0px;
+}
+.block-idevels a{
+  color: #fff;
+  font-family: 'PT Sans';
+  font-size: 14px;
+}
+.block-idevels .notification-close a{
+  float:right;
+  margin-right: 10px;
+}
