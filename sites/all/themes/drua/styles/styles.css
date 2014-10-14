@@ -2156,3 +2156,30 @@ div.geshifilter, table .geshifilter td {
 .view-News .views-row .content img{
   margin-right: 35px;
 }
+
+#block-drua_profile-notification_block {
+  display: block;
+  height: auto;
+  background-color: red;
+  clear: both;
+  margin: 10px 0px;
+  padding: 5px 10px;
+  text-align: left;
+}
+
+#page-top {
+  z-index: 999;
+  width: 100%;
+  margin: 0px;
+}
+
+#block-drua_profile-notification_block a {
+  color: #fff;
+  font-family: 'PT Sans';
+  font-size: 14px;
+}
+
+#block-drua_profile-notification_block .notification-close a {
+  float: right;
+  margin-right: 10px;
+}
