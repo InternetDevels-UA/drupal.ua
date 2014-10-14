@@ -4462,7 +4462,8 @@ a.karma.up::after {
 #block-menu-secondary-links .menu a .tile-title {
   font-family: 'PT Sans';
 }
-.block-idevels {
+
+#block-drua_profile-notification_block {
   display: block;
   height: auto;
   background-color: red;
@@ -4475,14 +4476,16 @@ a.karma.up::after {
 #page-top {
   z-index: 999;
   width: 100%;
-  margin:0px;
+  margin: 0px;
 }
-.block-idevels a{
+
+#block-drua_profile-notification_block a {
   color: #fff;
   font-family: 'PT Sans';
   font-size: 14px;
 }
-.block-idevels .notification-close a{
-  float:right;
+
+#block-drua_profile-notification_block .notification-close a {
+  float: right;
   margin-right: 10px;
 }
