@@ -4468,8 +4468,8 @@ a.karma.up::after {
   height: auto;
   background-color: red;
   clear: both;
-  margin: 10px 0px;
-  padding: 5px 10px;
+  margin: 0px;
+  padding: 5px 20px;
   text-align: left;
 }
 
