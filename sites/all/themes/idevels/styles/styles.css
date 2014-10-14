@@ -4377,8 +4377,6 @@ a.karma.up::after {
   font-style: italic;
 }
 form[action="/node/add/events"] div > div > div.standard {
-  /*Прибрати перед переносом*/
-  width: 845px;
   position: relative;
   padding-right: 340px;
 }

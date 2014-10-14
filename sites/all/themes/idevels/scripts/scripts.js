@@ -315,8 +315,11 @@ $(function () {
         initialize();
         geocoder.geocode( { 'address': address}, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
+            console.log(results[0].geometry.location);
             map.setCenter(results[0].geometry.location); // set the map region to center
             marker.setPosition(results[0].geometry.location); // change the marker position
+            $lan.val(results[0].geometry.location['k']);
+            $lng.val(results[0].geometry.location['B']);
           } else {
             alert('Geocode was not successful for the following reason: ' + status);
           }
@@ -332,8 +335,6 @@ $(function () {
     function initialize() {
       var lan = 50.71441902633967;
       var lng = 25.317786984069812;
-      $lan.val(lan);
-      $lng.val(lng);
       $zoom.val(12);
       var myLatlng = new google.maps.LatLng(lan,lng);
       var mapOptions = {
