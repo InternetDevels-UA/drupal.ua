@@ -4376,53 +4376,53 @@ a.karma.up::after {
 .page-groups .group-subtitle a:last-child {
   font-style: italic;
 }
-form[action="/node/add/events"] div > div > div.standard {
+form#events-node-form div > div > div.standard {
   position: relative;
   padding-right: 340px;
 }
-form[action="/node/add/events"] #map {
+form#events-node-form #map {
   position: absolute;
   right: 20px;
   top: 370px;
 }
-form[action="/node/add/events"] #edit-field-city-value-wrapper,
-form[action="/node/add/events"] #edit-field-address-0-value-wrapper,
-form[action="/node/add/events"] #edit-field-site-0-value-wrapper,
-form[action="/node/add/events"] #edit-field-site-0-value-wrapper + .link-field-subrow {
+form#events-node-form #edit-field-city-value-wrapper,
+form#events-node-form #edit-field-address-0-value-wrapper,
+form#events-node-form #edit-field-site-0-value-wrapper,
+form#events-node-form #edit-field-site-0-value-wrapper + .link-field-subrow {
   display: inline-block;
   width: 47%
 }
-form[action="/node/add/events"] #edit-field-city-value-wrapper > input,
-form[action="/node/add/events"] #edit-field-address-0-value-wrapper > input {
+form#events-node-form #edit-field-city-value-wrapper > input,
+form#events-node-form #edit-field-address-0-value-wrapper > input {
   width: 100%
 }
-form[action="/node/add/events"] #edit-field-site-0-value-wrapper {
+form#events-node-form #edit-field-site-0-value-wrapper {
   position: relative;
   top: -57px;
 }
-form[action="/node/add/events"] #show_on_map+span {
+form#events-node-form #show_on_map+span {
   margin-left: 5px;
 }
-form[action="/node/add/events"] #edit-field-latitude-0-value-wrapper,
-form[action="/node/add/events"] #edit-field-longitude-0-value-wrapper,
-form[action="/node/add/events"] #edit-field-zoom-0-value-wrapper {
+form#events-node-form #edit-field-latitude-0-value-wrapper,
+form#events-node-form #edit-field-longitude-0-value-wrapper,
+form#events-node-form #edit-field-zoom-0-value-wrapper {
   display: none;
 }
-form[action="/node/add/events"] #img-prev input.img-prev {
+form#events-node-form #img-prev input.img-prev {
   display: none;
 }
-form[action="/node/add/events"] #edit-field-events-logo-0-upload-wrapper .widget-preview {
+form#events-node-form #edit-field-events-logo-0-upload-wrapper .widget-preview {
   border: none;
 }
-form[action="/node/add/events"] #edit-field-events-logo-0-ahah-wrapper {
+form#events-node-form #edit-field-events-logo-0-ahah-wrapper {
   position: absolute;
   right: 20px;
   top: -13px;
 }
-form[action="/node/add/events"] #img-prev {
+form#events-node-form #img-prev {
   position: relative;
 }
-form[action="/node/add/events"] #img-prev:hover input.img-prev {
+form#events-node-form #img-prev:hover input.img-prev {
   display: block;
   width: 20px;
   height: 20px;
@@ -4434,67 +4434,67 @@ form[action="/node/add/events"] #img-prev:hover input.img-prev {
   background-color: transparent;
   overflow: hidden;
 }
-form[action="/node/add/events"] .standard > fieldset {
+form#events-node-form .standard > fieldset {
   padding: 0;
   margin: 0;
   border: none;
 }
-form[action="/node/add/events"] .standard > fieldset > legend {
+form#events-node-form .standard > fieldset > legend {
   display: none;
 }
-form[action="/node/add/events"] fieldset .container-inline-date > div > div {
+form#events-node-form fieldset .container-inline-date > div > div {
   width: 47%;
 }
-form[action="/node/add/events"] fieldset .container-inline-date > div > div+div {
+form#events-node-form fieldset .container-inline-date > div > div+div {
   margin-left: 1%;
 }
 #ui-datepicker-div {
   min-width: 200px;
 }
-form[action="/node/add/events"] fieldset .form-item input {
+form#events-node-form fieldset .form-item input {
   width: 100%;
 }
-form[action="/node/add/events"] fieldset .container-inline-date,
-form[action="/node/add/events"] #edit-field-event-price-0-value-wrapper,
-form[action="/node/add/events"] #edit-field-event-type-value-wrapper {
+form#events-node-form fieldset .container-inline-date,
+form#events-node-form #edit-field-event-price-0-value-wrapper,
+form#events-node-form #edit-field-event-type-value-wrapper {
   display: inline-block;
   width: 48%;
   overflow: hidden;
 }
-form[action="/node/add/events"] #edit-field-event-price-0-value {
+form#events-node-form #edit-field-event-price-0-value {
   width: 110px;
 }
-form[action="/node/add/events"] #edit-field-event-price-0-value {
+form#events-node-form #edit-field-event-price-0-value {
   display: inline-block;
   margin-left: 10px;
 }
-form[action="/node/add/events"] #edit-field-events-logo-0-ahah-wrapper {
+form#events-node-form #edit-field-events-logo-0-ahah-wrapper {
   width: 300px;
 }
-form[action="/node/add/events"] #edit-field-events-logo-0-ahah-wrapper * {
+form#events-node-form #edit-field-events-logo-0-ahah-wrapper * {
   max-width: 300px;
   max-height: 300px;
 }
-form[action="/node/add/events"] #edit-field-events-logo-0-filefield-upload {
+form#events-node-form #edit-field-events-logo-0-filefield-upload {
   display: none !important;
 }
-form[action="/node/add/events"] .vertical-tabs {
+form#events-node-form .vertical-tabs {
   width: 100%;
 }
-body:not(.admin-menu) form[action="/node/add/events"] #edit-language-wrapper {
+body:not(.admin-menu) form#events-node-form #edit-language-wrapper {
   display: none;
 }
-form[action="/node/add/events"] #edit-body-wrapper .resizable-textarea,
-form[action="/node/add/events"] #edit-field-new-teaser-0-value-wrapper .resizable-textarea {
+form#events-node-form #edit-body-wrapper .resizable-textarea,
+form#events-node-form #edit-field-new-teaser-0-value-wrapper .resizable-textarea {
   position: relative;
 }
-form[action="/node/add/events"] .textarea-errors {
+form#events-node-form .textarea-errors {
   position: absolute;
   top: -17px;
   right: 0;
   font-size: 0.8em;
   color: red;
 }
-form[action="/node/add/events"] #edit-preview {
+form#events-node-form #edit-preview {
   display: none;
 }

@@ -131,7 +131,6 @@ $(function () {
     if (window.location.pathname != '/node/add/resource')
       return;
     $this = $(this);
-    console.log(window.location.pathname);
     if ($this.val() == 2491) {
       $( ".link-field-subrow" ).hide();
       $( ".filefield-element" ).show();
@@ -204,17 +203,12 @@ $(function () {
     $(this).parent().parent().find('.meta-links > .meta').after($(this));
   });
 
-  if (window.location.pathname == '/node/add/events') {
+  if ($('#events-node-form').length) {
     // decorate teaser
     var $teaser = $("#edit-field-new-teaser-0-value");
     var $body = $("#edit-body");
     var $end_date = $("#edit-field-event-date-0-value2-datepicker-popup-0");
     var $start_date = $("#edit-field-event-date-0-value-datepicker-popup-0");
-/*    $teaser.removeAttr("disabled");
-    $teaser.parent().show();
-    $teaser.parent().parent().after($teaser.parent().parent().prev());
-    $teaser.parent().parent().before('<label for="edit-teaser-js">Анонс: </label>');*/
-
 
     $teaser_errors = $('<span class="textarea-errors"></span>');
     $teaser.before($teaser_errors);
@@ -223,7 +217,7 @@ $(function () {
     // check teaser text length
     function check_teaser() {
       if ($teaser.val().length < 100) {
-        $teaser_errors.text('Анонс не може бути меншим 100 символів');
+        $teaser_errors.text(Drupal.t("Teaser can't be less than 100 characters"));
         $("html, body").animate({scrollTop: $teaser.offset().top-20 }, 500);
         return false;
       }
@@ -240,7 +234,7 @@ $(function () {
     // check body text length
     function check_body() {
       if ($body.val().length < 300) {
-        $body_errors.text('Опис події не може бути меншим 300 символів');
+        $body_errors.text(Drupal.t("Event discripton can't be less than 300 characters"));
         $("html, body").animate({scrollTop: $body.offset().top-20 }, 500);
         return false;
       }
@@ -255,7 +249,7 @@ $(function () {
     // check if date are correct
     function check_date() {
       if ($start_date.val() == '') {
-        alert('Початкова дата не може бути пустою');
+        alert(Drupal.t("Start date can't be empty"));
         $("html, body").animate({scrollTop: $start_date.offset().top-20 }, 500);
         return false;
       }
@@ -263,7 +257,7 @@ $(function () {
         var arr_start_date = $start_date.val().split("/");
         var arr_end_date = $end_date.val().split("/");
         if (parseInt(arr_start_date[0]*31)+parseInt(arr_start_date[1])+parseInt(arr_start_date[2]*366) > parseInt(arr_end_date[0]*31)+parseInt(arr_end_date[1])+parseInt(arr_end_date[2]*366)) {
-          alert('Початкова дата не може бути меншою за кінцеву');
+          alert(Drupal.t("Start date can't be after end date"));
           $end_date.val('');
           return false;
         };
@@ -276,26 +270,13 @@ $(function () {
       return check_date() && check_body() && check_teaser();
     });
 
-    $("#main-content form .admin+input+input").after('<a href="/events" id="all-events">Повернутися до всіх подій -></a>');
+    $("#main-content form .admin+input+input").after('<a href="/events" id="all-events">'+Drupal.t('Back to all events')+' -></a>');
 
-/*    var $gmap = $('<iframe id="googlemap"/>');
-    $gmap.attr('width', "300");
-    $gmap.attr('height', "300");
-    $gmap.attr('src', "https://www.google.com/maps/embed/v1/place?key=AIzaSyDC0IajOIjtieJ67ODTICSsr1ZVjqxra4A&q=Конякіна,Луцьк");
-    $gmap.appendTo("#edit-field-city-value-wrapper");*/
-/*    var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-    // ADD THIS
-    var marker = new google.maps.Marker({
-        map: map, // refer to the map you've just initialise
-        position: latlng, // set the marker position (is based on latitude & longitude)
-        draggable: true // allow user to drag the marker
-    });*/
     // var section
     var $city_input = $('#edit-field-city-value');
     var $address_input = $('#edit-field-address-0-value');
     var $mapdiv = $('<div id="map"></div>');
-    var $show_on_map = $('<input type="checkbox" id="show_on_map"><span>Подія на карті</span></input>');
+    var $show_on_map = $('<input type="checkbox" id="show_on_map"><span>'+Drupal.t('Event on map')+'</span></input>');
     var $lan = $('#edit-field-latitude-0-value');
     var $lng = $('#edit-field-longitude-0-value');
     var $zoom = $('#edit-field-zoom-0-value');
@@ -315,13 +296,12 @@ $(function () {
         initialize();
         geocoder.geocode( { 'address': address}, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
-            console.log(results[0].geometry.location);
             map.setCenter(results[0].geometry.location); // set the map region to center
             marker.setPosition(results[0].geometry.location); // change the marker position
             $lan.val(results[0].geometry.location['k']);
             $lng.val(results[0].geometry.location['B']);
           } else {
-            alert('Geocode was not successful for the following reason: ' + status);
+            alert(Drupal.t('Geocode was not successful for the following reason')+': ' + status);
           }
         });
       }
@@ -361,20 +341,14 @@ $(function () {
       });
     }
 
-/*    var $delete_logo = $('#edit-field-events-logo-0-filefield-upload');
-    $delete_logo.hide();
-    $("#edit-field-events-logo-0-upload:file").change(function (){
-      $delete_logo.show();
-    });*/
-
     // decorate price
     var $price = $('#edit-field-event-price-0-value');
-    $price.val('Безкоштовна');
+    $price.val(Drupal.t('Free'));
     $price.hide();
 
     var arr = [
-      {val : 0, text: 'Безкоштовна'},
-      {val : 1, text: 'Платна'}
+      {val : 0, text: Drupal.t('Free')},
+      {val : 1, text: Drupal.t('Not Free')}
     ];
 
     var $sel = $('<select>');
@@ -385,7 +359,7 @@ $(function () {
 
     $sel.change(function() {
       if (this.value==0) {
-        $price.val('Безкоштовна');
+        $price.val(Drupal.t('Free'));
         $price.hide();
       }
       else {
@@ -414,15 +388,6 @@ $(function () {
     $("#edit-field-events-logo-0-upload").change(function(){
       readURL(this);
     });
-
-/*    var wto;
-    var $field_city = $('#edit-field-city-value');
-    $field_city.keyup(function() {
-      clearTimeout(wto);
-      wto = setTimeout(function() {
-        $gmap.attr('src', "https://www.google.com/maps/embed/v1/place?key=AIzaSyDC0IajOIjtieJ67ODTICSsr1ZVjqxra4A&q="+$field_city.val());
-      }, 2000);
-    });*/
 
   };
 
