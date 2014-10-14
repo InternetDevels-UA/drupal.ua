@@ -5213,14 +5213,14 @@ a.contact-node-form-cancel {
   position: relative;
   font-family: 'PT Sans';
   margin-left: 20px;
-  top: 14px;
+  top: 17px;
 }
 
 .contact-node-form-cancel a:after {
   position: absolute;
   content: ' →';
   font-size: 13px;
-  margin-top: 0px;
+  margin-top: 2px;
   margin-left: 4px;
   font-family: 'PT Sans';
 }
