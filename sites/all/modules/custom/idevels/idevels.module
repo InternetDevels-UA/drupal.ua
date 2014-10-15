@@ -264,20 +264,35 @@ function idevels_views_pre_render(&$view) {
   }
   elseif ($view->name == 'Events' && $view->current_display == 'page_1') {
     drupal_set_title(t('Events'));
+    drupal_set_breadcrumb(array(
+    l(t('Home'), NULL),
+    t('Events')
+    ));
   }
   elseif ($view->name == 'Events' && $view->current_display == 'page_2') {
     drupal_set_title(t('Past Events'));
+    drupal_set_breadcrumb(array(
+      l(t('Home'), NULL),
+      t('Events'),
+    ));
   }
   elseif ($view->name == 'og_posts_list' && $view->current_display == 'block_1') {
     drupal_set_breadcrumb(array(
       l(t('Home'), NULL),
-      t('Groups')
+      t('Groups'),
     ));
   }
   elseif ($view->name == 'users' && $view->current_display == 'page_1') {
     drupal_set_breadcrumb(array(
       l(t('Home'), NULL),
-      t('Users')
+      t('Subscribers'),
+    ));
+  }
+  elseif ($view->name == 'taxonomy_term' && $view->current_display == 'page') {
+    drupal_set_breadcrumb(array(
+      l(t('Home'), NULL),
+      l(t('Groups'), 'groups'),
+      drupal_get_title(),
     ));
   }
   elseif ($view->name == 'vacations' && $view->current_display == 'page_1') {
