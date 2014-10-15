@@ -203,6 +203,8 @@ $(function () {
     $(this).parent().parent().find('.meta-links > .meta').after($(this));
   });
 
+  console.log(Drupal.t("End date can't be empty"));
+
   if ($('#events-node-form').length) {
     // decorate teaser
     var $teaser = $("#edit-field-new-teaser-0-value");
@@ -245,6 +247,7 @@ $(function () {
     };
 
     $end_date.change(check_date);
+    $start_date.change(check_date);
 
     // check if date are correct
     function check_date() {
@@ -253,12 +256,16 @@ $(function () {
         $("html, body").animate({scrollTop: $start_date.offset().top-20 }, 500);
         return false;
       }
+      else if ($end_date.val() == '') {
+        alert(Drupal.t("End date can't be empty"));
+        $("html, body").animate({scrollTop: $end_date.offset().top-20 }, 500);
+        return false;
+      }
       else {
         var arr_start_date = $start_date.val().split("/");
         var arr_end_date = $end_date.val().split("/");
         if (parseInt(arr_start_date[0]*31)+parseInt(arr_start_date[1])+parseInt(arr_start_date[2]*366) > parseInt(arr_end_date[0]*31)+parseInt(arr_end_date[1])+parseInt(arr_end_date[2]*366)) {
           alert(Drupal.t("Start date can't be after end date"));
-          $end_date.val('');
           return false;
         };
       }
