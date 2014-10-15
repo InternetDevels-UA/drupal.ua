@@ -4455,3 +4455,10 @@ a.karma.up::after {
 .view-id-upcoming_events .field-content{
   min-height:60px;
 }
+
+.helper-node-form .body-field-wrapper  {
+  margin-bottom:15px;
+}
+.helper-node-form .standard{
+  margin-top:-25px
+}
