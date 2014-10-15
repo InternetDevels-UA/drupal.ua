@@ -5228,3 +5228,9 @@ a.contact-node-form-cancel {
 .contact-node-form-cancel a:hover {
   color: #f93703;
 }
+/*Any Firefox */
+@-moz-document url-prefix() {
+  .contact-node-form-cancel a:after {
+    margin-top: 18px;
+  }
+}
