@@ -55,6 +55,7 @@ function drua_profile_block($op = 'list', $delta = 0) {
         'profile_bookmarks' => array('info' => t('Profile: User bookmarks')),
         'idevels_blockfooter' => array('info' => t('Footer: Block with all information.')),
         'top_cities_by_events' => array('info' => t('Top cities by events')),
+        'og_most_popular_groups' => array('info' => t('Most popular group')),
       );
 
     case 'view':
@@ -340,9 +341,35 @@ function drua_profile_block($op = 'list', $delta = 0) {
             'title' => t('Cities'),
             'content' => _drua_profile_top_cities_by_events(),
           );
+          break;
+        case 'og_most_popular_groups':
+          return array(
+            'content' => _drua_profile_og_most_popular_groups(),
+          );
+          break;
       }
-      break;
   }
+}
+
+/**
+ * Return a themed block.
+ * @return
+ *  A themed HTML string representing the og_most_popular_groups block.
+ */
+function _drua_profile_og_most_popular_groups() {
+  $result = db_query("SELECT node.nid AS nid,term_data.tid AS term_data_tid,term_data.name AS term_data_name,term_data.vid AS term_data_vid, node.title AS node_title, node.language AS node_language,COUNT(term_data.name) AS post_count FROM node node  LEFT JOIN og og ON node.nid = og.nid LEFT JOIN term_node term_node ON node.vid = term_node.vid LEFT JOIN term_data term_data ON term_node.tid = term_data.tid WHERE (node.status = 1) AND (og.og_directory <> 0) AND (node.type in ('group')) GROUP BY term_data_name ORDER BY term_data_name ASC");
+  $CountAll=0;
+  while ($row = db_fetch_array($result)) {
+    $url = 'taxonomy/term/' . $row['term_data_tid'];
+    $alias = drupal_get_path_alias($url, $row['node_language']);
+    if (!preg_match('/tegi*/', $alias)) {
+      $items[] = '<span class="most-popular-groups">' . l($row['term_data_name'] . ' (' . $row['post_count'] . ') ', $alias) . '</span>';
+    }
+    $CountAll+=$row['post_count'];
+  }
+  $output = '<h3 class="all-most-popular-groups"><a href="og/">' . t('All group') . ' ('.$CountAll.')</h3>';
+  $output .= implode($items);
+  return $output;
 }
 
 function _drua_profile_top_cities_by_events() {
