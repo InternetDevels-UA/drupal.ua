@@ -200,4 +200,8 @@ $(function () {
     };
   };
 
+  $(".vud-widget-upanddown").each(function(){
+    $(this).parent().parent().find('.meta-links > .meta').after($(this));
+  });
+
 });
