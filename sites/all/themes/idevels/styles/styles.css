@@ -4487,6 +4487,12 @@ a.karma.up::after {
   min-height:60px;
 }
 
+.helper-node-form .body-field-wrapper  {
+  margin-bottom:15px;
+}
+.helper-node-form .standard{
+  margin-top:-25px
+}
 #block-menu-primary-links ul.menu li a {
   font-family: 'PT Sans';
 }
