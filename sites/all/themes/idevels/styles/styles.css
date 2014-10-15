@@ -4192,7 +4192,7 @@ body.front .content-center {
   background-position: 730px top;
 }
 body.front .small-button.browse-all{
-  right:35px;
+  right:80px;
 }
 .view-upcoming-events .views-field-field-events-logo-fid {
   clear: left;
@@ -4498,6 +4498,16 @@ a.contact-node-form-cancel {
   top: 14px;
 }
 
+body.front .pane-views {
+  width: 905px;
+}
+
+body.front
+.center-right {
+  width: 395px;
+  padding-left: 0px;
+  float: right;
+}
 .contact-node-form-cancel a:after {
   position: absolute;
   content: ' →';
