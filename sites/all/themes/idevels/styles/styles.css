@@ -4197,7 +4197,7 @@ body.front .small-button.browse-all{
 .view-upcoming-events .views-field-field-events-logo-fid {
   clear: left;
   float: left;
-  margin: 0px 20px 60px 0px;
+  margin: 0px 20px 0px 0px;
   width: 80px;
   height: auto;
   min-height: 71px;
@@ -4389,6 +4389,13 @@ a.karma.up::after {
 .all-upcoming-events:hover {
   text-decoration: none;
 }
-.view-id-upcoming_events .field-content{
-  min-height:60px;
+.view-id-upcoming_events .field-content p{
+  float:right;
+  width:370px;
+  margin: -25px 20px 20px 0px;
+}
+
+.view-upcoming-events .views-row,
+.all-upcoming-events{
+  clear:both;
 }
