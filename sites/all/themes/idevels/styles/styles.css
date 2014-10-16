@@ -4411,6 +4411,9 @@ form#events-node-form #edit-field-zoom-0-value-wrapper {
 form#events-node-form #img-prev input.img-prev {
   display: none;
 }
+form#events-node-form #edit-field-events-logo-0-upload-wrapper > .filefield-upload {
+  max-height: 320px;
+}
 form#events-node-form #edit-field-events-logo-0-upload-wrapper .widget-preview {
   border: none;
 }

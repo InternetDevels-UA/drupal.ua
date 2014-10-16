@@ -389,6 +389,10 @@ $(function () {
         }
 
         reader.readAsDataURL(input.files[0]);
+
+        $clear_img_prev.click(function(event) {
+          $img_prev.remove();
+        });
       }
     }
 
