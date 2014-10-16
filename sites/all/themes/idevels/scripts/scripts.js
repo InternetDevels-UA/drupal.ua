@@ -208,7 +208,7 @@ $(function () {
   if ($('#events-node-form').length) {
     // decorate teaser
     var $teaser = $("#edit-field-new-teaser-0-value");
-    var $body = $("#edit-body");
+    var $body = $("#cke_edit-body body");
     var $end_date = $("#edit-field-event-date-0-value2-datepicker-popup-0");
     var $start_date = $("#edit-field-event-date-0-value-datepicker-popup-0");
 
@@ -230,12 +230,13 @@ $(function () {
     };
 
     $body_errors = $('<span class="textarea-errors"></span>');
-    $body.before($body_errors);
+    $("#edit-body").before($body_errors);
     $body.change(check_body);
 
     // check body text length
     function check_body() {
-      if ($body.val().length < 300) {
+/*      if ($body.val().length < 300) {*/
+      if (CKEDITOR.instances['DOM-ID-HERE'].getData().length < 300) {
         $body_errors.text(Drupal.t("Event discripton can't be less than 300 characters"));
         $("html, body").animate({scrollTop: $body.offset().top-20 }, 500);
         return false;
