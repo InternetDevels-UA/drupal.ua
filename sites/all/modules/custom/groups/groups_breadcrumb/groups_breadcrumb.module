@@ -20,12 +20,12 @@ function groups_breadcrumb_form_alter(&$form, $form_state, $form_id) {
  * Implementation of hook_nodeapi().
  */
 function groups_breadcrumb_nodeapi(&$node, $op, $teaser, $page) {
-  if (arg(0) == 'node' && arg(2) != 'edit' && $op == 'alter' && $node->nid == arg(1)) {
+  if (arg(0) == 'node' && $op == 'alter' && $node->nid == arg(1)) {
     if (og_is_group_post_type($node->type)) {
       reset($node->og_groups);
       $group_nid = current($node->og_groups);
       $group_title = $node->og_groups_both[$group_nid];
-      
+
       if ($group_lang = _group_breadcrumb_get_translations($group_nid)) {
         $group_title = $group_lang->title;
         $group_nid = $group_lang->nid;
@@ -34,17 +34,32 @@ function groups_breadcrumb_nodeapi(&$node, $op, $teaser, $page) {
       drupal_set_breadcrumb(array(
         l(t('Home'), NULL),
         l(t('Groups'), 'groups'),
-        l($group_title, 'node/'. $group_nid)
+        l($group_title, 'node/' . $group_nid),
+        drupal_get_title(),
       ));
     }
     elseif (og_is_group_type($node->type)) {
       drupal_set_breadcrumb(array(
         l(t('Home'), NULL),
-        l(t('Groups'), 'groups')
+        l(t('Groups'), 'groups'),
+        drupal_get_title(),
       ));
     }
     else {
-      drupal_set_breadcrumb(array());
+      if ($node->type == 'events') {
+        drupal_set_breadcrumb(array(
+          l(t('Home'), NULL),
+          l(t('Events'), 'events'),
+          drupal_get_title(),
+        ));
+      }
+      if ($node->type == 'helper') {
+        drupal_set_breadcrumb(array(
+          l(t('Home'), NULL),
+          l(t('Questions/Answers'), 'question'),
+          drupal_get_title(),
+        ));
+      }
     }
   }
 }
@@ -52,6 +67,7 @@ function groups_breadcrumb_nodeapi(&$node, $op, $teaser, $page) {
 
 /**
  * Addition function:
+ *
  * Get translated Group.
  */
 function _group_breadcrumb_get_translations($gid) {
