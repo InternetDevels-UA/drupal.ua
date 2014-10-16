@@ -302,7 +302,7 @@ function idevels_views_pre_render(&$view) {
     drupal_set_breadcrumb(array(
       l(t('Home'), NULL),
       l(t('Groups'), 'groups'),
-      l(t('Community'), 'community'),
+      l(drupal_get_title(),arg(0).'/'.arg(1)),
       t('By term'),
     ));
   }
