@@ -254,7 +254,7 @@ function idevels_vk_login() {
 function idevels_views_pre_render(&$view) {
   if ($view->name == 'question' && $view->current_display == 'page_1') {
     // if (empty($view->result)) {
-    $attachment = '<p class="empty-questions">' . t('Having problems with Drupal? Ask a question about the community!') . '</p>';
+    // $attachment = '<p class="empty-questions">' . t('Having problems with Drupal? Ask a question about the community!') . '</p>';
     $attachment .= '<span class="button ask">';
     $attachment .= l(t('Ask question'), 'node/add/question', array('attributes' => array('class' => 'button-helper helper')));
     $attachment .= '</span>';
@@ -264,24 +264,47 @@ function idevels_views_pre_render(&$view) {
   }
   elseif ($view->name == 'Events' && $view->current_display == 'page_1') {
     drupal_set_title(t('Events'));
+    drupal_set_breadcrumb(array(
+    l(t('Home'), NULL),
+    t('Events')
+    ));
   }
   elseif ($view->name == 'Events' && $view->current_display == 'page_2') {
     drupal_set_title(t('Past Events'));
+    drupal_set_breadcrumb(array(
+      l(t('Home'), NULL),
+      t('Events'),
+    ));
   }
   elseif ($view->name == 'og_posts_list' && $view->current_display == 'block_1') {
     drupal_set_breadcrumb(array(
       l(t('Home'), NULL),
-      t('Groups')
+      t('Groups'),
     ));
   }
   elseif ($view->name == 'users' && $view->current_display == 'page_1') {
     drupal_set_breadcrumb(array(
       l(t('Home'), NULL),
-      t('Users')
+      t('Subscribers'),
+    ));
+  }
+  elseif ($view->name == 'taxonomy_term' && $view->current_display == 'page') {
+    drupal_set_breadcrumb(array(
+      l(t('Home'), NULL),
+      l(t('Groups'), 'groups'),
+      drupal_get_title(),
     ));
   }
   elseif ($view->name == 'vacations' && $view->current_display == 'page_1') {
     drupal_set_title(t('Vacations'));
+  }
+  elseif ($view->name == 'posts_by_term' && $view->current_display == 'page') {
+    drupal_set_breadcrumb(array(
+      l(t('Home'), NULL),
+      l(t('Groups'), 'groups'),
+      l(drupal_get_title(),arg(0).'/'.arg(1)),
+      t('By term'),
+    ));
   }
   elseif ($view->name == 'group_comments' && $view->current_display == 'page_1') {
     drupal_set_title(t('Last activity'));
@@ -791,7 +814,7 @@ function idevels_init() {
   $path = trim($path, '/');
   $breadcrumb = array();
   $breadcrumb[] = l(t('Home'), '<front>');
-  $breadcrumb[] = l(t('Ask a questions'), $path); // Link to current URL
+  $breadcrumb[] = t('Ask a questions');
 // Set Breadcrumbs
   drupal_set_breadcrumb($breadcrumb);
   }
