@@ -3982,6 +3982,14 @@ form#user-register #edit-legal-accept-wrapper strong {
   margin-top: 10px;
   height: 24px;
 }
+.node-type-events .panel-bottom {
+  width: 100%;
+  max-width: 100%;
+}
+.node-type-events .panel-bottom .pane-node-body {
+  overflow-x: auto;
+  overflow-y: hidden;;
+}
 /*
 * contact form
 */
