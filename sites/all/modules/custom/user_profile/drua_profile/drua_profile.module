@@ -103,13 +103,11 @@ function drua_profile_block($op = 'list', $delta = 0, $edit = array()) {
         'profile_group' => array('info' => t('Profile: User groups')),
         'profile_bookmarks' => array('info' => t('Profile: User bookmarks')),
         'idevels_blockfooter' => array('info' => t('Footer: Block with all information.')),
+        'last_comments' => array('info' => t('Last comments')),
         'top_cities_by_events' => array('info' => t('Top cities by events')),
         'notification_block' => array('info' => t('Notification about development instruction')),
         'og_most_popular_groups' => array('info' => t('Most popular group')),
         'profile_change_avatar' => array('info' => t('Profile: Change avatar')),
-        'profile_change_avatar' => array('info' => t('Profile: Change avatar')),
-        'idevels_blockfooter' => array('info' => t('Footer: Block with all information.')),
-        'top_cities_by_events' => array('info' => t('Top cities by events')),
       );
 
     case 'view':
@@ -413,19 +411,16 @@ function drua_profile_block($op = 'list', $delta = 0, $edit = array()) {
             'content' => _drua_profile_top_cities_by_events(),
           );
           break;
+        case 'last_comments':
+          return array(
+            'title' => t('Last comments'),
+            'content' => _drua_profile_last_comments(),
+          );
+          break;
         case 'og_most_popular_groups':
           return array(
             'content' => _drua_profile_og_most_popular_groups(),
           );
-          break;
-        case 'profile_change_avatar':
-          if (arg(0) == 'user' && arg(2) == 'edit') {
-            return array(
-              'subject' => t('Photo'),
-              'content' => drupal_get_form('avatar_profile_form'),
-            );
-          }
-
           break;
       }
       break;
@@ -462,6 +457,35 @@ function _drua_profile_top_cities_by_events() {
     $cities[] = "<div class='views-row'><div class='views-field-name'><span class='field-content'><a href='/events?city={$row['name']}'>{$city}</a></span></div></div>";
   }
   return implode($cities);
+}
+
+function _drua_profile_last_comments() {
+  $result = db_query(
+    'SELECT `comments`.`timestamp` , `node`.`title` , `node_comment_statistics`.`comment_count` , `comments`.`cid` , `node`.`nid` 
+    FROM (SELECT * FROM `comments` ORDER BY `comments`.`timestamp` DESC) `comments`
+    INNER JOIN `node` ON `comments`.`nid` = `node`.`nid` 
+    INNER JOIN `node_comment_statistics` ON `node`.`nid` = `node_comment_statistics`.`nid` 
+    WHERE `node`.`status` =1
+    GROUP BY `node`.`nid`
+    ORDER BY `comments`.`timestamp` DESC
+    LIMIT 0 , 7'
+  );
+  while ($row = db_fetch_array($result)) {
+    if (function_exists('ua_month_perfecty')) {
+      $time = ua_month_perfecty(reset(explode(',', $row['timestamp'])));
+    }
+    else {
+      $time = format_date(reset(explode(',', $row['timestamp'])), 'custom', 'd F, g:i');
+    }
+    $title = reset(explode(',', $row['title']));
+    $comment_count = reset(explode(',', $row['comment_count']));
+    $cid = reset(explode(',', $row['cid']));
+    $path_to_node = '/' . drupal_get_path_alias('node/' . reset(explode(',', $row['nid'])));
+    $path_to_comment = $path_to_node . '#comment-' . $cid;
+    $output[] = "<div class='views-row'><div class='views-field-timestamp'><span class='field-content'>$time</span></div><div class='views-field-subject'><span class='field-content'><a href={$path_to_comment}>$title</a></span></div><div class='views-field-title-1'><span class='field-content'><a href={$path_to_node}>$comment_count</a></span></div></div>";
+  }
+  $output = '<div class="pane-group-comments-panel-pane-2">' . implode($output) . '<div class="view-footer"><p><a href="/userstracker" rel="nofollow">Всі коментарі</a></p></div>' .'</div>';
+    return $output;
 }
 
 /**
