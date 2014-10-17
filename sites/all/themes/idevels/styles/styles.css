@@ -4500,6 +4500,33 @@ a.karma.up::after {
   font-family: 'PT Sans';
 }
 
+#block-drua_profile-notification_block {
+  display: block;
+  height: auto;
+  background-color: red;
+  clear: both;
+  margin: 0px;
+  padding: 5px 20px;
+  text-align: left;
+}
+
+#page-top {
+  z-index: 999;
+  width: 100%;
+  margin: 0px;
+}
+
+#block-drua_profile-notification_block a {
+  color: #fff;
+  font-family: 'PT Sans';
+  font-size: 14px;
+}
+
+#block-drua_profile-notification_block .notification-close a {
+  float: right;
+  margin-right: 10px;
+}
+
 body,
 #footer {
   background-color: #F6F6F6;
@@ -4733,3 +4760,4 @@ body.front
 .contact-node-form-cancel a:hover {
   color: #f93703;
 }
+

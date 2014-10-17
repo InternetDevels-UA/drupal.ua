@@ -816,7 +816,21 @@ function idevels_init() {
   $breadcrumb[] = l(t('Home'), '<front>');
   $breadcrumb[] = t('Ask a questions');
 // Set Breadcrumbs
-  drupal_set_breadcrumb($breadcrumb);
+    drupal_set_breadcrumb($breadcrumb);
+  }
+  if (preg_match('*notification-close*', $path) || $path == '/notification-accept') {
+    setcookie('DuNotificationInstruction',1,time()+3600*24*7);
+    if (!empty($arg) && ($path != '/notification-accept')) {
+      drupal_goto(substr($arg, 17));
+    }
+  }
+  if (arg(0) == 'node' && arg(2)=='vud-votes') {
+    $path=arg(0).'/'.arg(1);
+    drupal_set_breadcrumb(array(
+      l(t('Home'), NULL),
+      l(drupal_get_title(),$path),
+      t('Voting details')
+    ));
   }
 }
 
