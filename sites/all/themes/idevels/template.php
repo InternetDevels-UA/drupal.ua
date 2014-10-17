@@ -294,14 +294,19 @@ function idevels_preprocess_profile_header(&$vars) {
   $arg = arg();
   $tabs_arr = explode("\n", theme('menu_local_tasks'));
   $edit_link = l(t('Edit'), 'user/' . arg(1) . '/edit/profile');
-  array_splice($tabs_arr, 2, 0, '<li>' . $edit_link . '</li>');
+  if ($arg[0] == 'user' && $user->uid == $arg[1] && !user_access('access administration pages')) {
+    array_splice($tabs_arr, 2, 0, '<li>' . $edit_link . '</li>');
+  }
+  if ($arg[0] == 'user' && in_array($arg[3], array('email', 'password')) && $user->uid == $arg[1] && user_access('access administration pages')) {
+    array_splice($tabs_arr, 2, 0, '<li class="active">' . $edit_link . '</li>');
+  }
   $newtabs = array(
     'profile',
     'newsletter',
     'email',
     'password'
   );
-  if ($arg[2] == 'edit' && (in_array($arg[3], $newtabs))) {
+  if ($arg[2] == 'edit' && (in_array($arg[3], $newtabs)) && !user_access('access administration pages')) {
     $tabs_arr[2] = '<li class="active">' . $edit_link . '</li>';
   }
   if ($arg[2] == 'edit' && ($arg[3] == 'profile' || $arg[3] == 'newsletter')) {
@@ -647,6 +652,13 @@ function idevels_content_multiple_values($element) {
     uasort($items, '_content_sort_items_value_helper');
     $element[$element['#field_name'] . '_add_more']['#value'] = '';
     // Add the items as table rows.
+    if (count($items) == 3 && array_key_exists('', $items) && isset($items['']) && $items[1]['#value']['value']) {
+      $items[0]['value']['#value'] = $items[1]['#value']['value'];
+      $items[1]['value']['#value'] = '';
+    }
+    if (!$items[0]['value']['#value']) {
+      unset($items[0]);
+    }
     foreach ($items as $delta => $item) {
       $item['_weight']['#attributes']['class'] = $order_class;
       $delta_element = drupal_render($item['_weight']);
@@ -674,6 +686,9 @@ function idevels_content_multiple_values($element) {
         );
       }
       $row_class = 'draggable';
+      if (!$cells[1]) {
+        continue;
+      }
       $rows[] = array(
         'data'  => $cells,
         'class' => $row_class,

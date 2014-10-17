@@ -74,7 +74,9 @@ function drua_profile_menu() {
  *  Implements hook_menu_alter().
  */
 function drua_profile_menu_alter(&$items) {
-  $items['user/%user_category/edit']['access callback'] = FALSE;
+  $items['user/%user_category/edit']['access arguments'] = array('access administration pages');
+  $items['user/%user_category/edit']['access callback'] = 'user_access';
+//  $items['user/%user_category/edit']['access callback'] = FALSE;
   $items['user/reset/%/%/%']['page arguments'] = array('drua_profile_user_pass_reset', 2, 3, 4);
 }
 
@@ -495,9 +497,17 @@ function avatar_profile_form_submit($form, &$form_state) {
  */
 function drua_profile_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'profile_node_form') {
-    $form['#pre_render'][] = 'drua_profile_add_description';
+    $form['#pre_render'][] = 'drua_profile_form_prerender';
     $form['field_image']['#type'] = 'hidden';
     unset($form['language']);
+    $form['buttons']['cancel'] = array(
+      '#value'  => l(t('Cancel'), 'user'),
+      '#access' => TRUE,
+      '#weight' => 9,
+      '#prefix' => '<div class="cancel-button">',
+      '#suffix' => '</div>',
+    );
+
   }
   if ($form_id == 'user_admin_settings') {
     $defaults = variable_get('new_email_message', array());
@@ -508,7 +518,7 @@ function drua_profile_form_alter(&$form, &$form_state, $form_id) {
       '#collapsible' => TRUE,
       '#collapsed'   => TRUE,
       '#tree'        => TRUE,
-      '#description' => t('Customize new email confirmation messages .') . ' ' . $email_token_help,
+      '#description' => t('Customize new email confirmation messages.') . ' ' . $email_token_help,
     );
     $form['email']['new_email_message']['new_email_subject'] = array(
       '#type'          => 'textfield',
@@ -530,20 +540,13 @@ function drua_profile_form_alter(&$form, &$form_state, $form_id) {
 }
 
 /**
- *  Add description text to fields first name and last name.
+ *  Prerender function for form user profile edit.
  */
-function drua_profile_add_description($form) {
+function drua_profile_form_prerender($form) {
+  // Make gender field options translatable.
   $genders = array_keys($form['group_personal']['field_gender']['value']['#options']);
   $form['group_personal']['field_gender']['value'][$genders[0]]['#title'] = t('male');
   $form['group_personal']['field_gender']['value'][$genders[1]]['#title'] = t('female');
-  $form['group_personal']['field_first_name']['#weight'] = 7;
-  $form['group_personal']['field_last_name']['#weight'] = 8;
-  $form['group_personal']['name_description'] = array(
-    '#value'  => t('The portal introduced a policy of real names, read !link. This information can be ignored, but then you will not be able to comment on Lenta.', array('!link' => l(t('information about the new rules'), ''))),
-    '#weight' => 9,
-    '#prefix' => '<div class="description">',
-    '#suffix' => '</div>',
-  );
 
   return $form;
 }
