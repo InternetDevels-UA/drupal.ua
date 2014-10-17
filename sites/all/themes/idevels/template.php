@@ -714,3 +714,16 @@ function idevels_content_multiple_values($element) {
 
   return $output;
 }
+/**
+ * Theming Events__panel_pane_2__field_event_date_value.
+ * Wrap in time tag and add class pastevent or not-pastevent
+ */
+function idevels_preprocess_views_view_field__Events__panel_pane_2__field_event_date_value(&$vars) {
+  if (strtotime($vars['row']->node_data_field_latitude_field_event_date_value2) < time()) {
+    $vars['output'] = '<time class="pastevent">' . $vars['output'] . '</time>';
+  }
+  else {
+    $vars['output'] = '<time class="not-pastevent">' . $vars['output'] . '</time>';
+  }
+}
+s

@@ -131,7 +131,6 @@ $(function () {
     if (window.location.pathname != '/node/add/resource')
       return;
     $this = $(this);
-    console.log(window.location.pathname);
     if ($this.val() == 2491) {
       $( ".link-field-subrow" ).hide();
       $( ".filefield-element" ).show();
@@ -242,4 +241,25 @@ $(function () {
       $(this).parent().parent().remove();
     });
   });
+  // hide event report
+  $(".node-type-events .pane-field-report").hide();
+
+  // if event not past disable link for view report
+  if ($(".node-type-events time.not-pastevent").length > 0) {
+    $("#link-event-overview").removeAttr('href');
+    $("#link-event-overview").addClass('expanded');
+  }
+  // if event past hide I'll go button and change label for avatars
+  else if ($(".node-type-events time.pastevent").length > 0) {
+    $(".node-type-events .views-field-ops").hide();
+    $(".view-id-Events.view-display-id-panel_pane_3 p").text(Drupal.t('Event ended'));
+  };
+
+  // on click hide event text and show event report
+  $("#link-event-overview:not(.expanded)").click(function (e) {
+    $(".node-type-events .pane-field-report").toggle();
+    $(".node-type-events .pane-node-body").toggle();
+    return false;
+  });
+
 });
