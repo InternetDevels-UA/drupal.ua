@@ -47,6 +47,18 @@ function groups_form_changes_form_alter(&$form, $form_state, $form_id) {
       }
     }
   }
+  if ($form_id == 'webform_client_form_301625') {
+    $form['actions']['cancel'] = array(
+      '#type' => 'markup',
+      '#suffix' => '</span>',
+      '#prefix' => '<span class="contact-node-form-cancel">',
+      '#value' => l(t('Cancel question'), '<front>'),
+      '#weight' => 20,
+      '#access' => TRUE,
+    );
+    $form['#prefix'] = '<span class="contact-node-form">';
+    $form['#suffix'] = '</span>';
+  }
 
   /**
    * When creating the post, you should choose only one group.
