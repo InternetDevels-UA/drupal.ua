@@ -53,7 +53,7 @@ function groups_form_changes_form_alter(&$form, $form_state, $form_id) {
       }
     }
   }
-  if ($form_id == 'webform_client_form_301276') {
+  if ($form_id == 'webform_client_form_301625') {
     $form['actions']['cancel'] = array(
       '#type' => 'markup',
       '#suffix' => '</span>',
