@@ -3252,6 +3252,7 @@ element.style {
 }
 .not-logged-in #block-menu-menu-userlogin {
   margin-top: -25px;
+  margin-right:20px;
 }
 /*#block-menu-primary-links:after{
   content: '.';
