@@ -92,7 +92,7 @@ function drua_profile_tab() {
 /**
  * Implementation of hook_block().
  */
-function drua_profile_block($op = 'list', $delta = 0) {
+function drua_profile_block($op = 'list', $delta = 0, $edit = array()) {
   global $user;
   switch ($op) {
     case 'list':
@@ -107,6 +107,8 @@ function drua_profile_block($op = 'list', $delta = 0) {
         'profile_change_avatar' => array('info' => t('Profile: Change avatar')),
         'idevels_blockfooter' => array('info' => t('Footer: Block with all information.')),
         'top_cities_by_events' => array('info' => t('Top cities by events')),
+        'notification_block' => array('info' => t('Notification about development instruction')),
+        'og_most_popular_groups' => array('info' => t('Most popular group')),
       );
 
     case 'view':
@@ -130,7 +132,15 @@ function drua_profile_block($op = 'list', $delta = 0) {
             }
           }
           break;
-          
+        case 'notification_block':
+          if (isset($_COOKIE['DuNotificationInstruction'])) {
+            return;
+          }
+          return array(
+            'subject' => '',
+            'content' => notification_instruction_block_items(),
+          );
+          break;
         case 'profile_contacts':
           if (arg(0) == 'node') {
             $node = node_load(array('nid' => arg(1)));
@@ -401,8 +411,30 @@ function drua_profile_block($op = 'list', $delta = 0) {
             'title' => t('Cities'),
             'content' => _drua_profile_top_cities_by_events(),
           );
+          break;
+        case 'og_most_popular_groups':
+          return array(
+            'content' => _drua_profile_og_most_popular_groups(),
+          );
+          break;
       }
       break;
+    case 'configure':
+      if ($delta == 'notification_block') {
+        $form['link'] = array(
+          '#type' => 'textarea',
+          '#title' => t('Body'),
+          '#default_value' => variable_get('notification_instruction_block_items', 'notification_block'),
+          '#required' => TRUE,
+        );
+        return $form;
+      }
+      break;
+    case 'save':
+      if ($delta == 'notification_block') {
+        variable_set('notification_instruction_block_items', $edit['link']);
+        break;
+      }
   }
 }
 
@@ -763,6 +795,27 @@ function drua_profile_user_pass_reset(&$form_state, $uid, $timestamp, $hashed_pa
       drupal_access_denied();
     }
   }
+}
+
+/**
+ * Return a themed block.
+ * @return
+ *  A themed HTML string representing the og_most_popular_groups block.
+ */
+function _drua_profile_og_most_popular_groups() {
+  $result = db_query("SELECT node.nid AS nid,term_data.tid AS term_data_tid,term_data.name AS term_data_name,term_data.vid AS term_data_vid, node.title AS node_title, node.language AS node_language,COUNT(term_data.name) AS post_count FROM node node  LEFT JOIN og og ON node.nid = og.nid LEFT JOIN term_node term_node ON node.vid = term_node.vid LEFT JOIN term_data term_data ON term_node.tid = term_data.tid WHERE (node.status = 1) AND (og.og_directory <> 0) AND (node.type in ('group')) GROUP BY term_data_name ORDER BY term_data_name ASC");
+  $CountAll=0;
+  while ($row = db_fetch_array($result)) {
+    $url = 'taxonomy/term/' . $row['term_data_tid'];
+    $alias = drupal_get_path_alias($url, $row['node_language']);
+    if (!preg_match('/tegi*/', $alias)) {
+      $items[] = '<span class="most-popular-groups">' . l($row['term_data_name'] . ' (' . $row['post_count'] . ') ', $alias) . '</span>';
+    }
+    $CountAll+=$row['post_count'];
+  }
+  $output = '<h3 class="all-most-popular-groups"><a href="og/">' . t('All group') . ' ('.$CountAll.')</a></h3>';
+  $output .= implode($items);
+  return $output;
 }
 
 function _drua_profile_top_cities_by_events() {
@@ -1133,4 +1186,22 @@ function theme_drua_block_domen_active($data = NULL) {
 }
 
 
-
+/**
+ * @return string
+ *   return html block.
+ */
+function notification_instruction_block_items() {
+  $path = request_uri();
+  $path = trim($path, '/');
+  if ($path == '') {
+    $path = 'front';
+  }
+  $output = l(variable_get('notification_instruction_block_items', 'notification_block'), 'notification-accept');
+  $output .= '<span class="notification-close">' . l('x', 'notification-close', array(
+        'query' => array(
+          'destination' => '' . $path,
+        )
+      )
+    ) . '</span>';
+  return $output;
+}
