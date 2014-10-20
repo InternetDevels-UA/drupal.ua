@@ -4354,9 +4354,11 @@ a.karma.up::after {
   position: relative;
   top: -15px;
 }
-.page-groups .group-subtitle a:first-child {
+.page-groups .group-subtitle a:first-child,
+.node-type-group .group-subtitle img+a {
   color: black;
 }
-.page-groups .group-subtitle a:last-child {
+.page-groups .group-subtitle a+a,
+.node-type-group .group-subtitle a+a {
   font-style: italic;
 }
