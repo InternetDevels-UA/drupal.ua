@@ -927,7 +927,7 @@ ul.quicktabs-style-nostyle li.active:hover a  { background:url(../images/tabs-bi
 ul.quicktabs-style-nostyle li.active:active { background:url(../images/tabs-big.png) right -56px no-repeat; }
 ul.quicktabs-style-nostyle li.active:active a { background:url(../images/tabs-big.png) 0 -56px no-repeat; }
 
-ul.primary, ul.primary li, ul.primary li a { padding:0; margin:0; }
+ul.primary, ul.primary li, ul.primary li a { padding:0; margin:0; font-family: "PT Sans";}
 ul.primary, ul.primary li, ul.primary li a, ul.primary li.active, ul.primary li.active a { line-height:28px !important; display:inline-block; border:none; }
 .tabs-wrapper { margin: 1em 0; }
 ul.primary { margin: 0; display:block; }
@@ -947,7 +947,7 @@ ul.primary li.active:active { background:url(../images/tabs-big.png) right -56px
 ul.primary li.active:active a { background:url(../images/tabs-big.png) 0 -56px no-repeat; }
 
 ul.secondary { border:none; margin: 1em 0 2em; padding:0; }
-ul.secondary li, ul.secondary li a { padding:0; margin:0; }
+ul.secondary li, ul.secondary li a { padding:0; margin:0; font-family: "PT Sans"}
 ul.secondary li { display:inline-block;margin-right:20px; border-right:none; }
 ul.secondary a.active { border-bottom:4px solid #286596; }
 
@@ -1323,6 +1323,7 @@ h1.user-name {
   color: #000;
 }
 h1.user-name span.user-login {
+  font-family: 'PT Sans Narrow', Arial, sans-serif;
   font-weight: normal;
   font-size: 28px;
 }
@@ -4194,6 +4195,272 @@ form[action="/feedback"] #webform-component-povidomlennya textarea,
 form[action="/feedback"] .captcha {
   width: 785px;
 }
+
+/*
+* Right block with avatar
+*/
+#block-drua_profile-profile_change_avatar * {
+  font-family: 'PT Sans' !important;
+}
+#block-drua_profile-profile_change_avatar #edit-file-wrapper,
+#block-drua_profile-profile_change_avatar .form-submit {
+  display: none;
+}
+#block-drua_profile-profile_change_avatar .block-title {
+  font-weight: 100;
+  font-style: italic;
+  font-family: 'PT Sans Narrow', Arial, sans-serif !important;
+}
+/*
+* Profile tabs
+*/
+form#drua-profile-change-password *,
+form#drua-profile-change-email *,
+form#user-profile-form *,
+form#node-form * {
+  font-family: "PT Sans" !important;
+}
+form#drua-profile-change-password label,
+form#drua-profile-change-email label,
+form#user-profile-form label,
+form#node-form label,
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values thead th {
+  font-weight: normal;
+}
+fieldset.group-personal input[type=text],
+fieldset.group-personal .form-item textarea,
+fieldset.group-personal select.location_auto_country,
+fieldset.group-contacts input[type=text],
+fieldset.group-drupal input[type=text],
+fieldset.group-personal > div.form-item#edit-field-last-name-0-value-wrapper .description,
+form#node-form fieldset.group-drupal .description {
+  width: 390px;
+}
+fieldset.group-personal .form-item textarea {
+  resize: none;
+}
+fieldset.group-personal,
+fieldset.group-contacts,
+fieldset.group-drupal,
+fieldset.group-drupal fieldset,
+fieldset.group-personal fieldset.location,
+form#user-profile-form fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+fieldset.group-personal,
+fieldset.group-contacts,
+fieldset.group-drupal {
+  margin: 0 0 30px 0;
+}
+fieldset.group-personal > legend,
+fieldset.group-contacts > legend,
+fieldset.group-drupal legend,
+form#user-profile-form fieldset legend {
+  padding: 0;
+  font-style: italic;
+}
+fieldset.group-personal fieldset.location > legend,
+fieldset.group-personal fieldset.location #edit-field-location-0-delete-location-wrapper {
+  display: none;
+}
+fieldset.group-personal fieldset.location select.location_auto_country {
+  margin: 0;
+}
+fieldset.group-personal fieldset.location #edit-field-location-0-city-wrapper,
+fieldset.group-personal fieldset.location #edit-field-location-0-city-wrapper input {
+  margin-bottom: 0;
+}
+fieldset.group-personal .description {
+  clear: both;
+  margin-bottom: 10px;
+}
+fieldset.group-personal .date-clear-block {
+  width: 324px;
+}
+@-moz-document url-prefix() {
+  fieldset.group-personal .date-clear-block {
+    width: 314px;
+  }
+}
+
+fieldset.group-personal .date-clear-block > .form-item > label {
+  float: left;
+}
+fieldset.group-personal .date-clear-block > .form-item > div {
+  float: right;
+}
+fieldset.group-personal .date-clear-block > .form-item > div label {
+  display: none;
+}
+fieldset.group-personal > div.form-item:nth-of-type(4) {
+  clear: both;
+}
+fieldset.group-personal > div.form-item:nth-of-type(4) label,
+fieldset.group-personal > div.form-item#edit-field-first-name-0-value-wrapper > label,
+fieldset.group-personal > div.form-item#edit-field-last-name-0-value-wrapper > label,
+fieldset.group-personal > div.form-item#edit-field-profile-company-0-value-wrapper > label,
+fieldset.group-personal > div.form-item#edit-field-job-title-0-value-wrapper > label,
+fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper > label,
+fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper > label,
+fieldset.group-contacts > div.form-item > label,
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values thead th,
+fieldset.group-drupal label {
+  float: left;
+  padding-right: 10px;
+  width: 140px;
+}
+body.page-user form#node-form input[type=submit],
+body.page-user form#user-profile-form input[type=submit],
+form#drua-profile-change-email input[type=submit],
+form#drua-profile-change-password input[type=submit] {
+  border: 1px solid #E3E3E3;
+  background: linear-gradient(to bottom,#F7F7F7,#EDEBEB);
+  padding: 0 11px;
+  height: 31px;
+  line-height: 1;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 0 #FCFCFC inset,0 -1px 0 0 #F0EEEE inset;
+  cursor: pointer;
+  position: relative;
+  font-size: 16px;
+}
+body.page-user form#node-form input[type=submit]:hover,
+body.page-user form#user-profile-form input[type=submit]:hover,
+form#drua-profile-change-email input[type=submit]:hover,
+form#drua-profile-change-password input[type=submit]:hover {
+  border-color: #999;
+}
+fieldset.group-personal > div.form-item#edit-field-last-name-0-value-wrapper .description,
+form#node-form fieldset.group-drupal .description {
+ margin-left: 140px;
+}
+fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper,
+fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper {
+  clear: both;
+}
+fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper textarea,
+fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper textarea {
+  float: left;
+}
+fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper .grippie,
+fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper .grippie {
+  display: none;
+}
+fieldset.group-personal > fieldset:nth-of-type(2) {
+  clear: both;
+}
+fieldset.group-contacts > div#field-personal-website-items table.sticky-header {
+  display: none !important;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values {
+  border-bottom: none;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values td.content-multiple-drag {
+  padding-left: 7px !important;
+  padding-top: 8px !important;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values td.content-multiple-drag a {
+  padding-left: 0;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values td.content-multiple-drag a div {
+  transition: 0;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values td:nth-of-type(2) {
+  padding: 0 !important;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values thead {
+  float: left;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values td.row-remove,
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values td.row-add {
+  padding: 0 10px !important;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values thead th {
+  display: block;
+  float: left;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values tbody {
+  display: block;
+  float: left;
+}
+fieldset.group-contacts > div#field-personal-website-items .description {
+  margin-left: 170px;
+}
+fieldset.group-contacts > div#field-personal-website-items input[type=text] {
+  width: 360px;
+}
+fieldset.group-drupal fieldset div#edit-field-account-0-fieldset-data-wrapper {
+  float: left;
+  width: 425px;
+}
+fieldset.group-drupal fieldset div#edit-field-account-0-fieldset-data-wrapper input {
+  width: 250px;
+}
+fieldset.group-drupal fieldset .sub {
+  width: 530px;
+}
+fieldset.group-drupal fieldset input[type=submit] {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  width: 105px;
+}
+body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr {
+  background: #FFF;
+}
+body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit],
+body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr .row-remove div {
+  margin-top: 4px;
+  width: 28px;
+  height: 28px;
+  border: none;
+  cursor: pointer;
+  transition: none;
+}
+body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit] {
+  margin-top: 3px;
+  height: 30px;
+  background: url('/sites/all/themes/idevels/images/add-remove-buttons.png') no-repeat 0 1px;
+}
+body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit]:hover {
+  background-position: -34px 1px;
+}
+body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit]:active {
+  background-position: -68px 1px;
+}
+body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr .row-remove div {
+  background: url('/sites/all/themes/idevels/images/add-remove-buttons.png') no-repeat 0 -32px;
+}
+body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr .row-remove div:hover {
+  background-position: -34px -32px;
+}
+body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr .row-remove div:active {
+  background-position: -68px -32px;
+}
+body.page-user form#node-form .cancel-button {
+  display: inline-block;
+  margin-left: 10px;
+}
+body.page-user form#node-form .cancel-button a {
+  text-decoration: underline;
+  font-style: italic;
+}
+body.page-user form#node-form .cancel-button a:after {
+  position: absolute;
+  content: ' →';
+  font-size: 13px;
+  margin-top: 0;
+  margin-left: 4px;
+  font-family: 'PT Sans';
+}
+body.page-user form#node-form .cancel-button a:hover {
+  color: #F93703;
+}
 /*Upcoming-events And Frontpage*/
 body.front .center-left {
   width: 60%;
@@ -4711,7 +4978,6 @@ body.front .view-display-id-block_1 .views-row {
 a.contact-node-form-cancel {
   font: 15px 'PT Sans';
 }
-
 #main-content .contact-node-form form[action="/contacts"] input[type="submit"] {
   border: 1px solid #e3e3e3;
   background: linear-gradient(to bottom, #f7f7f7, #edebeb);
@@ -4768,4 +5034,3 @@ body.front
     margin-top: 18px;
   }
 }
-
