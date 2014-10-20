@@ -4464,8 +4464,10 @@ a.karma.up::after {
   position: relative;
   top: -15px;
 }
+.node-type-group .group-subtitle a:first-child,
 .page-groups .group-subtitle a:first-child,
-.node-type-group .group-subtitle img+a {
+.node-type-group .group-subtitle img+a,
+.page-groups .group-subtitle img+a {
   color: black;
 }
 .page-groups .group-subtitle a+a,
