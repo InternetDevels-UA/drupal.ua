@@ -545,6 +545,7 @@ function idevels_preprocess_views_view_fields(&$vars) {
  * For exposed sort by carma or new users;
  */
 function idevels_views_query_alter(&$view, &$query) {
+  global $user;
   if ($view->name == 'users') {
     switch (arg(1)) {
       case 'popular':
@@ -564,6 +565,9 @@ function idevels_views_query_alter(&$view, &$query) {
         $query->orderby[0] = 'users_created_day '.$direction;
         break;
     }
+  }
+  if ($view->name == 'Events' && $view->current_display == 'panel_pane_3') {
+    $query->orderby[] = sprintf("CASE WHEN flag_content_node.uid=%d Then 0 Else 1 End", $user->uid);
   }
 }
 

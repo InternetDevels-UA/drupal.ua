@@ -222,8 +222,6 @@ $(function () {
     $(this).parent().parent().find('.meta-links > .meta').after($(this));
   });
 
-  console.log(Drupal.t("End date can't be empty"));
-
   if ($('#events-node-form').length) {
     // decorate teaser
     var $teaser = $("#edit-field-new-teaser-0-value");
@@ -422,6 +420,27 @@ $(function () {
 
   };
 
+  // hide event report
+  $(".node-type-events .pane-field-report").hide();
 
+  // if event not past disable link for view report
+  if ($(".node-type-events time.not-pastevent").length > 0) {
+    $("#link-event-overview").removeAttr('href');
+    $("#link-event-overview").addClass('expanded');
+  }
+  // if event past hide I'll go button and change label for avatars
+  else if ($(".node-type-events time.pastevent").length > 0) {
+    $(".node-type-events .views-field-ops").hide();
+    $(".view-id-Events.view-display-id-panel_pane_3 p").text(Drupal.t('Event ended'));
+  };
+
+  console.log(Drupal.t('Event ended'));
+
+  // on click hide event text and show event report
+  $("#link-event-overview:not(.expanded)").click(function (e) {
+    $(".node-type-events .pane-field-report").toggle();
+    $(".node-type-events .pane-node-body").toggle();
+    return false;
+  });
 
 });

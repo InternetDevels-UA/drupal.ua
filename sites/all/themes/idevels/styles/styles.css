@@ -3958,7 +3958,7 @@ form#user-register #edit-legal-accept-wrapper strong {
 }
 .node-type-events .view-Events {
   font-size: 15px;
-  font-family: 'PT Sans';
+  font-family: 'Pt Sans',Arial,Verdana,sans-serif;
 }
 .node-type-events .views-field-address,
 .node-type-events .views-field-field-event-date-value-4,
@@ -3997,6 +3997,14 @@ form#user-register #edit-legal-accept-wrapper strong {
   margin-right: 15px;
   margin-top: 10px;
   height: 24px;
+}
+.node-type-events .panel-bottom {
+  width: 100%;
+  max-width: 100%;
+}
+.node-type-events .panel-bottom .pane-node-body {
+  overflow-x: auto;
+  overflow-y: hidden;;
 }
 /*
 * contact form
@@ -5165,4 +5173,82 @@ body.front
 
 .pane-drua-profile-last-comments > h3.pane-title {
   margin-left: 20px;
+}
+.node-type-events .panel-display.container-12 {
+  width: 100%;
+}
+.pane-events-panel-pane-2 .view-Events .views-row {
+  padding: 0;
+}
+.pane-events-panel-pane-2 .view-Events label {
+  display: inline-block;
+  width: 180px;
+}
+.pane-events-panel-pane-2 .view-Events .views-row > div {
+  margin: 10px 0 5px;
+}
+.pane-events-panel-pane-2 .view-Events .views-field-ops a {
+  margin: 5px 0;
+}
+.pane-events-panel-pane-2 .views-field-field-address-value {
+  padding-left: 10px;
+}
+.pane-events-panel-pane-2 .views-field-field-city-value,
+.pane-events-panel-pane-2 .views-field-field-address-value,
+.pane-events-panel-pane-2 .views-field-field-zoom-value,
+.pane-events-panel-pane-3 .views-row {
+  display: inline-block;
+  margin: 5px 0 0 !important;
+}
+.pane-events-panel-pane-3 .views-row {
+  padding: 10px;
+}
+.pane-events-panel-pane-3 .view-header,
+.pane-events-panel-pane-2 .views-field-ops .field-content,
+.node-type-events .panel-bottom .pane-field-google-calendar {
+  display: inline-block;
+  padding: 2px 10px;
+  background-color: #6aa84f;
+  border: solid 2px #333;
+  -moz-box-shadow: 4px 4px 2px #222;
+  -webkit-box-shadow: 4px 4px 2px #222;
+  box-shadow: 4px 4px 2px #222;
+}
+.pane-events-panel-pane-3 .view-header {
+  margin-top: 14px;
+  background-color: transparent;
+  vertical-align: top;
+}
+.node-type-events .panel-bottom .pane-field-google-calendar {
+  background-color: transparent;
+}
+.pane-events-panel-pane-3 .view-header p {
+  margin: 0;
+  color: #333;
+}
+.pane-events-panel-pane-2 .views-field-ops .field-content a {
+  color: white;
+}
+.pane-events-panel-pane-3 .view-content {
+  display: inline;
+}
+.node-type-events .panel-col-last img {
+  width: 100%;
+  height: auto;
+}
+.node-type-events .panel-col-last .pane-custom.pane-1 {
+  width: 100%;
+  margin-right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.node-type-events .pane-field-google-calendar {
+  float: left;
+}
+.node-type-events .pane-addthis-0 {
+  float: right;
+}
+.node-type-events .pane-field-report {
+  margin-bottom: 10px;
 }
