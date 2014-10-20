@@ -4761,3 +4761,6 @@ body.front
   color: #f93703;
 }
 
+.pane-drua-profile-last-comments > h3.pane-title {
+  margin-left: 20px;
+}
