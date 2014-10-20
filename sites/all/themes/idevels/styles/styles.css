@@ -4544,6 +4544,7 @@ a.karma.up::after {
 }
 .node-type-events .pane-addthis-0 {
   float: right;
+  margin-right: 36px;
 }
 .node-type-events .pane-field-report {
   margin-bottom: 10px;

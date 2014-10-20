@@ -131,7 +131,6 @@ $(function () {
     if (window.location.pathname != '/node/add/resource')
       return;
     $this = $(this);
-    console.log(window.location.pathname);
     if ($this.val() == 2491) {
       $( ".link-field-subrow" ).hide();
       $( ".filefield-element" ).show();
@@ -218,7 +217,8 @@ $(function () {
     $(".view-id-Events.view-display-id-panel_pane_3 p").text(Drupal.t('Event ended'));
   };
 
-  console.log(Drupal.t('Event ended'));
+  var destination_link = '/user/login?destination='+window.location.pathname;
+  $(".not-logged-in.node-type-events .pane-events-panel-pane-2 .views-field-ops .field-content").html("<a href="+destination_link+">"+Drupal.t("I'll go there")+"<a/>");
 
   // on click hide event text and show event report
   $("#link-event-overview:not(.expanded)").click(function (e) {
