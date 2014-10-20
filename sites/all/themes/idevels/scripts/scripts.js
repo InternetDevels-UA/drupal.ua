@@ -203,14 +203,14 @@ $(function () {
     $(this).parent().parent().find('.meta-links > .meta').after($(this));
   });
 
-  console.log(Drupal.t("End date can't be empty"));
-
   if ($('#events-node-form').length) {
     // decorate teaser
     var $teaser = $("#edit-field-new-teaser-0-value");
     var $body = $("#cke_edit-body body");
     var $end_date = $("#edit-field-event-date-0-value2-datepicker-popup-0");
     var $start_date = $("#edit-field-event-date-0-value-datepicker-popup-0");
+
+    $("#edit-body-wrapper > label").html(Drupal.t("Event description")+': '+'<span class="form-required">*</span>'+' ');
 
     $teaser_errors = $('<span class="textarea-errors"></span>');
     $teaser.before($teaser_errors);
@@ -236,7 +236,7 @@ $(function () {
     // check body text length
     function check_body() {
 /*      if ($body.val().length < 300) {*/
-      if (CKEDITOR.instances['DOM-ID-HERE'].getData().length < 300) {
+      if (CKEDITOR.instances['edit-body'].getData().length < 300) {
         $body_errors.text(Drupal.t("Event discripton can't be less than 300 characters"));
         $("html, body").animate({scrollTop: $body.offset().top-20 }, 500);
         return false;
@@ -250,14 +250,17 @@ $(function () {
     $end_date.change(check_date);
     $start_date.change(check_date);
 
+    var i_check_date = 0;
+
     // check if date are correct
     function check_date() {
       if ($start_date.val() == '') {
         alert(Drupal.t("Start date can't be empty"));
         $("html, body").animate({scrollTop: $start_date.offset().top-20 }, 500);
+        i_check_date = 1;
         return false;
       }
-      else if ($end_date.val() == '') {
+      else if ($end_date.val() == '' && i_check_date > 0) {
         alert(Drupal.t("End date can't be empty"));
         $("html, body").animate({scrollTop: $end_date.offset().top-20 }, 500);
         return false;
