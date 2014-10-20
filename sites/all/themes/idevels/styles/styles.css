@@ -4757,7 +4757,7 @@ form#events-node-form div > div > div.standard {
 form#events-node-form #map {
   position: absolute;
   right: 20px;
-  top: 370px;
+  top: 390px;
 }
 form#events-node-form #edit-field-city-value-wrapper,
 form#events-node-form #edit-field-address-0-value-wrapper,
@@ -4861,6 +4861,7 @@ form#events-node-form .vertical-tabs {
 body:not(.admin-menu) form#events-node-form #edit-language-wrapper {
   display: none;
 }
+form#events-node-form #edit-title-wrapper,
 form#events-node-form #edit-body-wrapper .resizable-textarea,
 form#events-node-form #edit-field-new-teaser-0-value-wrapper .resizable-textarea {
   position: relative;
@@ -4872,10 +4873,21 @@ form#events-node-form .textarea-errors {
   font-size: 0.8em;
   color: red;
 }
+form#events-node-form #edit-title-wrapper .textarea-errors {
+  top: 8px;
+  right: 25px;
+}
 form#events-node-form #edit-preview,
 form#events-node-form #edit-field-report-0-value-wrapper,
 form#events-node-form #edit-field-report-0-value-wrapper + a + div.textarea-identifier {
   display: none;
+}
+form#events-node-form #edit-field-new-teaser-0-value,
+form#events-node-form #edit-body {
+  resize: vertical;
+}
+form#events-node-form #edit-submit {
+  margin-right: 20px;
 }
 
 .all-upcoming-events {
