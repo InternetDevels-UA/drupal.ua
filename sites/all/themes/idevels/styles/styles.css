@@ -4896,3 +4896,7 @@ body.front
     margin-top: 18px;
   }
 }
+
+.pane-drua-profile-last-comments > h3.pane-title {
+  margin-left: 20px;
+}
