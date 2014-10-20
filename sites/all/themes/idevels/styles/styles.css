@@ -2163,7 +2163,7 @@ div.geshifilter, table .geshifilter td {
   float: right;
 }
 .view-question.view-display-id-page_1 {
-  /*  width: 64%;*/
+  width: 100%;
   float: left;
 }
 .view-question.view-display-id-page_1 .views-field-title a {
