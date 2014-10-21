@@ -450,6 +450,20 @@ function idevels_preprocess_views_view(&$vars) {
         $vars['header'] = $header;
       }
     }
+  } elseif ($vars['view']->name == 'profile_view') {
+      if ($vars['view']->current_display == 'page_1') {
+          if ($vars['empty'] == '') {
+              $user = user_load(arg(1));
+              $widget_settings = db_result(db_query("SELECT widget_settings FROM content_node_field_instance WHERE field_name = 'field_image'"));
+              $data = unserialize($widget_settings);
+              $output = '<div class="no-profile"><div class="image">';
+              $output .= theme_imagecache('100x100', $data['default_image']['filepath']);
+              $output .= '</div><div class="user-name">';
+              $output .= $user->name;
+              $output .= '</div></div>';
+              $vars['empty'] = $output;
+          }
+      }
   }
 }
 
@@ -504,6 +518,12 @@ function idevels_preprocess_views_view_fields(&$vars) {
     }
   }
   if ($vars['view']->name == 'profile_view') {
+      // Translatable labels
+      foreach ($vars['fields'] as $key => $field) {
+          if (!empty($field->label)) {
+              $vars['fields'][$key]->label = t($field->label);
+          }
+      }
     if (isset($vars['fields']['field_job_title_value']) && isset($vars['fields']['field_profile_company_value'])) {
       $vars['fields']['field_job_title_value']->content .= ' ' . t('in') . ' ';
     }
