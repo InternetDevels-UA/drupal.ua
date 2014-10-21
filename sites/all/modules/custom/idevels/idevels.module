@@ -279,7 +279,7 @@ function idevels_views_pre_render(&$view) {
   elseif ($view->name == 'og_posts_list' && $view->current_display == 'block_1') {
     drupal_set_breadcrumb(array(
       l(t('Home'), NULL),
-      t('Groups'),
+      t('Last posts in groups')
     ));
   }
   elseif ($view->name == 'users' && $view->current_display == 'page_1') {
