@@ -294,6 +294,7 @@ ul.secondary-menu li a, ul.secondary-menu li.active-trail a {
 }
 .node .node-links .new {
   color:#FF3366;
+  display: none;
 }
 
 .node .taxonomy-links {
@@ -2504,7 +2505,7 @@ h2.title{
   max-width: 1240px;
 }
 .node .meta-links{
-  margin-top: 30px;
+/*  margin-top: 30px;*/
   padding-bottom: 25px;
   margin-bottom: -20px;
 }
@@ -2758,6 +2759,7 @@ h3.pane-title{
   width: 15px;
   padding-left: 0;
   text-align: center;
+  color: white;
 }
 #sidebar-right #block-views-question-block_2 .field-content{
   font-size: 10px;
@@ -5031,7 +5033,7 @@ body.front .pane-views,
 }
 
 .content img {
-  margin: 0px;
+  margin: 5px;
   padding: 0px;
 }
 
