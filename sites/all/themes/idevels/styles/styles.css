@@ -4520,6 +4520,9 @@ a.karma.up::after {
 .pane-events-panel-pane-2 .view-Events .views-row > div {
   margin: 10px 0 5px;
 }
+.pane-events-panel-pane-2 .view-Events .views-row > div:first-child {
+  margin-top: 0;
+}
 .pane-events-panel-pane-2 .view-Events .views-field-ops a {
   margin: 5px 0;
 }
