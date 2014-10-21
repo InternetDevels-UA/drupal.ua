@@ -4827,6 +4827,9 @@ form#events-node-form fieldset .container-inline-date > div > div {
 form#events-node-form fieldset .container-inline-date > div > div+div {
   margin-left: 1%;
 }
+.pane-events-panel-pane-2 .view-Events .views-row > div:first-child {
+  margin-top: 0;
+}
 #ui-datepicker-div {
   min-width: 200px;
 }
@@ -5266,10 +5269,6 @@ body.front
 }
 .node-type-events .pane-field-google-calendar {
   float: left;
-}
-.node-type-events .pane-addthis-0 {
-  float: right;
-  margin-right: 36px;
 }
 .node-type-events .pane-field-report {
   margin-bottom: 10px;
