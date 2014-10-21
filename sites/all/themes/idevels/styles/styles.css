@@ -4918,7 +4918,6 @@ form#events-node-form #edit-submit {
 #block-menu-secondary-links .menu a .tile-title {
   font-family: 'PT Sans';
 }
-
 #block-drua_profile-notification_block {
   display: block;
   height: auto;
@@ -5264,6 +5263,7 @@ body.front
 }
 .node-type-events .pane-addthis-0 {
   float: right;
+  margin-right: 36px;
 }
 .node-type-events .pane-field-report {
   margin-bottom: 10px;
