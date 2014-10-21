@@ -297,7 +297,10 @@ $(function () {
 
     // check date, teaser, body date before submit
     $("#main-content form").submit(function(e){
-      return check_date() && check_body() && check_teaser();
+      if (check_date() && check_teaser() && check_body()) {
+        return true
+      };
+      return false;
     });
 
     $("#main-content form .admin+input+input").after('<a href="/events" id="all-events">'+Drupal.t('Back to all events')+' -></a>');
@@ -393,6 +396,7 @@ $(function () {
         $price.hide();
       }
       else {
+        $price.val('');
         $price.show();
       }
     });

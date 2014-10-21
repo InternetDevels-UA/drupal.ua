@@ -362,6 +362,9 @@ function idevels_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'events_node_form') {
     $form['#id'] = 'events-node-form';
   }
+  if ($form_id == 'events_node_form') {
+    $form['#validate'][] = 'idevels_events_date_validate';
+  }
 }
 
 /**
@@ -606,6 +609,26 @@ function idevels_cities_autocomplete_validate(&$form, &$form_state) {
     $form_state['values']['city'] = str_replace('"', "", $form_state['values']['city']);
     $temp_array = taxonomy_get_term_by_name($form_state['values']['city']);
     $form_state['values']['city'] = $temp_array[0]->tid;
+  }
+}
+
+/**
+ * Implementation of hook_form_validate().
+ * For Event form;
+ */
+function idevels_events_date_validate(&$form, &$form_state) {
+  $start_time = strtotime(&$form_state['values']['field_event_date'][0]['value']);
+  $teaser = &$form_state['values']['field_new_teaser'][0]['value'];
+  $body = &$form_state['values']['body'];
+
+  if ($start_time < time()) {
+    form_set_error('field_event_date', t("Start date can't be before today's date"));
+  }
+  if (strlen($teaser) < 100) {
+    form_set_error('field_new_teaser', t("Teaser can't be less than 100 characters"));
+  }
+  if (strlen($body) < 300) {
+    form_set_error('body', t("Event discripton can't be less than 300 characters"));
   }
 }
 
