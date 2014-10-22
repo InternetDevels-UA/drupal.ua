@@ -5060,6 +5060,7 @@ body.page-user .view-id-profile_view .views-field-field-bio-value label {
 #block-menu-secondary-links .menu a .tile-title {
   font-family: 'PT Sans';
 }
+
 #block-drua_profile-notification_block {
   display: block;
   height: auto;
@@ -5345,6 +5346,9 @@ body.front
 .pane-events-panel-pane-2 .view-Events .views-row > div {
   margin: 10px 0 5px;
 }
+.pane-events-panel-pane-2 .view-Events .views-row > div:first-child {
+  margin-top: 0;
+}
 .pane-events-panel-pane-2 .view-Events .views-field-ops a {
   margin: 5px 0;
 }
@@ -5373,7 +5377,7 @@ body.front
   box-shadow: 4px 4px 2px #222;
 }
 .pane-events-panel-pane-3 .view-header {
-  margin-top: 14px;
+  margin: 14px 0 10px 0;
   background-color: transparent;
   vertical-align: top;
 }
@@ -5404,6 +5408,11 @@ body.front
 .node-type-events .pane-field-google-calendar {
   float: left;
 }
+.node-type-events .pane-addthis-0 {
+  float: right;
+  margin-right: 15px;
+}
 .node-type-events .pane-field-report {
   margin-bottom: 10px;
 }
+
