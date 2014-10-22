@@ -26,6 +26,10 @@ function idevels_preprocess_page(&$vars) {
 //dsm($vars);
 #  $vars['search'] = drupal_get_form('sphinxsearch_search_box');
 //  $vars['user_menu_block'] = user_menu_block();
+  $destinantion = (isset($_REQUEST['destination'])) ? $_REQUEST['destination'] : '';
+  if ($destinantion == 'node/add/events' && isset($vars['tabs'])) {
+    $vars['tabs'] = substr_replace($vars['tabs'], '?destination=front', 54, 0);
+  }
   $node = $vars['node'];
 
   if (arg(0) == 'gallery') {
