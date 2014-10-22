@@ -27,7 +27,7 @@ function groups_form_changes_form_alter(&$form, $form_state, $form_id) {
       $new = 'Create ' . filter_xss_admin($types[$type]->type);
       $new_translated = t($new);
       if ($form_id == 'helper_node_form') {
-        drupal_set_title($types[$type]->name);
+        drupal_set_title(t('Added new questions'));
         $form['buttons']['submit']['#value'] = t('Save question');
         $form['buttons']['cancel'] = array(
           '#type' => 'markup',
@@ -42,6 +42,7 @@ function groups_form_changes_form_alter(&$form, $form_state, $form_id) {
         $form['#prefix'] = '<span class="helper-node-form">';
         $form['#suffix'] = '</span>';
         $form['body_field']['body']['#rows'] = 11;
+        $form['body_field']['body']['#required'] = TRUE;
       }
       else {
         if ($new == $new_translated) {
