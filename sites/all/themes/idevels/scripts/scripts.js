@@ -404,8 +404,10 @@ $(function () {
       }
     }
 
-    $("#edit-field-events-logo-0-upload").change(function(){
-      readURL(this);
+    document.querySelector('body').addEventListener('change', function(event) {
+      if (event.target.id == 'edit-field-events-logo-0-upload') {
+        readURL(event.target);
+      }
     });
 
   };
