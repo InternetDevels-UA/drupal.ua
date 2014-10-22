@@ -799,7 +799,9 @@ function idevels_add_resurses_form_submit($form, &$form_state) {
 
 function idevels_init() {
   $path = request_uri();
+
   $arg = drupal_get_destination();
+  
   if ($path == '/node/add/question' || $path == '/node/add/question/') {
     $path = trim($path, '/');
     $breadcrumb = array();
@@ -811,7 +813,7 @@ function idevels_init() {
   if (preg_match('*notification-close*', $path) || $path == '/notification-accept') {
     setcookie('DuNotificationInstruction',1,time()+3600*24*7);
     if (!empty($arg) && ($path != '/notification-accept')) {
-      drupal_goto(substr($arg, 17));
+      drupal_goto();
     }
   }
 }
