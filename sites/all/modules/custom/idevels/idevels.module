@@ -623,11 +623,11 @@ function idevels_events_date_validate($form, $form_state) {
   $body = $form_state['values']['body'];
 
   if ($start_time < time()) {
-    form_set_error('field_event_date', t("Start date can't be before today's date"));
+    form_set_error('field_event_date', t("Start date can't be before today's date."));
   }
-  if ($end_time < $start_time) {
+/*  if ($end_time < $start_time) {
     form_set_error('field_event_date', t("Start date can't be before End date"));
-  }
+  }*/
   if (strlen($teaser) < 100) {
     form_set_error('field_new_teaser', t("Teaser can't be less than 100 characters"));
   }
