@@ -42,7 +42,7 @@ body {
   background: #ffffff;
   color: #333333;
   font-size: 14px;
-  font-family: 'Pt Sans',Arial,Verdana,sans-serif;
+  font-family: 'PT Sans';
   padding: 0px;
 }
 p, dl, hr, h1, h2, h3, h4, h5, h6, ol, ul, pre, table, address, fieldset {
@@ -55,33 +55,33 @@ h1, h2, h3, h4, h5 {
 }
 
 h1, h2.title {
-  font:26px/30px 'open_sans',Arial,sans-serif;
+  font:26px/30px 'PT Sans Narrow';
   margin:0 0 21px;
   padding:0;
 }
 
 h2 {
   color:#000000;
-  font:22px/26px 'open_sans',Arial,sans-serif;
+  font:22px/26px 'PT Sans Narrow';
   margin:28px 0 21px;
   padding:0;
 }
 
 h3 {
   color:#000000;
-  font:18px/24px 'open_sans',Arial,sans-serif;
+  font:18px/24px 'PT Sans Narrow';
   margin:28px 0 21px;
   padding:0;
 }
 h4 {
   color:#3E434A;
-  font:bold 15px/20px 'open_sans',Arial,sans-serif;
+  font:bold 15px/20px 'PT Sans Narrow';
   margin:21px 0 21px;
   padding:0;
 }
 h5 {
   color:#3E434A;
-  font:bold 13px/18px 'open_sans',Arial,sans-serif;
+  font:bold 13px/18px 'PT Sans Narrow';
   margin:0;
   padding:0;
 }
@@ -1161,7 +1161,7 @@ tr.even, tr.odd {
 .info {
   color:#266B7B;
   float:right;
-  font-family:georgia;
+  font-family:'PT Sans';
   font-size:0.9em;
   font-style:italic;
   margin-right:70px;
@@ -1690,7 +1690,7 @@ h3.pane-title span.title-data {
   text-align:right;
   font-size:30px;
   margin-top:-6px;
-  font-family: 'open_sans',Tahoma;
+  font-family: 'PT Sans';
 }
 .featured h2 .ln { display:block; line-height:34px; }
 .featured h2 .l1 { color:#0097d2; }
@@ -1770,7 +1770,7 @@ h3.pane-title span.title-data {
 }
 
 a.showcase_link_sticky, a.showcase_link {
-  font-family: 'open_sans','helvetica neue',helvetica,arial;
+  font-family: 'PT Sans';
   text-decoration:none;
   text-shadow:1px 1px #F1F0F0;
   margin-left: 5px;
@@ -2163,11 +2163,11 @@ div.geshifilter, table .geshifilter td {
   float: right;
 }
 .view-question.view-display-id-page_1 {
-  /*  width: 64%;*/
+  width: 100%;
   float: left;
 }
 .view-question.view-display-id-page_1 .views-field-title a {
-  font-family: Arial, sans-serif;
+  font-family: 'PT Sans';
   font-size: 26px;
   font-style: normal;
   text-decoration: none solid rgb(33, 115, 175);
@@ -2201,7 +2201,7 @@ div.geshifilter, table .geshifilter td {
 .pane-question .pane-title {
   color: rgb(153, 153, 153);
   display: inline;
-  font-family: 'open_sans', Verdana, Arial;
+  font-family: 'PT Sans';
   font-size: 18px;
   font-style: normal;
   padding-left: 5px;
@@ -2210,7 +2210,7 @@ div.geshifilter, table .geshifilter td {
 .view-question.view-display-id-page_1 .views-field-name a {
   color: rgb(102, 102, 102);
   display: inline;
-  font-family: 'Helvetica Regular', Helvetica;
+  font-family: 'PT Sans';
   font-size: 14px;
   font-style: normal;
   font-weight: normal;
@@ -2279,7 +2279,7 @@ div.geshifilter, table .geshifilter td {
   border-top-width: 2px;
   box-sizing: border-box;
   display: inline-block;
-  font-family: Arial;
+  font-family: 'PT Sans';
   font-size: 13px;
   height: 27px;
   letter-spacing: normal;
@@ -2345,7 +2345,7 @@ div.geshifilter, table .geshifilter td {
 }
 #block-menu-primary-links ul.menu a{
   color: #969696;
-  font: 18px 'Source Sans Pro', 'open_sans';
+  font: 18px 'PT Sans Narrow';
   font-weight: 900;
 }
 #block-menu-primary-links ul.menu li{
@@ -2358,7 +2358,7 @@ div.geshifilter, table .geshifilter td {
   text-decoration: none;
 
   font-size: 16px;
-  font-family: open_sans_bold, verdana, arial;
+  font-family: 'PT Sans';
   font-weight: bold;
   color: #969696;
 
@@ -2423,7 +2423,7 @@ h1, h2, h3, h4, h5, h6,
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a{
   margin: 5px 0 15px 0;
   line-height: 1.2em;
-  font-family: 'Pt Sans',Arial,Verdana,sans-serif;
+  font-family: 'PT Sans';
   color: #252525;
 }
 h2.title a{
@@ -2433,7 +2433,7 @@ h2.title a{
   color: #252525;
   font-size: 34px;
   margin-bottom: 10px;
-  font-family: 'Pt Sans Narrow',Arial,Verdana,sans-serif;
+  font-family: 'PT Sans Narrow';
   font-weight: bold;
 }
 h2.title a:hover{
@@ -2457,7 +2457,7 @@ h2.title{
   box-shadow: 0px 2px 0px #da6500;
   border: none;
   border-bottom: 1px solid #ff8a24;
-  font: 28px 'open_sans';
+  font: 28px 'PT Sans';
   border-radius: 4px;
   font-weight: 700;
   transition: all 300ms ease-in;
@@ -2481,7 +2481,7 @@ h2.title{
   width: 168px;
   margin: 0 auto;
   padding: 0;
-  font: 14px 'open_sans';
+  font: 14px 'PT Sans';
   padding-top: 1px;
   margin-bottom: 7px;
 }
@@ -2490,7 +2490,7 @@ h2.title{
 .button.bsmall a:hover{text-decoration: none}
 .button.ask{display: inline;}
 .steps .button.bbig{
-  font: 18px 'open_sans';
+  font: 18px 'PT Sans';
   font-weight: 900;
 }
 #site-subheader ul.main-menu{
@@ -2583,12 +2583,12 @@ div.panel-pane div.node {
 .panel-right .pane-block:last-child {
   background: none;
 }
-.welcome-message { width:100%; /*height:600px; background:#3075d3; */background-image: url( "../images/bokeh.png" ); background-repeat: no-repeat; background-position:top center; }
-.welcome-message-map { width:100%; height:340px; background-image: url( "../images/map1.jpg" ); background-repeat: no-repeat; background-position:top center; }
+.welcome-message { width:100%; /*height:600px; background:#3075d3; */background-image: url("../images/bokeh.png"); background-repeat: no-repeat; background-position:top center; }
+.welcome-message-map { width:100%; height:340px; background-image: url("../images/map1.jpg"); background-repeat: no-repeat; background-position:top center; }
 .welcome-text { padding-top:380px; width:100%; text-align:center; }
 .social-question{
   /*font-family: 'Source Sans Pro';*/
-  font-family: open_sans_bold, Open Sans, Verdana, Arial;
+  font-family: 'PT Sans';
   font-size: 24px;
   position: relative;
   color: #1f1f1f;
@@ -2605,7 +2605,7 @@ div.panel-pane div.node {
     position: absolute;
     right: 54px;
     top: -10px;
-    background-image: url("../images/circle.png" );
+    background-image: url("../images/circle.png");
     background-repeat: no-repeat;
     background-position: top right;*/
 }
@@ -2616,7 +2616,7 @@ a.ask.question {
   height: 151px;
   z-index: 2;
   position: relative;
-  background-image: url("../images/join-now.png" );
+  background-image: url("../images/join-now.png");
   background-repeat: no-repeat;
   float: right;
   margin-top: -150px;
@@ -2624,7 +2624,7 @@ a.ask.question {
   color: white;
   font-weight: 900;
   padding-top: 26px;
-  font-family: 'open_sans';
+  font-family: 'PT Sans';
   text-shadow: 2px 3px 2px rgba(141, 142, 142, 0.76);
 }
 a.ask.question:hover{
@@ -2636,7 +2636,7 @@ a.ask.question:hover{
 h3.pane-title{
   font-size: 36px;
   /*font-family: open_sans_bold, Open Sans, Verdana, Arial;*/
-  font-family:'PT Sans Narrow',Arial,sans-serif;
+  font-family:'PT Sans Narrow';
   /*font-weight: 900;*/
   margin-bottom: 35px;
   position: relative;
@@ -2646,7 +2646,7 @@ h3.pane-title{
 .pane-question .pane-title{
   display: block;
   font-size: 36px;
-  font-family: open_sans_bold, Open Sans, Verdana, Arial;
+  font-family: 'PT Sans';
   /*font-weight: 900;*/
   margin-bottom: 35px;
   position: relative;
@@ -2656,7 +2656,7 @@ h3.pane-title{
 .pane-question .pane-title a,
 #block-views-question-block_2 .block-title a {
   /*font-family: open_sans_bold, Open Sans, Verdana, Arial;*/
-  font-family: 'PT Sans Narrow',Arial,sans-serif;
+  font-family: 'PT Sans Narrow';
   font-weight: bold;
   font-size: 28px;
 }
@@ -2711,7 +2711,7 @@ h3.pane-title{
   color: #1876ac;
   margin-top: -5px;
   /*font-family: 'open_sans';*/
-  font-family: 'Pt Sans',Arial,Verdana,sans-serif;
+  font-family: 'PT Sans';
   /*font-weight: 700;*/
   font-style: italic;
 }
@@ -2723,7 +2723,7 @@ h3.pane-title{
   font-size: 11px!important;
   /*  color: #ffffff;*/
   /*font-family: Open Sans;*/
-  font-family: 'Pt Sans',Arial,Verdana,sans-serif !important;;
+  font-family: 'PT Sans' !important;;
   /*  font-weight: bold;
     text-transform: uppercase;*/
   color: #999;
@@ -2748,7 +2748,7 @@ h3.pane-title{
   padding-top: 2px;
   text-align: center;
   font-size: 10px;
-  background-image: url("../images/comments.png" );
+  background-image: url("../images/comments.png");
   background-repeat: no-repeat;
   background-position: 0 -1px;
 }
@@ -2760,13 +2760,13 @@ h3.pane-title{
 }
 #sidebar-right #block-views-question-block_2 .field-content{
   font-size: 10px;
-  font-family: Open Sans;
+  font-family: 'PT Sans';
 }
 .pane-group-comments-panel-pane-2 .views-field-title-1 a,
 .view-question .views-row .views-field-comment-count a {
   color: white;
   font-weight: bold;
-  font-family: 'Pt Sans',Arial,Verdana,sans-serif;
+  font-family: 'PT Sans';
 }
 .pane-group-comments-panel-pane-2 .views-field-title-1 a:hover,
 .pane-group-comments-panel-pane-2 .views-field-title-1 a:visited,
@@ -2815,7 +2815,7 @@ h3.pane-title{
   padding: 0px;
   min-height: 50px;
   margin-bottom: 21px;
-  background-image: url("../images/bubble-2.png" );
+  background-image: url("../images/bubble-2.png");
   background-repeat: no-repeat;
   background-position: 81px 15px;
 }
@@ -2829,7 +2829,7 @@ h3.pane-title{
 .small-button {
 
   background: url("../images/button.png") top left repeat-x;
-  font-family: open sans;
+  font-family: 'PT Sans';
   font-weight: normal;
   color: #b54c0d!important;
   text-align: center;
@@ -2880,56 +2880,56 @@ h3.pane-title{
   text-decoration: none;
 }
 #block-menu-secondary-links .menu a.vakancii {
-  background-image: url("../images/tile-contact.png" );
+  background-image: url("../images/tile-contact.png");
   background-position: center 1px;
   background-repeat: no-repeat;
 }
 #block-menu-secondary-links .menu a.vakancii:hover {
-  background-image: url("../images/tile-contact-2.png" );
+  background-image: url("../images/tile-contact-2.png");
 }
 #block-menu-secondary-links .menu a.members{
-  background-image: url("../images/tile-members.png" );
+  background-image: url("../images/tile-members.png");
   background-position: center 1px;
   background-repeat: no-repeat;
 }
 #block-menu-secondary-links .menu a.members:hover {
-  background-image: url("../images/tile-members-2.png" );
+  background-image: url("../images/tile-members-2.png");
 }
 #block-menu-secondary-links .menu a.groups{
-  background-image: url("../images/tile-groups.png" );
+  background-image: url("../images/tile-groups.png");
   background-position: center 1px;
   background-repeat: no-repeat;
   transition: all 300ms ease-in;
 }
 #block-menu-secondary-links .menu a.groups:hover {
-  background-image: url("../images/tile-groups-2.png" );
+  background-image: url("../images/tile-groups-2.png");
 }
 #block-menu-secondary-links .menu a.ask-questions{
-  background-image: url("../images/tile-forums.png" );
+  background-image: url("../images/tile-forums.png");
   background-position: center 1px;
   background-repeat: no-repeat;
   width: 182px;
 }
 #block-menu-secondary-links .menu a.ask-questions:hover{
-  background-image: url("../images/tile-forums-2.png" );
+  background-image: url("../images/tile-forums-2.png");
 }
 
 #block-menu-secondary-links .menu a.events{
-  background-image: url("../images/tile-blog.png" );
+  background-image: url("../images/tile-blog.png");
   background-position: center 1px;
   background-repeat: no-repeat;
 }
 #block-menu-secondary-links .menu a.events:hover{
-  background-image: url("../images/tile-blog-2.png" );
+  background-image: url("../images/tile-blog-2.png");
 }
 #block-menu-secondary-links .menu a.activity{
-  background-image: url("../images/tile-activity.png" );
+  background-image: url("../images/tile-activity.png");
   background-position: center 1px;
   background-repeat: no-repeat;
   border-left: none;
 }
 #block-menu-secondary-links .menu a.activity:hover{
-  background-image: url("../images/tile-activity-2.png" );
+  background-image: url("../images/tile-activity-2.png");
 }
 #block-menu-secondary-links .menu a .tile-title {
   font-size: 12px;
@@ -2940,7 +2940,7 @@ h3.pane-title{
   position: relative;
   transition: all 300ms ease-in;
   /*text-transform: uppercase;*/
-  font-family: 'open_sans', Verdana, Arial;
+  font-family: 'PT Sans';
   padding: 3px 5px;
 }
 .view-group .views-field-title{
@@ -2969,7 +2969,7 @@ h3.pane-title{
 .footer-menu ul li {
   display: inline;
   margin: 0 30px 0 0;
-  font-family: 'open_sans', Verdana, Arial;
+  font-family: 'PT Sans';
   font-weight: 700;
 }
 .footer-menu ul li a {
@@ -3009,12 +3009,12 @@ h3.pane-title{
   color: #ffffff;
   text-transform: uppercase;
   font-weight: 400;
-  font-family: "open_sans";
+  font-family: 'PT Sans';
   text-decoration: none;
 }
 .view-group .views-field-created{
   text-align: left;
-  background-image: url("../images/transparent.png" );
+  background-image: url("../images/transparent.png");
   color: #ffffff;
   width: 330px;
   padding: 7px;
@@ -3029,7 +3029,7 @@ h3.pane-title{
 }
 .view-group .views-row:hover .views-field-created { display:block; }
 .view-group .views-field-created span{
-  background-image: url("../images/popup-time.png" );
+  background-image: url("../images/popup-time.png");
   background-position: 10px center;
   background-repeat: no-repeat;
   padding: 10px 0px 3px 57px;
@@ -3082,7 +3082,7 @@ h3.pane-title{
 .footer-second .panel-pane .pane-title{
   font-size: 15px;
   /*font-family: 'open_sans';*/
-  font-family: 'open_sans', Verdana, Arial;
+  font-family: 'PT Sans';
   padding: 2px 0px;
   font-weight: 700;
   text-transform: uppercase;
@@ -3090,7 +3090,7 @@ h3.pane-title{
 }
 /*.footer-first .view-group-comments .views-field-comment{
   border: 1px solid #cfcfcf;
-  background-image: url("../images/quote-bg.png" );
+  background-image: url("../images/quote-bg.png");
   background-repeat: no-repeat;
   background-position: 10px 7px;
   padding: 15px 15px 20px 20px;
@@ -3124,7 +3124,7 @@ h3.pane-title{
 .recent-comment-buble {
   width: 15px;
   height: 15px;
-  background-image: url("../images/bubble.png" );
+  background-image: url("../images/bubble.png");
   background-repeat: no-repeat;
   position: absolute;
 }
@@ -3157,7 +3157,7 @@ h3.pane-title{
   color: #f9f9f9;
   font-size: 48px;
   overflow: hidden;
-  font-family: 'open_sans', Verdana, Arial;
+  font-family: 'PT Sans';
   text-align: center;
   font-weight: 900;
   margin-top: 50px;
@@ -3183,7 +3183,7 @@ h3.pane-title{
 .user-front .views-field-title .field-content{
   display: none;
   text-align: left;
-  background-image: url("../images/transparent.png" );
+  background-image: url("../images/transparent.png");
   color: #ffffff;
   width: 330px;
   padding: 10px;
@@ -3336,7 +3336,7 @@ form#user-register input.form-submit {
   color: #524949;
   font-weight: bold;
   border: 1px solid #BBB;
-  font-family: "PT Sans";
+  font-family: 'PT Sans';
 }
 form#user-register #edit-pass-wrapper label {
   display: none;
@@ -3520,7 +3520,7 @@ form#user-register #edit-legal-accept-wrapper strong {
   font-size: 11px;
   font-weight: bold;
   /*width: 270px;*/
-  font-family: 'open_sans', Verdana, Arial;
+  font-family: 'PT Sans';
 }
 .view-users .views-field-created label{
   background: #c8c8c8;
@@ -3544,7 +3544,7 @@ form#user-register #edit-legal-accept-wrapper strong {
   margin-top: 12px;
 }
 .view-users .view-header a {
-  font-family: 'open_sans', Verdana, Arial;
+  font-family: 'PT Sans';
   font-size: 16px;
   margin-left: 10px;
 }
@@ -3621,13 +3621,13 @@ form#user-register #edit-legal-accept-wrapper strong {
   width: 310px;
   padding-left: 0px;
   float: right;
-  background-image: url("../images/dot-v-2.png" );
+  background-image: url("../images/dot-v-2.png");
   background-repeat: repeat-y;
   background-position: top left;
 }
 
 #sidebar-right h3{
-  font: 24px 'open_sans', Arial, sans-serif;
+  font: 24px 'PT Sans';
   font-weight: 700;
   /*padding: 12px 0px;*/
   margin-bottom: 10px;
@@ -3635,7 +3635,7 @@ form#user-register #edit-legal-accept-wrapper strong {
 }
 #sidebar-right .field-content{
   font-size: 15px;
-  font-family: sans-serif;
+  font-family: 'PT Sans';
 }
 #sidebar-right .block{
   /*padding-bottom: 30px;*/
@@ -3647,7 +3647,7 @@ form#user-register #edit-legal-accept-wrapper strong {
   background-image: none;
 }
 /*.page-events */.view-Events .views-field-title{
-                   font: 28px 'Source Sans Pro';
+                   font: 28px 'PT Sans Narrow';
                    font-weight: 900;
 
                  }
@@ -3659,7 +3659,7 @@ form#user-register #edit-legal-accept-wrapper strong {
 .page-events .views-row{
   font-size: 14px;
   line-height: 1.4em;
-  font-family: 'Open Sans', Tahoma, Verdana, sans-serif;
+  font-family: 'PT Sans';
 }
 
 .add-events{
@@ -3673,7 +3673,7 @@ form#user-register #edit-legal-accept-wrapper strong {
   box-shadow: 0px 2px 0px #da6500;
   border: none;
   border-bottom: 1px solid #ff8a24;
-  font: 28px 'Source Sans Pro', 'open_sans';
+  font: 28px 'PT Sans';
   border-radius: 4px;
   font-weight: 700;
   transition: all 300ms ease-in;
@@ -3721,7 +3721,7 @@ form#user-register #edit-legal-accept-wrapper strong {
   width: 45px;
   margin-top: 5px;
   text-align: center;
-  font-family: 'open_sans';
+  font-family: 'PT Sans';
 }
 .node-type-events .view-Events .views-field-field-event-date-value-2{
   height: 87px;
@@ -3957,7 +3957,7 @@ form#user-register #edit-legal-accept-wrapper strong {
 }
 .node-type-events .view-Events {
   font-size: 15px;
-  font-family: 'open_sans';
+  font-family: 'PT Sans';
 }
 .node-type-events .views-field-address,
 .node-type-events .views-field-field-event-date-value-4,
@@ -4013,7 +4013,7 @@ form#user-register #edit-legal-accept-wrapper strong {
   width: 300px!important;
   padding: 6px!important;
   border: 1px solid #dbdbdb!important;
-  font-family: verdana, ms sans serif!important;
+  font-family: 'PT Sans';
   font-size: 24px!important;
   border-radius: 5px;
 }
@@ -4023,7 +4023,7 @@ form#user-register #edit-legal-accept-wrapper strong {
   padding: 10px!important;
   width: 530px;
   color: #717171!important;
-  font-family: verdana, ms sans serif!important;
+  font-family: 'PT Sans';
   font-size: 12px!important;
   border-radius: 9px;
 }
@@ -4039,7 +4039,7 @@ form#user-register #edit-legal-accept-wrapper strong {
   cursor: pointer;
   color: #ffffff;
   border: none;
-  font: 28px 'Source Sans Pro', 'open_sans';
+  font: 28px 'PT Sans';
   border-radius: 4px;
   font-weight: 700;
   transition: all 300ms ease-in;
@@ -4228,23 +4228,23 @@ body.front .small-button.browse-all{
 .view-upcoming-events .views-field-field-event-date-value {
   margin-right: 11px;
   color: #999;
-  font: 13px 'Pt Sans',Arial,Verdana,sans-serif;
+  font: 13px 'PT Sans';
 }
 
 .view-upcoming-events .views-field-field-city-value {
   color: #999;
-  font: 13px 'Pt Sans',Arial,Verdana,sans-serif;
+  font: 13px 'PT Sans';
 }
 
 .view-upcoming-events .views-field-title a {
-  font:  18px 'Pt Sans',Arial,Verdana,sans-serif;
+  font:  18px 'PT Sans';
   line-height: 25px;
 }
 
 .view-upcoming-events .views-field-body {
   line-height: 22px;
   color: #0d0d0d;
-  font: 15px 'Pt Sans',Arial,Verdana,sans-serif;
+  font: 15px 'PT Sans';
 }
 
 div#not_found_page {
@@ -4262,9 +4262,9 @@ div#not_found {
   position: relative;
   width: 588px;
   height: 216px;
-  background-image: url("../images/Page_Not_Found.png" );
+  background-image: url("../images/Page_Not_Found.png");
   background-repeat: no-repeat;
-  font-family: 'Pt Sans',Arial,Verdana,sans-serif;
+  font-family: 'PT Sans';
   color: #777;
 }
 div#not_found > div {
@@ -4277,7 +4277,7 @@ div#not_found #not_found_text {
   margin-bottom: 0;
 }
 #search-form * {
-  font-family: 'Pt Sans',Arial,Verdana,sans-serif;
+  font-family: 'PT Sans';
 }
 
 .most-popular-groups{
@@ -4290,7 +4290,7 @@ div#not_found #not_found_text {
 .all-most-popular-groups a {
   color: black;
   text-decoration: underline;
-  font-family:'PT Sans Narrow',Arial,sans-serif;
+  font-family:'PT Sans Narrow';
 }
 
 .all-most-popular-groups a:hover {
@@ -4298,7 +4298,7 @@ div#not_found #not_found_text {
 }
 
 .helper-label{
-  font: 15px 'Pt Sans',Arial,Verdana,sans-serif;
+  font: 15px 'PT Sans';
 }
 
 .helper-node-form-cancel {
@@ -4306,7 +4306,7 @@ div#not_found #not_found_text {
 }
 
 a.helper-node-form-cancel {
-  font: 15px 'Pt Sans', Arial, Verdana, sans-serif;
+  font: 15px 'PT Sans';
 }
 
 .teaser-checkbox {
@@ -4476,7 +4476,7 @@ a.karma.up::after {
   color: black;
   text-decoration: underline;
   font-size: 14px;
-  font-family: "Pt sans";
+  font-family: 'PT Sans';
   margin-top:-7px;
   display: block;
 }
@@ -4507,7 +4507,7 @@ a.karma.up::after {
   background-color: red;
   clear: both;
   margin: 0px;
-  padding: 5px 20px;
+  padding: 7px 20px;
   text-align: left;
 }
 
@@ -4648,7 +4648,7 @@ body.front .view-display-id-block_1 .views-row {
 }
 
 #block-views-question-block_1 h3.block-title {
-  font-family: 'PT Sans Narrow', Arial, sans-serif;
+  font-family: 'PT Sans Narrow';
   font-weight: bold;
   font-size: 28px;
   margin: 5px 0 15px 20px;
@@ -4670,7 +4670,7 @@ body.front .view-display-id-block_1 .views-row {
 }
 
 #block-views-question-block_1 h3.block-title {
-  font-family: 'PT Sans Narrow', Arial, sans-serif;
+  font-family: 'PT Sans Narrow';
   font-weight: bold;
   font-size: 28px;
   margin: 5px 0 15px 0;
@@ -4680,7 +4680,7 @@ body.front .view-display-id-block_1 .views-row {
 
 .view-question .views-field-created span {
   font-size: 11px !important;
-  font-family: 'Pt Sans', Arial, Verdana, sans-serif !important;
+  font-family: 'PT Sans';
   color: #999;
   margin-bottom: 5px;
 }
@@ -4699,17 +4699,17 @@ body.front .view-display-id-block_1 .views-row {
   line-height: 1.2em;
   color: #1876ac;
   margin-top: -5px;
-  font-family: 'Pt Sans', Arial, Verdana, sans-serif;
+  font-family: 'PT Sans';
   font-style: italic;
 }
 
 #sidebar-right #block-views-question-block_1 .field-content {
   font-size: 10px;
-  font-family: Open Sans;
+  font-family: 'PT Sans';
 }
 
 a.contact-node-form-cancel {
-  font: 15px 'Pt Sans', Arial, Verdana, sans-serif;
+  font: 15px 'PT Sans';
 }
 
 #main-content .contact-node-form form[action="/contacts"] input[type="submit"] {
@@ -4732,6 +4732,13 @@ a.contact-node-form-cancel {
   border-color: #999;
 }
 
+
+body.front
+.center-right {
+  width: 395px;
+  padding-left: 0px;
+  float: right;
+}
 .contact-node-form-cancel a {
   text-decoration: underline;
   font-style: italic;
@@ -4740,25 +4747,25 @@ a.contact-node-form-cancel {
   position: relative;
   font-family: 'PT Sans';
   margin-left: 20px;
-  top: 14px;
+  top: 17px;
 }
 
-body.front
-.center-right {
-  width: 395px;
-  padding-left: 0px;
-  float: right;
-}
 .contact-node-form-cancel a:after {
   position: absolute;
   content: ' →';
   font-size: 13px;
-  margin-top: 0px;
+  margin-top: 2px;
   margin-left: 4px;
   font-family: 'PT Sans';
 }
 
 .contact-node-form-cancel a:hover {
   color: #f93703;
+}
+/*Any Firefox */
+@-moz-document url-prefix() {
+  .contact-node-form-cancel a:after {
+    margin-top: 18px;
+  }
 }
 
