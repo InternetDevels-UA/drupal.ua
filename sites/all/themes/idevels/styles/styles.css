@@ -4551,7 +4551,7 @@ a.karma.up::after {
   box-shadow: 4px 4px 2px #222;
 }
 .pane-events-panel-pane-3 .view-header {
-  margin-top: 14px;
+  margin: 14px 0 10px 0;
   background-color: transparent;
   vertical-align: top;
 }
