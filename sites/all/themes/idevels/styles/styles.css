@@ -4900,6 +4900,11 @@ form#events-node-form #edit-submit {
   margin-right: 20px;
 }
 
+.page-node .messages.error ul > li > div > ul > li {
+  margin-left: 16px;
+  list-style: square;
+}
+
 /**
  * User profile view page.
  */
@@ -5016,6 +5021,7 @@ body.page-user .view-id-profile_view .views-field-field-personal-website-value .
 body.page-user .view-id-profile_view .views-field-field-bio-value label {
   font-size: 22px;
 }
+
 .all-upcoming-events {
   color: black;
   text-decoration: underline;
@@ -5325,6 +5331,7 @@ body.front
 .pane-drua-profile-last-comments > h3.pane-title {
   margin-left: 20px;
 }
+
 .node-type-events .panel-display.container-12 {
   width: 100%;
 }
