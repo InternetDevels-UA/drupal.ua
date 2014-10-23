@@ -876,6 +876,14 @@ function idevels_init() {
       t('Voting details')
     ));
   }
+  else if (arg(0) == 'node' && arg(2)=='edit') {
+    $path=arg(0).'/'.arg(1);
+    drupal_set_breadcrumb(array(
+      l(t('Home'), NULL),
+      l(drupal_get_title(),$path),
+      t('edit')
+    ));
+  }
 }
 
 function ua_month_perfecty($timestamp) {
