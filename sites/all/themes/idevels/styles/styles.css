@@ -5423,6 +5423,10 @@ body.front
   float: right;
   margin-right: 15px;
 }
+/* fix for safari */
+.node-type-events .pane-addthis-0 div {
+  display: inline-block;
+}
 .node-type-events .pane-field-report {
   margin-bottom: 10px;
 }
