@@ -7,7 +7,7 @@
     <div class="picture">
       <?php if ($picture): ?><? print $picture; ?><?php endif; ?>
       <span class="submitted">
-        <?php print $user; ?> / <span class="date"><?php print $date; ?></span>
+        <?php print $user; ?> / <span class="date"><a href="#comment-<?php print $cid; ?>"><?php print $date; ?></a></span>
       </span>
     </div>
   </div>
