@@ -5182,7 +5182,8 @@ body.front .pane-views,
 
 .content img {
   margin: 5px;
-  padding: 0px;
+  padding: 5px;
+  border: 1px solid #D5D3D3;
 }
 
 div.panel-pane div.node {
