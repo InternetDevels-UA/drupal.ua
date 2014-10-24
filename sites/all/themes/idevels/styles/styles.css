@@ -4536,7 +4536,11 @@ body.page-user .view-id-profile_view .views-field-nothing label {
   font-weight: normal;
 }
 body.page-user .view-id-profile_view .views-field-nothing .field-content {
-  display: inline-block;
+  display: block;
+  overflow: hidden;
+}
+body.page-user .view-id-profile_view .views-field-nothing .field-content .drupal_activity .project_org_wrap div {
+  margin-bottom: 10px;
 }
 body.page-user .view-id-profile_view .views-field-city .field-content,
 body.page-user .view-id-profile_view .views-field-field-skills-value .field-content,
