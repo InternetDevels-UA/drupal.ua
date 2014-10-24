@@ -3623,9 +3623,6 @@ form#user-register #edit-legal-accept-wrapper strong {
   width: 310px;
   padding-left: 0px;
   float: right;
-  background-image: url("../images/dot-v-2.png");
-  background-repeat: repeat-y;
-  background-position: top left;
 }
 
 #sidebar-right h3{
@@ -4626,7 +4623,7 @@ body.front .pane-views,
 }
 
 .content img,
-#main-content img {
+.pane-node-body img {
   margin: 5px;
   padding: 5px;
   border: 1px solid #D5D3D3;
