@@ -4868,6 +4868,58 @@ form#events-node-form #edit-field-event-price-0-value {
 form#events-node-form #edit-field-events-logo-0-ahah-wrapper {
   width: 300px;
 }
+.pane-events-panel-pane-2 .views-field-ops .field-content {
+/*  display: inline-block;
+  padding: 2px 10px;
+  background-color: #6aa84f;
+  border: solid 2px #333;
+  -moz-box-shadow: 4px 4px 2px #222;
+  -webkit-box-shadow: 4px 4px 2px #222;
+  box-shadow: 4px 4px 2px #222;*/
+  /*font-size: 13px;*/
+  border: 1px solid #e3e3e3;
+  background: linear-gradient(to bottom,#f7f7f7,#edebeb);
+  padding: 5px 12px;
+  height: 31px;
+  line-height: 1;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 0 #fcfcfc inset,0 -1px 0 0 #f0eeee inset;
+  cursor: pointer;
+  position: relative;
+}
+.pane-events-panel-pane-2 .views-field-ops .field-content:hover {
+   border: 1px solid #999;
+}
+.node-type-events .panel-bottom .pane-field-google-calendar {
+  text-decoration: none;
+  display: inline-block;
+  height: 22px;
+  line-height: 20px;
+  border: 1px solid #ccc;
+  font-size: 11px;
+  border-radius: 3px;
+  padding: 0 4px 0 21px;
+  background-color: #f1f1f1;
+  background-position: 2px 2px;
+  background-repeat: no-repeat;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAADFBMVEVDiPj///+71PyixPxANrz/AAAAI0lEQVRo3mM4wMDAzAAGTA1MDRACAhgdUIjQUBiBJgEHIKMAJaMGaQeAWa0AAAAASUVORK5CYII=');
+  color: #4285f4;
+  margin-right: 12px;
+}
+.pane-events-panel-pane-3 .view-header {
+  display: inline-block;
+  margin: 14px 0 10px 0;
+  background-color: transparent;
+  vertical-align: top;
+  font-weight: bold;
+}
+.view-Events.view-display-id-panel_pane_3 img {
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  box-shadow: 0 0 1px 0 #aaa;
+}
 form#events-node-form #edit-field-events-logo-0-ahah-wrapper * {
   max-width: 300px;
   max-height: 300px;
@@ -4885,6 +4937,13 @@ form#events-node-form #edit-title-wrapper,
 form#events-node-form #edit-body-wrapper .resizable-textarea,
 form#events-node-form #edit-field-new-teaser-0-value-wrapper .resizable-textarea {
   position: relative;
+}
+.node-type-events .panel-col-last img {
+  width: 100%;
+  height: auto;
+  box-shadow: 0px 0px 10px #ccc;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
 }
 form#events-node-form .textarea-errors {
   position: absolute;
@@ -5383,18 +5442,7 @@ body.front
   margin: 5px 0 0 !important;
 }
 .pane-events-panel-pane-3 .views-row {
-  padding: 10px;
-}
-.pane-events-panel-pane-3 .view-header,
-.pane-events-panel-pane-2 .views-field-ops .field-content,
-.node-type-events .panel-bottom .pane-field-google-calendar {
-  display: inline-block;
-  padding: 2px 10px;
-  background-color: #6aa84f;
-  border: solid 2px #333;
-  -moz-box-shadow: 4px 4px 2px #222;
-  -webkit-box-shadow: 4px 4px 2px #222;
-  box-shadow: 4px 4px 2px #222;
+  padding: 5px 2px 2px 2px;
 }
 .pane-events-panel-pane-3 .view-header {
   margin: 14px 0 10px 0;
@@ -5409,7 +5457,7 @@ body.front
   color: #333;
 }
 .pane-events-panel-pane-2 .views-field-ops .field-content a {
-  color: white;
+  color: black;
 }
 .pane-events-panel-pane-3 .view-content {
   display: inline;
