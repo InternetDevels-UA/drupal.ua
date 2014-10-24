@@ -14,6 +14,10 @@ function idevels_menu_alter(&$items) {
     $items['node/add/question']['page arguments'] = array('helper');
     unset($items['node/add/helper']);
   }
+  if (isset($items['node/add/events'])) {
+    $items['node/add/events']['access callback']='_idevels_events_access';
+    unset($items['node/add/events']['access arguments']);
+  }
 }
 
 /**
@@ -255,7 +259,7 @@ function idevels_views_pre_render(&$view) {
   if ($view->name == 'question' && $view->current_display == 'page_1') {
     // if (empty($view->result)) {
     // $attachment = '<p class="empty-questions">' . t('Having problems with Drupal? Ask a question about the community!') . '</p>';
-    $attachment .= '<span class="button ask">';
+    $attachment = '<span class="button ask">';
     $attachment .= l(t('Ask question'), 'node/add/question', array('attributes' => array('class' => 'button-helper helper')));
     $attachment .= '</span>';
     // $view->attachment_after = $attachment;
@@ -264,24 +268,47 @@ function idevels_views_pre_render(&$view) {
   }
   elseif ($view->name == 'Events' && $view->current_display == 'page_1') {
     drupal_set_title(t('Events'));
+    drupal_set_breadcrumb(array(
+    l(t('Home'), NULL),
+    t('Events')
+    ));
   }
   elseif ($view->name == 'Events' && $view->current_display == 'page_2') {
     drupal_set_title(t('Past Events'));
+    drupal_set_breadcrumb(array(
+      l(t('Home'), NULL),
+      t('Events'),
+    ));
   }
   elseif ($view->name == 'og_posts_list' && $view->current_display == 'block_1') {
     drupal_set_breadcrumb(array(
       l(t('Home'), NULL),
-      t('Groups')
+      t('Groups'),
     ));
   }
   elseif ($view->name == 'users' && $view->current_display == 'page_1') {
     drupal_set_breadcrumb(array(
       l(t('Home'), NULL),
-      t('Users')
+      t('Subscribers'),
+    ));
+  }
+  elseif ($view->name == 'taxonomy_term' && $view->current_display == 'page') {
+    drupal_set_breadcrumb(array(
+      l(t('Home'), NULL),
+      l(t('Groups'), 'groups'),
+      drupal_get_title(),
     ));
   }
   elseif ($view->name == 'vacations' && $view->current_display == 'page_1') {
     drupal_set_title(t('Vacations'));
+  }
+  elseif ($view->name == 'posts_by_term' && $view->current_display == 'page') {
+    drupal_set_breadcrumb(array(
+      l(t('Home'), NULL),
+      l(t('Groups'), 'groups'),
+      l(drupal_get_title(),arg(0).'/'.arg(1)),
+      t('By term'),
+    ));
   }
   elseif ($view->name == 'group_comments' && $view->current_display == 'page_1') {
     drupal_set_title(t('Last activity'));
@@ -335,9 +362,6 @@ function idevels_form_alter(&$form, &$form_state, $form_id) {
     $form['#attributes']=array('class'=>'custom-user-login-page');
     unset($form['name']['#title']);
     unset($form['pass']['#title']);
-  }
-  if (isset($form['field_notification_instruction'])) {
-    $form['field_notification_instruction']['#access'] = FALSE;
   }
 }
 
@@ -506,6 +530,15 @@ function idevels_preprocess_views_view_fields(&$vars) {
       }
     }
   }
+  elseif ($vars['view']->name == 'group') {
+    if ($vars['view']->current_display == "block_1") {
+      $title=$vars['row']->node_title;
+      $field_image=$vars['fields']['field_group_image_fid']->content;
+      $field_title=$vars['fields']['title']->content;
+      $vars['fields']['field_group_image_fid']->content=str_replace('title=""','title="'.$title.'"',$field_image);
+      $vars['fields']['title']->content=str_replace('<a','<a title="'.$title.'"',$field_title);
+      }
+    }
 }
 
 /**
@@ -789,21 +822,29 @@ function idevels_add_resurses_form_submit($form, &$form_state) {
 }
 
 function idevels_init() {
-  $path = request_uri();
+  $path=request_uri();
   $arg = drupal_get_destination();
-  if ($path == '/node/add/question' || $path == '/node/add/question/') {
-    $path = trim($path, '/');
-    $breadcrumb = array();
-    $breadcrumb[] = l(t('Home'), '<front>');
-    $breadcrumb[] = l(t('Ask a questions'), $path); // Link to current URL
+  if ($path=='/node/add/question' ||$path=='/node/add/question/'){
+  $path = trim($path, '/');
+  $breadcrumb = array();
+  $breadcrumb[] = l(t('Home'), '<front>');
+  $breadcrumb[] = t('Ask a questions');
 // Set Breadcrumbs
     drupal_set_breadcrumb($breadcrumb);
   }
   if (preg_match('*notification-close*', $path) || $path == '/notification-accept') {
     setcookie('DuNotificationInstruction',1,time()+3600*24*7);
     if (!empty($arg) && ($path != '/notification-accept')) {
-      drupal_goto(substr($arg, 17));
+      drupal_goto();
     }
+  }
+  if (arg(0) == 'node' && arg(2)=='vud-votes') {
+    $path=arg(0).'/'.arg(1);
+    drupal_set_breadcrumb(array(
+      l(t('Home'), NULL),
+      l(drupal_get_title(),$path),
+      t('Voting details')
+    ));
   }
 }
 
@@ -816,4 +857,17 @@ function ua_month_perfecty($timestamp) {
     '@i' => format_date($timestamp, 'custom', 'i'),
   ));
   return $output;
+}
+
+/**
+ * Check access to add events.
+ */
+function _idevels_events_access(){
+  global $user;
+  if ($user->uid == 0) {
+    drupal_goto('user/login', 'destination=node/add/events');
+  }
+  else {
+    return TRUE;
+  }
 }
