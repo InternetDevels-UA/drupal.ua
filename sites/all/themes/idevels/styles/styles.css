@@ -4256,6 +4256,9 @@ form#user-profile-form fieldset {
   padding: 0;
   border: 0;
 }
+fieldset.group-personal fieldset.location {
+  clear: both;
+}
 fieldset.group-personal,
 fieldset.group-contacts,
 fieldset.group-drupal {
