@@ -4625,7 +4625,8 @@ body.front .pane-views,
   width: 100%;
 }
 
-.content img {
+.content img,
+#main-content img {
   margin: 5px;
   padding: 5px;
   border: 1px solid #D5D3D3;
