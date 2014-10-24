@@ -4266,6 +4266,9 @@ form#user-profile-form fieldset {
   padding: 0;
   border: 0;
 }
+fieldset.group-personal fieldset.location {
+  clear: both;
+}
 fieldset.group-personal,
 fieldset.group-contacts,
 fieldset.group-drupal {
@@ -5435,4 +5438,3 @@ body.front
 .node-type-events .pane-field-report {
   margin-bottom: 10px;
 }
-

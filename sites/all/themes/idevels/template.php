@@ -656,14 +656,21 @@ function idevels_content_multiple_values($element) {
     uasort($items, '_content_sort_items_value_helper');
     $element[$element['#field_name'] . '_add_more']['#value'] = '';
     // Add the items as table rows.
-    if (count($items) == 3 && array_key_exists('', $items) && isset($items['']) && $items[1]['#value']['value']) {
+//    if (count($items) == 3 && array_key_exists('', $items) && isset($items['']) && $items[1]['#value']['value']) {
+////      $items[0]['value']['#value'] = $items[1]['#value']['value'];
+////      $items[1]['value']['#value'] = '';
+//    }
+    if ($items[1]['#value']['value'] && !$items[0]['#value']['value']) {
       $items[0]['value']['#value'] = $items[1]['#value']['value'];
       $items[1]['value']['#value'] = '';
     }
     if (!$items[0]['value']['#value']) {
-      unset($items[0]);
+//      unset($items[0]);
     }
     foreach ($items as $delta => $item) {
+        if (!$item['value']['#value'] && $delta != end(array_keys($items))) {
+            continue;
+        }
       $item['_weight']['#attributes']['class'] = $order_class;
       $delta_element = drupal_render($item['_weight']);
       $cells = array(
