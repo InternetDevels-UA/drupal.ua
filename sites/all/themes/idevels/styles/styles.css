@@ -5477,9 +5477,10 @@ body.front
 .node-type-events .panel-col-last .pane-custom.pane-2 {
   width: 100%;
   margin-right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+}
+.node-type-events .panel-col-last .pane-custom.pane-1 .pane-content {
+  width: 100%;
+  text-align: center;
 }
 .node-type-events .pane-field-google-calendar {
   float: left;

@@ -269,7 +269,7 @@ function idevels_views_pre_render(&$view) {
   elseif ($view->name == 'Events' && $view->current_display == 'panel_pane_3') {
     drupal_set_breadcrumb(array(
       l(t('Home'), NULL),
-      t('Events'),
+      l(t('Events'), 'events'),
       drupal_get_title(),
     ));
   }
