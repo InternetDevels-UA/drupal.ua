@@ -4974,6 +4974,9 @@ form#events-node-form #edit-submit {
   margin-left: 16px;
   list-style: square;
 }
+.page-node .messages.error .item-list ul li {
+  list-style: none;
+}
 
 /**
  * User profile view page.
