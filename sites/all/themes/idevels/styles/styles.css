@@ -4652,7 +4652,7 @@ a.karma.up::after {
   margin-right: 15px;
 }
 /* fix for safari */
-.node-type-events .pane-addthis-0 div {
+.pane-addthis-0 div {
   display: inline-block;
 }
 .node-type-events .pane-field-report {
