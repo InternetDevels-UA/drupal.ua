@@ -4639,7 +4639,8 @@ a.karma.up::after {
   width: 100%;
   margin-right: 0;
 }
-.node-type-events .panel-col-last .pane-custom.pane-1 .pane-content {
+.node-type-events .panel-col-last .pane-custom.pane-1 .pane-content,
+.node-type-events .panel-col-last .pane-custom.pane-2 .pane-content {
   width: 100%;
   text-align: center;
 }
