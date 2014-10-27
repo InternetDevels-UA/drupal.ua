@@ -452,11 +452,13 @@ $(function () {
   if ($(".node-type-events time.not-pastevent").length > 0) {
     $("#link-event-overview").removeAttr('href');
     $("#link-event-overview").addClass('expanded');
+    $("#add_event_report").hide();
   }
   // if event past hide I'll go button and change label for avatars
   else if ($(".node-type-events time.pastevent").length > 0) {
     $(".node-type-events .views-field-ops").hide();
     $(".view-id-Events.view-display-id-panel_pane_3 p").text(Drupal.t('Event ended'));
+    $("#add_event_report").show();
   };
 
   var destination_link = '/user/login?destination='+window.location.pathname;
