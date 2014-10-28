@@ -349,3 +349,7 @@
 	path = sites/all/modules/contrib/emfield
 	url = http://git.drupal.org/project/emfield.git
 	branch = 6.x-2.x
+[submodule "sites/all/modules/contrib/jquery_update"]
+	path = sites/all/modules/contrib/jquery_update
+	url = http://git.drupal.org/project/jquery_update.git
+	branch = 6.x-2.x
