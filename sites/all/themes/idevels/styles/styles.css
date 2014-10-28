@@ -392,7 +392,7 @@ h1 .tag a, h2 .tag a, h1 .tag em, h2 .tag em {
   padding:0;
 }
 
-.node .content ul, .node .content ol { margin-left:2em; }
+.node .content ul, .node .content ol, .page-node .pane-content ul, .page-node .pane-content ol { margin-left:2em; }
 .node .content ul li, .node .content ol li { margin-bottom:0.5em; }
 .node .content ul li ul, .node .content ol li ul, .node .content ul li ol, .node .content ol li ol { margin:1em 0 1em 20px; }
 .node .content ul li ul { list-style-type:circle; }
