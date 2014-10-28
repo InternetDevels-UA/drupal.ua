@@ -4628,6 +4628,11 @@ body.front .pane-views,
   padding: 5px;
   border: 1px solid #D5D3D3;
 }
+.content form img {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
 
 div.panel-pane div.node {
   padding: 0px;
