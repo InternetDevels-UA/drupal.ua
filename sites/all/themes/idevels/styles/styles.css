@@ -4610,12 +4610,10 @@ form#events-node-form #edit-body {
 form#events-node-form #edit-submit {
   margin-right: 20px;
 }
-
-.page-node .messages.error ul > li > div > ul > li {
-  margin-left: 16px;
-  list-style: square;
-}
 .page-node .messages.error .item-list ul li {
+  list-style: none;
+}
+.messages.error ul {
   list-style: none;
 }
 
