@@ -227,7 +227,7 @@ $(function () {
         $teaser_errors.text('');
         return true;
       }
-    };
+    }
 
     $teaser.change(check_teaser);
 
@@ -251,7 +251,7 @@ $(function () {
         $body_errors.text('');
         return true;
       }
-    };
+    }
 
     $body.change(check_body);
 
@@ -259,13 +259,13 @@ $(function () {
 
     // check if date are correct
     function check_date() {
-      if ($start_date.val() == '') {
+      if ($start_date.val() === '') {
         alert(Drupal.t("Start date can't be empty"));
         $("html, body").animate({scrollTop: $start_date.offset().top-20 }, 500);
         i_check_date = 1;
         return false;
       }
-      else if ($end_date.val() == '' && i_check_date > 0) {
+      else if ($end_date.val() === '' && i_check_date > 0) {
         alert(Drupal.t("End date can't be empty"));
         $("html, body").animate({scrollTop: $end_date.offset().top-20 }, 500);
         return false;
@@ -273,13 +273,13 @@ $(function () {
       else {
         var arr_start_date = $start_date.val().split("/");
         var arr_end_date = $end_date.val().split("/");
-        if (parseInt(arr_start_date[0]*31)+parseInt(arr_start_date[1])+parseInt(arr_start_date[2]*366) > parseInt(arr_end_date[0]*31)+parseInt(arr_end_date[1])+parseInt(arr_end_date[2]*366)) {
+        if (parseInt(arr_start_date[0]*31,10)+parseInt(arr_start_date[1],10)+parseInt(arr_start_date[2]*366,10) > parseInt(arr_end_date[0]*31,10)+parseInt(arr_end_date[1],10)+parseInt(arr_end_date[2]*366,10)) {
           alert(Drupal.t("Start date can't be after end date"));
           return false;
-        };
+        }
       }
       return true;
-    };
+    }
 
     $start_date.change(check_date);
     $end_date.change(check_date);
@@ -287,8 +287,8 @@ $(function () {
     // check date, teaser, body date before submit
     $("#main-content form").submit(function(e){
       if (check_date() && check_teaser() && check_body()) {
-        return true
-      };
+        return true;
+      }
       return false;
     });
 
@@ -341,7 +341,7 @@ $(function () {
       var myLatlng = new google.maps.LatLng(lan,lng);
       var mapOptions = {
         zoom: 12,
-        center: myLatlng,
+        center: myLatlng
       };
       map = new google.maps.Map(document.getElementById('map'), mapOptions);
       marker = new google.maps.Marker({
@@ -380,7 +380,7 @@ $(function () {
     $price.before($sel);
 
     $sel.change(function() {
-      if (this.value==0) {
+      if (this.value===0) {
         $price.val(Drupal.t('Free'));
         $price.hide();
       }
@@ -402,7 +402,7 @@ $(function () {
           $("#edit-field-events-logo-0-upload").before($img_prev);
           $("#edit-field-events-logo-0-upload").before($clear_img_prev);
           $(".img-prev").wrapAll('<div id="img-prev"></div>');
-        }
+        };
 
         reader.readAsDataURL(input.files[0]);
 
@@ -418,7 +418,7 @@ $(function () {
       }
     });
 
-  };
+  }
 
 
 
