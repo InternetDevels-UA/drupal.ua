@@ -227,7 +227,7 @@ $(function () {
         $teaser_errors.text('');
         return true;
       }
-    };
+    }
 
     $teaser.change(check_teaser);
 
