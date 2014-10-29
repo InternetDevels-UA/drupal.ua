@@ -4962,7 +4962,9 @@ form#events-node-form #edit-title-wrapper .textarea-errors {
 }
 form#events-node-form #edit-preview,
 form#events-node-form #edit-field-report-0-value-wrapper,
-form#events-node-form #edit-field-report-0-value-wrapper + a + div.textarea-identifier {
+form#events-node-form #edit-field-report-0-value-wrapper + a + div.textarea-identifier,
+form#events-node-form #field-photos-items, 
+form#events-node-form #field-videos-items{
   display: none;
 }
 .node-type-events .pane-addthis-0 {

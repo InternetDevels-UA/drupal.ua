@@ -372,8 +372,6 @@ function idevels_form_alter(&$form, &$form_state, $form_id) {
   }
   if ($form_id == 'events_node_form') {
     $form['#id'] = 'events-node-form';
-  }
-  if ($form_id == 'events_node_form') {
     $form['#validate'][] = 'idevels_events_date_validate';
   }
 }
