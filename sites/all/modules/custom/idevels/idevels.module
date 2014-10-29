@@ -364,8 +364,9 @@ function idevels_form_alter(&$form, &$form_state, $form_id) {
     unset($form['pass']['#title']);
   }
   if ($form_id == 'events_node_form') {
-    $form['#id'] = 'events-node-form';
     dsm($form);
+    $form['#validate'][] = 'idevels_events_date_validate';
+    $form['#id'] = 'events-node-form';
     if (strtotime($form['field_event_date'][0]['#default_value']['value2']) < time()) {
       $form['#attributes']['class']= 'past-event';
       unset($form['body_field']);
@@ -392,9 +393,6 @@ function idevels_form_alter(&$form, &$form_state, $form_id) {
       $form['#validate'][] = 'idevels_events_date_validate';
     }
   }
-/*  if ($form_id == 'events_node_form') {
-    $form['#validate'][] = 'idevels_events_date_validate';
-  }*/
 }
 
 /**
