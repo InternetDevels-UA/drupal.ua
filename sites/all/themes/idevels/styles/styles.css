@@ -4978,6 +4978,9 @@ form#events-node-form #edit-body {
 form#events-node-form #edit-submit {
   margin-right: 20px;
 }
+form#events-node-form .body-field-wrapper {
+  margin-top: 30px;
+}
 .page-node .messages.error .item-list ul li {
   list-style: none;
 }
