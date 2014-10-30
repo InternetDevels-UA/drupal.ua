@@ -4210,6 +4210,10 @@ form[action="/feedback"] .captcha {
 #block-drua_profile-profile_change_avatar * {
   font-family: 'PT Sans' !important;
 }
+#block-drua_profile-profile_change_avatar img {
+  border-radius: 4px;
+  box-shadow: 0 0 1px 0 #AAA;
+}
 #block-drua_profile-profile_change_avatar #edit-file-wrapper,
 #block-drua_profile-profile_change_avatar .form-submit {
   display: none;
@@ -4234,6 +4238,13 @@ form#user-profile-form label,
 form#node-form label,
 fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values thead th {
   font-weight: normal;
+}
+form#drua-profile-change-password .sub-header,
+form#drua-profile-change-email .sub-header {
+  font-size: 1.4em;
+  color: #565254;
+  font-weight: normal;
+  font-style: italic;
 }
 fieldset.group-personal input[type=text],
 fieldset.group-personal .form-item textarea,
@@ -4321,6 +4332,12 @@ fieldset.group-drupal label {
   float: left;
   padding-right: 10px;
   width: 140px;
+}
+fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper > label {
+  margin-top: 9px;
+}
+fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper textarea {
+  margin-top: 13px;
 }
 body.page-user form#node-form input[type=submit],
 body.page-user form#user-profile-form input[type=submit],
