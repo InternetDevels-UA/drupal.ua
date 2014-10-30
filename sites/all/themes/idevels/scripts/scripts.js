@@ -183,6 +183,9 @@ $(function () {
       i = 0;
     });
   });
+  $('#edit-field-location-0-city-wrapper input').attr('maxlength', 100);
+  $('#edit-field-profile-company-0-value-wrapper input').attr('maxlength', 100);
+  $('#edit-field-job-title-0-value-wrapper input').attr('maxlength', 100);
 
   if ($('#edit-pass-pass1').length) {
     $('#edit-pass-pass1').attr('placeholder', Drupal.t('Password'));
