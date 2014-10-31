@@ -1194,26 +1194,40 @@ function theme_drua_block_drupal_active($user_data = NULL) {
     $output .= theme('drua_block_domen_active',
       array('drupal.org' => $user_data['drupal_parser']['drupal.org']));
   }
-  
-  $org_project = '';
-  if (isset($user_data['drupal_parser']['drupal.org']['projects']['translations'])) {
-    foreach ($user_data['drupal_parser']['drupal.org']['projects']['translations'] as $data) {
-      $org_project .= '
-    <div class="project_trans">'. l($data['title'], $data['href'], $data) .'</div>';
+    $org_project = '';
+    if (isset($user_data['drupal_parser']['drupal.org']['projects']['translations'])) {
+        $org_project .= '<div>';
+        foreach ($user_data['drupal_parser']['drupal.org']['projects']['translations'] as $data) {
+            $org_project .=
+              l($data['title'], $data['href'], $data);
+            if ($data != end($user_data['drupal_parser']['drupal.org']['projects']['translations'])) {
+                $org_project .= ', ';
+            }
+        }
+        $org_project .= '</div>';
     }
-  }
-  if (isset($user_data['drupal_parser']['drupal.org']['projects']['modules'])) {
-    foreach ($user_data['drupal_parser']['drupal.org']['projects']['modules'] as $data) {
-      $org_project .= '
-    <div class="project_module">'. l($data['title'], $data['href'], $data) .'</div>';
+    if (isset($user_data['drupal_parser']['drupal.org']['projects']['modules'])) {
+        $org_project .= '<div>';
+        foreach ($user_data['drupal_parser']['drupal.org']['projects']['modules'] as $key => $data) {
+            $org_project .=
+              l($data['title'], $data['href'], $data);
+            if ($data != end($user_data['drupal_parser']['drupal.org']['projects']['modules'])) {
+                $org_project .= ', ';
+            }
+        }
+        $org_project .= '</div>';
     }
-  }
-  if (isset($user_data['drupal_parser']['drupal.org']['projects']['themes'])) {
-    foreach ($user_data['drupal_parser']['drupal.org']['projects']['themes'] as $data) {
-      $org_project .= '
-    <div class="project_theme">'. l($data['title'], $data['href'], $data) .'</div>';
+    if (isset($user_data['drupal_parser']['drupal.org']['projects']['themes'])) {
+        $org_project .= '<div>';
+        foreach ($user_data['drupal_parser']['drupal.org']['projects']['themes'] as $data) {
+            $org_project .=
+              l($data['title'], $data['href'], $data);
+            if ($data != end($user_data['drupal_parser']['drupal.org']['projects']['themes'])) {
+                $org_project .= ', ';
+            }
+        }
+        $org_project .= '</div>';
     }
-  }
   
   if (!empty($org_project)) {
     $output .= '

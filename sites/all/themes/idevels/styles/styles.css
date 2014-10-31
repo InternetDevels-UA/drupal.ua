@@ -1581,9 +1581,7 @@ p.empty-icon a.icon-no-about {
   margin-bottom: 15px;
 }
 .drupal_activity .domen_wrap .text_wrap {
-  background: transparent url(../images/icons/drup_main_icon.gif) 0 0 no-repeat;
   height: 32px;
-  padding-left: 40px;
 }
 .drupal_activity .domen_wrap .drupal_ru {
   background-position: 0 -32px;
@@ -1604,9 +1602,7 @@ p.empty-icon a.icon-no-about {
   color: #2173AF;
 }
 .drupal_activity .project_org_wrap div {
-  background: transparent url(../images/icons/profile_icon.gif) 0 0 no-repeat;
   margin-bottom: 6px;
-  padding-left: 22px;
   height: 16px;
   line-height: 11px;
   font-size: 12px;
@@ -3957,8 +3953,13 @@ form#user-register #edit-legal-accept-wrapper strong {
 .not-front #main-content {
   width: 905px;
   float: left;
-
   padding-top: 10px;
+}
+.not-front.page-user #main-content {
+  padding-top: 40px;
+}
+.not-front.page-user #sidebar-right {
+  padding-top: 40px;
 }
 .view-Events .views-label-address{
   float: left;
@@ -4774,6 +4775,126 @@ a.karma.up::after {
   font-style: italic;
 }
 
+/**
+ * User profile view page.
+ */
+body.page-user .no-profile {
+}
+body.page-user .view-id-profile_view * {
+  font-family: 'Pt Sans', Arial, Verdana, sans-serif;
+}
+body.page-user .view-id-profile_view .field-content {
+  font-size: 13px;
+}
+body.page-user .no-profile .image,
+body.page-user .view-id-profile_view .views-field-field-image-fid {
+  float: left;
+  margin-bottom: 20px;
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  margin-right: 10px;
+}
+body.page-user .no-profile .image img,
+body.page-user .view-id-profile_view .views-field-field-image-fid img {
+  border-radius: 4px;
+  box-shadow: 0 0 1px 0 #AAA;
+}
+body.page-user .no-profile .user-name,
+body.page-user .view-id-profile_view .views-field-field-first-name-value {
+  margin-left: 110px;
+  padding-top: 15px;
+  font-weight: bold;
+}
+body.page-user .no-profile .user-name,
+body.page-user .view-id-profile_view .views-field-field-first-name-value .field-content{
+  font-size: 30px;
+}
+body.page-user .view-id-profile_view .views-field-field-job-title-value,
+body.page-user .view-id-profile_view .views-field-field-profile-company-value {
+  display: inline-block;
+}
+body.page-user .view-id-profile_view .views-field-field-job-title-value span,
+body.page-user .view-id-profile_view .views-field-field-profile-company-value span {
+  font-size: 15px;
+}
+body.page-user .view-id-profile_view .views-field-city {
+  clear: left;
+}
+body.page-user .view-id-profile_view .views-field-city,
+body.page-user .view-id-profile_view .views-field-field-skills-value,
+body.page-user .view-id-profile_view .views-field-field-personal-website-value {
+  margin: 15px 0;
+}
+body.page-user .view-id-profile_view .views-field-city label,
+body.page-user .view-id-profile_view .views-field-field-skills-value label,
+body.page-user .view-id-profile_view .views-field-field-personal-website-value label,
+body.page-user .view-id-profile_view .views-field-nothing label {
+  display: block;
+  float: left;
+  width: 111px;
+  color: #858585;
+  font-style: normal;
+  font-size: 13px;
+  font-weight: normal;
+}
+body.page-user .view-id-profile_view .views-field-nothing .field-content {
+  display: block;
+  overflow: hidden;
+}
+body.page-user .view-id-profile_view .views-field-nothing .field-content .drupal_activity .project_org_wrap div {
+  margin-bottom: 10px;
+}
+body.page-user .view-id-profile_view .views-field-city .field-content,
+body.page-user .view-id-profile_view .views-field-field-skills-value .field-content,
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content {
+  display: block;
+  overflow: hidden;
+}
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a {
+  text-decoration: underline;
+}
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a:hover {
+  text-decoration: none;
+  color: #000;
+}
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="facebook.com/"] {
+  background: url('/sites/all/themes/idevels/images/icons/soc/facebook.png') no-repeat left;
+}
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="plus.google.com/"] {
+  background: url('/sites/all/themes/idevels/images/icons/soc/gplus.png') no-repeat left;
+}
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="profiles.google.com/"] {
+  background: url('/sites/all/themes/idevels/images/icons/soc/google.png') no-repeat left;
+}
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="twitter.com/"] {
+  background: url('/sites/all/themes/idevels/images/icons/soc/twitter.png') no-repeat left;
+}
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="linkedin.com/"] {
+  background: url('/sites/all/themes/idevels/images/icons/soc/linkedin.png') no-repeat left;
+}
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content .skype a {
+  background: url('/sites/all/themes/idevels/images/icons/soc/skype.png') no-repeat left;
+}
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="vk.com/"],
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="vkontakte.com/"],
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="vkontakte.ru/"] {
+  background: url('/sites/all/themes/idevels/images/icons/soc/vk.png') no-repeat left;
+}
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="facebook.com/"],
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="plus.google.com/"],
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="profiles.google.com/"],
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="twitter.com/"],
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="linkedin.com/"],
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content .skype a,
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="vk.com/"],
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="vkontakte.com/"],
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="vkontakte.ru/"] {
+  padding-left: 20px;
+}
+body.page-user .view-id-profile_view .views-field-field-bio-value label {
+  font-size: 22px;
+}
 .all-upcoming-events {
   color: black;
   text-decoration: underline;
