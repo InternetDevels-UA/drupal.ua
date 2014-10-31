@@ -4977,7 +4977,8 @@ body.page-user .view-id-profile_view .views-field-field-bio-value label {
 .pane-events-panel-pane-3 .views-row {
   padding: 5px 2px 2px 2px;
 }
-.pane-events-panel-pane-2 .views-field-ops .field-content {
+.pane-events-panel-pane-2 .views-field-ops .field-content,
+#add_event_report {
 /*  display: inline-block;
   padding: 2px 10px;
   background-color: #6aa84f;
@@ -4996,7 +4997,13 @@ body.page-user .view-id-profile_view .views-field-field-bio-value label {
   cursor: pointer;
   position: relative;
 }
-.pane-events-panel-pane-2 .views-field-ops .field-content:hover {
+#add_event_report {
+  display: none;
+  color: black;
+  text-decoration: none;
+}
+.pane-events-panel-pane-2 .views-field-ops .field-content:hover,
+#add_event_report:hover {
    border: 1px solid #999;
 }
 .node-type-events .panel-bottom .pane-field-google-calendar {
@@ -5050,11 +5057,13 @@ body.page-user .view-id-profile_view .views-field-field-bio-value label {
   border-radius: 10px;
   -webkit-border-radius: 10px;
 }
-.node-type-events .panel-col-last .pane-custom.pane-1 {
+.node-type-events .panel-col-last .pane-custom.pane-1,
+.node-type-events .panel-col-last .pane-custom.pane-2 {
   width: 100%;
   margin-right: 0;
 }
-.node-type-events .panel-col-last .pane-custom.pane-1 .pane-content {
+.node-type-events .panel-col-last .pane-custom.pane-1 .pane-content,
+.node-type-events .panel-col-last .pane-custom.pane-2 .pane-content {
   width: 100%;
   text-align: center;
 }
