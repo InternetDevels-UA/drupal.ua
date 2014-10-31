@@ -203,7 +203,7 @@ $(function () {
     $(this).parent().parent().find('.meta-links > .meta').after($(this));
   });
 
-  if ($('#events-node-form').length) {
+  if ($('#events-node-form.future-event').length || $('#events-node-form.present-event').length) {
     // decorate teaser
     var $teaser = $("#edit-field-new-teaser-0-value");
     /*var $body = $("#cke_edit-body body");*/
@@ -417,7 +417,9 @@ $(function () {
         readURL(event.target);
       }
     });
+  }
 
+  if ($('#events-node-form.past-event').length) {
     // Page Add event report
     if ($('#events-node-form.past-event').length) {
       //$("#edit-title").attr('disabled','disabled');
@@ -431,10 +433,6 @@ $(function () {
       }
 
       clearfields();
-
-/*      console.log(Drupal.t("Video link from YouTube or Vimeo"));
-      console.log(Drupal.t("Add video"));
-      console.log(Drupal.t('Videos'));*/
 
       var $photos_block = $('#field-photos-items');
       var $videos_block_old = $('#field-videos-items');

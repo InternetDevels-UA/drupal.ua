@@ -4655,6 +4655,10 @@ form#events-node-form.past-event #right-block #field_photos_values * {
 form#events-node-form.past-event #right-block #field_photos_values .tableHeader-processed th {
   padding-left: 0;
 }
+form#events-node-form.past-event #right-block #field_photos_values .tableHeader-processed th:last-of-type,
+form#events-node-form.past-event #right-block .sticky-header {
+  display: none;
+}
 form#events-node-form.past-event #right-block #field_photos_values img {
   max-width: 50px;
   max-height: 50px;
@@ -4671,6 +4675,10 @@ form#events-node-form.past-event #right-block #add-video {
   border: 1px solid #e3e3e3 !important;
   border-radius: 3px;
   cursor: pointer;
+}
+form#events-node-form.past-event #right-block .form-file:hover,
+form#events-node-form.past-event #right-block #add-video:hover {
+  border: 1px solid #777 !important;
 }
 #overlay {
   position: fixed;
