@@ -624,102 +624,106 @@ function idevels_preprocess_views_view_field__og_most_popular_groups_by_term__ti
 }
 
 function idevels_content_multiple_values($element) {
-  $field_name = $element['#field_name'];
-  $field = content_fields($field_name);
-  $output = '';
-  if ($field['multiple'] >= 1) {
-    $table_id = $element['#field_name'] . '_values';
-    $order_class = $element['#field_name'] . '-delta-order';
-    $required = !empty($element['#required']) ? '<span class="form-required" title="' . t('This field is required.') . '">*</span>' : '';
-    $header = array(
-      array(
-        'data'    => t('!title: !required', array(
+  if ($element['#field_name'] == 'field_personal_website') {
+    $field_name = $element['#field_name'];
+    $field = content_fields($field_name);
+    $output = '';
+    if ($field['multiple'] >= 1) {
+      $table_id = $element['#field_name'] . '_values';
+      $order_class = $element['#field_name'] . '-delta-order';
+      $required = !empty($element['#required']) ? '<span class="form-required" title="' . t('This field is required.') . '">*</span>' : '';
+      $header = array(
+        array(
+          'data'    => t('!title: !required', array(
             '!title'    => $element['#title'],
             '!required' => $required
           )),
-        'colspan' => 2,
-      ),
-      array(
-        'data'  => t('Order'),
-        'class' => 'content-multiple-weight-header',
-      ),
-    );
-    $rows = array();
-    // Sort items according to '_weight' (needed when the form comes back after
-    // preview or failed validation)
-    $items = array();
-    foreach (element_children($element) as $key) {
-      if ($key !== $element['#field_name'] . '_add_more') {
-        $items[$element[$key]['#delta']] = &$element[$key];
+          'colspan' => 2,
+        ),
+        array(
+          'data'  => t('Order'),
+          'class' => 'content-multiple-weight-header',
+        ),
+      );
+      $rows = array();
+      // Sort items according to '_weight' (needed when the form comes back after
+      // preview or failed validation)
+      $items = array();
+      foreach (element_children($element) as $key) {
+        if ($key !== $element['#field_name'] . '_add_more') {
+          $items[$element[$key]['#delta']] = &$element[$key];
+        }
       }
-    }
-    uasort($items, '_content_sort_items_value_helper');
-    $element[$element['#field_name'] . '_add_more']['#value'] = '';
-    // Add the items as table rows.
+      uasort($items, '_content_sort_items_value_helper');
+      $element[$element['#field_name'] . '_add_more']['#value'] = '';
+      // Add the items as table rows.
 //    if (count($items) == 3 && array_key_exists('', $items) && isset($items['']) && $items[1]['#value']['value']) {
 ////      $items[0]['value']['#value'] = $items[1]['#value']['value'];
 ////      $items[1]['value']['#value'] = '';
 //    }
-    if ($items[1]['#value']['value'] && !$items[0]['#value']['value']) {
-      $items[0]['value']['#value'] = $items[1]['#value']['value'];
-      $items[1]['value']['#value'] = '';
-    }
-    if (!$items[0]['value']['#value']) {
+      if ($items[1]['#value']['value'] && !$items[0]['#value']['value']) {
+        $items[0]['value']['#value'] = $items[1]['#value']['value'];
+        $items[1]['value']['#value'] = '';
+      }
+      if (!$items[0]['value']['#value']) {
 //      unset($items[0]);
-    }
-    foreach ($items as $delta => $item) {
+      }
+      foreach ($items as $delta => $item) {
         if (!$item['value']['#value'] && $delta != end(array_keys($items))) {
-            continue;
+          continue;
         }
-      $item['_weight']['#attributes']['class'] = $order_class;
-      $delta_element = drupal_render($item['_weight']);
-      $cells = array(
-        array(
-          'data'  => '',
-          'class' => 'content-multiple-drag',
-        ),
-        drupal_render($item),
-        array(
-          'data'  => $delta_element,
-          'class' => 'delta-order',
-        ),
-      );
-      if ($delta != end(array_keys($items))) {
-        $cells[] = array(
-          'data'  => '<div></div>',
-          'class' => 'row-remove',
+        $item['_weight']['#attributes']['class'] = $order_class;
+        $delta_element = drupal_render($item['_weight']);
+        $cells = array(
+          array(
+            'data'  => '',
+            'class' => 'content-multiple-drag',
+          ),
+          drupal_render($item),
+          array(
+            'data'  => $delta_element,
+            'class' => 'delta-order',
+          ),
+        );
+        if ($delta != end(array_keys($items))) {
+          $cells[] = array(
+            'data'  => '<div></div>',
+            'class' => 'row-remove',
+          );
+        }
+        else {
+          $cells[] = array(
+            'data'  => drupal_render($element[$element['#field_name'] . '_add_more']),
+            'class' => 'row-add',
+          );
+        }
+        $row_class = 'draggable';
+        if (!$cells[1]) {
+          continue;
+        }
+        $rows[] = array(
+          'data'  => $cells,
+          'class' => $row_class,
         );
       }
-      else {
-        $cells[] = array(
-          'data'  => drupal_render($element[$element['#field_name'] . '_add_more']),
-          'class' => 'row-add',
-        );
-      }
-      $row_class = 'draggable';
-      if (!$cells[1]) {
-        continue;
-      }
-      $rows[] = array(
-        'data'  => $cells,
-        'class' => $row_class,
-      );
-    }
-    $output .= theme('table', $header, $rows, array('id'    => $table_id,
-                                                    'class' => 'content-multiple-table'
+      $output .= theme('table', $header, $rows, array(
+        'id'    => $table_id,
+        'class' => 'content-multiple-table'
       ));
-    $output .= $element['#description'] ? '<div class="description">' . $element['#description'] . '</div>' : '';
-    drupal_add_tabledrag($table_id, 'order', 'sibling', $order_class);
-    drupal_add_js(drupal_get_path('module', 'content') . '/js/content.node_form.js');
-  }
-  else {
-    foreach (element_children($element) as $key) {
-      $output .= drupal_render($element[$key]);
+      $output .= $element['#description'] ? '<div class="description">' . $element['#description'] . '</div>' : '';
+      drupal_add_tabledrag($table_id, 'order', 'sibling', $order_class);
+      drupal_add_js(drupal_get_path('module', 'content') . '/js/content.node_form.js');
     }
-  }
+    else {
+      foreach (element_children($element) as $key) {
+        $output .= drupal_render($element[$key]);
+      }
+    }
 
-  return $output;
+    return $output;
+  }
 }
+
 /**
  * Theming group_comments__panel_pane_2__timestamp.
  * Make months looks better. 
