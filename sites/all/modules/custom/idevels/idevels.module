@@ -372,7 +372,29 @@ function idevels_form_alter(&$form, &$form_state, $form_id) {
   }
   if ($form_id == 'events_node_form') {
     $form['#id'] = 'events-node-form';
-    $form['#validate'][] = 'idevels_events_date_validate';
+    if ($form['field_event_date'][0]['#default_value']['value2'] != '' && strtotime($form['field_event_date'][0]['#default_value']['value2']) < time()) {
+      $form['#attributes']['class']= 'past-event';
+      unset($form['body_field']);
+      unset($form['field_event_date']);
+      unset($form['field_event_price']);
+      unset($form['field_event_type']);
+      unset($form['field_city']);
+      unset($form['field_address']);
+      unset($form['field_latitude']);
+      unset($form['field_longitude']);
+      unset($form['field_zoom']);
+      unset($form['field_site']);
+      unset($form['field_google_calendar']);
+      unset($form['field_new_teaser']);
+      $form['title']['#attributes']['readonly'] = 'readonly';
+    }
+    elseif ($form['field_event_date'][0]['#default_value']['value2'] != '' && strtotime($form['field_event_date'][0]['#default_value']['value']) < time()) {
+      $form['#attributes']['class'] = 'present-event';
+    }
+    else {
+      $form['#attributes']['class'] = 'future-event';
+      $form['#validate'][] = 'idevels_events_date_validate';
+    }
   }
 }
 

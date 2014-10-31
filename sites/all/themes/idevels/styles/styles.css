@@ -4985,7 +4985,7 @@ form#events-node-form #edit-preview,
 form#events-node-form #edit-field-report-0-value-wrapper,
 form#events-node-form #edit-field-report-0-value-wrapper + a + div.textarea-identifier,
 form#events-node-form #field-photos-items, 
-form#events-node-form #field-videos-items{
+form#events-node-form #field-videos-items {
   display: none;
 }
 .node-type-events .pane-addthis-0 {
@@ -5001,6 +5001,178 @@ form#events-node-form #edit-submit {
 }
 form#events-node-form .body-field-wrapper {
   margin-top: 30px;
+}
+
+/* Page Add event report */
+form#events-node-form.past-event div > div > div.standard {
+  width: 505px;
+  padding-right: 0;
+  clear: none;
+}
+form#events-node-form.past-event #right-block #field-photos-items,
+form#events-node-form.past-event #edit-field-report-0-value-wrapper {
+  display: block;
+}
+form#events-node-form.past-event #field-videos-items {
+  display: none;
+}
+form#events-node-form.past-event #edit-field-events-logo-0-filefield-remove {
+  display: none;
+}
+form#events-node-form.past-event #edit-field-events-logo-0-upload-wrapper .imagefield-preview {
+ width: 200px;
+ height: 200px;
+}
+form#events-node-form.past-event #edit-field-events-logo-0-upload-wrapper .imagefield-preview img {
+  width: 100%;
+}
+form#events-node-form.past-event .vertical-tabs {
+  max-width: 320px;
+}
+form#events-node-form.past-event #edit-field-events-logo-0-upload-wrapper .filefield-element .widget-edit {
+  display: none;
+}
+form#events-node-form.past-event #right-block #field_photos_values {
+  border: none;
+}
+form#events-node-form.past-event #right-block #field_photos_values * {
+  background-color: transparent;
+  border: none;
+}
+form#events-node-form.past-event #right-block #field_photos_values .tableHeader-processed th {
+  padding-left: 0;
+}
+form#events-node-form.past-event #right-block #field_photos_values .tableHeader-processed th:last-of-type,
+form#events-node-form.past-event #right-block .sticky-header {
+  display: none;
+}
+form#events-node-form.past-event #right-block #field_photos_values img {
+  max-width: 50px;
+  max-height: 50px;
+}
+form#events-node-form.past-event #right-block .form-file,
+form#events-node-form.past-event #right-block #add-video {
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  overflow: hidden;
+  display: block;
+  padding-left: 50px;
+  background: url("../images/answers/b_add.png") no-repeat scroll 0 0 transparent;
+  border: 1px solid #e3e3e3 !important;
+  border-radius: 3px;
+  cursor: pointer;
+}
+form#events-node-form.past-event #right-block .form-file:hover,
+form#events-node-form.past-event #right-block #add-video:hover {
+  border: 1px solid #777 !important;
+}
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000; /* high z-index */
+  background: rgba(0,0,0,0.75);
+}
+#overlay #add-video-pop-up {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-left: -210px;
+  margin-top: -35px;
+  background-color: #ddd;
+  padding: 10px;
+  border: 1px solid #e3e3e3;
+  border-radius: 10px;
+}
+#overlay #add-video-pop-up input {
+  width: 300px;
+  padding: 5px;
+  margin-right: 5px;
+}
+#overlay #add-video-pop-up button {
+  padding: 5px;
+}
+form#events-node-form.past-event #right-block #video-prew * {
+  display: inline-block;
+}
+form#events-node-form.past-event #right-block #video-prew .video-thumb {
+  position: relative;
+}
+form#events-node-form.past-event #right-block #video-prew img {
+  margin: 5px;
+  position: relative;
+  top: 6px;
+}
+form#events-node-form.past-event #right-block .form-submit.ahah-processed,
+form#events-node-form.past-event #right-block .description {
+  display: none;
+}
+form#events-node-form.past-event #right-block .filefield-element:hover input[id$="remove"],
+form#events-node-form.past-event #right-block #video-prew .video-thumb:hover .delete-video-thumb {
+  display: block !important;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 15px;
+  height: 15px;
+  padding: 0 0 0 15px;
+  background: url("../images/answers/b_close.png") no-repeat scroll 0 -5px transparent;
+  background-size: 20px 20px;
+  cursor: pointer;
+  border: none;
+}
+form#events-node-form.past-event #right-block #video-prew .video-thumb .delete-video-thumb {
+  display: none;
+}
+form#events-node-form.past-event #right-block #video-prew .video-thumb:hover .delete-video-thumb {
+  top: 12px;
+  right: 7px;
+}
+form#events-node-form.past-event #right-block {
+  float: right;
+  width: 300px;
+  height: auto;
+}
+form#events-node-form.past-event #edit-field-events-logo-0-ahah-wrapper {
+  display: none;
+}
+form#events-node-form.past-event #right-block #edit-field-events-logo-0-ahah-wrapper {
+  display: block;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+form#events-node-form.past-event .content-multiple-table td.content-multiple-drag {
+  width: 5px;
+  display: none;
+}
+form#events-node-form.past-event .content-multiple-table td.content-multiple-drag a {
+  margin: 0;
+  padding: 0;
+}
+form#events-node-form.past-event #field-photos-items tr {
+  display: inline-block;
+  width: 60px;
+  height: 70px;
+  margin: 0;
+  padding: 0;
+}
+form#events-node-form.past-event #field-photos-items tr .filefield-element {
+  position: relative;
+  width: 50px;
+  height: 50px;
+}
+form#events-node-form.past-event #field-photos-items thead tr {
+  display: inline;
+}
+form#events-node-form.past-event #edit-title {
+  opacity: 0.75;
+}
+form#events-node-form.past-event #edit-field-report-0-value {
+  resize: vertical;
 }
 .page-node .messages.error .item-list ul li {
   list-style: none;
