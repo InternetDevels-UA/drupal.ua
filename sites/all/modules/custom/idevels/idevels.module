@@ -364,10 +364,8 @@ function idevels_form_alter(&$form, &$form_state, $form_id) {
     unset($form['pass']['#title']);
   }
   if ($form_id == 'events_node_form') {
-    dsm($form);
-    $form['#validate'][] = 'idevels_events_date_validate';
     $form['#id'] = 'events-node-form';
-    if (strtotime($form['field_event_date'][0]['#default_value']['value2']) < time()) {
+    if ($form['field_event_date'][0]['#default_value']['value2'] != '' && strtotime($form['field_event_date'][0]['#default_value']['value2']) < time()) {
       $form['#attributes']['class']= 'past-event';
       unset($form['body_field']);
       unset($form['field_event_date']);
@@ -381,11 +379,9 @@ function idevels_form_alter(&$form, &$form_state, $form_id) {
       unset($form['field_site']);
       unset($form['field_google_calendar']);
       unset($form['field_new_teaser']);
-      $form['title']['#attributes']['disabled'] = TRUE;
-/*      unset($form['field_photos'][1]);
-      unset($form['field_videos'][1]);*/
+      $form['title']['#attributes']['readonly'] = 'readonly';
     }
-    elseif (strtotime($form['field_event_date'][0]['#default_value']['value']) < time()) {
+    elseif ($form['field_event_date'][0]['#default_value']['value2'] != '' && strtotime($form['field_event_date'][0]['#default_value']['value']) < time()) {
       $form['#attributes']['class'] = 'present-event';
     }
     else {
