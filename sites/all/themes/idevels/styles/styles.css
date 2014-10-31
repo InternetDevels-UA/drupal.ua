@@ -317,7 +317,8 @@ ul.secondary-menu li a, ul.secondary-menu li.active-trail a {
   overflow-y: hidden;
   overflow-x: auto;
 }
-.node .content p {
+.node .content p,
+.node .pane-content p {
   overflow: auto;
 }
 /*.node .taxonomy-links .links li {
