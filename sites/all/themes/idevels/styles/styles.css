@@ -314,12 +314,14 @@ ul.secondary-menu li a, ul.secondary-menu li.active-trail a {
   margin:0;
   display:inline;
 }
-.node .content {
+.node .content,
+.node .content p,
+.pane-node-body p {
   overflow-y: hidden;
   overflow-x: auto;
 }
 .node .content p,
-.node .pane-content p {
+.pane-node-body p {
   overflow: auto;
 }
 /*.node .taxonomy-links .links li {
