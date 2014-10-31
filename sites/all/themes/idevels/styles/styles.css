@@ -294,6 +294,7 @@ ul.secondary-menu li a, ul.secondary-menu li.active-trail a {
 }
 .node .node-links .new {
   color:#FF3366;
+  display: none;
 }
 
 .node .taxonomy-links {
@@ -2503,7 +2504,7 @@ h2.title{
   max-width: 1240px;
 }
 .node .meta-links{
-  margin-top: 30px;
+/*  margin-top: 30px;*/
   padding-bottom: 25px;
   margin-bottom: -20px;
 }
@@ -2757,6 +2758,7 @@ h3.pane-title{
   width: 15px;
   padding-left: 0;
   text-align: center;
+  color: white;
 }
 #sidebar-right #block-views-question-block_2 .field-content{
   font-size: 10px;
@@ -3621,9 +3623,6 @@ form#user-register #edit-legal-accept-wrapper strong {
   width: 310px;
   padding-left: 0px;
   float: right;
-  background-image: url("../images/dot-v-2.png");
-  background-repeat: repeat-y;
-  background-position: top left;
 }
 
 #sidebar-right h3{
@@ -4465,10 +4464,14 @@ a.karma.up::after {
   position: relative;
   top: -15px;
 }
-.page-groups .group-subtitle a:first-child {
+.node-type-group .group-subtitle a:first-child,
+.page-groups .group-subtitle a:first-child,
+.node-type-group .group-subtitle img+a,
+.page-groups .group-subtitle img+a {
   color: black;
 }
-.page-groups .group-subtitle a:last-child {
+.page-groups .group-subtitle a+a,
+.node-type-group .group-subtitle a+a {
   font-style: italic;
 }
 
@@ -4619,9 +4622,16 @@ body.front .pane-views,
   width: 100%;
 }
 
-.content img {
-  margin: 0px;
-  padding: 0px;
+.content img,
+.pane-node-body img {
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid #D5D3D3;
+}
+.content form img {
+  margin: 0;
+  padding: 0;
+  border: none;
 }
 
 div.panel-pane div.node {
