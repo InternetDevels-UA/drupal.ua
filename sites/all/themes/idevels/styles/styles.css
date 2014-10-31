@@ -317,6 +317,9 @@ ul.secondary-menu li a, ul.secondary-menu li.active-trail a {
   overflow-y: hidden;
   overflow-x: auto;
 }
+.node .content p {
+  overflow: auto;
+}
 /*.node .taxonomy-links .links li {
   margin:0 15px 0 0;
   background:transparent url(../images/tag.png) no-repeat 0 0;
