@@ -455,92 +455,83 @@ $(function () {
     });
   }
 
+  // Page Add event report
   if ($('#events-node-form.past-event').length) {
-    // Page Add event report
-    if ($('#events-node-form.past-event').length) {
-      //$("#edit-title").attr('disabled','disabled');
 
-      function clearfields() {
-        $('#field-photos-items .form-file').each(function () {
-          if (!$(this).parents().eq(7).is(':last-child')) {
-            $(this).parents().eq(7).hide();
-          };
-        });
-      }
+    // fix double empty image fields bug
+    if ($('#field_photos_values tr:first-clild .form-file').val() === '') {
+      $('#field-photos-items').addClass('double-empty-fields-bug');
+    };
 
-      clearfields();
+    var $photos_block = $('#field-photos-items');
+    var $videos_block_old = $('#field-videos-items');
+    var $videos_block = $('<div id="videos-block"><label>'+Drupal.t('Videos')+'</label><div id="video-prew"><button id="add-video"></button></div></div>');
+    var $overlay = $('<div id="overlay"><div id="add-video-pop-up"><label for="youtube-video">'+Drupal.t("Video link from YouTube or Vimeo")+'</label><div id="youtube-video"><input id="youtube-video-input" type="text"/><button id="video-added">'+Drupal.t("Add video")+'</button></div></div></div>');
+    var $right_block = $('<div id="right-block"></div>');
+    $("form#events-node-form.past-event div > div > div.standard").before($right_block);
 
-      var $photos_block = $('#field-photos-items');
-      var $videos_block_old = $('#field-videos-items');
-      var $videos_block = $('<div id="videos-block"><label>'+Drupal.t('Videos')+'</label><div id="video-prew"><button id="add-video"></button></div></div>');
-      var $overlay = $('<div id="overlay"><div id="add-video-pop-up"><label for="youtube-video">'+Drupal.t("Video link from YouTube or Vimeo")+'</label><div id="youtube-video"><input id="youtube-video-input" type="text"/><button id="video-added">'+Drupal.t("Add video")+'</button></div></div></div>');
-      var $right_block = $('<div id="right-block"></div>');
-      $("form#events-node-form.past-event div > div > div.standard").before($right_block);
+    $('#edit-field-events-logo-0-ahah-wrapper').appendTo($right_block);
+    $photos_block.appendTo($right_block);
+    $videos_block.appendTo($right_block);
 
-      $('#edit-field-events-logo-0-ahah-wrapper').appendTo($right_block);
-      $photos_block.appendTo($right_block);
-      $videos_block.appendTo($right_block);
+    // Add new photo (need jQuery 1.3)
+    $('#field-photos-items .form-file').live('change', function(event){
+      $( "#edit-field-photos-field-photos-add-more" ).trigger( "mousedown" );
+    });
 
-      // Add new photo (need jQuery 1.3)
-      $('#field-photos-items .form-file').live('change', function(event){
-        $( "#edit-field-photos-field-photos-add-more" ).trigger( "mousedown" );
-      });
-
-      function add_video_thumb(src, id) {
-        $new_video_thumb = $('<div class="video-thumb"><img src="'+src+'" width=50 height=50 /><button class="delete-video-thumb" data-id="'+id+'"></button><div>');
-        $('#video-prew > button').before($new_video_thumb);
-      }
-
-      function parseVideoURL(url, id) {
-        var regstring = url.match(/http:\/\/(?:www\.)?(vimeo|youtube)\.com\/(?:watch\?v=)?(.*?)(?:\s|$|&)/);
-        var provider = RegExp.$1;
-        var vid = RegExp.$2;
-        if (provider == 'youtube') {
-          var src = "http://img.youtube.com/vi/"+vid+"/2.jpg";
-          add_video_thumb(src, id);
-        }
-        else if (provider == 'vimeo') {
-          $.getJSON('http://www.vimeo.com/api/v2/video/' + vid + '.json?callback=?', {format: "json"}, function(data) {
-            add_video_thumb(data[0].thumbnail_small, id);
-          });
-        }
-        else {
-          console.log(url);
-        }
-      }
-
-      // Add new video
-      $('#add-video').click(function(event) {
-        $overlay.appendTo($('body'));
-        $('#video-added').click(function(event) {
-          $('#field-videos-items tr:last-child input').val($('#youtube-video-input').val());
-          $('#edit-field-videos-field-videos-add-more').trigger( "mousedown" );
-          parseVideoURL($('#youtube-video-input').val(), $('#field-videos-items tr:last-child input').attr("id"));
-          $('#youtube-video-input').val('');
-          $overlay.remove();
-        });
-        $("body").keydown(function(event) {
-          if (event.keyCode == 27) {
-            $overlay.remove();
-          }
-        });
-        return false;
-      });
-
-      // Inicial video parser 
-      $('#field-videos-items .form-item .form-text').each(function () {
-        if ($(this).val() != '') {
-          parseVideoURL($(this).val(), $(this).attr("id"));         
-        };
-      });
-
-      // delete video (need jQuery 1.3)
-      $('.delete-video-thumb').live('mousedown', function(event){
-        $( "#"+$(this).attr("data-id") ).parent().parent().find('input[type=checkbox]').attr('checked','checked');
-        $(this).parent().remove();
-      });
-
+    function add_video_thumb(src, id) {
+      $new_video_thumb = $('<div class="video-thumb"><img src="'+src+'" width=50 height=50 /><button class="delete-video-thumb" data-id="'+id+'"></button><div>');
+      $('#video-prew > button').before($new_video_thumb);
     }
+
+    function parseVideoURL(url, id) {
+      var regstring = url.match(/http:\/\/(?:www\.)?(vimeo|youtube)\.com\/(?:watch\?v=)?(.*?)(?:\s|$|&)/);
+      var provider = RegExp.$1;
+      var vid = RegExp.$2;
+      if (provider == 'youtube') {
+        var src = "http://img.youtube.com/vi/"+vid+"/2.jpg";
+        add_video_thumb(src, id);
+      }
+      else if (provider == 'vimeo') {
+        $.getJSON('http://www.vimeo.com/api/v2/video/' + vid + '.json?callback=?', {format: "json"}, function(data) {
+          add_video_thumb(data[0].thumbnail_small, id);
+        });
+      }
+      else {
+        console.log(url);
+      }
+    }
+
+    // Add new video
+    $('#add-video').click(function(event) {
+      $overlay.appendTo($('body'));
+      $('#video-added').click(function(event) {
+        $('#field-videos-items tr:last-child input').val($('#youtube-video-input').val());
+        $('#edit-field-videos-field-videos-add-more').trigger( "mousedown" );
+        parseVideoURL($('#youtube-video-input').val(), $('#field-videos-items tr:last-child input').attr("id"));
+        $('#youtube-video-input').val('');
+        $overlay.remove();
+      });
+      $("body").keydown(function(event) {
+        if (event.keyCode == 27) {
+          $overlay.remove();
+        }
+      });
+      return false;
+    });
+
+    // Inicial video parser 
+    $('#field-videos-items .form-item .form-text').each(function () {
+      if ($(this).val() != '') {
+        parseVideoURL($(this).val(), $(this).attr("id"));         
+      };
+    });
+
+    // delete video (need jQuery 1.3)
+    $('.delete-video-thumb').live('mousedown', function(event){
+      $( "#"+$(this).attr("data-id") ).parent().parent().find('input[type=checkbox]').attr('checked','checked');
+      $(this).parent().remove();
+    });
 
   }
 
@@ -574,5 +565,6 @@ $(function () {
     $(".node-type-events .pane-field-videos").toggle();
     return false;
   });
+
 
 });
