@@ -205,6 +205,8 @@ $(function () {
 
   // hide event report
   $(".node-type-events .pane-field-report").hide();
+  $(".node-type-events .pane-field-photos").hide();
+  $(".node-type-events .pane-field-videos").hide();
 
   // if event not past disable link for view report
   if ($(".node-type-events time.not-pastevent").length > 0) {
@@ -216,6 +218,7 @@ $(function () {
   else if ($(".node-type-events time.pastevent").length > 0) {
     $(".node-type-events .views-field-ops").hide();
     $(".view-id-Events.view-display-id-panel_pane_3 p").text(Drupal.t('Event ended'));
+    $("#add_event_report").attr("href", $("#page-title+.tabs-wrapper a[href$='edit']").attr('href'));
     $("#add_event_report").show();
   };
 
@@ -226,6 +229,8 @@ $(function () {
   $("#link-event-overview:not(.expanded)").click(function (e) {
     $(".node-type-events .pane-field-report").toggle();
     $(".node-type-events .pane-node-body").toggle();
+    $(".node-type-events .pane-field-photos").toggle();
+    $(".node-type-events .pane-field-videos").toggle();
     return false;
   });
 
