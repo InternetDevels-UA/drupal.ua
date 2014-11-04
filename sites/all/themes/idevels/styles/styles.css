@@ -4634,7 +4634,7 @@ form#events-node-form.past-event #edit-field-events-logo-0-filefield-remove {
 }
 form#events-node-form.past-event #edit-field-events-logo-0-upload-wrapper .imagefield-preview {
  width: 200px;
- height: 200px;
+ height: auto;
 }
 form#events-node-form.past-event #edit-field-events-logo-0-upload-wrapper .imagefield-preview img {
   width: 100%;
