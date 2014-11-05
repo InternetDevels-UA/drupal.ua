@@ -580,7 +580,7 @@ function idevels_preprocess_views_view_field__question__block_2__created_1(&$var
 }
 
 function idevels_preprocess_content_field(&$vars) {
-  if ($vars['field_name'] == 'field_report' && $vars['items'][0]['value'] == NULL) {
+  if ($vars['field_name'] == 'field_report' && empty($vars['items'][0]['value'])) {
     $vars['items'][0]['view'] = t('No information available yet');
     $vars['field_empty'] = FALSE;
     $vars['items'][0]['empty'] = FALSE;
