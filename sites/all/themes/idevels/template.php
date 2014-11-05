@@ -579,6 +579,9 @@ function idevels_preprocess_views_view_field__question__block_2__created_1(&$var
   }
 }
 
+/**
+ * For Event report: if report is empty we'll show this message 'No information available yet'. 
+ */
 function idevels_preprocess_content_field(&$vars) {
   if ($vars['field_name'] == 'field_report' && empty($vars['items'][0]['value'])) {
     $vars['items'][0]['view'] = t('No information available yet');
