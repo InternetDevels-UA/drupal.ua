@@ -811,3 +811,14 @@ function idevels_preprocess_views_view_field__Events__panel_pane_2__field_event_
     $vars['output'] = '<time class="not-pastevent">' . $vars['output'] . '</time>';
   }
 }
+
+/**
+ * For Event report: if report is empty we'll show this message 'No information available yet'. 
+ */
+function idevels_preprocess_content_field(&$vars) {
+  if ($vars['field_name'] == 'field_report' && empty($vars['items'][0]['value'])) {
+    $vars['items'][0]['view'] = t('No information available yet');
+    $vars['field_empty'] = FALSE;
+    $vars['items'][0]['empty'] = FALSE;
+  }
+}
