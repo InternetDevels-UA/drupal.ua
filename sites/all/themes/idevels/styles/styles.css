@@ -4286,6 +4286,7 @@ fieldset.group-drupal legend,
 form#user-profile-form fieldset legend {
   padding: 0;
   font-style: italic;
+  height: 40px;
 }
 fieldset.group-personal fieldset.location > legend,
 fieldset.group-personal fieldset.location #edit-field-location-0-delete-location-wrapper {
@@ -4371,10 +4372,12 @@ form#node-form fieldset.group-drupal .description {
 fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper,
 fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper {
   clear: both;
+  overflow: hidden;
 }
 fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper textarea,
 fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper textarea {
   float: left;
+  margin-top: 0;
 }
 fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper .grippie,
 fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper .grippie {
@@ -4382,6 +4385,9 @@ fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper .grippie 
 }
 fieldset.group-personal > fieldset:nth-of-type(2) {
   clear: both;
+}
+fieldset.group-contacts > div#field-personal-website-items {
+  margin-top: -4px;
 }
 fieldset.group-contacts > div#field-personal-website-items table.sticky-header {
   display: none !important;

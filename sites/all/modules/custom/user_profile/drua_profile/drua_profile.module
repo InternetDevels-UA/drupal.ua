@@ -60,7 +60,7 @@ function drua_profile_menu() {
     'weight'          => 19,
   );
   $items['user/%/mail/%'] = array(
-    'title'           => t('Email check'),
+    'title'           => 'Email check',
     'description'     => 'A page to check hash and change user email.',
     'page callback'   => 'drua_profile_checknewmail',
     'access callback' => TRUE,
@@ -532,6 +532,12 @@ function avatar_profile_form_submit($form, &$form_state) {
     $node->type = 'profile';
     $node->status = 1;
     $node->uid = $user->uid;
+    $widget_settings = db_result(db_query("SELECT widget_settings FROM content_node_field_instance WHERE field_name = 'field_birthday'"));
+    $data = unserialize($widget_settings);
+    $node->field_birthday[0]['value'] = $data['default_value_code'];
+    $widget_settings = db_result(db_query("SELECT widget_settings FROM content_node_field_instance WHERE field_name = 'field_gender'"));
+    $data = unserialize($widget_settings);
+    $node->field_gender[0]['value'] = $data['default_value'][0]['value'];
   }
   $node->field_image[0]['fid'] = $file->fid;
   node_save($node);
@@ -543,6 +549,7 @@ function avatar_profile_form_submit($form, &$form_state) {
  */
 function drua_profile_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'profile_node_form') {
+    $form['buttons']['submit']['#submit'][] = 'drua_profile_form_profile_submit';
     $form['#pre_render'][] = 'drua_profile_form_prerender';
     $form['field_image']['#type'] = 'hidden';
     unset($form['language']);
@@ -586,6 +593,15 @@ function drua_profile_form_alter(&$form, &$form_state, $form_id) {
 }
 
 /**
+ *  Replace default submit message for content type Profile.
+ */
+function drua_profile_form_profile_submit ($form, $form_state) {
+  $messages = drupal_get_messages();
+  drupal_set_message(t('Profile <em>!name</em> was updated', array('!name' => $form_state['node']['name'])));
+
+}
+
+/**
  *  Prerender function for form user profile edit.
  */
 function drua_profile_form_prerender($form) {
@@ -602,6 +618,7 @@ function drua_profile_form_prerender($form) {
 function drua_profile_change_email() {
   global $user;
 
+  drupal_set_title(t('Email'));
   $form = array();
   $form['#validate'][] = 'drua_profile_change_email_validate';
   $form['#submit'][] = 'drua_profile_change_email_submit';
