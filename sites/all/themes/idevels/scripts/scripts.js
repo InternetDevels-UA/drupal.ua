@@ -449,7 +449,7 @@ $(function () {
     }
 
     function parseVideoURL(url, id) {
-      var regstring = url.match(/http:\/\/(?:www\.)?(vimeo|youtube)\.com\/(?:watch\?v=)?(.*?)(?:\s|$|&)/);
+      var regstring = url.match(/(?:www\.)?(vimeo|youtube)\.com\/(?:watch\?v=)?(.*?)(?:\s|$|&)/);
       var provider = RegExp.$1;
       var vid = RegExp.$2;
       if (provider == 'youtube') {
