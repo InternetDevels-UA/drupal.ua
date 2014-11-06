@@ -4583,6 +4583,9 @@ a.karma.up::after {
 #add_event_report:hover {
    border: 1px solid #999;
 }
+.node-type-events .container-12 .grid-4 {
+  margin-bottom: 10px;
+}
 .node-type-events .panel-bottom .pane-field-google-calendar {
   text-decoration: none;
   display: inline-block;
