@@ -4782,3 +4782,11 @@ body.front
 .pane-drua-profile-last-comments > h3.pane-title {
   margin-left: 20px;
 }
+
+.node-type-events .panel-bottom h3.pane-title {
+  margin-bottom: 15px;
+}
+
+.node-type-events .panel-bottom > div > div {
+  margin-bottom: 20px;
+}
