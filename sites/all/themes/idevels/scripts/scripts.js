@@ -218,8 +218,16 @@ $(function () {
   else if ($(".node-type-events time.pastevent").length > 0) {
     $(".node-type-events .views-field-ops").hide();
     $(".view-id-Events.view-display-id-panel_pane_3 p").text(Drupal.t('Event ended'));
-    $("#add_event_report").attr("href", $("#page-title+.tabs-wrapper a[href$='edit']").attr('href'));
-    $("#add_event_report").show();
+    if ($(".node-type-events .pane-field-report").val()) {
+      $("#add_event_report").text(Drupal.t('Edit report'));
+    }
+    else {
+      $("#add_event_report").text(Drupal.t('Add report'));
+    }
+    if ($("#page-title+.tabs-wrapper a[href$='edit']").length > 0) {
+      $("#add_event_report").attr("href", $("#page-title+.tabs-wrapper a[href$='edit']").attr('href'));
+      $("#add_event_report").show();
+    }
   };
 
   var destination_link = '/user/login?destination='+window.location.pathname;
