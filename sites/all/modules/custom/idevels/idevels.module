@@ -380,6 +380,7 @@ function idevels_form_alter(&$form, &$form_state, $form_id) {
       unset($form['field_google_calendar']);
       unset($form['field_new_teaser']);
       $form['title']['#attributes']['readonly'] = 'readonly';
+      $form['buttons']['submit']['#value'] = t('Add report');
     }
     elseif ($form['field_event_date'][0]['#default_value']['value2'] != '' && strtotime($form['field_event_date'][0]['#default_value']['value']) < time()) {
       $form['#attributes']['class'] = 'present-event';

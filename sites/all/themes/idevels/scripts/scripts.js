@@ -423,7 +423,7 @@ $(function () {
   if ($('#events-node-form.past-event').length) {
 
     // fix double empty image fields bug
-    if ($('#field_photos_values tr:first-clild .form-file').val() === '') {
+    if ($('#field_photos_values tr:first-clild .form-file').val() === '' && !$('#field_photos_values tr:first-clild .widget-preview'.length)) {
       $('#field-photos-items').addClass('double-empty-fields-bug');
     };
 
