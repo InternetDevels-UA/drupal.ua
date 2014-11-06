@@ -550,9 +550,14 @@ $(function () {
   else if ($(".node-type-events time.pastevent").length > 0) {
     $(".node-type-events .views-field-ops").hide();
     $(".view-id-Events.view-display-id-panel_pane_3 p").text(Drupal.t('Event ended'));
-    $("#add_event_report").attr("href", $("#page-title+.tabs-wrapper a[href$='edit']").attr('href'));
-    $("#add_event_report").show();
-  };
+    if ($(".node-type-events .pane-field-report").text() &&  $(".node-type-events .pane-field-report").text().indexOf(Drupal.t('No information available yet')) < 0) {
+      $("#add_event_report").text(Drupal.t('Edit report'));
+    }
+    if ($("#page-title+.tabs-wrapper a[href$='edit']").length > 0) {
+      $("#add_event_report").attr("href", $("#page-title+.tabs-wrapper a[href$='edit']").attr('href'));
+      $("#add_event_report").show();
+    }
+  }
 
   var destination_link = '/user/login?destination='+window.location.pathname;
   $(".not-logged-in.node-type-events .pane-events-panel-pane-2 .views-field-ops .field-content").html("<a href="+destination_link+">"+Drupal.t("I'll go there")+"<a/>");
