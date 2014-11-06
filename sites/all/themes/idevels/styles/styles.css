@@ -4735,12 +4735,13 @@ form#events-node-form.past-event #right-block #video-prew .video-thumb:hover .de
   background-size: 20px 20px;
   cursor: pointer;
   border: none;
+  color: transparent;
 }
 form#events-node-form.past-event #right-block #video-prew .video-thumb .delete-video-thumb {
   display: none;
 }
 form#events-node-form.past-event #right-block #video-prew .video-thumb:hover .delete-video-thumb {
-  top: 12px;
+  top: 2px;
   right: 7px;
 }
 form#events-node-form.past-event #right-block {
