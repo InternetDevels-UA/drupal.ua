@@ -5102,14 +5102,13 @@ form#events-node-form.past-event #right-block #add-video:hover {
 }
 form#events-node-form.past-event #right-block #video-prew * {
   display: inline-block;
+  float: left;
 }
 form#events-node-form.past-event #right-block #video-prew .video-thumb {
   position: relative;
 }
 form#events-node-form.past-event #right-block #video-prew img {
-  margin: 5px;
-  position: relative;
-  top: 6px;
+  margin: 0 5px 5px 5px;
 }
 form#events-node-form.past-event #right-block .form-submit.ahah-processed,
 form#events-node-form.past-event #right-block .description {
@@ -5128,12 +5127,13 @@ form#events-node-form.past-event #right-block #video-prew .video-thumb:hover .de
   background-size: 20px 20px;
   cursor: pointer;
   border: none;
+  color: transparent;
 }
 form#events-node-form.past-event #right-block #video-prew .video-thumb .delete-video-thumb {
   display: none;
 }
 form#events-node-form.past-event #right-block #video-prew .video-thumb:hover .delete-video-thumb {
-  top: 12px;
+  top: 2px;
   right: 7px;
 }
 form#events-node-form.past-event #right-block {
@@ -5178,6 +5178,9 @@ form#events-node-form.past-event #edit-title {
 }
 form#events-node-form.past-event #edit-field-report-0-value {
   resize: vertical;
+}
+form#events-node-form.past-event #edit-field-report-0-value textarea {
+  float: left;
 }
 form#events-node-form.past-event .double-empty-fields-bug #field_photos_values tbody tr:first-child {
   display: none;
