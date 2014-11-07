@@ -4303,14 +4303,6 @@ fieldset.group-personal .description {
   clear: both;
   margin-bottom: 10px;
 }
-fieldset.group-personal .date-clear-block {
-  width: 324px;
-}
-@-moz-document url-prefix() {
-  fieldset.group-personal .date-clear-block {
-    width: 314px;
-  }
-}
 
 fieldset.group-personal .date-clear-block > .form-item > label {
   float: left;
