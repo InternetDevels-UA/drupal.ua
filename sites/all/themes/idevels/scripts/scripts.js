@@ -468,6 +468,11 @@ $(function () {
       }
     }
 
+    // Fix bug with empty logo
+    $('#edit-field-events-logo-0-upload').click(function(event) {
+      return false;
+    });
+
     // Add new video
     $('#add-video').click(function(event) {
       $overlay.appendTo($('body'));
