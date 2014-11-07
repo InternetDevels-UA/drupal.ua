@@ -4315,9 +4315,6 @@ fieldset.group-personal .date-clear-block {
 fieldset.group-personal .date-clear-block > .form-item > label {
   float: left;
 }
-fieldset.group-personal .date-clear-block > .form-item > div {
-  float: right;
-}
 fieldset.group-personal .date-clear-block > .form-item > div label {
   display: none;
 }
@@ -4327,6 +4324,7 @@ fieldset.group-personal > div.form-item:nth-of-type(4) {
 fieldset.group-personal > div.form-item:nth-of-type(4) label,
 fieldset.group-personal > div.form-item#edit-field-first-name-0-value-wrapper > label,
 fieldset.group-personal > div.form-item#edit-field-last-name-0-value-wrapper > label,
+fieldset.group-personal div.form-item#edit-field-birthday-0-value-wrapper label,
 fieldset.group-personal > div.form-item#edit-field-profile-company-0-value-wrapper > label,
 fieldset.group-personal > div.form-item#edit-field-job-title-0-value-wrapper > label,
 fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper > label,
