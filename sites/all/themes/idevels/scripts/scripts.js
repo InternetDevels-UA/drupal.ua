@@ -239,7 +239,6 @@ $(function () {
     $(this).parent().parent().find('.meta-links > .meta').after($(this));
   });
 
-<<<<<<< HEAD
   if ($('#events-node-form.future-event').length || $('#events-node-form.present-event').length) {
     // decorate teaser
     var $teaser = $("#edit-field-new-teaser-0-value");
