@@ -4556,6 +4556,7 @@ a.karma.up::after {
   display: block;
   word-break: break-all;
   padding-left: 182px;
+  min-height: 19px;
 }
 .pane-events-panel-pane-2 .view-Events label.views-label-field-site-url {
   position: absolute;
