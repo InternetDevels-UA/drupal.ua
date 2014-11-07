@@ -5632,6 +5632,7 @@ body.front
   margin-left: 20px;
 }
 
+<<<<<<< HEAD
 .node-type-events .panel-display.container-12 {
   width: 100%;
 }
@@ -5718,4 +5719,11 @@ body.front
   margin: 5px;
   padding: 5px;
   border: 1px solid #D5D3D3;
+}
+.node-type-events .panel-bottom h3.pane-title {
+  margin-bottom: 15px;
+}
+
+.node-type-events .panel-bottom > div > div {
+  margin-bottom: 20px;
 }
