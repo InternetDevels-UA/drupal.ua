@@ -458,6 +458,8 @@ $(function () {
   // Page Add event report
   if ($('#events-node-form.past-event').length) {
 
+    $('input[id^=edit-field-photos][id$=upload]').attr('title', Drupal.t('Allowed file extensions: png, gif, jpg, jpeg'));
+
     // fix double empty image fields bug
     if ($('#field_photos_values tr:first-clild .form-file').val() === '' && !$('#field_photos_values tr:first-clild .widget-preview'.length)) {
       $('#field-photos-items').addClass('double-empty-fields-bug');
@@ -502,9 +504,15 @@ $(function () {
       }
     }
 
+    // Fix bug with empty logo
+    $('#edit-field-events-logo-0-upload').click(function(event) {
+      return false;
+    });
+
     // Add new video
     $('#add-video').click(function(event) {
       $overlay.appendTo($('body'));
+      $('#add-video-pop-up input').attr('placeholder', Drupal.t('paste youtube or vimeo link there'));
       $('#video-added').click(function(event) {
         $('#field-videos-items tr:last-child input').val($('#youtube-video-input').val());
         $('#edit-field-videos-field-videos-add-more').trigger( "mousedown" );
