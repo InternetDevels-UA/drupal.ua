@@ -4552,9 +4552,13 @@ a.karma.up::after {
   margin: 5px 0 0 !important;
 }
 .pane-events-panel-pane-2 .views-field-field-site-url span {
-  display: inline-flex;
-  width: 350px;
+  width: 530px;
+  display: block;
   word-break: break-all;
+  padding-left: 182px;
+}
+.pane-events-panel-pane-2 .view-Events label.views-label-field-site-url {
+  position: absolute;
 }
 .pane-events-panel-pane-3 .views-row {
   padding: 5px 2px 2px 2px;
