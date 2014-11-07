@@ -204,4 +204,21 @@ $(function () {
     $(this).parent().parent().find('.meta-links > .meta').after($(this));
   });
 
+  // (Event page) Add user avatar if user push "I'll go" button
+  $(".node-type-events .panel-display .views-field-ops .flag-be-there a").live('mousedown', function(event) {
+    if (!$('.node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid').length) {
+      $('.node-type-events .panel-display .pane-events-panel-pane-3 .views-row-1').prepend('<div class="views-field-uid"></div>');
+    };
+    $.getJSON('/idevels-user/info', {format: "json"}, function(data) {
+      if ($(".node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid a[href='/users/"+data["user_name"]+"']").length) {
+        $(".node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid a[href='/users/"+data["user_name"]+"']").remove();
+      }
+      else {
+        var avatar = $('<span id="ajax_avatar" class="field-content"><a>'+data["avatar"]+'</a></span>');
+        $(".node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid").prepend(avatar);
+        $('#ajax_avatar a').attr("href", '/users/'+data["user_name"]);
+      }
+    });
+  });
+
 });
