@@ -5636,6 +5636,7 @@ body.front
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .node-type-events .panel-display.container-12 {
   width: 100%;
 }
@@ -5729,4 +5730,28 @@ body.front
 
 .node-type-events .panel-bottom > div > div {
   margin-bottom: 20px;
+}
+.view-profile-view.view-display-id-page_1 > .view-content {
+  float: left;
+  width: 275px;
+  overflow: hidden;
+}
+
+.view-profile-view.view-display-id-attachment_1 {
+  float: right;
+  width: 550px;
+}
+
+.view-profile-view .view-display-id-attachment_1 .views-field-field-events-logo-fid,
+.view-profile-view .view-display-id-attachment_1 .views-field-field-zoom-value {
+  clear: left;
+  float: left;
+  width: 100px;
+  text-align: center;
+  padding: 0 10px;
+}
+
+.view-profile-view .views-field-title, .view-profile-view .views-field-body {
+  margin-left: 100px;
+  width: 430px;
 }
