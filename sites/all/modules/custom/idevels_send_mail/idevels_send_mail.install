@@ -24,19 +24,30 @@ function idevels_send_mail_schema() {
         'type' => 'int',
         'unsigned' => TRUE,
         'not null' => FALSE,
-
       ),
       'timestamp' => array(
         'description' => 'Time when the user has subscribed',
         'type' => 'int',
         'not null' => TRUE,
         'default' => 0,
-
+      ),
+      'send_notification_day' => array(
+        'description' => 'Status if user send email day',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'send_notification' => array(
+        'description' => 'Send once email notification after subscribed',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 0,
       ),
     ),
     'primary key' => array('id'),
   );
-
   return $schema;
 }
 

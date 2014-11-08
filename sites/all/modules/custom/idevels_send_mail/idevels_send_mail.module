@@ -7,13 +7,85 @@
  * Implements hook_cron().
  **/
 function idevels_send_mail_cron() {
-  $date = new DateTime();
-  $timenow = strtotime('-1 day', date_timestamp_get($date));
-  $events = db_query("SELECT * FROM {idevels_send_mail}");
+  $time = strtotime('-1 day');
+  $events = db_query('SELECT * FROM {idevels_send_mail} WHERE send_notification = %b AND timestamp <= %d',
+    array(
+      1,
+      $time
+    ));
   while ($event = db_fetch_object($events)) {
-    if ($timenow >= $event->timestamp) {
-      $node = node_load(array("nid" => $event->nid));
-      $user = user_load(array('uid' => $event->uid));
+    $node = node_load(array("nid" => $event->nid));
+    $user = user_load(array('uid' => $event->uid));
+    $message = array(
+      'to' => $user->mail,
+      'subject' => $node->title,
+      'body' => t('test body'),
+      'headers' => array(
+        'Reply-To' => variable_get('site_name', ''),
+        'MIME-Version' => '1.0',
+        'Content-Type' => 'text/plain; charset=UTF-8; format=flowed; delsp=yes',
+        'Content-Transfer-Encoding' => '8Bit',
+        'From' => variable_get('site_name', ''),
+        'X-Mailer' => 'Drupal',
+      ),
+    );
+    job_queue_add('drupal_mail_send', 'Send email for user ' . $user->name . ' for event - ' . $node->title, array($message), '', TRUE);
+  }
+  db_query('UPDATE {idevels_send_mail} SET send_notification = %b WHERE timestamp <= %d',
+    array(
+      0,
+      $time
+    ));
+}
+
+/**
+ * Implements hook_flag().
+ **/
+function idevels_send_mail_flag($op, $flag, $content_id, $account, $fcid) {
+  $uid = $account->uid;
+  if ($op == 'unflag') {
+    db_query('UPDATE {idevels_send_mail} SET send_notification = %b WHERE nid = %d AND uid = %d',
+      array(
+        0,
+        $content_id,
+        $uid,
+      ));
+  }
+  if ($op == 'flag' and in_array('events', $flag->types)) {
+    $timestamp = time();
+    $count = db_result(db_query('SELECT 1 FROM {idevels_send_mail} WHERE uid = %d AND nid = %d',
+      array(
+        $uid,
+        $content_id,
+      )));
+    if ($count == 1) {
+      db_query('UPDATE {idevels_send_mail} SET send_notification = %b, timestamp = %d WHERE nid = %d AND uid = %d',
+        array(
+          1,
+          $timestamp,
+          $content_id,
+          $uid,
+        ));
+    }
+    else {
+      db_query('INSERT INTO {idevels_send_mail} (id, uid, nid, timestamp, send_notification, send_notification_day) VALUES (null, %d, %d, %d, %b, %b)',
+        array(
+          $uid,
+          $content_id,
+          $timestamp,
+          1,
+          1,
+        ));
+    }
+    $count = db_result(db_query('SELECT 1 FROM {idevels_send_mail} WHERE uid = %d AND nid = %d AND send_notification_day = %b',
+      array(
+        $uid,
+        $content_id,
+        1,
+      )));
+    if ($count == 1) {
+      $node = node_load(array("nid" => $content_id));
+      $user = user_load(array('uid' => $uid));
       $message = array(
         'to' => $user->mail,
         'subject' => $node->title,
@@ -27,31 +99,14 @@ function idevels_send_mail_cron() {
           'X-Mailer' => 'Drupal',
         ),
       );
-      job_queue_add('drupal_mail_send', 'Send email for user=>' . $user->name . 'for event' . $node->title, array($message), '', TRUE);
+      drupal_mail_send($message);
+      db_query('UPDATE {idevels_send_mail} SET send_notification_day = %b WHERE nid = %d and uid = %d',
+        array(
+          0,
+          $content_id,
+          $uid,
+        ));
     }
-  }
-  db_query("Delete FROM {idevels_send_mail} where timestamp<=%d", array($timenow));
-}
-
-/**
- * Implements hook_flag().
- **/
-function idevels_send_mail_flag($op, $flag, $content_id, $account, $fcid) {
-  $uid = $account->uid;
-  if ($op == 'unflag') {
-    db_query('Delete from {idevels_send_mail}  WHERE nid=%s and uid=%s', array(
-      $content_id,
-      $uid,
-    ));
-  }
-  if ($op == 'flag' and in_array('events', $flag->types)) {
-    $date = new DateTime();
-    $timestamp = date_timestamp_get($date);
-    db_query('INSERT INTO {idevels_send_mail}(id, uid, nid, timestamp) VALUES (null, %s, %s, %s)', array(
-      $uid,
-      $content_id,
-      $timestamp,
-    ));
   }
 }
 

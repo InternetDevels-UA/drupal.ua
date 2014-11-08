@@ -1,5 +1,5 @@
 name = Idevels send email module
 description = "Send mail a user for reviews"
 package = Internetdevels
-dependencies[] =  Job queue
+dependencies[] = job_queue
 core = 6.x
