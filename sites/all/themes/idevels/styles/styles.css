@@ -314,9 +314,15 @@ ul.secondary-menu li a, ul.secondary-menu li.active-trail a {
   margin:0;
   display:inline;
 }
-.node .content {
+.node .content,
+.node .content p,
+.pane-node-body p {
   overflow-y: hidden;
   overflow-x: auto;
+}
+.node .content p,
+.pane-node-body p {
+  overflow: auto;
 }
 /*.node .taxonomy-links .links li {
   margin:0 15px 0 0;
@@ -392,7 +398,7 @@ h1 .tag a, h2 .tag a, h1 .tag em, h2 .tag em {
   padding:0;
 }
 
-.node .content ul, .node .content ol { margin-left:2em; }
+.node .content ul, .node .content ol, .page-node .pane-content ul, .page-node .pane-content ol { margin-left:2em; }
 .node .content ul li, .node .content ol li { margin-bottom:0.5em; }
 .node .content ul li ul, .node .content ol li ul, .node .content ul li ol, .node .content ol li ol { margin:1em 0 1em 20px; }
 .node .content ul li ul { list-style-type:circle; }
@@ -930,11 +936,11 @@ ul.quicktabs-style-nostyle li.active:active a { background:url(../images/tabs-bi
 
 ul.primary, ul.primary li, ul.primary li a { padding:0; margin:0; font-family: "PT Sans";}
 ul.primary, ul.primary li, ul.primary li a, ul.primary li.active, ul.primary li.active a { line-height:28px !important; display:inline-block; border:none; }
-.tabs-wrapper { margin: 1em 0; }
+.tabs-wrapper { margin: -5px 0 10px 0; }
 ul.primary { margin: 0; display:block; }
 ul.primary li { padding:0 15px 0 0; }
-ul.primary li a { color:#93b1bb; font-weight:normal; padding:0 11px 0 15px; margin:0; }
-ul.primary li { background:url(../images/tabs-big.png) right -84px no-repeat; margin-right:-12px; margin-left:8px; }
+ul.primary li a { color:#93b1bb; font-weight:normal; /*padding:0 11px 0 15px;*/ margin:0; }
+/*ul.primary li { background:url(../images/tabs-big.png) right -84px no-repeat; margin-right:-12px; margin-left:8px; }
 ul.primary li a { background:url(../images/tabs-big.png) 0 -84px no-repeat; margin-left:-8px; }
 ul.primary li:hover { background:url(../images/tabs-big.png) right -112px no-repeat; }
 ul.primary li:hover a  { background:url(../images/tabs-big.png) 0 -112px no-repeat; }
@@ -945,7 +951,13 @@ ul.primary li.active a { background:url(../images/tabs-big.png) 0 0 no-repeat; c
 ul.primary li.active:hover { background:url(../images/tabs-big.png) right -28px no-repeat; }
 ul.primary li.active:hover a  { background:url(../images/tabs-big.png) 0 -28px no-repeat; }
 ul.primary li.active:active { background:url(../images/tabs-big.png) right -56px no-repeat; }
-ul.primary li.active:active a { background:url(../images/tabs-big.png) 0 -56px no-repeat; }
+ul.primary li.active:active a { background:url(../images/tabs-big.png) 0 -56px no-repeat; }*/
+
+ul.primary li:hover a { background-color: transparent; }
+ul.primary li.active { padding: 0; }
+ul.primary li a { background-color: transparent; text-decoration: underline; color: #333; }
+ul.primary li a:hover { color: red; }
+ul.primary li a.active { display: none; }
 
 ul.secondary { border:none; margin: 1em 0 2em; padding:0; }
 ul.secondary li, ul.secondary li a { padding:0; margin:0; font-family: "PT Sans"}
@@ -3966,11 +3978,7 @@ form#user-register #edit-legal-accept-wrapper strong {
 }
 .node-type-events .view-Events {
   font-size: 15px;
-<<<<<<< HEAD
   font-family: 'Pt Sans',Arial,Verdana,sans-serif;
-=======
-  font-family: 'PT Sans';
->>>>>>> master
 }
 .node-type-events .views-field-address,
 .node-type-events .views-field-field-event-date-value-4,
@@ -4772,6 +4780,11 @@ a.karma.up::after {
 .karma {
   padding: 5px 30px 5px 5px;
 }
+
+.page-groups .container-12 {
+  width: 100%;
+}
+
 .page-groups .group-subtitle {
   position: relative;
   top: -15px;
