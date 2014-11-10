@@ -4888,6 +4888,19 @@ form#events-node-form #edit-field-event-price-0-value {
 form#events-node-form #edit-field-events-logo-0-ahah-wrapper {
   width: 300px;
 }
+.pane-events-panel-pane-2 .views-field-field-site-url span {
+  width: 530px;
+  display: block;
+  word-break: break-all;
+  padding-left: 182px;
+  min-height: 19px;
+}
+.pane-events-panel-pane-2 .view-Events label.views-label-field-site-url {
+  position: absolute;
+}
+.pane-events-panel-pane-3 .views-row {
+  padding: 5px 2px 2px 2px;
+}
 .pane-events-panel-pane-2 .views-field-ops .field-content,
 #add_event_report {
 /*  display: inline-block;
@@ -5635,8 +5648,6 @@ body.front
   margin-left: 20px;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 .node-type-events .panel-display.container-12 {
   width: 100%;
 }
