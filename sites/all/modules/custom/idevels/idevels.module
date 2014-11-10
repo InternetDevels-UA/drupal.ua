@@ -594,6 +594,15 @@ function idevels_preprocess_views_view_fields(&$vars) {
       }
     }
   }
+  elseif ($vars['view']->name == 'group') {
+    if ($vars['view']->current_display == "block_1") {
+      $title=$vars['row']->node_title;
+      $field_image=$vars['fields']['field_group_image_fid']->content;
+      $field_title=$vars['fields']['title']->content;
+      $vars['fields']['field_group_image_fid']->content=str_replace('title=""','title="'.$title.'"',$field_image);
+      $vars['fields']['title']->content=str_replace('<a','<a title="'.$title.'"',$field_title);
+      }
+    }
 }
 
 /**
