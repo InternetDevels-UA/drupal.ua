@@ -425,7 +425,7 @@ $(function () {
     $('input[id^=edit-field-photos][id$=upload]').attr('title', Drupal.t('Allowed file extensions: png, gif, jpg, jpeg'));
 
     // fix double empty image fields bug
-    if ($('#field_photos_values tr:first-clild .form-file').val() === '' && !$('#field_photos_values tr:first-clild .widget-preview'.length)) {
+    if ($('#field_photos_values tr:first-clild .form-file').val() === '' && !$('#field_photos_values tr:first-clild .widget-preview').length) {
       $('#field-photos-items').addClass('double-empty-fields-bug');
     };
 
