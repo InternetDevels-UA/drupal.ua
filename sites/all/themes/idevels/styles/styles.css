@@ -4306,6 +4306,7 @@ fieldset.group-drupal legend,
 form#user-profile-form fieldset legend {
   padding: 0;
   font-style: italic;
+  height: 40px;
 }
 fieldset.group-personal fieldset.location > legend,
 fieldset.group-personal fieldset.location #edit-field-location-0-delete-location-wrapper {
@@ -4322,20 +4323,9 @@ fieldset.group-personal .description {
   clear: both;
   margin-bottom: 10px;
 }
-fieldset.group-personal .date-clear-block {
-  width: 324px;
-}
-@-moz-document url-prefix() {
-  fieldset.group-personal .date-clear-block {
-    width: 314px;
-  }
-}
 
 fieldset.group-personal .date-clear-block > .form-item > label {
   float: left;
-}
-fieldset.group-personal .date-clear-block > .form-item > div {
-  float: right;
 }
 fieldset.group-personal .date-clear-block > .form-item > div label {
   display: none;
@@ -4346,6 +4336,7 @@ fieldset.group-personal > div.form-item:nth-of-type(4) {
 fieldset.group-personal > div.form-item:nth-of-type(4) label,
 fieldset.group-personal > div.form-item#edit-field-first-name-0-value-wrapper > label,
 fieldset.group-personal > div.form-item#edit-field-last-name-0-value-wrapper > label,
+fieldset.group-personal div.form-item#edit-field-birthday-0-value-wrapper label,
 fieldset.group-personal > div.form-item#edit-field-profile-company-0-value-wrapper > label,
 fieldset.group-personal > div.form-item#edit-field-job-title-0-value-wrapper > label,
 fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper > label,
@@ -4391,10 +4382,12 @@ form#node-form fieldset.group-drupal .description {
 fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper,
 fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper {
   clear: both;
+  overflow: hidden;
 }
 fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper textarea,
 fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper textarea {
   float: left;
+  margin-top: 0;
 }
 fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper .grippie,
 fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper .grippie {
@@ -4402,6 +4395,9 @@ fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper .grippie 
 }
 fieldset.group-personal > fieldset:nth-of-type(2) {
   clear: both;
+}
+fieldset.group-contacts > div#field-personal-website-items {
+  margin-top: -4px;
 }
 fieldset.group-contacts > div#field-personal-website-items table.sticky-header {
   display: none !important;
