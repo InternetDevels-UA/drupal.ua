@@ -583,7 +583,6 @@ function idevels_preprocess_views_view_field__question__block_2__created_1(&$var
  * Event page trming. Add metatags to images. 
  */
 function idevels_preprocess_panels_pane(&$vars) {
-  dsm($vars);
   $title = $vars['display']->context['argument_nid_1']->title;
   if ($vars['pane']->subtype == 'field_events_logo') {
     $insert_to_logo = $title . '" title="' . $title;
