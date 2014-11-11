@@ -405,15 +405,14 @@ function _idevels_add_metatag($form, &$form_state) {
     $meta->path = $path;
     $meta->data = array();
     $meta->data['title'] = $form['title']['#default_value'] . ' | ' . t('Drupal events');
-    $meta->data['description'] = substr($form['field_new_teaser'][0]['#default_value']['value'], 0, strrpos(substr($form['field_new_teaser'][0]['#default_value']['value'], 0, 200), ' '));
+    $meta->data['description'] = $form['field_new_teaser'][0]['#default_value']['value'] ? substr($form['field_new_teaser'][0]['#default_value']['value'], 0, strrpos(substr($form['field_new_teaser'][0]['#default_value']['value'], 0, 200), ' ')) : '';
 
-    $city = taxonomy_get_term($form['field_city']['#default_value'][0]['value'])->name;
-    $meta->data['keywords'] = $form['title']['#default_value'];
-    $meta->data['keywords'] .= ', ' . $city;
+    $city = taxonomy_get_term($form['field_city']['#default_value'][0]['value'])->name ?: FALSE;
+    $meta->data['keywords'] = $form['title']['#default_value'] ?: '';
+    $meta->data['keywords'] .= $city ? ', ' . $city : '';
     $meta->data['keywords'] .= ', ' . t('Drupal events');
-    $meta->data['keywords'] .= ', ' . 'Drupal ' . strstr($form['field_event_date'][0]['#default_value']['value'], '-', TRUE);
-    $meta->data['keywords'] .= ', Drupal ' . strstr($city, ', ');
-    $meta->data['keywords'] .= ', ' . 'Drupal ' . substr($city, 0, strpos($city, ', '));
+    $meta->data['keywords'] .= $form['field_event_date'][0]['#default_value']['value'] ? ', Drupal ' . strstr($form['field_event_date'][0]['#default_value']['value'], '-', TRUE) : '';
+    $meta->data['keywords'] .= ($city && strstr($city, ', ')) ? ', Drupal ' . substr(strstr($city, ', '), 2) : '';
 
     $meta->language = '';
     simplemeta_meta_save($meta);
