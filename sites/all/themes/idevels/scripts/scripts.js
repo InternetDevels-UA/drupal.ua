@@ -118,7 +118,6 @@ $(function () {
     });
     var count = firstRow*3;
     count = obj.length - count;
-    console.log(count);
 
     if (row > 3) {
       obj.slice(-count).hide();
@@ -151,6 +150,43 @@ $(function () {
       modalFormDecorator();
     },1000);
   });
+// Right block user avatar.
+  $('#image-link').click(function (e) {
+    e.preventDefault();
+    $('#avatar-profile-form #edit-file').trigger('click');
+  });
+  $('#avatar-profile-form #edit-file').change(function () {
+    $('#avatar-profile-form .form-submit').trigger('click');
+  });
+  // Page change password.
+  $('#drua-profile-change-password input.required').attr('required', 'true');
+  // Page profile sites remove button.
+  var i = 0;
+  $('.group-contacts #field_personal_website_values tbody tr .row-remove div').click(function (e) {
+    $(this).parent().parent().remove();
+    $('.group-contacts #field_personal_website_values tbody tr').each(function () {
+      $(this).find('div.form-item').attr('id', 'edit-field-personal-website-' + i + '-value-wrapper');
+      $(this).find('div.form-item input').attr('name', 'field_personal_website[' + i + '][value]')
+        .attr('id', 'edit-field-personal-website-' + i + '-value');
+      i++;
+    });
+    i = 0;
+  });
+  $(document).ajaxStop(function () {
+    $('.group-contacts #field_personal_website_values tbody tr .row-remove div').click(function (e) {
+      $(this).parent().parent().remove();
+      $('.group-contacts #field_personal_website_values tbody tr').each(function () {
+        $(this).find('div.form-item').attr('id', 'edit-field-personal-website-' + i + '-value-wrapper');
+        $(this).find('div.form-item input').attr('name', 'field_personal_website[' + i + '][value]')
+          .attr('id', 'edit-field-personal-website-' + i + '-value');
+        i++;
+      });
+      i = 0;
+    });
+  });
+  $('#edit-field-location-0-city-wrapper input').attr('maxlength', 100);
+  $('#edit-field-profile-company-0-value-wrapper input').attr('maxlength', 100);
+  $('#edit-field-job-title-0-value-wrapper input').attr('maxlength', 100);
 
   if ($('#edit-pass-pass1').length) {
     $('#edit-pass-pass1').attr('placeholder', Drupal.t('Password'));
