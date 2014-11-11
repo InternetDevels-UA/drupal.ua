@@ -389,9 +389,11 @@ function drua_profile_block($op = 'list', $delta = 0, $edit = array()) {
           }
           $output = '<div class="lc"><div class="copyright">' . t('© 2010—2014 ') . l('Drupal.ua', 'http://www.drupal.ua') . '</div>
                      <div class="count">' . t('Our ') . l($link_title, 'users-lists') . '</div></div>';
+          /*$output = '<div class="lc"><div class="copyright">' . t('© 2010—2014 ') . l('Drupal.ua', 'http://www.drupal.ua'). t(' is supported by ') . l('InternetDevels', 'http://internetdevels.com') . t(' and group of volunteers.') . '</div>
+                     <div class="count">' . t('Our ') . l($link_title, 'users-lists') . '</div></div>';*/
           $output .= '<div class="mc"><div class="social">
                       <span class="we-in-soc">' . t('We are in social networks:') . '</span><span class="fb">' . $fb . '</span><span class="vk">' . $vk . '</span><span class="tw">' . $tw . '</span></div>
-                      <div class="work">' . l(t('Jobs at Drupal.ua'), 'vacations') . '</div></div>';
+                      <div class="work">' . l('Drupal.ua', 'http://www.drupal.ua'). t(' is supported by ') . l('InternetDevels', 'http://internetdevels.com') . t(' and group of volunteers.') . '</div></div>';
           $output .= '<div class="rc"><div class="contacts">' . l(t('Contacts'), 'contacts') . '</div>
                       <div class="mail">' . t('Write to us ') . l(t('support@drupal.ua'), 'mailto:support@drupal.ua', array(
               'absolute'   => TRUE,
