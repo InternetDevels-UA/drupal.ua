@@ -578,3 +578,24 @@ function idevels_preprocess_views_view_field__question__block_2__created_1(&$var
     $vars['output'] = ua_month_perfecty($vars['view']->result[$vars['id']-1]->node_created);
   }
 }
+
+/**
+ * Event page trming. Add metatags to images. 
+ */
+function idevels_preprocess_panels_pane(&$vars) {
+  dsm($vars);
+  $title = $vars['display']->context['argument_nid_1']->title;
+  if ($vars['pane']->subtype == 'field_events_logo') {
+    $insert_to_logo = $title . '" title="' . $title;
+    $vars['content'] = substr_replace($vars['content'], $insert_to_logo, strpos($vars['content'], 'alt="') + 5, 0);
+  }
+  elseif ($vars['pane']->subtype == 'field_photos') {
+    $i = 0;
+    while (strpos($vars['content'], 'alt=""') > 0) {
+      $i++;
+      $vars['content'] = substr_replace($vars['content'], $title . '_№' . (string) $i, strpos($vars['content'], 'alt=""') + 5, 0);
+      $vars['content'] = substr_replace($vars['content'], '_№' . (string) $i, strpos($vars['content'], 'title="' . $title . '"') + 7 + strlen($title), 0);
+      $vars['content'] = substr_replace($vars['content'], '_№' . (string) $i, strpos($vars['content'], 'title="' . $title . '"') + 7 + strlen($title), 0);
+    }
+  }
+}
