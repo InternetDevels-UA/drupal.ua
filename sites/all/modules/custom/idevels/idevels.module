@@ -413,8 +413,34 @@ function idevels_form_alter(&$form, &$form_state, $form_id) {
     else {
       $form['#attributes']['class'] = 'future-event';
       $form['#validate'][] = 'idevels_events_date_validate';
+      $form['#submit'][] = '_idevels_add_metatag';
       drupal_set_title(t('Create event (title)'));
     }
+  }
+}
+
+/**
+ * Function submit (add metatag to event's page).
+ */
+function _idevels_add_metatag($form, &$form_state) {
+  if (module_exists('simplemeta')) {
+    $path = strstr($_GET['q'], '/edit', TRUE);
+
+    $meta = new stdClass();
+    $meta->path = $path;
+    $meta->data = array();
+    $meta->data['title'] = $form['title']['#default_value'] . ' | ' . t('Drupal events');
+    $meta->data['description'] = $form['field_new_teaser'][0]['#default_value']['value'] ? substr($form['field_new_teaser'][0]['#default_value']['value'], 0, strrpos(substr($form['field_new_teaser'][0]['#default_value']['value'], 0, 200), ' ')) : '';
+
+    $city = taxonomy_get_term($form['field_city']['#default_value'][0]['value'])->name ?: FALSE;
+    $meta->data['keywords'] = $form['title']['#default_value'] ?: '';
+    $meta->data['keywords'] .= $city ? ', ' . $city : '';
+    $meta->data['keywords'] .= ', ' . t('Drupal events');
+    $meta->data['keywords'] .= $form['field_event_date'][0]['#default_value']['value'] ? ', Drupal ' . strstr($form['field_event_date'][0]['#default_value']['value'], '-', TRUE) : '';
+    $meta->data['keywords'] .= ($city && strstr($city, ', ')) ? ', Drupal ' . substr(strstr($city, ', '), 2) : '';
+
+    $meta->language = '';
+    simplemeta_meta_save($meta);
   }
 }
 
