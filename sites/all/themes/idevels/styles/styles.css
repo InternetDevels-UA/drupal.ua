@@ -4932,6 +4932,7 @@ body.page-user .view-id-profile_view .views-field-field-bio-value label {
   float:none;
   width:370px;
   margin: 0px;
+  word-wrap: break-word;
 }
 
 .view-upcoming-events .views-row,
