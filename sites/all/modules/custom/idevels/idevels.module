@@ -57,7 +57,8 @@ function idevels_menu() {
 function idevels_get_userinfo() {
   global $user;
 
-  $avatar = (empty($user->picture) ? theme('image', 'sites/default/files/dua.idevels.drupalcompany.com/imagecache/50x50/imagefield_default_images/no-image_1.jpg') : theme_imagecache('50x50', $user->picture));
+  $profile = node_load(array('uid'  => $user->uid,'type' => 'profile'));
+  $avatar = (empty($profile->field_image[0]['filepath']) ? theme('image', 'sites/default/files/dua.idevels.drupalcompany.com/imagecache/50x50/imagefield_default_images/no-image_1.jpg') : theme_imagecache('50x50', $profile->field_image[0]['filepath']));
 
   drupal_json(array('user_name' => $user->name,'avatar' => $avatar));
 }
