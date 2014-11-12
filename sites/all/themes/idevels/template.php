@@ -87,6 +87,24 @@ function idevels_preprocess_page(&$vars) {
   elseif ($_GET['q'] == 'resources') {
     $vars['title'] = t('Resources');
   }
+  if (preg_match('/events.+/', request_uri())) {
+    //Get event type from taxonomy_term
+    $event_type = taxonomy_get_term($node->field_event_type[0]['value']);
+    $vars['micro_data_name'] = $event_type->name;
+
+    $vars['micro_data_description'] = $node->body;
+    $vars['micro_data_image'] = $node->field_events_logo[0]['filepath'];
+    $vars['micro_data_startDate'] = $node->field_event_date[0]['value'];
+    $vars['micro_data_endDate'] = $node->field_event_date[0]['value2'];
+    $vars['micro_data_streetAddress'] = $node->field_address[0]['value'];
+    $vars['micro_data_priceCurrency'] = $node->field_event_price[0]['value'];
+
+    //Get city name from taxonomy_term
+    $city = taxonomy_get_term($node->field_city[0]['value']);
+    $vars['micro_data_addressLocality'] = $city->name;
+    $vars['micro_data_url'] = $event_type->tid;
+
+  }
 }
 
 /**
