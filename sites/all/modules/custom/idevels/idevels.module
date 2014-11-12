@@ -391,8 +391,9 @@ function idevels_form_alter(&$form, &$form_state, $form_id) {
     $form['title']['#maxlength'] = 80;
     $form['#id'] = 'events-node-form';
     if ($form['field_event_date'][0]['#default_value']['value2'] != '' && strtotime($form['field_event_date'][0]['#default_value']['value2']) < time()) {
-      $form['#attributes']['class']= 'past-event';
-      unset($form['body_field']);
+      $form['#attributes']['class'] = 'past-event';
+      $form['body_field']['#prefix'] = '<div style="display: none;">';
+      $form['body_field']['#suffix'] = '</div>';
       unset($form['field_event_date']);
       unset($form['field_event_price']);
       unset($form['field_event_type']);
@@ -403,7 +404,8 @@ function idevels_form_alter(&$form, &$form_state, $form_id) {
       unset($form['field_zoom']);
       unset($form['field_site']);
       unset($form['field_google_calendar']);
-      unset($form['field_new_teaser']);
+      $form['field_new_teaser']['#prefix'] = '<div style="display: none;">';
+      $form['field_new_teaser']['#suffix'] = '</div>';
       $form['title']['#attributes']['readonly'] = 'readonly';
       $form['buttons']['submit']['#value'] = t('Add report');
     }

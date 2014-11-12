@@ -5193,8 +5193,10 @@ form#events-node-form.past-event #edit-title {
 form#events-node-form.past-event #edit-field-report-0-value {
   resize: vertical;
 }
-form#events-node-form.past-event #edit-field-report-0-value textarea {
+form#events-node-form.past-event #edit-field-report-0-value-wrapper textarea,
+form#events-node-form.past-event #edit-field-report-0-value-wrapper .description {
   float: left;
+  width: 100%
 }
 form#events-node-form.past-event .double-empty-fields-bug #field_photos_values tbody tr:first-child {
   display: none;

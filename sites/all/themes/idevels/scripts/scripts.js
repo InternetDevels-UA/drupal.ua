@@ -461,9 +461,25 @@ $(function () {
     $('input[id^=edit-field-photos][id$=upload]').attr('title', Drupal.t('Allowed file extensions: png, gif, jpg, jpeg'));
 
     // fix double empty image fields bug
-    if ($('#field_photos_values tr:first-clild .form-file').val() === '' && !$('#field_photos_values tr:first-clild .widget-preview'.length)) {
+    if ($('#field_photos_values tr:first-clild .form-file').val() === '' && !$('#field_photos_values tr:first-clild .widget-preview').length) {
       $('#field-photos-items').addClass('double-empty-fields-bug');
     };
+
+    // Fix for hide plus. Add div over remove button.
+    $('#right-block .filefield-element').live('mouseover', function(event){
+      if (!$(this).find('.div-for-remove-plus').length) {
+        $(this).find('input[id^="edit-field-photos"][id$="remove"]').before('<div class="div-for-remove-plus" style="position: absolute; right:0; top: 0; z-index: 77; height:15px; width:15px; cursor: pointer;"></div>');
+      };
+    });
+
+    // Fix for hide plus. Add style to head.
+    $('head').append('<style id="fix-for-remove-plus"></style>');
+
+    // Fix for hide plus. Hide tr.
+    $('.div-for-remove-plus').live('click', function(event) {
+      $('style#fix-for-remove-plus').text($('style#fix-for-remove-plus').text()+'table#field_photos_values tbody tr:nth-child('+($(this).closest('tr').prevAll().length+1)+'){display: none !important;}');
+      $(this).next().trigger('mousedown');
+    });
 
     var $photos_block = $('#field-photos-items');
     var $videos_block_old = $('#field-videos-items');
