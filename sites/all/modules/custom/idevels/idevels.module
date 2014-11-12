@@ -405,7 +405,6 @@ function _idevels_add_metatag($form, &$form_state) {
     $meta->path = $path;
     $meta->data = array();
     $meta->data['title'] = $form['title']['#default_value'] . ' | ' . t('Drupal events');
-    $meta->data['description'] = $form['field_new_teaser'][0]['#default_value']['value'] ? substr($form['field_new_teaser'][0]['#default_value']['value'], 0, strrpos(substr($form['field_new_teaser'][0]['#default_value']['value'], 0, 200), ' ')) : '';
 
     $city = taxonomy_get_term($form['field_city']['#default_value'][0]['value'])->name ?: FALSE;
     $meta->data['keywords'] = $form['title']['#default_value'] ?: '';
