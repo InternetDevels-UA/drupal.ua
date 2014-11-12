@@ -483,7 +483,7 @@ h1 .tag a, h2 .tag a, h1 .tag em, h2 .tag em {
 .block, .panel-pane { margin: 0; }
 .front .panels-flexible-1-inside .panels-flexible-row { padding: 0 0 2px 0; }
 /*.block, .panel-pane { margin:0 0 1.5em; }*/
-.block h3.block-title, .panel-pane h3.pane-title { margin-top:0; font-size:2em; }
+.block h3.block-title, .panel-pane h3.pane-title,  .panel-pane h2.pane-title { margin-top:0; font-size:2em; }
 
 .ad-header { text-align:center; }
 
@@ -2643,7 +2643,8 @@ a.ask.question:hover{
 .container-12.question{
   position: relative;
 }
-h3.pane-title{
+h3.pane-title,
+h2.pane-title {
   font-size: 36px;
   /*font-family: open_sans_bold, Open Sans, Verdana, Arial;*/
   font-family:'PT Sans Narrow';

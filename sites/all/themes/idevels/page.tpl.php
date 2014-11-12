@@ -83,7 +83,11 @@
           <?php print $messages; ?>
           <?php print $breadcrumb; ?>
           <?php if ($title): ?>
-            <h1 class="title" id="page-title"><?php print $title; ?></h1>
+            <?php if ($node->type == 'events'): ?>
+              <h1 itemprop="name" class="title" id="page-title"><?php print $title; ?></h1>
+            <?php else: ?>
+              <h1 class="title" id="page-title"><?php print $title; ?></h1>
+            <?php endif ?>
           <?php endif; ?>
           <?php if ($tabs): ?>
             <div class="tabs-wrapper"><?php print $tabs; ?></div>
