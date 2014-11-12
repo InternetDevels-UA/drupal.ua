@@ -5492,6 +5492,9 @@ body.front .pane-views,
   padding: 0;
   border: none;
 }
+span.node-title-prefix.group-subtitle img {
+  margin-right: 2px;
+}
 
 div.panel-pane div.node {
   padding: 0px;
