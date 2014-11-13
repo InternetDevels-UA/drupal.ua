@@ -5766,13 +5766,17 @@ body.front
   float: left;
   width: 100px;
   text-align: center;
-  padding: 0 10px 0px  0px;
-  width:100px;
-  height:62px;
+  padding: 0 10px 0px 0px;
+  width: 100px;
+  height: 62px;
 }
 
 .view-profile-view .views-field-title, .view-profile-view .views-field-body {
   word-wrap: break-word;
   margin-left: 100px;
   width: 430px;
+}
+
+.view-profile-view .view-header p {
+  margin-left: 100px;
 }
