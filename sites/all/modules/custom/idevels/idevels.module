@@ -927,6 +927,16 @@ function idevels_init() {
       t('Voting details')
     ));
   }
+  $path = array();
+  $uri = trim(request_uri(), '/');
+  $path = explode('/', $uri);
+  if (in_array('groups', $path) && isset($path[1]) && isset($path[2])) {
+    drupal_set_breadcrumb(array(
+      l(t('Home'), NULL),
+      l(t('Groups'), 'groups'),
+      drupal_get_title(),
+    ));
+  }
 }
 
 function ua_month_perfecty($timestamp) {
