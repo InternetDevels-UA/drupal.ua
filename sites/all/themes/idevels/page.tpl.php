@@ -15,24 +15,23 @@
 <div style="height:0;width:0;overflow: hidden;" >
   <div itemscope itemtype="http://schema.org/Event" >
     <a itemprop="url" href="<?php print $micro_data_url; ?>"></a>
-    <h1 itemprop="name"><?php print $micro_data_name; ?></h1>
     <img itemprop="image" src="<?php print $micro_data_image; ?>" />
-    <div itemprop="startDate" content="<?php print $micro_data_startDate; ?>"></div>
-    <div itemprop="endDate" content="<?php print $micro_data_endDate; ?>"></div>
+    <meta itemprop="name" content="<?php print $micro_data_name; ?>"/>
+    <meta itemprop="startDate" content="<?php print $micro_data_startDate; ?>"/>
+    <meta itemprop="endDate" content="<?php print $micro_data_endDate; ?>"/>
+    <meta itemprop="description" content="<?php print $micro_data_description; ?>"/>
     <div itemprop="location" itemscope itemtype="http://schema.org/Place">
-      <div itemprop="name"><?php print $micro_data_streetAddress; ?></div>
-  <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-  <div itemprop="streetAddress"><?php print $micro_data_streetAddress; ?></div>
-  <div itemprop="addressLocality"><?php print $micro_data_addressLocality; ?></div>
+      <meta itemprop="name" content="<?php print $micro_data_streetAddress; ?>"/>
+      <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+        <meta itemprop="streetAddress"  content="<?php print $micro_data_streetAddress; ?>"/>
+        <meta itemprop="addressLocality"  content="<?php print $micro_data_addressLocality; ?>"/>
+      </div>
     </div>
-
     <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-      <span itemprop="price"> <meta itemprop="priceCurrency" content="UAH" />
-      <?php print $micro_data_priceCurrency; ?>
+      <meta itemprop="priceCurrency" content="UAH" />
+      <meta itemprop="price"  content="<?php print $micro_data_priceCurrency; ?>"/>
     </div>
-<span itemprop="description"><?php print $micro_data_description; ?>
   </div>
-
 </div>
 
 <div class="body-wrapper">
