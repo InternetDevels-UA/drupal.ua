@@ -3663,14 +3663,19 @@ form#user-register #edit-legal-accept-wrapper strong {
 #sidebar-right .block:last-child {
   background-image: none;
 }
-/*.page-events */.view-Events .views-field-title{
+/*.page-events */.view-Events .views-field-title, 
+                .view-Events .views-field-title h2 {
                    font: 28px 'PT Sans Narrow';
                    font-weight: 900;
 
                  }
-/*.page-events */.view-Events .views-field-title a{
+/*.page-events */.view-Events .views-field-title a, 
+                .view-Events .views-field-title a h2 {
                    text-decoration: none;
                    color: #232323;
+                 }
+                 .view-Events .views-field-title a h2 {
+                  margin: 0;
                  }
 
 .page-events .views-row{
@@ -5216,3 +5221,14 @@ body.front
   margin-left: 20px;
 }
 
+.page-events .views-field-body {
+  clear: both;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.page-events .views-field-field-city-value * {
+  display: inline;
+  font-style: normal;
+}
