@@ -816,12 +816,12 @@ function idevels_preprocess_views_view_fields__Events__page(&$vars) {
         break;
 
       case 'title':
-        $a_begin = substr($field->content, 0, strpos($field->content, '>' . $field->raw . '<') + 1);
+        $a_begin = substr($field->content, 0, strpos($field->content, '>' . htmlspecialchars($field->raw) . '<') + 1);
         if (substr($a_begin, 0, 3) == '<a ') {
           $a_begin = '<a itemprop="url" ' . substr($a_begin, 3);
         }
-        $a_end = substr($field->content, strpos($field->content, '>' . $field->raw . '<') + 1 + strlen($field->raw));
-        $field->content = $a_begin . '<h2 itemprop="name">' . $field->raw . '</h2>' . $a_end;
+        $a_end = substr($field->content, strpos($field->content, '>' . htmlspecialchars($field->raw) . '<') + 1 + strlen(htmlspecialchars($field->raw)));
+        $field->content = $a_begin . '<h2 itemprop="name">' . htmlspecialchars($field->raw) . '</h2>' . $a_end;
         break;
 
       case 'field_city_value':

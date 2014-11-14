@@ -5222,7 +5222,6 @@ body.front
 }
 
 .page-events .views-field-body {
-  clear: both;
   width: 100%;
   overflow-y: auto;
   overflow-x: auto;
