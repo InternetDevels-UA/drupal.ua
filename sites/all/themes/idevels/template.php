@@ -860,3 +860,62 @@ function idevels_preprocess_panels_pane(&$vars) {
     }
   }
 }
+
+/**
+ * Events page. Add metatag to event. 
+ */
+function idevels_preprocess_views_view_unformatted__Events__page(&$vars) {
+}
+
+/**
+ * Events page. Add metatag to events fields. 
+ */
+function idevels_preprocess_views_view_fields__Events__page(&$vars) {
+  foreach ($vars['fields'] as $id => &$field) {
+    switch ($id) {
+      case 'field_event_date_value_2':
+        $field->content = substr_replace($field->content, 'itemprop="startDate" content="' . $field->raw . '" ', 5, 0);
+        break;
+
+      case 'title':
+        $a_begin = substr($field->content, 0, strpos($field->content, '>' . htmlspecialchars($field->raw) . '<') + 1);
+        if (substr($a_begin, 0, 3) == '<a ') {
+          $a_begin = '<a itemprop="url" ' . substr($a_begin, 3);
+        }
+        $a_end = substr($field->content, strpos($field->content, '>' . htmlspecialchars($field->raw) . '<') + 1 + strlen(htmlspecialchars($field->raw)));
+        $field->content = $a_begin . '<h2 itemprop="name">' . htmlspecialchars($field->raw) . '</h2>' . $a_end;
+        break;
+
+      case 'field_city_value':
+        if ($field->content) {
+          $term = taxonomy_get_term($field->raw);
+          $name = $term->name;
+          $pieces = explode(", ", $name);
+          $pieces[0] = '<span itemprop="addressLocality">' . $pieces[0] . '</span>';
+          $pieces[1] = '<span itemprop="addressCountry">' . $pieces[1] . '</span>';
+          $address = '<address itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">' . implode(', ', $pieces) . '</address>';
+          $field->content = str_replace(">$name<", ">$address<", $field->content);
+        }
+        break;
+
+      case 'field_event_price_value':
+        if ($field->raw == t('Free')) {
+          $field->content = '<meta itemprop="priceCurrency" content="UAH"/><meta itemprop="price" content="0"/>';
+        }
+        else {
+          $field->content = '<meta itemprop="priceCurrency" content="UAH"/><meta itemprop="price" content="' . $field->raw . '"/>';
+        }
+        break;
+
+      case 'field_events_logo_fid':
+        if ($field->raw) {
+          $field->content = str_replace('width="50"', 'width="0"', $field->content);
+          $field->content = str_replace('height="50"', 'height="0"', $field->content);
+          $field->content = str_replace('alt=""', 'alt="' . $vars['fields']['title']->raw . '"', $field->content);
+          $field->content = str_replace('title=""', '" title="' . $vars['fields']['title']->raw . '"', $field->content);
+          $field->content = substr_replace($field->content, 'itemprop="image" style="overflow: hidden;" ', 5, 0);
+        }
+        break;
+    }
+  }
+}
