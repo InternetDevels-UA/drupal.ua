@@ -101,7 +101,10 @@ function idevels_preprocess_page(&$vars) {
 
     //Get city name from taxonomy_term
     $city = taxonomy_get_term($node->field_city[0]['value']);
-    $vars['micro_data_addressLocality'] = (!empty($city->name)) ? $city->name : '';
+    $city = (!empty($city->name)) ? $city->name : '';
+    $pieces = explode(", ", $city);
+    $vars['micro_data_addressLocality'] = $pieces[0];
+    $vars['micro_data_addressCountry'] = $pieces[1];
     $vars['micro_data_url'] = (!empty($event_type->tid)) ? $event_type->tid : '';
 
   }
