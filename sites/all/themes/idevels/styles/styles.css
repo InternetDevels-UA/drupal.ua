@@ -3979,11 +3979,7 @@ form#user-register #edit-legal-accept-wrapper strong {
 }
 .node-type-events .view-Events {
   font-size: 15px;
-<<<<<<< HEAD
   font-family: 'Pt Sans',Arial,Verdana,sans-serif;
-=======
-  font-family: 'PT Sans';
->>>>>>> master
 }
 .node-type-events .views-field-address,
 .node-type-events .views-field-field-event-date-value-4,
@@ -4926,7 +4922,7 @@ form#events-node-form #edit-title-wrapper .textarea-errors {
 form#events-node-form #edit-preview,
 form#events-node-form #edit-field-report-0-value-wrapper,
 form#events-node-form #edit-field-report-0-value-wrapper + a + div.textarea-identifier,
-form#events-node-form #field-photos-items, 
+form#events-node-form #field-photos-items,
 form#events-node-form #field-videos-items{
   display: none;
 }
@@ -5516,3 +5512,34 @@ body.front
   margin-left: 20px;
 }
 
+.view-profile-view.view-display-id-page_1 > .view-content {
+  float: left;
+  width: 275px;
+  overflow: hidden;
+}
+
+.view-profile-view.view-display-id-attachment_1 {
+  float: right;
+  width: 550px;
+}
+
+.view-profile-view .view-display-id-attachment_1 .views-field-field-events-logo-fid,
+.view-profile-view .view-display-id-attachment_1 .views-field-field-zoom-value {
+  clear: left;
+  float: left;
+  width: 100px;
+  text-align: center;
+  padding: 0 10px 0px 0px;
+  width: 100px;
+  height: 62px;
+}
+
+.view-profile-view .views-field-title, .view-profile-view .views-field-body {
+  word-wrap: break-word;
+  margin-left: 100px;
+  width: 430px;
+}
+
+.view-profile-view .view-header p {
+  margin-left: 100px;
+}
