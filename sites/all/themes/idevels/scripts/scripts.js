@@ -606,7 +606,7 @@ $(function () {
         $(".node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid a[href='/users/"+data["user_name"]+"']").parent().remove();
       }
       else {
-        var avatar = $('<span id="ajax_avatar" class="field-content" style="margin-left: 4px;"><a>'+data["avatar"]+'</a></span>');
+        var avatar = $('<span id="ajax_avatar" class="field-content" style="margin-right: 4px;"><a>'+data["avatar"]+'</a></span>');
         $(".node-type-events .panel-display .pane-events-panel-pane-3 .views-row-1 .views-field-uid").prepend(avatar);
         $('#ajax_avatar a').attr("href", '/users/'+data["user_name"]);
       }
