@@ -112,13 +112,13 @@ function idevels_preprocess_node(&$vars) {
       $vars['date'] = format_date($node->created, 'custom', "F jS, Y");
       break;
   }
-  
+
   // REFACTOR: Document these.
   if ($node->type == 'website_showcase') {
     $node_path_arr = explode('/', $node->path);
     if ($node_path_arr[0] == 'content' && arg(0) != 'gallery') {
-      drupal_goto('gallery/'. $node->nid); 
-    }      
+      drupal_goto('gallery/'. $node->nid);
+    }
     $node->field_ws_screenshot[0]['view'] = l($node->field_ws_screenshot[0]['view'], $node->field_ws_url[0]['display_url'], array('html' => TRUE));
     $created_by_user = user_load($node->uid);
 
@@ -131,12 +131,12 @@ function idevels_preprocess_node(&$vars) {
     }
     $node->username = $user_str;
     if ($node->field_ws_company_url[0]['view'] != '') {
-      $node->field_ws_company_url[0]['view'] = '<br/>'. l($node->field_ws_company_url[0]['display_title'], $node->field_ws_company_url[0]['display_url'], array('attributes' => array('class' => 'showcase_info_link')));  
+      $node->field_ws_company_url[0]['view'] = '<br/>'. l($node->field_ws_company_url[0]['display_title'], $node->field_ws_company_url[0]['display_url'], array('attributes' => array('class' => 'showcase_info_link')));
     }
     $node->created_text = t('Posted on') . ' ' . format_date($node->created, 'custom', 'l, F j, Y');
     //print $node->field_ws_screenshot[0]['view'];
     if ($GLOBALS['user']->uid == $node->uid || user_access('access content')) {
-      $node->edit_link = '<br/>'. l(t('&laquo; Edit'), 'node/'. $node->nid .'/edit', array('html' => TRUE, 'attributes' => array('class' => 'showcase_info_link')));  ;  
+      $node->edit_link = '<br/>'. l(t('&laquo; Edit'), 'node/'. $node->nid .'/edit', array('html' => TRUE, 'attributes' => array('class' => 'showcase_info_link')));  ;
     }
     else {
       $node->edit_link = '';
@@ -148,7 +148,7 @@ function idevels_preprocess_node(&$vars) {
     if (!$vars['page'] && og_is_group_post_type($node->type)) {
       if (!($page_node = menu_get_object() && og_is_group_type($page_node->type))) { // Do not add group prefix if we browse group nodes
         $og = $node->og_groups_both;
-        
+
         if (!empty($og)) {
           foreach ($og as $gid => $group) {
             $og[$gid] = l($group, 'node/'. $gid);
@@ -284,7 +284,7 @@ function idevels_preprocess_profile_header(&$vars) {
   global $user;
 
   //$profile_vars = $vars['content_profile']->get_variables('profile', $vars['teaser'], TRUE);
-  
+
   $vars['user_name'] = '';
   if (isset($profile_vars['field_first_name'][0]['value']) && !empty($profile_vars['field_first_name'][0]['value'])) {
     $vars['user_name'] = check_plain($profile_vars['field_first_name'][0]['value']) .' ';
@@ -292,7 +292,7 @@ function idevels_preprocess_profile_header(&$vars) {
   if (isset($profile_vars['field_last_name'][0]['value']) && !empty($profile_vars['field_last_name'][0]['value'])) {
     $vars['user_name'] .= check_plain($profile_vars['field_last_name'][0]['value']);
   }
-  
+
   $vars['user_login'] = ($vars['user_name'] ? ' <span class="profile-aka">aka</span> ' : '')
     . $vars['account']->name;
   $arg = arg();
@@ -495,7 +495,7 @@ if (module_exists('panels')) {
 
 
 /**
- * Profile theming 
+ * Profile theming
  */
 
 /**
@@ -614,7 +614,7 @@ function idevels_preprocess_views_view_field__profile_activity__block_1__message
 
 /**
  * Theming term name.
- * Fix translate term. 
+ * Fix translate term.
  */
 function idevels_preprocess_views_view_field__og_most_popular_groups_by_term__tid(&$vars) {
   global $language;
@@ -781,7 +781,7 @@ function idevels_content_multiple_values($element) {
 
 /**
  * Theming group_comments__panel_pane_2__timestamp.
- * Make months looks better. 
+ * Make months looks better.
  */
 function idevels_preprocess_views_view_field__group_comments__panel_pane_2__timestamp(&$vars) {
   if (function_exists('ua_month_perfecty')) {
@@ -791,7 +791,7 @@ function idevels_preprocess_views_view_field__group_comments__panel_pane_2__time
 
 /**
  * Theming question__block_2__created_1.
- * Make months looks better. 
+ * Make months looks better.
  */
 function idevels_preprocess_views_view_field__question__block_2__created_1(&$vars) {
   if (function_exists('ua_month_perfecty')) {
@@ -809,5 +809,25 @@ function idevels_preprocess_views_view_field__Events__panel_pane_2__field_event_
   }
   else {
     $vars['output'] = '<time class="not-pastevent">' . $vars['output'] . '</time>';
+  }
+}
+
+/**
+ * Event page trming. Add metatags to images.
+ */
+function idevels_preprocess_panels_pane(&$vars) {
+  $title = $vars['display']->context['argument_nid_1']->title;
+  if ($vars['pane']->subtype == 'field_events_logo') {
+    $insert_to_logo = $title . '" title="' . $title;
+    $vars['content'] = substr_replace($vars['content'], $insert_to_logo, strpos($vars['content'], 'alt="') + 5, 0);
+  }
+  elseif ($vars['pane']->subtype == 'field_photos') {
+    $i = 0;
+    while (strpos($vars['content'], 'alt=""') > 0) {
+      $i++;
+      $vars['content'] = substr_replace($vars['content'], $title . '_№' . (string) $i, strpos($vars['content'], 'alt=""') + 5, 0);
+      $vars['content'] = substr_replace($vars['content'], '_№' . (string) $i, strpos($vars['content'], 'title="' . $title . '"') + 7 + strlen($title), 0);
+      $vars['content'] = substr_replace($vars['content'], '_№' . (string) $i, strpos($vars['content'], 'title="' . $title . '"') + 7 + strlen($title), 0);
+    }
   }
 }
