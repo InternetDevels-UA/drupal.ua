@@ -318,11 +318,15 @@ function idevels_views_pre_render(&$view) {
     ));
   }
   elseif ($view->name == 'taxonomy_term' && $view->current_display == 'page') {
-    drupal_set_breadcrumb(array(
-      l(t('Home'), NULL),
-      l(t('Groups'), 'groups'),
-      drupal_get_title(),
-    ));
+    $title=drupal_get_title();
+    if (!empty($title)) {
+      drupal_set_breadcrumb(array(
+        l(t('Home'), NULL),
+        l(t('Groups'), 'groups'),
+        $title,
+      ));
+    }
+    drupal_set_title('');
   }
   elseif ($view->name == 'vacations' && $view->current_display == 'page_1') {
     drupal_set_title(t('Vacations'));
@@ -1051,6 +1055,16 @@ function idevels_init() {
       l(t('Home'), NULL),
       l(drupal_get_title(),$path),
       t('edit')
+    ));
+  }
+  $path = array();
+  $uri = trim(request_uri(), '/');
+  $path = explode('/', $uri);
+  if (in_array('groups', $path) && isset($path[1]) && isset($path[2])) {
+    drupal_set_breadcrumb(array(
+      l(t('Home'), NULL),
+      l(t('Groups'), 'groups'),
+      drupal_get_title(),
     ));
   }
 }
