@@ -363,6 +363,12 @@ function idevels_form_alter(&$form, &$form_state, $form_id) {
     unset($form['name']['#title']);
     unset($form['pass']['#title']);
   }
+  if ($form_id == 'events_node_form') {
+    $form['title']['#maxlength'] = 80;
+    $form['#id'] = 'events-node-form';
+    $form['#validate'][] = 'idevels_events_date_validate';
+    drupal_set_title(t('Create event (title)'));
+  }
 }
 
 /**
@@ -687,6 +693,30 @@ function idevels_cities_autocomplete_validate(&$form, &$form_state) {
   }
 }
 
+/**
+ * Implementation of hook_form_validate().
+ * For Event form;
+ */
+function idevels_events_date_validate($form, $form_state) {
+  $start_time = strtotime($form_state['values']['field_event_date'][0]['value']);
+  $end_time = strtotime($form_state['values']['field_event_date'][0]['value2']);
+  $teaser = $form_state['values']['field_new_teaser'][0]['value'];
+  $body = $form_state['values']['body'];
+
+  if ($start_time < time()) {
+    form_set_error('field_event_date', t("Start date can't be before today's date."));
+  }
+/*  if ($end_time < $start_time) {
+    form_set_error('field_event_date', t("Start date can't be before End date"));
+  }*/
+  if (strlen($teaser) < 100) {
+    form_set_error('field_new_teaser', t("Teaser can't be less than 100 characters"));
+  }
+  if (strlen($body) < 300) {
+    form_set_error('body', t("Event discripton can't be less than 300 characters"));
+  }
+}
+
 function idevels_change_header_image_form(&$form_state) {
   $form = array();  
   $form['file'] = array(
@@ -925,6 +955,14 @@ function idevels_init() {
       l(t('Home'), NULL),
       l(drupal_get_title(),$path),
       t('Voting details')
+    ));
+  }
+  else if (arg(0) == 'node' && arg(2)=='edit') {
+    $path=arg(0).'/'.arg(1);
+    drupal_set_breadcrumb(array(
+      l(t('Home'), NULL),
+      l(drupal_get_title(),$path),
+      t('edit')
     ));
   }
 }

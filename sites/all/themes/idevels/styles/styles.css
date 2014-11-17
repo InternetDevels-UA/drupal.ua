@@ -4784,6 +4784,156 @@ a.karma.up::after {
 .page-groups .group-subtitle a:last-child {
   font-style: italic;
 }
+form#events-node-form div > div > div.standard {
+  position: relative;
+  padding-right: 340px;
+}
+form#events-node-form #map {
+  position: absolute;
+  right: 20px;
+  top: 390px;
+}
+form#events-node-form #edit-field-city-value-wrapper,
+form#events-node-form #edit-field-address-0-value-wrapper,
+form#events-node-form #edit-field-site-0-value-wrapper,
+form#events-node-form #edit-field-site-0-value-wrapper + .link-field-subrow {
+  display: inline-block;
+  width: 47%
+}
+form#events-node-form #edit-field-city-value-wrapper > input,
+form#events-node-form #edit-field-address-0-value-wrapper > input {
+  width: 100%
+}
+form#events-node-form #edit-field-site-0-value-wrapper {
+  position: relative;
+  top: -57px;
+}
+form#events-node-form #show_on_map+span {
+  margin-left: 5px;
+}
+form#events-node-form #edit-field-latitude-0-value-wrapper,
+form#events-node-form #edit-field-longitude-0-value-wrapper,
+form#events-node-form #edit-field-zoom-0-value-wrapper {
+  display: none;
+}
+form#events-node-form #img-prev input.img-prev {
+  display: none;
+}
+form#events-node-form #edit-field-events-logo-0-upload-wrapper > .filefield-upload {
+  max-height: 320px;
+}
+form#events-node-form #edit-field-events-logo-0-upload-wrapper .widget-preview {
+  border: none;
+}
+form#events-node-form #edit-field-events-logo-0-ahah-wrapper {
+  position: absolute;
+  right: 20px;
+  top: -13px;
+}
+form#events-node-form #img-prev {
+  position: relative;
+}
+form#events-node-form #img-prev:hover input.img-prev {
+  display: block;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  background:url("../images/answers/b_close.png") no-repeat scroll -7px -7px transparent;
+  border: none;
+  background-color: transparent;
+  overflow: hidden;
+}
+form#events-node-form .standard > fieldset {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+form#events-node-form .standard > fieldset > legend {
+  display: none;
+}
+form#events-node-form fieldset .container-inline-date > div > div {
+  width: 47%;
+}
+form#events-node-form fieldset .container-inline-date > div > div+div {
+  margin-left: 1%;
+}
+#ui-datepicker-div {
+  min-width: 200px;
+}
+form#events-node-form fieldset .form-item input {
+  width: 100%;
+}
+form#events-node-form fieldset .container-inline-date,
+form#events-node-form #edit-field-event-price-0-value-wrapper,
+form#events-node-form #edit-field-event-type-value-wrapper {
+  display: inline-block;
+  width: 48%;
+  overflow: hidden;
+}
+form#events-node-form #edit-field-event-price-0-value {
+  width: 110px;
+}
+form#events-node-form #edit-field-event-price-0-value {
+  display: inline-block;
+  margin-left: 10px;
+}
+form#events-node-form #edit-field-events-logo-0-ahah-wrapper {
+  width: 300px;
+}
+form#events-node-form #edit-field-events-logo-0-ahah-wrapper * {
+  max-width: 300px;
+  max-height: 300px;
+}
+form#events-node-form #edit-field-events-logo-0-filefield-upload {
+  display: none !important;
+}
+form#events-node-form .vertical-tabs {
+  width: 100%;
+}
+body:not(.admin-menu) form#events-node-form #edit-language-wrapper {
+  display: none;
+}
+form#events-node-form #edit-title-wrapper,
+form#events-node-form #edit-body-wrapper .resizable-textarea,
+form#events-node-form #edit-field-new-teaser-0-value-wrapper .resizable-textarea {
+  position: relative;
+}
+form#events-node-form .textarea-errors {
+  position: absolute;
+  top: -17px;
+  right: 0;
+  font-size: 0.8em;
+  color: red;
+}
+form#events-node-form #edit-title-wrapper .textarea-errors {
+  top: 8px;
+  right: 25px;
+}
+form#events-node-form #edit-preview,
+form#events-node-form #edit-field-report-0-value-wrapper,
+form#events-node-form #edit-field-report-0-value-wrapper + a + div.textarea-identifier,
+form#events-node-form #field-photos-items, 
+form#events-node-form #field-videos-items{
+  display: none;
+}
+form#events-node-form #edit-field-new-teaser-0-value,
+form#events-node-form #edit-body {
+  resize: vertical;
+}
+form#events-node-form #edit-submit {
+  margin-right: 20px;
+}
+form#events-node-form .body-field-wrapper {
+  margin-top: 30px;
+}
+.page-node .messages.error .item-list ul li {
+  list-style: none;
+}
+.messages.error ul {
+  list-style: none;
+}
 
 /**
  * User profile view page.
