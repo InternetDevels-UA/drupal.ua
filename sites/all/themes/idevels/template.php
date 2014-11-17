@@ -103,8 +103,8 @@ function idevels_preprocess_page(&$vars) {
     $city = taxonomy_get_term($node->field_city[0]['value']);
     $city = (!empty($city->name)) ? $city->name : '';
     $pieces = explode(", ", $city);
-    $vars['micro_data_addressLocality'] = $pieces[0];
-    $vars['micro_data_addressCountry'] = $pieces[1];
+    $vars['micro_data_addressLocality'] = (!empty($pieces[0])) ? $pieces[0] : '';
+    $vars['micro_data_addressCountry'] = (!empty($pieces[1])) ? $pieces[1] : '';
     $vars['micro_data_url'] = (!empty($event_type->tid)) ? $event_type->tid : '';
 
   }
