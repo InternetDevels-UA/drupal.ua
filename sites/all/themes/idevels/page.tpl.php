@@ -25,6 +25,7 @@
       <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
         <meta itemprop="streetAddress"  content="<?php print $micro_data_streetAddress; ?>"/>
         <meta itemprop="addressLocality"  content="<?php print $micro_data_addressLocality; ?>"/>
+        <meta itemprop="addressCountry"  content="<?php print $micro_data_addressCountry; ?>"/>
       </div>
     </div>
     <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
