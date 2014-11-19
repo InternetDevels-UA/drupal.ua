@@ -300,11 +300,15 @@ function idevels_views_pre_render(&$view) {
     ));
   }
   elseif ($view->name == 'taxonomy_term' && $view->current_display == 'page') {
-    drupal_set_breadcrumb(array(
-      l(t('Home'), NULL),
-      l(t('Groups'), 'groups'),
-      drupal_get_title(),
-    ));
+    $title = drupal_get_title();
+    if (!empty($title)) {
+      drupal_set_breadcrumb(array(
+        l(t('Home'), NULL),
+        l(t('Groups'), 'groups'),
+        $title,
+      ));
+    }
+    drupal_set_title('');
   }
   elseif ($view->name == 'vacations' && $view->current_display == 'page_1') {
     drupal_set_title(t('Vacations'));
