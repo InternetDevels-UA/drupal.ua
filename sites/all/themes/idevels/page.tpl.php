@@ -11,8 +11,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1.0, user-scalable=no" />
 </head>
 
-<body class="<?php print $body_classes; ?> sshow-grid">
-  <div class="body-wrapper">
+<body class="<?php print $body_classes; ?> sshow-grid" ">
+<div style="height:0;width:0;overflow: hidden;" >
+  <div itemscope itemtype="http://schema.org/Event" >
+    <a itemprop="url" href="<?php print $micro_data_url; ?>"></a>
+    <img itemprop="image" src="<?php print $micro_data_image; ?>" />
+    <meta itemprop="name" content="<?php print $micro_data_name; ?>"/>
+    <meta itemprop="startDate" content="<?php print $micro_data_startDate; ?>"/>
+    <meta itemprop="endDate" content="<?php print $micro_data_endDate; ?>"/>
+    <meta itemprop="description" content="<?php print $micro_data_description; ?>"/>
+    <div itemprop="location" itemscope itemtype="http://schema.org/Place">
+      <meta itemprop="name" content="<?php print $micro_data_streetAddress; ?>"/>
+      <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+        <meta itemprop="streetAddress"  content="<?php print $micro_data_streetAddress; ?>"/>
+        <meta itemprop="addressLocality"  content="<?php print $micro_data_addressLocality; ?>"/>
+      </div>
+    </div>
+    <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+      <meta itemprop="priceCurrency" content="UAH" />
+      <meta itemprop="price"  content="<?php print $micro_data_priceCurrency; ?>"/>
+    </div>
+  </div>
+</div>
+
+<div class="body-wrapper">
     <div id="page" class="page clear-block">
         
 
