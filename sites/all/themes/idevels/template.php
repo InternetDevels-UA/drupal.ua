@@ -829,8 +829,10 @@ function idevels_preprocess_views_view_fields__Events__page(&$vars) {
           $term = taxonomy_get_term($field->raw);
           $name = $term->name;
           $pieces = explode(", ", $name);
-          $pieces[0] = '<span itemprop="addressLocality">' . $pieces[0] . '</span>';
-          $pieces[1] = '<span itemprop="addressCountry">' . $pieces[1] . '</span>';
+          $pieces[0] = $pieces[0] ? '<span itemprop="addressLocality">' . $pieces[0] . '</span>' : '';
+          if (count($pieces) > 1) {
+            $pieces[1] = '<span itemprop="addressCountry">' . $pieces[1] . '</span>';
+          }
           $address = '<address itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">' . implode(', ', $pieces) . '</address>';
           $field->content = str_replace(">$name<", ">$address<", $field->content);
         }
