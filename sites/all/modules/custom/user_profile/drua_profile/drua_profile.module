@@ -48,6 +48,7 @@ function drua_profile_menu() {
     'type'            => MENU_LOCAL_TASK,
     'page arguments'  => array('drua_profile_change_password'),
     'access callback' => 'drua_profile_tab',
+    'load arguments' => array('%map', '%index'),
     'weight'          => 20,
   );
   $items['user/%user_category/edit/email'] = array(
@@ -57,6 +58,7 @@ function drua_profile_menu() {
     'type'            => MENU_LOCAL_TASK,
     'page arguments'  => array('drua_profile_change_email'),
     'access callback' => 'drua_profile_tab',
+    'load arguments' => array('%map', '%index'),
     'weight'          => 19,
   );
   $items['user/%/mail/%'] = array(
@@ -884,8 +886,8 @@ function _drua_profile_og_most_popular_groups() {
     $alias = drupal_get_path_alias($url, $row['node_language']);
     if (!preg_match('/tegi*/', $alias)) {
       $items[] = '<span class="most-popular-groups">' . l($row['term_data_name'] . ' (' . $row['post_count'] . ') ', $alias) . '</span>';
+      $CountAll+=$row['post_count'];
     }
-    $CountAll+=$row['post_count'];
   }
   $output = '<h3 class="all-most-popular-groups"><a href="og/">' . t('All group') . ' ('.$CountAll.')</a></h3>';
   $output .= implode($items);
