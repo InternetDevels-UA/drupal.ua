@@ -389,7 +389,7 @@ h1 .tag a, h2 .tag a, h1 .tag em, h2 .tag em {
 
 .node .node-links li:after {
   content:'/';
-  color:#a3a3a3;
+  color: transparent;
   padding:0 0 0 7px;
 }
 
