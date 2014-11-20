@@ -87,6 +87,24 @@ function idevels_preprocess_page(&$vars) {
   elseif ($_GET['q'] == 'resources') {
     $vars['title'] = t('Resources');
   }
+  if (preg_match('/events.+/', request_uri())) {
+    //Get event type from taxonomy_term
+    $event_type = taxonomy_get_term($node->field_event_type[0]['value']);
+    $vars['micro_data_name'] = (!empty($event_type->name)) ? $event_type->name : '';
+
+    $vars['micro_data_description'] = $node->body;
+    $vars['micro_data_image'] = (!empty($node->field_events_logo[0]['filepath'])) ? $node->field_events_logo[0]['filepath'] : '';
+    $vars['micro_data_startDate'] = (!empty($node->field_event_date[0]['value'])) ? $node->field_event_date[0]['value'] : '';
+    $vars['micro_data_endDate'] = (!empty($node->field_event_date[0]['value2'])) ? $node->field_event_date[0]['value2'] : '';
+    $vars['micro_data_streetAddress'] = (!empty($node->field_address[0]['value'])) ? $node->field_address[0]['value'] : '';
+    $vars['micro_data_priceCurrency'] = (!empty($node->field_event_price[0]['value'])) ? $node->field_event_price[0]['value'] : '';
+
+    //Get city name from taxonomy_term
+    $city = taxonomy_get_term($node->field_city[0]['value']);
+    $vars['micro_data_addressLocality'] = (!empty($city->name)) ? $city->name : '';
+    $vars['micro_data_url'] = (!empty($event_type->tid)) ? $event_type->tid : '';
+
+  }
 }
 
 /**
@@ -112,13 +130,13 @@ function idevels_preprocess_node(&$vars) {
       $vars['date'] = format_date($node->created, 'custom', "F jS, Y");
       break;
   }
-  
+
   // REFACTOR: Document these.
   if ($node->type == 'website_showcase') {
     $node_path_arr = explode('/', $node->path);
     if ($node_path_arr[0] == 'content' && arg(0) != 'gallery') {
-      drupal_goto('gallery/'. $node->nid); 
-    }      
+      drupal_goto('gallery/'. $node->nid);
+    }
     $node->field_ws_screenshot[0]['view'] = l($node->field_ws_screenshot[0]['view'], $node->field_ws_url[0]['display_url'], array('html' => TRUE));
     $created_by_user = user_load($node->uid);
 
@@ -131,12 +149,12 @@ function idevels_preprocess_node(&$vars) {
     }
     $node->username = $user_str;
     if ($node->field_ws_company_url[0]['view'] != '') {
-      $node->field_ws_company_url[0]['view'] = '<br/>'. l($node->field_ws_company_url[0]['display_title'], $node->field_ws_company_url[0]['display_url'], array('attributes' => array('class' => 'showcase_info_link')));  
+      $node->field_ws_company_url[0]['view'] = '<br/>'. l($node->field_ws_company_url[0]['display_title'], $node->field_ws_company_url[0]['display_url'], array('attributes' => array('class' => 'showcase_info_link')));
     }
     $node->created_text = t('Posted on') . ' ' . format_date($node->created, 'custom', 'l, F j, Y');
     //print $node->field_ws_screenshot[0]['view'];
     if ($GLOBALS['user']->uid == $node->uid || user_access('access content')) {
-      $node->edit_link = '<br/>'. l(t('&laquo; Edit'), 'node/'. $node->nid .'/edit', array('html' => TRUE, 'attributes' => array('class' => 'showcase_info_link')));  ;  
+      $node->edit_link = '<br/>'. l(t('&laquo; Edit'), 'node/'. $node->nid .'/edit', array('html' => TRUE, 'attributes' => array('class' => 'showcase_info_link')));  ;
     }
     else {
       $node->edit_link = '';
@@ -148,7 +166,7 @@ function idevels_preprocess_node(&$vars) {
     if (!$vars['page'] && og_is_group_post_type($node->type)) {
       if (!($page_node = menu_get_object() && og_is_group_type($page_node->type))) { // Do not add group prefix if we browse group nodes
         $og = $node->og_groups_both;
-        
+
         if (!empty($og)) {
           foreach ($og as $gid => $group) {
             $og[$gid] = l($group, 'node/'. $gid);
@@ -281,8 +299,10 @@ function idevels_preprocess_block(&$vars, $hook) {
  * output avatar and tabs, so, we need the special care here.
  */
 function idevels_preprocess_profile_header(&$vars) {
+  global $user;
+
   //$profile_vars = $vars['content_profile']->get_variables('profile', $vars['teaser'], TRUE);
-  
+
   $vars['user_name'] = '';
   if (isset($profile_vars['field_first_name'][0]['value']) && !empty($profile_vars['field_first_name'][0]['value'])) {
     $vars['user_name'] = check_plain($profile_vars['field_first_name'][0]['value']) .' ';
@@ -290,10 +310,72 @@ function idevels_preprocess_profile_header(&$vars) {
   if (isset($profile_vars['field_last_name'][0]['value']) && !empty($profile_vars['field_last_name'][0]['value'])) {
     $vars['user_name'] .= check_plain($profile_vars['field_last_name'][0]['value']);
   }
-  
+
   $vars['user_login'] = ($vars['user_name'] ? ' <span class="profile-aka">aka</span> ' : '')
     . $vars['account']->name;
-  $vars['tabs'] = theme('menu_local_tasks');
+  $arg = arg();
+  $tabs_arr = explode("\n", theme('menu_local_tasks'));
+  $edit_link = l(t('Edit'), 'user/' . arg(1) . '/edit/profile');
+  if ($arg[0] == 'user' && $user->uid == $arg[1] && !user_access('access administration pages')) {
+    array_splice($tabs_arr, 2, 0, '<li>' . $edit_link . '</li>');
+  }
+  if ($arg[0] == 'user' && in_array($arg[3], array('email', 'password')) && $user->uid == $arg[1] && user_access('access administration pages')) {
+    array_splice($tabs_arr, 2, 0, '<li class="active">' . $edit_link . '</li>');
+  }
+  $newtabs = array(
+    'profile',
+    'newsletter',
+    'email',
+    'password'
+  );
+  if ($arg[2] == 'edit' && (in_array($arg[3], $newtabs)) && !user_access('access administration pages')) {
+    $tabs_arr[2] = '<li class="active">' . $edit_link . '</li>';
+  }
+  if ($arg[2] == 'edit' && ($arg[3] == 'profile' || $arg[3] == 'newsletter')) {
+    $tabs_arr = array_reverse($tabs_arr);
+    foreach ($tabs_arr as $key => $tab) {
+      if (preg_match("/\\/user\\/" . arg(1) . "\\/edit\"/", $tab)) {
+        unset($tabs_arr[$key]);
+        break;
+      }
+    }
+    $tabs_arr = array_reverse($tabs_arr);
+  }
+  if ($arg[2] == 'edit' && ($arg[3] == 'email' || $arg[3] == 'password')) {
+
+    foreach ($tabs_arr as $key => $tab) {
+      if (preg_match("/\\/edit\\/email/", $tab)) {
+        $new_tabs = array(
+          '<li>' . l(t('Profile'), 'user/' . arg(1) . '/edit/profile') . '</li>',
+          '<li>' . l(t('Newsletters'), 'user/' . arg(1) . '/edit/newsletter') . '</li>',
+        );
+        array_splice($tabs_arr, $key, 0, $new_tabs);
+      }
+    }
+  }
+  $tabs = implode("\n", $tabs_arr);
+  /*
+   * Replace patterns for:
+   *  - user/%/edit -> user/%/edit/profile
+   *  - 'Profile' -> t('Profile')
+   *  - 'Newsletter' -> t('Newsletter')
+   *  - 'View' -> t('View')
+   */
+  $user_link = drupal_get_path_alias('user/' . $user->uid);
+  $patterns = array(
+    "/\\/user\\/" . arg(1) . "\\/edit\"/",
+    "/Profile/",
+    "/edit\\/newsletter\"( class=\"active\")?>(.*)<\\/a><\\/li>/",
+    "/" . preg_quote($user_link, '/') . "\"( class=\"active\")?>(.*)<\\/a><\\/li>/",
+  );
+  $replacements = array(
+    '/user/' . arg(1) . '/edit/profile"',
+    t('Profile'),
+    'edit/newsletter"$1>' . t('Newsletters') . '</a></li>',
+    $user_link . '"$1>' . t('View') . '</a></li>',
+  );
+  $links = preg_replace($patterns, $replacements, $tabs);
+  $vars['tabs'] = $links;
 }
 
 ///**
@@ -431,7 +513,7 @@ if (module_exists('panels')) {
 
 
 /**
- * Profile theming 
+ * Profile theming
  */
 
 /**
@@ -550,7 +632,7 @@ function idevels_preprocess_views_view_field__profile_activity__block_1__message
 
 /**
  * Theming term name.
- * Fix translate term. 
+ * Fix translate term.
  */
 function idevels_preprocess_views_view_field__og_most_popular_groups_by_term__tid(&$vars) {
   global $language;
@@ -559,9 +641,165 @@ function idevels_preprocess_views_view_field__og_most_popular_groups_by_term__ti
     'taxonomy/term/'. $vars['row']->term_data_tid);
 }
 
+function idevels_content_multiple_values($element) {
+  if ($element['#field_name'] == 'field_personal_website') {
+    $field_name = $element['#field_name'];
+    $field = content_fields($field_name);
+    $output = '';
+    if ($field['multiple'] >= 1) {
+      $table_id = $element['#field_name'] . '_values';
+      $order_class = $element['#field_name'] . '-delta-order';
+      $required = !empty($element['#required']) ? '<span class="form-required" title="' . t('This field is required.') . '">*</span>' : '';
+      $header = array(
+        array(
+          'data'    => t('!title: !required', array(
+            '!title'    => $element['#title'],
+            '!required' => $required
+          )),
+          'colspan' => 2,
+        ),
+        array(
+          'data'  => t('Order'),
+          'class' => 'content-multiple-weight-header',
+        ),
+      );
+      $rows = array();
+      // Sort items according to '_weight' (needed when the form comes back after
+      // preview or failed validation)
+      $items = array();
+      foreach (element_children($element) as $key) {
+        if ($key !== $element['#field_name'] . '_add_more') {
+          $items[$element[$key]['#delta']] = &$element[$key];
+        }
+      }
+      uasort($items, '_content_sort_items_value_helper');
+      $element[$element['#field_name'] . '_add_more']['#value'] = '';
+      // Add the items as table rows.
+//    if (count($items) == 3 && array_key_exists('', $items) && isset($items['']) && $items[1]['#value']['value']) {
+////      $items[0]['value']['#value'] = $items[1]['#value']['value'];
+////      $items[1]['value']['#value'] = '';
+//    }
+      if ($items[1]['#value']['value'] && !$items[0]['#value']['value']) {
+        $items[0]['value']['#value'] = $items[1]['#value']['value'];
+        $items[1]['value']['#value'] = '';
+      }
+      if (!$items[0]['value']['#value']) {
+//      unset($items[0]);
+      }
+      foreach ($items as $delta => $item) {
+        if (!$item['value']['#value'] && $delta != end(array_keys($items))) {
+          continue;
+        }
+        $item['_weight']['#attributes']['class'] = $order_class;
+        $delta_element = drupal_render($item['_weight']);
+        $cells = array(
+          array(
+            'data'  => '',
+            'class' => 'content-multiple-drag',
+          ),
+          drupal_render($item),
+          array(
+            'data'  => $delta_element,
+            'class' => 'delta-order',
+          ),
+        );
+        if ($delta != end(array_keys($items))) {
+          $cells[] = array(
+            'data'  => '<div></div>',
+            'class' => 'row-remove',
+          );
+        }
+        else {
+          $cells[] = array(
+            'data'  => drupal_render($element[$element['#field_name'] . '_add_more']),
+            'class' => 'row-add',
+          );
+        }
+        $row_class = 'draggable';
+        if (!$cells[1]) {
+          continue;
+        }
+        $rows[] = array(
+          'data'  => $cells,
+          'class' => $row_class,
+        );
+      }
+      $output .= theme('table', $header, $rows, array(
+        'id'    => $table_id,
+        'class' => 'content-multiple-table'
+      ));
+      $output .= $element['#description'] ? '<div class="description">' . $element['#description'] . '</div>' : '';
+      drupal_add_tabledrag($table_id, 'order', 'sibling', $order_class);
+      drupal_add_js(drupal_get_path('module', 'content') . '/js/content.node_form.js');
+    }
+    else {
+      foreach (element_children($element) as $key) {
+        $output .= drupal_render($element[$key]);
+      }
+    }
+  } else {
+    $field_name = $element['#field_name'];
+    $field = content_fields($field_name);
+    $output = '';
+
+    if ($field['multiple'] >= 1) {
+      $table_id = $element['#field_name'] .'_values';
+      $order_class = $element['#field_name'] .'-delta-order';
+      $required = !empty($element['#required']) ? '<span class="form-required" title="'. t('This field is required.') .'">*</span>' : '';
+
+      $header = array(
+        array(
+          'data' => t('!title: !required', array('!title' => $element['#title'], '!required' => $required)),
+          'colspan' => 2
+        ),
+        t('Order'),
+      );
+      $rows = array();
+
+      // Sort items according to '_weight' (needed when the form comes back after
+      // preview or failed validation)
+      $items = array();
+      foreach (element_children($element) as $key) {
+        if ($key !== $element['#field_name'] .'_add_more') {
+          $items[] = &$element[$key];
+        }
+      }
+      usort($items, '_content_sort_items_value_helper');
+
+      // Add the items as table rows.
+      foreach ($items as $key => $item) {
+        $item['_weight']['#attributes']['class'] = $order_class;
+        $delta_element = drupal_render($item['_weight']);
+        $cells = array(
+          array('data' => '', 'class' => 'content-multiple-drag'),
+          drupal_render($item),
+          array('data' => $delta_element, 'class' => 'delta-order'),
+        );
+        $rows[] = array(
+          'data' => $cells,
+          'class' => 'draggable',
+        );
+      }
+
+      $output .= theme('table', $header, $rows, array('id' => $table_id, 'class' => 'content-multiple-table'));
+      $output .= $element['#description'] ? '<div class="description">'. $element['#description'] .'</div>' : '';
+      $output .= drupal_render($element[$element['#field_name'] .'_add_more']);
+
+      drupal_add_tabledrag($table_id, 'order', 'sibling', $order_class);
+    }
+    else {
+      foreach (element_children($element) as $key) {
+        $output .= drupal_render($element[$key]);
+      }
+    }
+  }
+
+  return $output;
+}
+
 /**
  * Theming group_comments__panel_pane_2__timestamp.
- * Make months looks better. 
+ * Make months looks better.
  */
 function idevels_preprocess_views_view_field__group_comments__panel_pane_2__timestamp(&$vars) {
   if (function_exists('ua_month_perfecty')) {
@@ -571,10 +809,43 @@ function idevels_preprocess_views_view_field__group_comments__panel_pane_2__time
 
 /**
  * Theming question__block_2__created_1.
- * Make months looks better. 
+ * Make months looks better.
  */
 function idevels_preprocess_views_view_field__question__block_2__created_1(&$vars) {
   if (function_exists('ua_month_perfecty')) {
     $vars['output'] = ua_month_perfecty($vars['view']->result[$vars['id']-1]->node_created);
+  }
+}
+
+/**
+ * Theming Events__panel_pane_2__field_event_date_value.
+ * Wrap in time tag and add class pastevent or not-pastevent
+ */
+function idevels_preprocess_views_view_field__Events__panel_pane_2__field_event_date_value(&$vars) {
+  if (strtotime($vars['row']->node_data_field_latitude_field_event_date_value2) < time()) {
+    $vars['output'] = '<time class="pastevent">' . $vars['output'] . '</time>';
+  }
+  else {
+    $vars['output'] = '<time class="not-pastevent">' . $vars['output'] . '</time>';
+  }
+}
+
+/**
+ * Event page trming. Add metatags to images.
+ */
+function idevels_preprocess_panels_pane(&$vars) {
+  $title = $vars['display']->context['argument_nid_1']->title;
+  if ($vars['pane']->subtype == 'field_events_logo') {
+    $insert_to_logo = $title . '" title="' . $title;
+    $vars['content'] = substr_replace($vars['content'], $insert_to_logo, strpos($vars['content'], 'alt="') + 5, 0);
+  }
+  elseif ($vars['pane']->subtype == 'field_photos') {
+    $i = 0;
+    while (strpos($vars['content'], 'alt=""') > 0) {
+      $i++;
+      $vars['content'] = substr_replace($vars['content'], $title . '_№' . (string) $i, strpos($vars['content'], 'alt=""') + 5, 0);
+      $vars['content'] = substr_replace($vars['content'], '_№' . (string) $i, strpos($vars['content'], 'title="' . $title . '"') + 7 + strlen($title), 0);
+      $vars['content'] = substr_replace($vars['content'], '_№' . (string) $i, strpos($vars['content'], 'title="' . $title . '"') + 7 + strlen($title), 0);
+    }
   }
 }
