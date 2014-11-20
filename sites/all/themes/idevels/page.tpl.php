@@ -7,12 +7,35 @@
   <?php print $head; ?>
   <?php print $styles; ?>
   <?php print $scripts; ?>
-  <script src="http://vk.com/js/api/openapi.js" type="text/javascript"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC0IajOIjtieJ67ODTICSsr1ZVjqxra4A"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1.0, user-scalable=no" />
 </head>
 
-<body class="<?php print $body_classes; ?> sshow-grid">
-  <div class="body-wrapper">
+<body class="<?php print $body_classes; ?> sshow-grid" ">
+<div style="height:0;width:0;overflow: hidden;" >
+  <div itemscope itemtype="http://schema.org/Event" >
+    <a itemprop="url" href="<?php print $micro_data_url; ?>"></a>
+    <img itemprop="image" src="<?php print $micro_data_image; ?>" />
+    <meta itemprop="name" content="<?php print $micro_data_name; ?>"/>
+    <meta itemprop="startDate" content="<?php print $micro_data_startDate; ?>"/>
+    <meta itemprop="endDate" content="<?php print $micro_data_endDate; ?>"/>
+    <meta itemprop="description" content="<?php print $micro_data_description; ?>"/>
+    <div itemprop="location" itemscope itemtype="http://schema.org/Place">
+      <meta itemprop="name" content="<?php print $micro_data_streetAddress; ?>"/>
+      <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+        <meta itemprop="streetAddress"  content="<?php print $micro_data_streetAddress; ?>"/>
+        <meta itemprop="addressLocality"  content="<?php print $micro_data_addressLocality; ?>"/>
+        <meta itemprop="addressCountry"  content="<?php print $micro_data_addressCountry; ?>"/>
+      </div>
+    </div>
+    <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+      <meta itemprop="priceCurrency" content="UAH" />
+      <meta itemprop="price"  content="<?php print $micro_data_priceCurrency; ?>"/>
+    </div>
+  </div>
+</div>
+
+<div class="body-wrapper">
     <div id="page" class="page clear-block">
         
 
@@ -83,7 +106,11 @@
           <?php print $messages; ?>
           <?php print $breadcrumb; ?>
           <?php if ($title): ?>
-            <h1 class="title" id="page-title"><?php print $title; ?></h1>
+            <?php if ($node->type == 'events'): ?>
+              <h1 itemprop="name" class="title" id="page-title"><?php print $title; ?></h1>
+            <?php else: ?>
+              <h1 class="title" id="page-title"><?php print $title; ?></h1>
+            <?php endif ?>
           <?php endif; ?>
           <?php if ($tabs): ?>
             <div class="tabs-wrapper"><?php print $tabs; ?></div>

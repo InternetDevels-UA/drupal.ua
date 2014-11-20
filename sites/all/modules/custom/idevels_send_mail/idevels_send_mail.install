@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * Implementation hook_schema().
+ */
+function idevels_send_mail_schema() {
+  $schema['idevels_send_mail'] = array(
+    'description' => 'The base table the users for reviews .',
+    'fields' => array(
+      'id' => array(
+        'description' => 'ID',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'uid' => array(
+        'description' => 'The primary identifier for a users.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'nid' => array(
+        'description' => 'The {events}.nid identifier.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'timestamp' => array(
+        'description' => 'Time when the user has subscribed',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'send_notification_day' => array(
+        'description' => 'Status if user send email day',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'send_notification' => array(
+        'description' => 'Send once email notification after subscribed',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('id'),
+  );
+  return $schema;
+}
+
+/**
+ * Implementation hook_install().
+ */
+function idevels_send_mail_install() {
+  // Create idevels_send_mail table.
+  drupal_install_schema('idevels_send_mail');
+}
+
+/**
+ * Implementation hook_uninstall().
+ */
+function idevels_send_mail_uninstall() {
+  // Drop idevels_send_mail table.
+  drupal_uninstall_schema('idevels_send_mail');
+}
