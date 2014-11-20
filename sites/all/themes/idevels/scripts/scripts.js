@@ -246,10 +246,18 @@ $(function () {
     };
     $.getJSON('/idevels-user/info', {format: "json"}, function(data) {
       if ($(".node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid a[href='/users/"+data["user_name"]+"']").length) {
+        if ($(".node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid a[href='/users/"+data["user_name"]+"']").parent().parent().children().length < 2) {
+          $(".node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid a[href='/users/"+data["user_name"]+"']").parent().parent().addClass('empty');
+        };
         $(".node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid a[href='/users/"+data["user_name"]+"']").parent().remove();
       }
       else {
-        var avatar = $('<span id="ajax_avatar" class="field-content" style="margin-right: 4px;"><a>'+data["avatar"]+'</a></span>');
+        if ($(".node-type-events .panel-display .pane-events-panel-pane-3 .views-row-1 .views-field-uid").hasClass('empty')) {
+          var avatar = $('<span id="ajax_avatar" class="field-content"><a>'+data["avatar"]+'</a></span>');
+        }
+        else {
+          var avatar = $('<span id="ajax_avatar" class="field-content" style="margin-right: 4px;"><a>'+data["avatar"]+'</a></span>');
+        }
         $(".node-type-events .panel-display .pane-events-panel-pane-3 .views-row-1 .views-field-uid").prepend(avatar);
         $('#ajax_avatar a').attr("href", '/users/'+data["user_name"]);
       }
