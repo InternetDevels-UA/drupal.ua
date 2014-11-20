@@ -565,9 +565,8 @@ $(function () {
   $(".node-type-events .pane-field-videos").hide();
 
   // if event not past disable link for view report
-  if ($(".node-type-events time.not-pastevent").length > 0) {
-    $("#link-event-overview").removeAttr('href');
-    $("#link-event-overview").addClass('expanded');
+if ($(".node-type-events time.not-pastevent").length > 0) {
+    $("#link-event-overview").hide();
     $("#add_event_report").hide();
   }
   // if event past hide I'll go button and change label for avatars
