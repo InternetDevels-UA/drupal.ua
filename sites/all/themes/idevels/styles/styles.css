@@ -5556,3 +5556,12 @@ body.front
 .view-profile-view .view-header p {
   margin-left: 100px;
 }
+.node-type-events #main .pane-field-photos .field-field-photos * {
+  display: inline-block;
+}
+
+.node-type-events #main .pane-field-photos .field-field-photos img {
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid #D5D3D3;
+}
