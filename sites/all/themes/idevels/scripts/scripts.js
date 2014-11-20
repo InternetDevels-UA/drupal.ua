@@ -118,7 +118,6 @@ $(function () {
     });
     var count = firstRow*3;
     count = obj.length - count;
-    console.log(count);
 
     if (row > 3) {
       obj.slice(-count).hide();
@@ -150,6 +149,43 @@ $(function () {
       modalFormDecorator();
     },1000);
   });
+// Right block user avatar.
+  $('#image-link').click(function (e) {
+    e.preventDefault();
+    $('#avatar-profile-form #edit-file').trigger('click');
+  });
+  $('#avatar-profile-form #edit-file').change(function () {
+    $('#avatar-profile-form .form-submit').trigger('click');
+  });
+  // Page change password.
+  $('#drua-profile-change-password input.required').attr('required', 'true');
+  // Page profile sites remove button.
+  var i = 0;
+  $('.group-contacts #field_personal_website_values tbody tr .row-remove div').click(function (e) {
+    $(this).parent().parent().remove();
+    $('.group-contacts #field_personal_website_values tbody tr').each(function () {
+      $(this).find('div.form-item').attr('id', 'edit-field-personal-website-' + i + '-value-wrapper');
+      $(this).find('div.form-item input').attr('name', 'field_personal_website[' + i + '][value]')
+        .attr('id', 'edit-field-personal-website-' + i + '-value');
+      i++;
+    });
+    i = 0;
+  });
+  $(document).ajaxStop(function () {
+    $('.group-contacts #field_personal_website_values tbody tr .row-remove div').click(function (e) {
+      $(this).parent().parent().remove();
+      $('.group-contacts #field_personal_website_values tbody tr').each(function () {
+        $(this).find('div.form-item').attr('id', 'edit-field-personal-website-' + i + '-value-wrapper');
+        $(this).find('div.form-item input').attr('name', 'field_personal_website[' + i + '][value]')
+          .attr('id', 'edit-field-personal-website-' + i + '-value');
+        i++;
+      });
+      i = 0;
+    });
+  });
+  $('#edit-field-location-0-city-wrapper input').attr('maxlength', 100);
+  $('#edit-field-profile-company-0-value-wrapper input').attr('maxlength', 100);
+  $('#edit-field-job-title-0-value-wrapper input').attr('maxlength', 100);
 
   if ($('#edit-pass-pass1').length) {
     $('#edit-pass-pass1').attr('placeholder', Drupal.t('Password'));
@@ -523,17 +559,53 @@ $(function () {
 
   }
 
-// IE hack for add image button 
-if (navigator.userAgent.match(/msie/i) || navigator.userAgent.match(/trident/i) ){
-  var ua = window.navigator.userAgent;
-  var msie = ua.indexOf("MSIE ");
+  // hide event report
+  $(".node-type-events .pane-field-report").hide();
+  $(".node-type-events .pane-field-photos").hide();
+  $(".node-type-events .pane-field-videos").hide();
 
-  if ($.browser.msie  && parseInt($.browser.version, 10) < 11) {
-    $('form#events-node-form.past-event #right-block input.form-file').before('<img class="form-file" style="position: absolute; background-color: #fff;" src="/sites/all/themes/idevels/images/answers/b_add.png">');
-    $('form#events-node-form.past-event #right-block img.form-file').click(function(event) {
-      $(this).parent().find('input.form-file').trigger('click');
-    });
-  } 
-}
+  // if event not past disable link for view report
+  if ($(".node-type-events time.not-pastevent").length > 0) {
+    $("#link-event-overview").removeAttr('href');
+    $("#link-event-overview").addClass('expanded');
+    $("#add_event_report").hide();
+  }
+  // if event past hide I'll go button and change label for avatars
+  else if ($(".node-type-events time.pastevent").length > 0) {
+    $(".node-type-events .views-field-ops").hide();
+    $(".view-id-Events.view-display-id-panel_pane_3 p").text(Drupal.t('Event ended'));
+    if ($(".node-type-events .pane-field-report").text() &&  $(".node-type-events .pane-field-report").text().indexOf(Drupal.t('No information available yet')) < 0) {
+      $("#add_event_report").text(Drupal.t('Edit report'));
+    }
+    if ($("#page-title+.tabs-wrapper a[href$='edit']").length > 0) {
+      $("#add_event_report").attr("href", $("#page-title+.tabs-wrapper a[href$='edit']").attr('href'));
+      $("#add_event_report").show();
+    }
+  }
+
+  var destination_link = '/user/login?destination='+window.location.pathname;
+  $(".not-logged-in.node-type-events .pane-events-panel-pane-2 .views-field-ops .field-content").html("<a href="+destination_link+">"+Drupal.t("I'll go there")+"<a/>");
+
+  // on click hide event text and show event report
+  $("#link-event-overview:not(.expanded)").click(function (e) {
+    $(".node-type-events .pane-field-report").toggle();
+    $(".node-type-events .pane-node-body").toggle();
+    $(".node-type-events .pane-field-photos").toggle();
+    $(".node-type-events .pane-field-videos").toggle();
+    return false;
+  });
+
+  // IE hack for add image button 
+  if (navigator.userAgent.match(/msie/i) || navigator.userAgent.match(/trident/i) ){
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+
+    if ($.browser.msie  && parseInt($.browser.version, 10) < 11) {
+      $('form#events-node-form.past-event #right-block input.form-file').before('<img class="form-file" style="position: absolute; background-color: #fff;" src="/sites/all/themes/idevels/images/answers/b_add.png">');
+      $('form#events-node-form.past-event #right-block img.form-file').click(function(event) {
+        $(this).parent().find('input.form-file').trigger('click');
+      });
+    } 
+  }
 
 });

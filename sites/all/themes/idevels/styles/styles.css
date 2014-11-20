@@ -313,9 +313,15 @@ ul.secondary-menu li a, ul.secondary-menu li.active-trail a {
   margin:0;
   display:inline;
 }
-.node .content {
+.node .content,
+.node .content p,
+.pane-node-body p {
   overflow-y: hidden;
   overflow-x: auto;
+}
+.node .content p,
+.pane-node-body p {
+  overflow: auto;
 }
 /*.node .taxonomy-links .links li {
   margin:0 15px 0 0;
@@ -391,7 +397,7 @@ h1 .tag a, h2 .tag a, h1 .tag em, h2 .tag em {
   padding:0;
 }
 
-.node .content ul, .node .content ol { margin-left:2em; }
+.node .content ul, .node .content ol, .page-node .pane-content ul, .page-node .pane-content ol { margin-left:2em; }
 .node .content ul li, .node .content ol li { margin-bottom:0.5em; }
 .node .content ul li ul, .node .content ol li ul, .node .content ul li ol, .node .content ol li ol { margin:1em 0 1em 20px; }
 .node .content ul li ul { list-style-type:circle; }
@@ -476,7 +482,7 @@ h1 .tag a, h2 .tag a, h1 .tag em, h2 .tag em {
 .block, .panel-pane { margin: 0; }
 .front .panels-flexible-1-inside .panels-flexible-row { padding: 0 0 2px 0; }
 /*.block, .panel-pane { margin:0 0 1.5em; }*/
-.block h3.block-title, .panel-pane h3.pane-title { margin-top:0; font-size:2em; }
+.block h3.block-title, .panel-pane h3.pane-title,  .panel-pane h2.pane-title { margin-top:0; font-size:2em; }
 
 .ad-header { text-align:center; }
 
@@ -927,13 +933,13 @@ ul.quicktabs-style-nostyle li.active:hover a  { background:url(../images/tabs-bi
 ul.quicktabs-style-nostyle li.active:active { background:url(../images/tabs-big.png) right -56px no-repeat; }
 ul.quicktabs-style-nostyle li.active:active a { background:url(../images/tabs-big.png) 0 -56px no-repeat; }
 
-ul.primary, ul.primary li, ul.primary li a { padding:0; margin:0; }
+ul.primary, ul.primary li, ul.primary li a { padding:0; margin:0; font-family: "PT Sans";}
 ul.primary, ul.primary li, ul.primary li a, ul.primary li.active, ul.primary li.active a { line-height:28px !important; display:inline-block; border:none; }
-.tabs-wrapper { margin: 1em 0; }
+.tabs-wrapper { margin: -5px 0 10px 0; }
 ul.primary { margin: 0; display:block; }
 ul.primary li { padding:0 15px 0 0; }
-ul.primary li a { color:#93b1bb; font-weight:normal; padding:0 11px 0 15px; margin:0; }
-ul.primary li { background:url(../images/tabs-big.png) right -84px no-repeat; margin-right:-12px; margin-left:8px; }
+ul.primary li a { color:#93b1bb; font-weight:normal; /*padding:0 11px 0 15px;*/ margin:0; }
+/*ul.primary li { background:url(../images/tabs-big.png) right -84px no-repeat; margin-right:-12px; margin-left:8px; }
 ul.primary li a { background:url(../images/tabs-big.png) 0 -84px no-repeat; margin-left:-8px; }
 ul.primary li:hover { background:url(../images/tabs-big.png) right -112px no-repeat; }
 ul.primary li:hover a  { background:url(../images/tabs-big.png) 0 -112px no-repeat; }
@@ -944,10 +950,16 @@ ul.primary li.active a { background:url(../images/tabs-big.png) 0 0 no-repeat; c
 ul.primary li.active:hover { background:url(../images/tabs-big.png) right -28px no-repeat; }
 ul.primary li.active:hover a  { background:url(../images/tabs-big.png) 0 -28px no-repeat; }
 ul.primary li.active:active { background:url(../images/tabs-big.png) right -56px no-repeat; }
-ul.primary li.active:active a { background:url(../images/tabs-big.png) 0 -56px no-repeat; }
+ul.primary li.active:active a { background:url(../images/tabs-big.png) 0 -56px no-repeat; }*/
+
+ul.primary li:hover a { background-color: transparent; }
+ul.primary li.active { padding: 0; }
+ul.primary li a { background-color: transparent; text-decoration: underline; color: #333; }
+ul.primary li a:hover { color: red; }
+ul.primary li a.active { display: none; }
 
 ul.secondary { border:none; margin: 1em 0 2em; padding:0; }
-ul.secondary li, ul.secondary li a { padding:0; margin:0; }
+ul.secondary li, ul.secondary li a { padding:0; margin:0; font-family: "PT Sans"}
 ul.secondary li { display:inline-block;margin-right:20px; border-right:none; }
 ul.secondary a.active { border-bottom:4px solid #286596; }
 
@@ -1322,6 +1334,15 @@ h1.user-name {
   font-weight: bold;
   color: #000;
 }
+  h1.user-name span.user-login {
+    font-family: 'PT Sans Narrow', Arial, sans-serif;
+    font-weight: normal;
+    font-size: 28px;
+  }
+  h1.user-name span.profile-aka {
+    font-size: 20px;
+    color: #999;
+  }
 h1.user-name span.user-login {
   font-weight: normal;
   font-size: 28px;
@@ -1571,9 +1592,7 @@ p.empty-icon a.icon-no-about {
   margin-bottom: 15px;
 }
 .drupal_activity .domen_wrap .text_wrap {
-  background: transparent url(../images/icons/drup_main_icon.gif) 0 0 no-repeat;
   height: 32px;
-  padding-left: 40px;
 }
 .drupal_activity .domen_wrap .drupal_ru {
   background-position: 0 -32px;
@@ -1594,9 +1613,7 @@ p.empty-icon a.icon-no-about {
   color: #2173AF;
 }
 .drupal_activity .project_org_wrap div {
-  background: transparent url(../images/icons/profile_icon.gif) 0 0 no-repeat;
   margin-bottom: 6px;
-  padding-left: 22px;
   height: 16px;
   line-height: 11px;
   font-size: 12px;
@@ -2503,7 +2520,7 @@ h2.title{
   max-width: 1240px;
 }
 .node .meta-links{
-  margin-top: 30px;
+  /*margin-top: 30px;*/
   padding-bottom: 25px;
   margin-bottom: -20px;
 }
@@ -2633,7 +2650,8 @@ a.ask.question:hover{
 .container-12.question{
   position: relative;
 }
-h3.pane-title{
+h3.pane-title,
+h2.pane-title {
   font-size: 36px;
   /*font-family: open_sans_bold, Open Sans, Verdana, Arial;*/
   font-family:'PT Sans Narrow';
@@ -3949,15 +3967,20 @@ form#user-register #edit-legal-accept-wrapper strong {
 .not-front #main-content {
   width: 905px;
   float: left;
-
   padding-top: 10px;
+}
+.not-front.page-user #main-content {
+  padding-top: 40px;
+}
+.not-front.page-user #sidebar-right {
+  padding-top: 27px;
 }
 .view-Events .views-label-address{
   float: left;
 }
 .node-type-events .view-Events {
   font-size: 15px;
-  font-family: 'PT Sans';
+  font-family: 'Pt Sans',Arial,Verdana,sans-serif;
 }
 .node-type-events .views-field-address,
 .node-type-events .views-field-field-event-date-value-4,
@@ -3996,6 +4019,14 @@ form#user-register #edit-legal-accept-wrapper strong {
   margin-right: 15px;
   margin-top: 10px;
   height: 24px;
+}
+.node-type-events .panel-bottom {
+  width: 100%;
+  max-width: 100%;
+}
+.node-type-events .panel-bottom .pane-node-body {
+  overflow-x: auto;
+  overflow-y: hidden;;
 }
 /*
 * contact form
@@ -4193,6 +4224,292 @@ form[action="/feedback"] #webform-component-povidomlennya textarea {
 form[action="/feedback"] #webform-component-povidomlennya textarea,
 form[action="/feedback"] .captcha {
   width: 785px;
+}
+
+/*
+* Right block with avatar
+*/
+#block-drua_profile-profile_change_avatar * {
+  font-family: 'PT Sans' !important;
+}
+#block-drua_profile-profile_change_avatar img {
+  border-radius: 4px;
+  box-shadow: 0 0 1px 0 #AAA;
+}
+#block-drua_profile-profile_change_avatar #edit-file-wrapper,
+#block-drua_profile-profile_change_avatar .form-submit {
+  display: none;
+}
+#block-drua_profile-profile_change_avatar .block-title {
+  font-weight: 100;
+  font-style: italic;
+  font-family: 'PT Sans Narrow', Arial, sans-serif !important;
+}
+/*
+* Profile tabs
+*/
+form#drua-profile-change-password *,
+form#drua-profile-change-email *,
+form#user-profile-form *,
+form#node-form * {
+  font-family: "PT Sans" !important;
+}
+form#drua-profile-change-password span.password-strength,
+form#drua-profile-change-password span.password-confirm {
+  margin-left: 5px;
+}
+form#drua-profile-change-password label,
+form#drua-profile-change-email label,
+form#user-profile-form label,
+form#node-form label,
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values thead th {
+  font-weight: normal;
+}
+form#drua-profile-change-password .sub-header,
+form#drua-profile-change-email .sub-header {
+  font-size: 1.4em;
+  color: #565254;
+  font-weight: normal;
+  font-style: italic;
+}
+fieldset.group-personal input[type=text],
+fieldset.group-personal .form-item textarea,
+fieldset.group-personal select.location_auto_country,
+fieldset.group-contacts input[type=text],
+fieldset.group-drupal input[type=text],
+fieldset.group-personal > div.form-item#edit-field-last-name-0-value-wrapper .description,
+form#node-form fieldset.group-drupal .description {
+  width: 390px;
+}
+fieldset.group-personal .form-item textarea {
+  resize: none;
+}
+fieldset.group-personal,
+fieldset.group-contacts,
+fieldset.group-drupal,
+fieldset.group-drupal fieldset,
+fieldset.group-personal fieldset.location,
+form#user-profile-form fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+fieldset.group-personal fieldset.location {
+  clear: both;
+}
+fieldset.group-personal,
+fieldset.group-contacts,
+fieldset.group-drupal {
+  margin: 0 0 30px 0;
+}
+fieldset.group-personal > legend,
+fieldset.group-contacts > legend,
+fieldset.group-drupal legend,
+form#user-profile-form fieldset legend {
+  padding: 0;
+  font-style: italic;
+  height: 40px;
+}
+fieldset.group-personal fieldset.location > legend,
+fieldset.group-personal fieldset.location #edit-field-location-0-delete-location-wrapper {
+  display: none;
+}
+fieldset.group-personal fieldset.location select.location_auto_country {
+  margin: 0;
+}
+fieldset.group-personal fieldset.location #edit-field-location-0-city-wrapper,
+fieldset.group-personal fieldset.location #edit-field-location-0-city-wrapper input {
+  margin-bottom: 0;
+}
+fieldset.group-personal .description {
+  clear: both;
+  margin-bottom: 10px;
+}
+
+fieldset.group-personal .date-clear-block > .form-item > label {
+  float: left;
+}
+fieldset.group-personal .date-clear-block > .form-item > div label {
+  display: none;
+}
+fieldset.group-personal > div.form-item:nth-of-type(4) {
+  clear: both;
+}
+fieldset.group-personal > div.form-item:nth-of-type(4) label,
+fieldset.group-personal > div.form-item#edit-field-first-name-0-value-wrapper > label,
+fieldset.group-personal > div.form-item#edit-field-last-name-0-value-wrapper > label,
+fieldset.group-personal div.form-item#edit-field-birthday-0-value-wrapper label,
+fieldset.group-personal > div.form-item#edit-field-profile-company-0-value-wrapper > label,
+fieldset.group-personal > div.form-item#edit-field-job-title-0-value-wrapper > label,
+fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper > label,
+fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper > label,
+fieldset.group-contacts > div.form-item > label,
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values thead th,
+fieldset.group-drupal label {
+  float: left;
+  padding-right: 10px;
+  width: 140px;
+}
+fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper > label {
+  margin-top: 9px;
+}
+fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper textarea {
+  margin-top: 13px;
+}
+body.page-user form#node-form input[type=submit],
+body.page-user form#user-profile-form input[type=submit],
+form#drua-profile-change-email input[type=submit],
+form#drua-profile-change-password input[type=submit] {
+  border: 1px solid #E3E3E3;
+  background: linear-gradient(to bottom,#F7F7F7,#EDEBEB);
+  padding: 0 11px;
+  height: 31px;
+  line-height: 1;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 0 #FCFCFC inset,0 -1px 0 0 #F0EEEE inset;
+  cursor: pointer;
+  position: relative;
+  font-size: 16px;
+}
+body.page-user form#node-form input[type=submit]:hover,
+body.page-user form#user-profile-form input[type=submit]:hover,
+form#drua-profile-change-email input[type=submit]:hover,
+form#drua-profile-change-password input[type=submit]:hover {
+  border-color: #999;
+}
+fieldset.group-personal > div.form-item#edit-field-last-name-0-value-wrapper .description,
+form#node-form fieldset.group-drupal .description {
+ margin-left: 140px;
+}
+fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper,
+fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper {
+  clear: both;
+  overflow: hidden;
+}
+fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper textarea,
+fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper textarea {
+  float: left;
+  margin-top: 0;
+}
+fieldset.group-personal > div.form-item#edit-field-skills-0-value-wrapper .grippie,
+fieldset.group-personal > div.form-item#edit-field-bio-0-value-wrapper .grippie {
+  display: none;
+}
+fieldset.group-personal > fieldset:nth-of-type(2) {
+  clear: both;
+}
+fieldset.group-contacts > div#field-personal-website-items {
+  margin-top: -4px;
+}
+fieldset.group-contacts > div#field-personal-website-items table.sticky-header {
+  display: none !important;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values {
+  border-bottom: none;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values td.content-multiple-drag {
+  padding-left: 7px !important;
+  padding-top: 8px !important;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values td.content-multiple-drag a {
+  padding-left: 0;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values td.content-multiple-drag a div {
+  transition: 0;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values td:nth-of-type(2) {
+  padding: 0 !important;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values thead {
+  float: left;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values td.row-remove,
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values td.row-add {
+  padding: 0 10px !important;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values thead th {
+  display: block;
+  float: left;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+fieldset.group-contacts > div#field-personal-website-items table#field_personal_website_values tbody {
+  display: block;
+  float: left;
+}
+fieldset.group-contacts > div#field-personal-website-items .description {
+  margin-left: 170px;
+}
+fieldset.group-contacts > div#field-personal-website-items input[type=text] {
+  width: 360px;
+}
+fieldset.group-drupal fieldset div#edit-field-account-0-fieldset-data-wrapper {
+  float: left;
+  width: 425px;
+}
+fieldset.group-drupal fieldset div#edit-field-account-0-fieldset-data-wrapper input {
+  width: 250px;
+}
+fieldset.group-drupal fieldset .sub {
+  width: 530px;
+}
+fieldset.group-drupal fieldset input[type=submit] {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  width: 105px;
+}
+body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr {
+  background: #FFF;
+}
+body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit],
+body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr .row-remove div {
+  margin-top: 4px;
+  width: 28px;
+  height: 28px;
+  border: none;
+  cursor: pointer;
+  transition: none;
+}
+body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit] {
+  margin-top: 3px;
+  height: 30px;
+  background: url('/sites/all/themes/idevels/images/add-remove-buttons.png') no-repeat 0 1px;
+}
+body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit]:hover {
+  background-position: -34px 1px;
+}
+body.page-user form#node-form .group-contacts #field-personal-website-items input[type=submit]:active {
+  background-position: -68px 1px;
+}
+body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr .row-remove div {
+  background: url('/sites/all/themes/idevels/images/add-remove-buttons.png') no-repeat 0 -32px;
+}
+body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr .row-remove div:hover {
+  background-position: -34px -32px;
+}
+body.page-user form#node-form .group-contacts #field_personal_website_values tbody tr .row-remove div:active {
+  background-position: -68px -32px;
+}
+body.page-user form#node-form .cancel-button {
+  display: inline-block;
+  margin-left: 10px;
+}
+body.page-user form#node-form .cancel-button a {
+  text-decoration: underline;
+  font-style: italic;
+}
+body.page-user form#node-form .cancel-button a:after {
+  position: absolute;
+  content: ' →';
+  font-size: 13px;
+  margin-top: 0;
+  margin-left: 4px;
+  font-family: 'PT Sans';
+}
+body.page-user form#node-form .cancel-button a:hover {
+  color: #F93703;
 }
 /*Upcoming-events And Frontpage*/
 body.front .center-left {
@@ -4461,6 +4778,11 @@ a.karma.up::after {
 .karma {
   padding: 5px 30px 5px 5px;
 }
+
+.page-groups .container-12 {
+  width: 100%;
+}
+
 .page-groups .group-subtitle {
   position: relative;
   top: -15px;
@@ -4806,6 +5128,126 @@ form#events-node-form.past-event #bue-ui-1 {
   list-style: none;
 }
 
+/**
+ * User profile view page.
+ */
+body.page-user .no-profile {
+}
+body.page-user .view-id-profile_view * {
+  font-family: 'Pt Sans', Arial, Verdana, sans-serif;
+}
+body.page-user .view-id-profile_view .field-content {
+  font-size: 13px;
+}
+body.page-user .no-profile .image,
+body.page-user .view-id-profile_view .views-field-field-image-fid {
+  float: left;
+  margin-bottom: 20px;
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  margin-right: 10px;
+}
+body.page-user .no-profile .image img,
+body.page-user .view-id-profile_view .views-field-field-image-fid img {
+  border-radius: 4px;
+  box-shadow: 0 0 1px 0 #AAA;
+}
+body.page-user .no-profile .user-name,
+body.page-user .view-id-profile_view .views-field-field-first-name-value {
+  margin-left: 110px;
+  padding-top: 15px;
+  font-weight: bold;
+}
+body.page-user .no-profile .user-name,
+body.page-user .view-id-profile_view .views-field-field-first-name-value .field-content{
+  font-size: 30px;
+}
+body.page-user .view-id-profile_view .views-field-field-job-title-value,
+body.page-user .view-id-profile_view .views-field-field-profile-company-value {
+  display: inline-block;
+}
+body.page-user .view-id-profile_view .views-field-field-job-title-value span,
+body.page-user .view-id-profile_view .views-field-field-profile-company-value span {
+  font-size: 15px;
+}
+body.page-user .view-id-profile_view .views-field-city {
+  clear: left;
+}
+body.page-user .view-id-profile_view .views-field-city,
+body.page-user .view-id-profile_view .views-field-field-skills-value,
+body.page-user .view-id-profile_view .views-field-field-personal-website-value {
+  margin: 15px 0;
+}
+body.page-user .view-id-profile_view .views-field-city label,
+body.page-user .view-id-profile_view .views-field-field-skills-value label,
+body.page-user .view-id-profile_view .views-field-field-personal-website-value label,
+body.page-user .view-id-profile_view .views-field-nothing label {
+  display: block;
+  float: left;
+  width: 111px;
+  color: #858585;
+  font-style: normal;
+  font-size: 13px;
+  font-weight: normal;
+}
+body.page-user .view-id-profile_view .views-field-nothing .field-content {
+  display: block;
+  overflow: hidden;
+}
+body.page-user .view-id-profile_view .views-field-nothing .field-content .drupal_activity .project_org_wrap div {
+  margin-bottom: 10px;
+}
+body.page-user .view-id-profile_view .views-field-city .field-content,
+body.page-user .view-id-profile_view .views-field-field-skills-value .field-content,
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content {
+  display: block;
+  overflow: hidden;
+}
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a {
+  text-decoration: underline;
+}
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a:hover {
+  text-decoration: none;
+  color: #000;
+}
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="facebook.com/"] {
+  background: url('/sites/all/themes/idevels/images/icons/soc/facebook.png') no-repeat left;
+}
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="plus.google.com/"] {
+  background: url('/sites/all/themes/idevels/images/icons/soc/gplus.png') no-repeat left;
+}
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="profiles.google.com/"] {
+  background: url('/sites/all/themes/idevels/images/icons/soc/google.png') no-repeat left;
+}
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="twitter.com/"] {
+  background: url('/sites/all/themes/idevels/images/icons/soc/twitter.png') no-repeat left;
+}
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="linkedin.com/"] {
+  background: url('/sites/all/themes/idevels/images/icons/soc/linkedin.png') no-repeat left;
+}
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content .skype a {
+  background: url('/sites/all/themes/idevels/images/icons/soc/skype.png') no-repeat left;
+}
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="vk.com/"],
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="vkontakte.com/"],
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="vkontakte.ru/"] {
+  background: url('/sites/all/themes/idevels/images/icons/soc/vk.png') no-repeat left;
+}
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="facebook.com/"],
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="plus.google.com/"],
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="profiles.google.com/"],
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="twitter.com/"],
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="linkedin.com/"],
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content .skype a,
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="vk.com/"],
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="vkontakte.com/"],
+body.page-user .view-id-profile_view .views-field-field-personal-website-value .field-content a[href*="vkontakte.ru/"] {
+  padding-left: 20px;
+}
+body.page-user .view-id-profile_view .views-field-field-bio-value label {
+  font-size: 22px;
+}
 .all-upcoming-events {
   color: black;
   text-decoration: underline;
@@ -4819,9 +5261,10 @@ form#events-node-form.past-event #bue-ui-1 {
   text-decoration: none;
 }
 .view-id-upcoming_events .field-content p{
-  float:right;
+  float:none;
   width:370px;
-  margin: -25px 20px 20px 0px;
+  margin: 0px;
+  word-wrap: break-word;
 }
 
 .view-upcoming-events .views-row,
@@ -4843,6 +5286,155 @@ form#events-node-form.past-event #bue-ui-1 {
 }
 #block-menu-secondary-links .menu a .tile-title {
   font-family: 'PT Sans';
+}
+.node-type-events .panel-display.container-12 {
+  width: 100%;
+}
+.pane-events-panel-pane-2 .view-Events .views-row {
+  padding: 0;
+}
+.pane-events-panel-pane-2 .view-Events label {
+  display: inline-block;
+  width: 180px;
+}
+.pane-events-panel-pane-2 .view-Events .views-row > div {
+  margin: 10px 0 5px;
+}
+.pane-events-panel-pane-2 .view-Events .views-row > div:first-child {
+  margin-top: 0;
+}
+.pane-events-panel-pane-2 .view-Events .views-field-ops a {
+  margin: 5px 0;
+}
+.pane-events-panel-pane-2 .views-field-field-address-value {
+  padding-left: 10px;
+}
+.pane-events-panel-pane-2 .views-field-field-city-value,
+.pane-events-panel-pane-2 .views-field-field-address-value,
+.pane-events-panel-pane-2 .views-field-field-zoom-value,
+.pane-events-panel-pane-3 .views-row {
+  display: inline-block;
+  margin: 5px 0 0 !important;
+}
+.pane-events-panel-pane-2 .views-field-field-site-url span {
+  width: 530px;
+  display: block;
+  word-break: break-all;
+  padding-left: 182px;
+  min-height: 19px;
+}
+.pane-events-panel-pane-2 .view-Events label.views-label-field-site-url {
+  position: absolute;
+}
+.pane-events-panel-pane-3 .views-row {
+  padding: 5px 2px 2px 2px;
+}
+.pane-events-panel-pane-2 .views-field-ops .field-content,
+#add_event_report {
+/*  display: inline-block;
+  padding: 2px 10px;
+  background-color: #6aa84f;
+  border: solid 2px #333;
+  -moz-box-shadow: 4px 4px 2px #222;
+  -webkit-box-shadow: 4px 4px 2px #222;
+  box-shadow: 4px 4px 2px #222;*/
+  /*font-size: 13px;*/
+  border: 1px solid #e3e3e3;
+  background: linear-gradient(to bottom,#f7f7f7,#edebeb);
+  padding: 5px 12px;
+  height: 31px;
+  line-height: 1;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 0 #fcfcfc inset,0 -1px 0 0 #f0eeee inset;
+  cursor: pointer;
+  position: relative;
+}
+#add_event_report {
+  display: none;
+  color: black;
+  text-decoration: none;
+}
+.pane-events-panel-pane-2 .views-field-ops .field-content:hover,
+#add_event_report:hover {
+   border: 1px solid #999;
+}
+.node-type-events .container-12 .grid-4 {
+  margin-bottom: 10px;
+}
+.node-type-events .panel-bottom .pane-field-google-calendar {
+  text-decoration: none;
+  display: inline-block;
+  height: 22px;
+  line-height: 20px;
+  border: 1px solid #ccc;
+  font-size: 11px;
+  border-radius: 3px;
+  padding: 0 4px 0 21px;
+  background-color: #f1f1f1;
+  background-position: 2px 2px;
+  background-repeat: no-repeat;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAADFBMVEVDiPj///+71PyixPxANrz/AAAAI0lEQVRo3mM4wMDAzAAGTA1MDRACAhgdUIjQUBiBJgEHIKMAJaMGaQeAWa0AAAAASUVORK5CYII=');
+  color: #4285f4;
+  margin-right: 12px;
+}
+.pane-events-panel-pane-3 .view-header {
+  display: inline-block;
+  margin: 14px 0 10px 0;
+  background-color: transparent;
+  vertical-align: top;
+  font-weight: bold;
+}
+.view-Events.view-display-id-panel_pane_3 img {
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  box-shadow: 0 0 1px 0 #aaa;
+}
+.node-type-events .panel-bottom .pane-field-google-calendar {
+  background-color: transparent;
+}
+.pane-events-panel-pane-3 .view-header p {
+  margin: 0;
+  color: #333;
+}
+.pane-events-panel-pane-2 .views-field-ops .field-content a {
+  /*color: white;*/
+  color: black;
+}
+.pane-events-panel-pane-3 .view-content {
+  display: inline;
+}
+.node-type-events .panel-col-last img {
+  width: 100%;
+  height: auto;
+  box-shadow: 0px 0px 10px #ccc;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+.node-type-events .panel-col-last .pane-custom.pane-1,
+.node-type-events .panel-col-last .pane-custom.pane-2 {
+  width: 100%;
+  margin-right: 0;
+}
+.node-type-events .panel-col-last .pane-custom.pane-1 .pane-content,
+.node-type-events .panel-col-last .pane-custom.pane-2 .pane-content {
+  width: 100%;
+  text-align: center;
+}
+.node-type-events .pane-field-google-calendar {
+  float: left;
+}
+.node-type-events .pane-addthis-0 {
+  float: right;
+  margin-right: 15px;
+}
+/* fix for safari */
+.pane-addthis-0 div {
+  display: inline-block;
+}
+.node-type-events .pane-field-report {
+  margin-bottom: 10px;
 }
 
 #block-drua_profile-notification_block {
@@ -5055,7 +5647,6 @@ body.front .view-display-id-block_1 .views-row {
 a.contact-node-form-cancel {
   font: 15px 'PT Sans';
 }
-
 #main-content .contact-node-form form[action="/contacts"] input[type="submit"] {
   border: 1px solid #e3e3e3;
   background: linear-gradient(to bottom, #f7f7f7, #edebeb);
@@ -5106,6 +5697,7 @@ body.front
 .contact-node-form-cancel a:hover {
   color: #f93703;
 }
+
 /*Any Firefox */
 @-moz-document url-prefix() {
   .contact-node-form-cancel a:after {
@@ -5119,4 +5711,36 @@ body.front
 
 form#events-node-form.past-event #edit-field-report-0-value-wrapper .bue-ui {
   float: left;
+}
+
+.view-profile-view.view-display-id-page_1 > .view-content {
+  float: left;
+  width: 275px;
+  overflow: hidden;
+}
+
+.view-profile-view.view-display-id-attachment_1 {
+  float: right;
+  width: 550px;
+}
+
+.view-profile-view .view-display-id-attachment_1 .views-field-field-events-logo-fid,
+.view-profile-view .view-display-id-attachment_1 .views-field-field-zoom-value {
+  clear: left;
+  float: left;
+  width: 100px;
+  text-align: center;
+  padding: 0 10px 0px 0px;
+  width: 100px;
+  height: 62px;
+}
+
+.view-profile-view .views-field-title, .view-profile-view .views-field-body {
+  word-wrap: break-word;
+  margin-left: 100px;
+  width: 430px;
+}
+
+.view-profile-view .view-header p {
+  margin-left: 100px;
 }

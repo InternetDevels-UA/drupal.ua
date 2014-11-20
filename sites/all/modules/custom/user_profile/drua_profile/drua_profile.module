@@ -37,6 +37,58 @@ function drua_profile_views_api() {
   );
 }
 
+/**
+ *  Implements hook_menu().
+ */
+function drua_profile_menu() {
+  $items['user/%user_category/edit/password'] = array(
+    'title'           => 'Password',
+    'description'     => 'A form to change user password.',
+    'page callback'   => 'drupal_get_form',
+    'type'            => MENU_LOCAL_TASK,
+    'page arguments'  => array('drua_profile_change_password'),
+    'access callback' => 'drua_profile_tab',
+    'load arguments' => array('%map', '%index'),
+    'weight'          => 20,
+  );
+  $items['user/%user_category/edit/email'] = array(
+    'title'           => 'Email',
+    'description'     => 'A form to change user email.',
+    'page callback'   => 'drupal_get_form',
+    'type'            => MENU_LOCAL_TASK,
+    'page arguments'  => array('drua_profile_change_email'),
+    'access callback' => 'drua_profile_tab',
+    'load arguments' => array('%map', '%index'),
+    'weight'          => 19,
+  );
+  $items['user/%/mail/%'] = array(
+    'title'           => 'Email check',
+    'description'     => 'A page to check hash and change user email.',
+    'page callback'   => 'drua_profile_checknewmail',
+    'access callback' => TRUE,
+    'type'            => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ *  Implements hook_menu_alter().
+ */
+function drua_profile_menu_alter(&$items) {
+  $items['user/%user_category/edit']['access arguments'] = array('access administration pages');
+  $items['user/%user_category/edit']['access callback'] = 'user_access';
+  $items['user/reset/%/%/%']['page arguments'] = array('drua_profile_user_pass_reset', 2, 3, 4);
+}
+
+/**
+ *  Show tabs edit password and edit email only in current user profile.
+ */
+function drua_profile_tab() {
+  global $user;
+
+  return ($user->uid == arg(1)) ? TRUE : FALSE;
+}
 
 /**
  * Implementation of hook_block().
@@ -53,6 +105,7 @@ function drua_profile_block($op = 'list', $delta = 0, $edit = array()) {
       	'profile_activity' => array('info' => t('Profile: Drupal activity')),
         'profile_group' => array('info' => t('Profile: User groups')),
         'profile_bookmarks' => array('info' => t('Profile: User bookmarks')),
+        'profile_change_avatar' => array('info' => t('Profile: Change avatar')),
         'idevels_blockfooter' => array('info' => t('Footer: Block with all information.')),
         'last_comments' => array('info' => t('Last comments')),
         'top_cities_by_events' => array('info' => t('Top cities by events')),
@@ -287,6 +340,15 @@ function drua_profile_block($op = 'list', $delta = 0, $edit = array()) {
               }
             }
             break;
+        case 'profile_change_avatar':
+          if (arg(0) == 'user' && arg(2) == 'edit') {
+            return array(
+              'subject' => t('Photo'),
+              'content' => drupal_get_form('avatar_profile_form'),
+            );
+          }
+
+          break;
         case 'idevels_blockfooter':
           $count = db_result(db_query("SELECT COUNT(uid) FROM {users} u WHERE u.status = 1"));
           $fb = l('facebook', 'https://www.facebook.com/groups/104220905217', array(
@@ -329,9 +391,11 @@ function drua_profile_block($op = 'list', $delta = 0, $edit = array()) {
           }
           $output = '<div class="lc"><div class="copyright">' . t('© 2010—2014 ') . l('Drupal.ua', 'http://www.drupal.ua') . '</div>
                      <div class="count">' . t('Our ') . l($link_title, 'users-lists') . '</div></div>';
+          /*$output = '<div class="lc"><div class="copyright">' . t('© 2010—2014 ') . l('Drupal.ua', 'http://www.drupal.ua'). t(' is supported by ') . l('InternetDevels', 'http://internetdevels.com') . t(' and group of volunteers.') . '</div>
+                     <div class="count">' . t('Our ') . l($link_title, 'users-lists') . '</div></div>';*/
           $output .= '<div class="mc"><div class="social">
                       <span class="we-in-soc">' . t('We are in social networks:') . '</span><span class="fb">' . $fb . '</span><span class="vk">' . $vk . '</span><span class="tw">' . $tw . '</span></div>
-                      <div class="work">' . l(t('Jobs at Drupal.ua'), 'vacations') . '</div></div>';
+                      <div class="work">' . l('Drupal.ua', 'http://www.drupal.ua'). t(' is supported by ') . l('InternetDevels', 'http://internetdevels.com') . t(' and group of volunteers.') . '</div></div>';
           $output .= '<div class="rc"><div class="contacts">' . l(t('Contacts'), 'contacts') . '</div>
                       <div class="mail">' . t('Write to us ') . l(t('support@drupal.ua'), 'mailto:support@drupal.ua', array(
               'absolute'   => TRUE,
@@ -384,6 +448,397 @@ function drua_profile_block($op = 'list', $delta = 0, $edit = array()) {
   }
 }
 
+function avatar_profile_form () {
+  $form = array();
+  $form['#attributes']['enctype'] = 'multipart/form-data';
+  $form['#validate'][] = 'avatar_profile_form_validate';
+  $form['#submit'][] = 'avatar_profile_form_submit';
+  $node = node_load(array(
+    'uid'  => arg(1),
+    'type' => 'profile',
+  ));
+  if ($node->field_image[0]) {
+    $form['image'] = array(
+      '#value'  => theme_imagecache('100x100', $node->field_image[0]['filepath']),
+      '#prefix' => '<div class="image">',
+      '#suffix' => '</div>',
+    );
+    $form['link'] = array(
+      '#value'  => l(t('Change image'), 'javascript:', array(
+        'external'   => TRUE,
+        'attributes' => array('id' => 'image-link')
+      )),
+      '#suffix' => '<div class="description">' . t('Transform into a square 100×100') . '</div>',
+    );
+  }
+  else {
+    $form['link'] = array(
+      '#value'  => l(t('Add image'), 'javascript:', array(
+        'external'   => TRUE,
+        'attributes' => array('id' => 'image-link')
+      )),
+      '#suffix' => '<div class="description">' . t('Transform into a square 100×100') . '</div>',
+    );
+  }
+  $form['file'] = array(
+    '#type'  => 'file',
+    '#title' => '',
+  );
+  $form['submit'] = array(
+    '#type'  => 'submit',
+    '#value' => t('Upload'),
+  );
+
+  return $form;
+}
+
+/**
+ * Validate inputted file.
+ */
+function avatar_profile_form_validate($form, &$form_state) {
+    // Allowed extensions
+  $ext_post = array('image/png', 'image/gif', 'image/jpg', 'image/jpeg');
+  $ext = 'png gif jpg jpeg';
+  if (!in_array($_FILES['files']['type']['file'], $ext_post)) {
+    form_set_error('file', t('Upload image file (!ext).', array('!ext' => $ext)));
+
+    return FALSE;
+  }
+  $validators = array(
+    'file_validate_extensions' => array($ext),
+  );
+  $dir = file_directory_path();
+  $dir .= '/imagefield_thumbs/images/avatars';
+  if ($file = file_save_upload('file', $validators, $dir)) {
+    $form_state['values']['file'] = $file;
+  }
+  else {
+    form_set_error('file', t('File was not upload.'));
+  }
+}
+
+/**
+ * Saving file after success validation.
+ */
+function avatar_profile_form_submit($form, &$form_state) {
+  $node = node_load(array(
+    'uid' => arg(1),
+    'type' => 'profile',
+  ));
+  $img = (object)field_file_load($node->field_image[0]);
+  field_file_delete($img);
+  $file = $form_state['values']['file'];
+  $file->status = FILE_STATUS_PERMANENT;
+  if (!$node) {
+    global $user;
+
+    $node = new stdClass();
+    $node->type = 'profile';
+    $node->status = 1;
+    $node->uid = $user->uid;
+    $widget_settings = db_result(db_query("SELECT widget_settings FROM content_node_field_instance WHERE field_name = 'field_birthday'"));
+    $data = unserialize($widget_settings);
+    $node->field_birthday[0]['value'] = $data['default_value_code'];
+    $widget_settings = db_result(db_query("SELECT widget_settings FROM content_node_field_instance WHERE field_name = 'field_gender'"));
+    $data = unserialize($widget_settings);
+    $node->field_gender[0]['value'] = $data['default_value'][0]['value'];
+  }
+  $node->field_image[0]['fid'] = $file->fid;
+  node_save($node);
+  drupal_set_message(t('Photo changed.'));
+}
+
+/**
+ *  Implements hook_form_alter().
+ */
+function drua_profile_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'profile_node_form') {
+    $form['buttons']['submit']['#submit'][] = 'drua_profile_form_profile_submit';
+    $form['#pre_render'][] = 'drua_profile_form_prerender';
+    $form['field_image']['#type'] = 'hidden';
+    unset($form['language']);
+    $form['buttons']['cancel'] = array(
+      '#value'  => l(t('Cancel'), 'user'),
+      '#access' => TRUE,
+      '#weight' => 9,
+      '#prefix' => '<div class="cancel-button">',
+      '#suffix' => '</div>',
+    );
+
+  }
+  if ($form_id == 'user_admin_settings') {
+    $defaults = variable_get('new_email_message', array());
+    $email_token_help = t('Available variables are:') . ' !username, !site, !password, !uri, !uri_brief, !mailto, !date, !login_uri, !edit_uri, !login_url., !new_email_link';
+    $form['email']['new_email_message'] = array(
+      '#type'        => 'fieldset',
+      '#title'       => t('New email message send'),
+      '#collapsible' => TRUE,
+      '#collapsed'   => TRUE,
+      '#tree'        => TRUE,
+      '#description' => t('Customize new email confirmation messages.') . ' ' . $email_token_help,
+    );
+    $form['email']['new_email_message']['new_email_subject'] = array(
+      '#type'          => 'textfield',
+      '#title'         => t('Subject'),
+      '#default_value' => isset($defaults['new_email_subject']) ? $defaults['new_email_subject'] : '',
+      '#description'   => '',
+    );
+    $form['email']['new_email_message']['new_email_message_body'] = array(
+      '#type'          => 'textarea',
+      '#title'         => t('Text'),
+      '#default_value' => isset($defaults['new_email_message_body']) ? $defaults['new_email_message_body'] : '',
+    );
+  }
+  if ($form_id == 'user_profile_form') {
+    if (isset($form['subscriptions'])) {
+      unset($form['subscriptions']['#description']);
+    }
+  }
+}
+
+/**
+ *  Replace default submit message for content type Profile.
+ */
+function drua_profile_form_profile_submit ($form, $form_state) {
+  $messages = drupal_get_messages();
+  drupal_set_message(t('Profile <em>!name</em> was updated', array('!name' => $form_state['node']['name'])));
+
+}
+
+/**
+ *  Prerender function for form user profile edit.
+ */
+function drua_profile_form_prerender($form) {
+  // Make gender field options translatable.
+  $genders = array_keys($form['group_personal']['field_gender']['value']['#options']);
+  $form['group_personal']['field_gender']['value'][$genders[0]]['#title'] = t('male');
+  $form['group_personal']['field_gender']['value'][$genders[1]]['#title'] = t('female');
+
+  return $form;
+}
+/**
+ *  Display form for change user email.
+ */
+function drua_profile_change_email() {
+  global $user;
+
+  drupal_set_title(t('Email'));
+  $form = array();
+  $form['#validate'][] = 'drua_profile_change_email_validate';
+  $form['#submit'][] = 'drua_profile_change_email_submit';
+  $form['change_email'] = array(
+    '#value' => '<div class="sub-header">' . t('Edit email') . '</div>',
+  );
+  if ($user->mail) {
+    $form['current_email'] = array(
+      '#value' => t('Acting-mail - !email', array('!email' => $user->mail)),
+    );
+  }
+  $form['new_email'] = array(
+    '#type'          => 'textfield',
+    '#title'         => t('Email'),
+    '#description'   => t('We will send a confirmation letter'),
+    '#default_value' => $user->mail,
+  );
+  $form['submit'] = array(
+    '#type'  => 'submit',
+    '#value' => t('Save'),
+  );
+
+  return $form;
+}
+
+/**
+ *  Validate email.
+ */
+function drua_profile_change_email_validate($form, $form_state) {
+  global $user;
+
+  $email = $form_state['values']['new_email'];
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    form_set_error('new_email', t('Enter valid email'));
+  }
+  if($email == $user->mail) {
+    form_set_error('new_email', t('Enter new email'));
+  }
+}
+
+/**
+ *  Change user email.
+ */
+function drua_profile_change_email_submit($form, $form_state) {
+  global $user, $base_url, $language;
+
+  $account = user_load($user->uid);
+  $tokens = user_mail_tokens($account, $language);
+  $email = $form_state['values']['new_email'];
+  $hash_email = substr(md5($user->uid), -7);
+  $data = array();
+  $data['email_confirmation'] = $hash_email;
+  $data['new_email'] = $email;
+  user_save($account, $data);
+  $vars = variable_get('new_email_message', array());
+  if ($vars) {
+    $text = $base_url . '/user/' . $account->uid . '/mail/' . $hash_email;
+    $link = l($text, 'user/' . $account->uid . '/mail/' . $hash_email, array('absolute' => TRUE));
+    $tokens['!new_email_link'] = $link;
+    $params['subject'] = strtr($vars['new_email_subject'], $tokens);
+    $params['body'] = strtr($vars['new_email_message_body'], $tokens);
+    $message = array(
+      'to'      => $email,
+      'subject' => $params['subject'],
+      'body'    => $params['body'],
+      'headers' => array(),
+    );
+    if (drupal_mail_send($message)) {
+      drupal_set_message(t('Confirmation link have send to you new email'));
+    };
+  }
+}
+
+/**
+ *  Display form for change user password.
+ */
+function drua_profile_change_password() {
+  include_once drupal_get_path('module', 'user') . '/user.pages.inc';
+  $form = drupal_retrieve_form('user_profile_form');
+  drupal_set_title(t('Password'));
+  unset($form['theme_select']);
+  unset($form['nodewords']);
+  unset($form['htmlmail']);
+  unset($form['heartbeat_activity_settings_select']);
+  unset($form['comment_notify_settings']);
+  unset($form['mimemail']);
+  unset($form['locale']);
+  unset($form['current_id']);
+  unset($form['legal']);
+  unset($form['language_value']);
+  unset($form['picture']);
+  unset($form['revision_id']);
+  unset($form['timezone']);
+  unset($form['masquerade']);
+  unset($form['account']);
+  unset($form['delete']);
+  $form['change_password'] = array(
+    '#value' => '<div class="sub-header">' . t('Change password') . '</div>',
+    '#weight'=> -10,
+  );
+  $form['#validate'] = array('drua_profile_change_password_validate');
+  $form['#submit'][] = 'drua_profile_change_password_submit';
+  $form['pass'] = array(
+    '#type'     => 'password_confirm',
+    '#required' => TRUE,
+  );
+
+  return $form;
+}
+
+/**
+ *  Validate password.
+ */
+function drua_profile_change_password_validate($form, $form_state) {
+  $new_pass = $form_state['clicked_button']['#post']['pass']['pass1'];
+  $new_pass_conf = $form_state['clicked_button']['#post']['pass']['pass2'];
+  if (!$new_pass || !$new_pass_conf) {
+    form_set_error('pass', t('Insert new passwords.'));
+  }
+  if ($new_pass != $new_pass_conf) {
+    form_set_error('pass', t('The specified passwords do not match.'));
+  }
+}
+
+/**
+ *  Change user passsword.
+ */
+function drua_profile_change_password_submit($form, $form_state) {
+  global $user;
+
+  $account = user_load($user->uid);
+  if (user_save($account, array('pass' => $form_state['values']['pass']))) {
+    drupal_set_message(t('Password changed'));
+  };
+}
+
+/**
+ *  Check and set new email.
+ */
+function drua_profile_checknewmail() {
+  $arg = arg();
+  if ($arg[3]) {
+    $user = user_load($arg[1]);
+    $data = unserialize($user->data);
+    if (isset($data['email_confirmation']) && isset($data['new_email'])) {
+      if ($data['email_confirmation'] == $arg[3]) {
+        $data['mail'] = $data['new_email'];
+        $data['email_confirmation'] = NULL;
+        $data['new_email'] = NULL;
+        user_save($user, $data);
+        drupal_set_message(t('Email successfully changed to !email', array('!email' => $data['mail'])));
+      }
+    }
+    drupal_goto('user/' . $user->uid);
+  }
+  drupal_goto('/');
+}
+
+function drua_profile_user_pass_reset(&$form_state, $uid, $timestamp, $hashed_pass, $action = NULL) {
+  global $user;
+
+  // Check if the user is already logged in. The back button is often the culprit here.
+  if ($user->uid) {
+    drupal_set_message(t('You have already used this one-time login link. It is not necessary to use this link to login anymore. You are already logged in.'));
+    drupal_goto();
+  }
+  else {
+    // Time out, in seconds, until login URL expires. 24 hours = 86400 seconds.
+    $timeout = 86400;
+    $current = time();
+    // Some redundant checks for extra security ?
+    if ($timestamp < $current && $account = user_load(array('uid' => $uid, 'status' => 1)) ) {
+      // Deny one-time login to blocked accounts.
+      if (drupal_is_denied('user', $account->name) || drupal_is_denied('mail', $account->mail)) {
+        drupal_set_message(t('You have tried to use a one-time login for an account which has been blocked.'), 'error');
+        drupal_goto();
+      }
+
+      // No time out for first time login.
+      if ($account->login && $current - $timestamp > $timeout) {
+        drupal_set_message(t('You have tried to use a one-time login link that has expired. Please request a new one using the form below.'));
+        drupal_goto('user/password');
+      }
+      else if ($account->uid && $timestamp > $account->login && $timestamp < $current && $hashed_pass == user_pass_rehash($account->pass, $timestamp, $account->login)) {
+        // First stage is a confirmation form, then login
+        if ($action == 'login') {
+          watchdog('user', 'User %name used one-time login link at time %timestamp.', array('%name' => $account->name, '%timestamp' => $timestamp));
+          // Set the new user.
+          $user = $account;
+          // user_authenticate_finalize() also updates the login timestamp of the
+          // user, which invalidates further use of the one-time login link.
+          user_authenticate_finalize($form_state['values']);
+          drupal_set_message(t('You have just used your one-time login link. It is no longer necessary to use this link to login. Please change your password.'));
+          drupal_goto('user/'. $user->uid .'/edit/password');
+        }
+        else {
+          $form['message'] = array('#value' => t('<p>This is a one-time login for %user_name and will expire on %expiration_date.</p><p>Click on this button to login to the site and change your password.</p>', array('%user_name' => $account->name, '%expiration_date' => format_date($timestamp + $timeout))));
+          $form['help'] = array('#value' => '<p>'. t('This login can be used only once.') .'</p>');
+          $form['submit'] = array('#type' => 'submit', '#value' => t('Log in'));
+          $form['#action'] = url("user/reset/$uid/$timestamp/$hashed_pass/login");
+          return $form;
+        }
+      }
+      else {
+        drupal_set_message(t('You have tried to use a one-time login link which has either been used or is no longer valid. Please request a new one using the form below.'));
+        drupal_goto('user/password');
+      }
+    }
+    else {
+      // Deny access, no more clues.
+      // Everything will be in the watchdog's URL for the administrator to check.
+      drupal_access_denied();
+    }
+  }
+}
+
 /**
  * Return a themed block.
  * @return
@@ -431,8 +886,8 @@ function _drua_profile_og_most_popular_groups() {
     $alias = drupal_get_path_alias($url, $row['node_language']);
     if (!preg_match('/tegi*/', $alias)) {
       $items[] = '<span class="most-popular-groups">' . l($row['term_data_name'] . ' (' . $row['post_count'] . ') ', $alias) . '</span>';
+      $CountAll+=$row['post_count'];
     }
-    $CountAll+=$row['post_count'];
   }
   $output = '<h3 class="all-most-popular-groups"><a href="og/">' . t('All group') . ' ('.$CountAll.')</a></h3>';
   $output .= implode($items);
@@ -758,26 +1213,40 @@ function theme_drua_block_drupal_active($user_data = NULL) {
     $output .= theme('drua_block_domen_active',
       array('drupal.org' => $user_data['drupal_parser']['drupal.org']));
   }
-  
-  $org_project = '';
-  if (isset($user_data['drupal_parser']['drupal.org']['projects']['translations'])) {
-    foreach ($user_data['drupal_parser']['drupal.org']['projects']['translations'] as $data) {
-      $org_project .= '
-    <div class="project_trans">'. l($data['title'], $data['href'], $data) .'</div>';
+    $org_project = '';
+    if (isset($user_data['drupal_parser']['drupal.org']['projects']['translations'])) {
+        $org_project .= '<div>';
+        foreach ($user_data['drupal_parser']['drupal.org']['projects']['translations'] as $data) {
+            $org_project .=
+              l($data['title'], $data['href'], $data);
+            if ($data != end($user_data['drupal_parser']['drupal.org']['projects']['translations'])) {
+                $org_project .= ', ';
+            }
+        }
+        $org_project .= '</div>';
     }
-  }
-  if (isset($user_data['drupal_parser']['drupal.org']['projects']['modules'])) {
-    foreach ($user_data['drupal_parser']['drupal.org']['projects']['modules'] as $data) {
-      $org_project .= '
-    <div class="project_module">'. l($data['title'], $data['href'], $data) .'</div>';
+    if (isset($user_data['drupal_parser']['drupal.org']['projects']['modules'])) {
+        $org_project .= '<div>';
+        foreach ($user_data['drupal_parser']['drupal.org']['projects']['modules'] as $key => $data) {
+            $org_project .=
+              l($data['title'], $data['href'], $data);
+            if ($data != end($user_data['drupal_parser']['drupal.org']['projects']['modules'])) {
+                $org_project .= ', ';
+            }
+        }
+        $org_project .= '</div>';
     }
-  }
-  if (isset($user_data['drupal_parser']['drupal.org']['projects']['themes'])) {
-    foreach ($user_data['drupal_parser']['drupal.org']['projects']['themes'] as $data) {
-      $org_project .= '
-    <div class="project_theme">'. l($data['title'], $data['href'], $data) .'</div>';
+    if (isset($user_data['drupal_parser']['drupal.org']['projects']['themes'])) {
+        $org_project .= '<div>';
+        foreach ($user_data['drupal_parser']['drupal.org']['projects']['themes'] as $data) {
+            $org_project .=
+              l($data['title'], $data['href'], $data);
+            if ($data != end($user_data['drupal_parser']['drupal.org']['projects']['themes'])) {
+                $org_project .= ', ';
+            }
+        }
+        $org_project .= '</div>';
     }
-  }
   
   if (!empty($org_project)) {
     $output .= '
