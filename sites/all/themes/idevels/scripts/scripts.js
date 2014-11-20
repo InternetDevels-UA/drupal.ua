@@ -522,6 +522,18 @@ $(function () {
     });
 
   }
-  
+
+// IE hack for add image button 
+if (navigator.userAgent.match(/msie/i) || navigator.userAgent.match(/trident/i) ){
+  var ua = window.navigator.userAgent;
+  var msie = ua.indexOf("MSIE ");
+
+  if ($.browser.msie  && parseInt($.browser.version, 10) < 11) {
+    $('form#events-node-form.past-event #right-block input.form-file').before('<img class="form-file" style="position: absolute; background-color: #fff;" src="/sites/all/themes/idevels/images/answers/b_add.png">');
+    $('form#events-node-form.past-event #right-block img.form-file').click(function(event) {
+      $(this).parent().find('input.form-file').trigger('click');
+    });
+  } 
+}
 
 });
