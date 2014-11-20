@@ -7,7 +7,7 @@
   <?php print $head; ?>
   <?php print $styles; ?>
   <?php print $scripts; ?>
-  <script src="http://vk.com/js/api/openapi.js" type="text/javascript"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC0IajOIjtieJ67ODTICSsr1ZVjqxra4A"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1.0, user-scalable=no" />
 </head>
 
@@ -106,7 +106,11 @@
           <?php print $messages; ?>
           <?php print $breadcrumb; ?>
           <?php if ($title): ?>
-            <h1 class="title" id="page-title"><?php print $title; ?></h1>
+            <?php if ($node->type == 'events'): ?>
+              <h1 itemprop="name" class="title" id="page-title"><?php print $title; ?></h1>
+            <?php else: ?>
+              <h1 class="title" id="page-title"><?php print $title; ?></h1>
+            <?php endif ?>
           <?php endif; ?>
           <?php if ($tabs): ?>
             <div class="tabs-wrapper"><?php print $tabs; ?></div>
