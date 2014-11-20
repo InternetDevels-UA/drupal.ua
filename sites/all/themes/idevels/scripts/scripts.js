@@ -593,15 +593,6 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
     $(".node-type-events .pane-field-videos").toggle();
     return false;
   });
-
-  // on click hide event text and show event report
-  $("#link-event-overview:not(.expanded)").click(function (e) {
-    $(".node-type-events .pane-field-report").toggle();
-    $(".node-type-events .pane-node-body").toggle();
-    $(".node-type-events .pane-field-photos").toggle();
-    $(".node-type-events .pane-field-videos").toggle();
-    return false;
-  });
   
   // (Event page) Add user avatar if user push "I'll go" button
   $(".node-type-events .panel-display .views-field-ops .flag-be-there a").live('mousedown', function(event) {
