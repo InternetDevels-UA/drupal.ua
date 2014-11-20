@@ -881,12 +881,12 @@ function idevels_preprocess_views_view_fields__Events__page(&$vars) {
         break;
 
       case 'title':
-        $a_begin = substr($field->content, 0, strpos($field->content, '>' . htmlspecialchars($field->raw) . '<') + 1);
+        $a_begin = substr($field->content, 0, strpos($field->content, '>' . trim(htmlspecialchars($field->raw)) . '<') + 1);
         if (substr($a_begin, 0, 3) == '<a ') {
           $a_begin = '<a itemprop="url" ' . substr($a_begin, 3);
         }
-        $a_end = substr($field->content, strpos($field->content, '>' . htmlspecialchars($field->raw) . '<') + 1 + strlen(htmlspecialchars($field->raw)));
-        $field->content = $a_begin . '<h2 itemprop="name">' . htmlspecialchars($field->raw) . '</h2>' . $a_end;
+        $a_end = substr($field->content, strpos($field->content, '>' . trim(htmlspecialchars($field->raw)) . '<') + 1 + strlen(trim(htmlspecialchars($field->raw))));
+        $field->content = $a_begin . '<h2 itemprop="name">' . trim(htmlspecialchars($field->raw)) . '</h2>' . $a_end;
         break;
 
       case 'field_city_value':
@@ -894,8 +894,10 @@ function idevels_preprocess_views_view_fields__Events__page(&$vars) {
           $term = taxonomy_get_term($field->raw);
           $name = $term->name;
           $pieces = explode(", ", $name);
-          $pieces[0] = '<span itemprop="addressLocality">' . $pieces[0] . '</span>';
-          $pieces[1] = '<span itemprop="addressCountry">' . $pieces[1] . '</span>';
+          $pieces[0] = $pieces[0] ? '<span itemprop="addressLocality">' . $pieces[0] . '</span>' : '';
+          if (count($pieces) > 1) {
+            $pieces[1] = '<span itemprop="addressCountry">' . $pieces[1] . '</span>';
+          }
           $address = '<address itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">' . implode(', ', $pieces) . '</address>';
           $field->content = str_replace(">$name<", ">$address<", $field->content);
         }
@@ -919,6 +921,39 @@ function idevels_preprocess_views_view_fields__Events__page(&$vars) {
           $field->content = substr_replace($field->content, 'itemprop="image" style="overflow: hidden;" ', 5, 0);
         }
         break;
+    }
+  }
+}
+
+/**
+ * Theming Events__panel_pane_2__field_event_date_value.
+ * Wrap in time tag and add class pastevent or not-pastevent
+ */
+function idevels_preprocess_views_view_field__Events__panel_pane_2__field_event_date_value(&$vars) {
+  if (strtotime($vars['row']->node_data_field_latitude_field_event_date_value2) < time()) {
+    $vars['output'] = '<time class="pastevent">' . $vars['output'] . '</time>';
+  }
+  else {
+    $vars['output'] = '<time class="not-pastevent">' . $vars['output'] . '</time>';
+  }
+}
+
+/**
+ * Event page trming. Add metatags to images.
+ */
+function idevels_preprocess_panels_pane(&$vars) {
+  $title = $vars['display']->context['argument_nid_1']->title;
+  if ($vars['pane']->subtype == 'field_events_logo') {
+    $insert_to_logo = $title . '" title="' . $title;
+    $vars['content'] = substr_replace($vars['content'], $insert_to_logo, strpos($vars['content'], 'alt="') + 5, 0);
+  }
+  elseif ($vars['pane']->subtype == 'field_photos') {
+    $i = 0;
+    while (strpos($vars['content'], 'alt=""') > 0) {
+      $i++;
+      $vars['content'] = substr_replace($vars['content'], $title . '_№' . (string) $i, strpos($vars['content'], 'alt=""') + 5, 0);
+      $vars['content'] = substr_replace($vars['content'], '_№' . (string) $i, strpos($vars['content'], 'title="' . $title . '"') + 7 + strlen($title), 0);
+      $vars['content'] = substr_replace($vars['content'], '_№' . (string) $i, strpos($vars['content'], 'title="' . $title . '"') + 7 + strlen($title), 0);
     }
   }
 }
