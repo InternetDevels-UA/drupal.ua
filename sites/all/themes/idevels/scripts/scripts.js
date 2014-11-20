@@ -594,8 +594,7 @@ $(function () {
     $(".node-type-events .pane-field-videos").toggle();
     return false;
   });
-
-
+  
   // (Event page) Add user avatar if user push "I'll go" button
   $(".node-type-events .panel-display .views-field-ops .flag-be-there a").live('mousedown', function(event) {
     if (!$('.node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid').length) {
@@ -612,5 +611,4 @@ $(function () {
       }
     });
   });
-
 });

@@ -80,11 +80,11 @@ function idevels_taxonomy_autocomplete($vid, $string = '', $event_page = FALSE) 
     if ($event_page) {
         $result = db_query(
           "SELECT  `term_data`.`name`
-          FROM  `content_type_events` 
+          FROM  `content_type_events`
           INNER JOIN  `term_data` ON  `content_type_events`.`field_city_value` =  `term_data`.`tid`
           WHERE LOWER(`term_data`.`name`) LIKE LOWER('%%%s%%')
-          GROUP BY  `field_city_value` 
-          ORDER BY COUNT(  `field_city_value` ) DESC 
+          GROUP BY  `field_city_value`
+          ORDER BY COUNT(  `field_city_value` ) DESC
           LIMIT 0 , 10"
         , $last_string);
     }
@@ -318,7 +318,7 @@ function idevels_views_pre_render(&$view) {
     ));
   }
   elseif ($view->name == 'taxonomy_term' && $view->current_display == 'page') {
-    $title=drupal_get_title();
+    $title = drupal_get_title();
     if (!empty($title)) {
       drupal_set_breadcrumb(array(
         l(t('Home'), NULL),
@@ -546,7 +546,7 @@ function idevels_preprocess_views_view(&$vars) {
       $vars['header'] .= l(t('new user'), 'users-lists/created/' . $revnew, array('attributes' => array('class' => $classNew)));
     }
   }
-  // Modal link to resources 
+  // Modal link to resources
   elseif ($vars['view']->name == 'Resources') {
     if ($vars['view']->current_display == 'page_1') {
       if ( user_is_logged_in() ) {
@@ -810,7 +810,7 @@ function idevels_events_date_validate($form, $form_state) {
 }
 
 function idevels_change_header_image_form(&$form_state) {
-  $form = array();  
+  $form = array();
   $form['file'] = array(
     '#attributes' => array('enctype' => 'multipart/form-data'),
     '#type' => 'file',
@@ -823,7 +823,7 @@ function idevels_change_header_image_form(&$form_state) {
   $form['#attributes']['enctype'] = "multipart/form-data";
   $form['submit'] = array(
     '#type' => 'submit',
-    '#value' => 'Submit',   
+    '#value' => 'Submit',
   );
   return $form;
 }
@@ -862,9 +862,9 @@ function examples_ctools_modal_review($js = FALSE) {
   //global $user;
   //$type = 'resurses';
 /*  $node = (object) array(
-    'uid' => $user->uid,  
-    'name' => (isset($user->name) ? $user->name : ''),  
-    'type' => $type,  
+    'uid' => $user->uid,
+    'name' => (isset($user->name) ? $user->name : ''),
+    'type' => $type,
     'language' => LANGUAGE_NONE);*/
   // Loading node form with disabled scripts.
   //if (!$js) {
@@ -879,7 +879,7 @@ function examples_ctools_modal_review($js = FALSE) {
   //$output = ctools_modal_form_wrapper(drupal_get_form('resource_node_form'), $form_state);
   $output = ctools_modal_form_wrapper('idevels_add_resurses_form', $form_state);
   //$output = ctools_modal_form_wrapper('resource_node_form', $form_state);
-  // Actions after form submit. 
+  // Actions after form submit.
   if (!empty($form_state['executed'])) {
     $output = array();
     // Close pop up.
@@ -966,7 +966,7 @@ function idevels_add_resurses_form(&$form_state) {
   $form['#after_build'][] = '_load_my_javascript';
   $form['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Add'), 
+    '#value' => t('Add'),
   );
   return $form;
 }
@@ -1049,6 +1049,7 @@ function idevels_init() {
       t('Voting details')
     ));
   }
+
   else if (arg(0) == 'node' && arg(2)=='edit') {
     $path=arg(0).'/'.arg(1);
     drupal_set_breadcrumb(array(
