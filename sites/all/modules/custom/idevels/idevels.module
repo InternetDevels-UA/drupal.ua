@@ -62,11 +62,11 @@ function idevels_taxonomy_autocomplete($vid, $string = '', $event_page = FALSE) 
     if ($event_page) {
         $result = db_query(
           "SELECT  `term_data`.`name`
-          FROM  `content_type_events` 
+          FROM  `content_type_events`
           INNER JOIN  `term_data` ON  `content_type_events`.`field_city_value` =  `term_data`.`tid`
           WHERE LOWER(`term_data`.`name`) LIKE LOWER('%%%s%%')
-          GROUP BY  `field_city_value` 
-          ORDER BY COUNT(  `field_city_value` ) DESC 
+          GROUP BY  `field_city_value`
+          ORDER BY COUNT(  `field_city_value` ) DESC
           LIMIT 0 , 10"
         , $last_string);
     }
@@ -266,6 +266,13 @@ function idevels_views_pre_render(&$view) {
     // }
     $view->attachment_before = $attachment;
   }
+  elseif ($view->name == 'Events' && $view->current_display == 'panel_pane_3') {
+    drupal_set_breadcrumb(array(
+      l(t('Home'), NULL),
+      l(t('Events'), 'events'),
+      drupal_get_title(),
+    ));
+  }
   elseif ($view->name == 'Events' && $view->current_display == 'page_1') {
     drupal_set_title(t('Events'));
     drupal_set_breadcrumb(array(
@@ -293,11 +300,15 @@ function idevels_views_pre_render(&$view) {
     ));
   }
   elseif ($view->name == 'taxonomy_term' && $view->current_display == 'page') {
-    drupal_set_breadcrumb(array(
-      l(t('Home'), NULL),
-      l(t('Groups'), 'groups'),
-      drupal_get_title(),
-    ));
+    $title = drupal_get_title();
+    if (!empty($title)) {
+      drupal_set_breadcrumb(array(
+        l(t('Home'), NULL),
+        l(t('Groups'), 'groups'),
+        $title,
+      ));
+    }
+    drupal_set_title('');
   }
   elseif ($view->name == 'vacations' && $view->current_display == 'page_1') {
     drupal_set_title(t('Vacations'));
@@ -362,6 +373,12 @@ function idevels_form_alter(&$form, &$form_state, $form_id) {
     $form['#attributes']=array('class'=>'custom-user-login-page');
     unset($form['name']['#title']);
     unset($form['pass']['#title']);
+  }
+  if ($form_id == 'events_node_form') {
+    $form['title']['#maxlength'] = 80;
+    $form['#id'] = 'events-node-form';
+    $form['#validate'][] = 'idevels_events_date_validate';
+    drupal_set_title(t('Create event (title)'));
   }
 }
 
@@ -461,7 +478,7 @@ function idevels_preprocess_views_view(&$vars) {
       $vars['header'] .= l(t('new user'), 'users-lists/created/' . $revnew, array('attributes' => array('class' => $classNew)));
     }
   }
-  // Modal link to resources 
+  // Modal link to resources
   elseif ($vars['view']->name == 'Resources') {
     if ($vars['view']->current_display == 'page_1') {
       if ( user_is_logged_in() ) {
@@ -477,6 +494,20 @@ function idevels_preprocess_views_view(&$vars) {
         $vars['header'] = $header;
       }
     }
+  } elseif ($vars['view']->name == 'profile_view') {
+      if ($vars['view']->current_display == 'page_1') {
+          if ($vars['empty'] == '') {
+              $user = user_load(arg(1));
+              $widget_settings = db_result(db_query("SELECT widget_settings FROM content_node_field_instance WHERE field_name = 'field_image'"));
+              $data = unserialize($widget_settings);
+              $output = '<div class="no-profile"><div class="image">';
+              $output .= theme_imagecache('100x100', $data['default_image']['filepath']);
+              $output .= '</div><div class="user-name">';
+              $output .= $user->name;
+              $output .= '</div></div>';
+              $vars['empty'] = $output;
+          }
+      }
   }
 }
 
@@ -530,6 +561,73 @@ function idevels_preprocess_views_view_fields(&$vars) {
       }
     }
   }
+  if ($vars['view']->name == 'profile_view') {
+      // Translatable labels
+      foreach ($vars['fields'] as $key => $field) {
+          if (!empty($field->label)) {
+              $vars['fields'][$key]->label = t($field->label);
+          }
+      }
+    if (isset($vars['fields']['field_job_title_value']) && isset($vars['fields']['field_profile_company_value'])) {
+      $vars['fields']['field_job_title_value']->content .= ' ' . t('in') . ' ';
+    }
+    // Display website field elements like links else unset this field.
+    if (trim($vars['fields']['field_personal_website_value']->content)) {
+      $website_content = &$vars['fields']['field_personal_website_value']->content;
+      $website_content = preg_replace("/<div class=\"skype\">(.*)<\/div>/", '<div class="skype"><a href="skype:$1">$1</a></div>', $website_content);
+      if (!strpos($website_content, 'field-item')) {
+        if ($skype_pos = strpos($website_content, '<div class="skype">')) {
+          $skype = substr($website_content, $skype_pos);
+          $website_content = substr($website_content, 0, $skype_pos);
+        }
+        $website_content = preg_replace("/\n/", ' ', $website_content);
+        $website_content = preg_replace("/,/", '', $website_content);
+        $websites_arr = explode(' ', $website_content);
+        foreach ($websites_arr as $key => $site) {
+          if ($site) {
+            $websites_arr[$key] = '<div class="field-item field-item-' . $key . '">' . trim($site) . '</div>';
+          }
+        }
+        $website_content = implode("", $websites_arr);
+        $website_content .= isset($skype) ? $skype : '';
+      }
+      $website_content = preg_replace_callback("/<div class=\"field-item(.*?)\">(.*?)<\/div>/", function ($value) {
+        $link = _filter_url($value[2], '-1');
+        if (substr($link, 0, 7) == '<a href') {
+          $link = preg_replace("/\">(http:\\/\\/|https:\\/\\/)?(www.)?(.*)<\\/a>/", '">$3</a>', $link);
+          $link = preg_replace("/title=/", 'rel="nofollow" target="_blank" title=', $link);
+        }
+        else {
+          $link = l($link, 'http://' . $link, array(
+            'attributes' => array(
+              'rel'    => 'nofollow',
+              'target' => '_blank',
+              'title'  => 'http://' . $link,
+            )
+          ));
+        }
+
+        return '<div class="field-item' . $value[1] . '">' . $link . '</div>';
+      }, $website_content);
+    }
+    else {
+      unset($vars['fields']['field_personal_website_value']);
+    }
+    // Replace all linebreaks to <br /> in field bio.
+    if (isset($vars['fields']['field_bio_value'])) {
+      $vars['fields']['field_bio_value']->content = nl2br($vars['fields']['field_bio_value']->content);
+    }
+    // Display block Drupal activity in field Drupal activity else unset.
+    if (isset($vars['fields']['nothing'])) {
+      $block = module_invoke('drua_profile', 'block', 'view', 'profile_drupal');
+      if ($block) {
+        $vars['fields']['nothing']->content = $block['content'];
+      }
+      else {
+        unset($vars['fields']['nothing']);
+      }
+    }
+  }
   elseif ($vars['view']->name == 'group') {
     if ($vars['view']->current_display == "block_1") {
       $title=$vars['row']->node_title;
@@ -546,6 +644,7 @@ function idevels_preprocess_views_view_fields(&$vars) {
  * For exposed sort by carma or new users;
  */
 function idevels_views_query_alter(&$view, &$query) {
+  global $user;
   if ($view->name == 'users') {
     switch (arg(1)) {
       case 'popular':
@@ -565,6 +664,9 @@ function idevels_views_query_alter(&$view, &$query) {
         $query->orderby[0] = 'users_created_day '.$direction;
         break;
     }
+  }
+  if ($view->name == 'Events' && $view->current_display == 'panel_pane_3') {
+    $query->orderby[] = sprintf("CASE WHEN flag_content_node.uid=%d Then 0 Else 1 End", $user->uid);
   }
 }
 
@@ -606,8 +708,32 @@ function idevels_cities_autocomplete_validate(&$form, &$form_state) {
   }
 }
 
+/**
+ * Implementation of hook_form_validate().
+ * For Event form;
+ */
+function idevels_events_date_validate($form, $form_state) {
+  $start_time = strtotime($form_state['values']['field_event_date'][0]['value']);
+  $end_time = strtotime($form_state['values']['field_event_date'][0]['value2']);
+  $teaser = $form_state['values']['field_new_teaser'][0]['value'];
+  $body = $form_state['values']['body'];
+
+  if ($start_time < time()) {
+    form_set_error('field_event_date', t("Start date can't be before today's date."));
+  }
+/*  if ($end_time < $start_time) {
+    form_set_error('field_event_date', t("Start date can't be before End date"));
+  }*/
+  if (strlen($teaser) < 100) {
+    form_set_error('field_new_teaser', t("Teaser can't be less than 100 characters"));
+  }
+  if (strlen($body) < 300) {
+    form_set_error('body', t("Event discripton can't be less than 300 characters"));
+  }
+}
+
 function idevels_change_header_image_form(&$form_state) {
-  $form = array();  
+  $form = array();
   $form['file'] = array(
     '#attributes' => array('enctype' => 'multipart/form-data'),
     '#type' => 'file',
@@ -620,7 +746,7 @@ function idevels_change_header_image_form(&$form_state) {
   $form['#attributes']['enctype'] = "multipart/form-data";
   $form['submit'] = array(
     '#type' => 'submit',
-    '#value' => 'Submit',   
+    '#value' => 'Submit',
   );
   return $form;
 }
@@ -659,9 +785,9 @@ function examples_ctools_modal_review($js = FALSE) {
   //global $user;
   //$type = 'resurses';
 /*  $node = (object) array(
-    'uid' => $user->uid,  
-    'name' => (isset($user->name) ? $user->name : ''),  
-    'type' => $type,  
+    'uid' => $user->uid,
+    'name' => (isset($user->name) ? $user->name : ''),
+    'type' => $type,
     'language' => LANGUAGE_NONE);*/
   // Loading node form with disabled scripts.
   //if (!$js) {
@@ -676,7 +802,7 @@ function examples_ctools_modal_review($js = FALSE) {
   //$output = ctools_modal_form_wrapper(drupal_get_form('resource_node_form'), $form_state);
   $output = ctools_modal_form_wrapper('idevels_add_resurses_form', $form_state);
   //$output = ctools_modal_form_wrapper('resource_node_form', $form_state);
-  // Actions after form submit. 
+  // Actions after form submit.
   if (!empty($form_state['executed'])) {
     $output = array();
     // Close pop up.
@@ -763,7 +889,7 @@ function idevels_add_resurses_form(&$form_state) {
   $form['#after_build'][] = '_load_my_javascript';
   $form['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Add'), 
+    '#value' => t('Add'),
   );
   return $form;
 }
@@ -844,6 +970,25 @@ function idevels_init() {
       l(t('Home'), NULL),
       l(drupal_get_title(),$path),
       t('Voting details')
+    ));
+  }
+
+  else if (arg(0) == 'node' && arg(2)=='edit') {
+    $path=arg(0).'/'.arg(1);
+    drupal_set_breadcrumb(array(
+      l(t('Home'), NULL),
+      l(drupal_get_title(),$path),
+      t('edit')
+    ));
+  }
+  $path = array();
+  $uri = trim(request_uri(), '/');
+  $path = explode('/', $uri);
+  if (in_array('groups', $path) && isset($path[1]) && isset($path[2])) {
+    drupal_set_breadcrumb(array(
+      l(t('Home'), NULL),
+      l(t('Groups'), 'groups'),
+      drupal_get_title(),
     ));
   }
 }

@@ -26,7 +26,11 @@
   <?php endif; ?>
 
   <?php if ($title): ?>
-    <h3 class="pane-title"><?php print $title; ?></h3>
+    <?php if ($title == t('Event report')): ?>
+      <h2 class="pane-title"><?php print $title; ?></h2>
+    <?php else: ?>
+      <h3 class="pane-title"><?php print $title; ?></h3>
+    <?php endif ?>
   <?php endif; ?>
 
   <?php if ($feeds): ?>
