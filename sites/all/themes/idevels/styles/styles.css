@@ -5002,7 +5002,7 @@ form#events-node-form.past-event #right-block #field_photos_values thead,
 form#events-node-form.past-event #right-block #field_photos_values thead tr,
 form#events-node-form.past-event #right-block #field_photos_values thead th {
   float: left;
-  max-height: 30px;
+  max-height: 12px;
 }
 form#events-node-form.past-event #right-block #field_photos_values .imagefield-preview {
   width: 50px;
