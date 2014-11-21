@@ -421,6 +421,7 @@ function _idevels_add_metatag($form, &$form_state) {
     $city = taxonomy_get_term($form['field_city']['#default_value'][0]['value'])->name ?: FALSE;
     $meta->data['keywords'] = $form['title']['#default_value'] ?: '';
     $meta->data['keywords'] .= $city ? ', ' . $city : '';
+    $meta->data['keywords'] .= $form['field_address'][0]['#default_value']['value'] ? ', ' . $form['field_address'][0]['#default_value']['value'] : '';
     $meta->data['keywords'] .= ', ' . t('Drupal events');
     $meta->data['keywords'] .= $form['field_event_date'][0]['#default_value']['value'] ? ', Drupal ' . strstr($form['field_event_date'][0]['#default_value']['value'], '-', TRUE) : '';
     $meta->data['keywords'] .= ($city && strstr($city, ', ')) ? ', Drupal ' . substr(strstr($city, ', '), 2) : '';
