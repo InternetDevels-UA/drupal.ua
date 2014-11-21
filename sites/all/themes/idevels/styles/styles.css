@@ -5542,6 +5542,14 @@ body.front
   margin-left: 20px;
 }
 
+.node-type-events .panel-bottom h3.pane-title {
+  margin-bottom: 15px;
+}
+
+.node-type-events .panel-bottom > div > div {
+  margin-bottom: 20px;
+}
+
 .view-profile-view.view-display-id-page_1 > .view-content {
   float: left;
   width: 275px;
