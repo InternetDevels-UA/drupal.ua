@@ -4989,9 +4989,34 @@ form#events-node-form.past-event #right-block #field_photos_values .tableHeader-
 form#events-node-form.past-event #right-block .sticky-header {
   display: none;
 }
-form#events-node-form.past-event #right-block #field_photos_values img {
+form#events-node-form.past-event #right-block #field_photos_values tbody tr {
+  float: left;
+  max-width: 70px;
+  max-height: 70px;
+}
+form#events-node-form.past-event #right-block #field_photos_values img,
+form#events-node-form.past-event #right-block #field_photos_values tbody td,
+form#events-node-form.past-event #right-block #field_photos_values tbody td div,
+form#events-node-form.past-event #right-block #field_photos_values .form-item {
+  float: left;
   max-width: 50px;
   max-height: 50px;
+}
+form#events-node-form.past-event #right-block #field_photos_values tbody tr {
+  float: left;
+  width: 60px;
+}
+form#events-node-form.past-event #right-block #field_photos_values thead,
+form#events-node-form.past-event #right-block #field_photos_values thead tr,
+form#events-node-form.past-event #right-block #field_photos_values thead th {
+  float: left;
+  max-height: 30px;
+}
+form#events-node-form.past-event #right-block #field_photos_values .imagefield-preview {
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  min-height: 50px;
 }
 form#events-node-form.past-event #right-block .form-file,
 form#events-node-form.past-event #right-block #add-video {
