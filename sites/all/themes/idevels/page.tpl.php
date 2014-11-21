@@ -4,7 +4,15 @@
 
 <head>
   <title><?php print $head_title; ?></title>
-  <?php print $head; ?>
+  <?php
+    $pieces = explode(' />', $head);
+    foreach ($pieces as $key => $value) {
+      if (strpos($value, '<meta name="dcterms.description"') !== FALSE || strpos($value, '<meta name="dcterms.date"') !== FALSE) {
+        unset($pieces[$key]);
+      }
+    }
+    print implode(' />', $pieces)
+   ?>
   <?php print $styles; ?>
   <?php print $scripts; ?>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC0IajOIjtieJ67ODTICSsr1ZVjqxra4A"></script>

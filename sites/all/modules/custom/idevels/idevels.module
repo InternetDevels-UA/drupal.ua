@@ -42,7 +42,25 @@ function idevels_menu() {
     'page arguments' => array('idevels_change_header_image_form'),
     'access arguments' => array('access administration pages'),
   );
+  $items['idevels-user/info'] = array(
+    'title' => 'Get user info',
+    'page callback' => 'idevels_get_userinfo',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
   return $items;
+}
+
+/**
+ * Ajax for user info (return username and avatar in json format)
+ */
+function idevels_get_userinfo() {
+  global $user;
+
+  $profile = node_load(array('uid'  => $user->uid,'type' => 'profile'));
+  $avatar = (empty($profile->field_image[0]['filepath']) ? theme('image', 'sites/default/files/dua.idevels.drupalcompany.com/imagecache/50x50/imagefield_default_images/no-image_1.jpg') : theme_imagecache('50x50', $profile->field_image[0]['filepath']));
+
+  drupal_json(array('user_name' => $user->name,'avatar' => $avatar));
 }
 
 /**
@@ -290,7 +308,7 @@ function idevels_views_pre_render(&$view) {
   elseif ($view->name == 'og_posts_list' && $view->current_display == 'block_1') {
     drupal_set_breadcrumb(array(
       l(t('Home'), NULL),
-      t('Groups'),
+      t('Last posts in groups')
     ));
   }
   elseif ($view->name == 'users' && $view->current_display == 'page_1') {
@@ -402,8 +420,34 @@ function idevels_form_alter(&$form, &$form_state, $form_id) {
     else {
       $form['#attributes']['class'] = 'future-event';
       $form['#validate'][] = 'idevels_events_date_validate';
+      $form['#submit'][] = '_idevels_add_metatag';
       drupal_set_title(t('Create event (title)'));
     }
+  }
+}
+
+/**
+ * Function submit (add metatag to event's page).
+ */
+function _idevels_add_metatag($form, &$form_state) {
+  if (module_exists('simplemeta')) {
+    $path = strstr($_GET['q'], '/edit', TRUE);
+
+    $meta = new stdClass();
+    $meta->path = $path;
+    $meta->data = array();
+    $meta->data['title'] = $form['title']['#default_value'] . ' | ' . t('Drupal events');
+
+    $city = taxonomy_get_term($form['field_city']['#default_value'][0]['value'])->name ?: FALSE;
+    $meta->data['keywords'] = $form['title']['#default_value'] ?: '';
+    $meta->data['keywords'] .= $city ? ', ' . $city : '';
+    $meta->data['keywords'] .= $form['field_address'][0]['#default_value']['value'] ? ', ' . $form['field_address'][0]['#default_value']['value'] : '';
+    $meta->data['keywords'] .= ', ' . t('Drupal events');
+    $meta->data['keywords'] .= $form['field_event_date'][0]['#default_value']['value'] ? ', Drupal ' . strstr($form['field_event_date'][0]['#default_value']['value'], '-', TRUE) : '';
+    $meta->data['keywords'] .= ($city && strstr($city, ', ')) ? ', Drupal ' . substr(strstr($city, ', '), 2) : '';
+
+    $meta->language = '';
+    simplemeta_meta_save($meta);
   }
 }
 

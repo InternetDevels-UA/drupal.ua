@@ -544,10 +544,10 @@ $(function () {
       return false;
     });
 
-    // Inicial video parser 
+    // Inicial video parser
     $('#field-videos-items .form-item .form-text').each(function () {
       if ($(this).val() != '') {
-        parseVideoURL($(this).val(), $(this).attr("id"));         
+        parseVideoURL($(this).val(), $(this).attr("id"));
       };
     });
 
@@ -565,9 +565,8 @@ $(function () {
   $(".node-type-events .pane-field-videos").hide();
 
   // if event not past disable link for view report
-  if ($(".node-type-events time.not-pastevent").length > 0) {
-    $("#link-event-overview").removeAttr('href');
-    $("#link-event-overview").addClass('expanded');
+if ($(".node-type-events time.not-pastevent").length > 0) {
+    $("#link-event-overview").hide();
     $("#add_event_report").hide();
   }
   // if event past hide I'll go button and change label for avatars
@@ -595,7 +594,7 @@ $(function () {
     return false;
   });
 
-  // IE hack for add image button 
+  // IE hack for add image button
   if (navigator.userAgent.match(/msie/i) || navigator.userAgent.match(/trident/i) ){
     var ua = window.navigator.userAgent;
     var msie = ua.indexOf("MSIE ");
@@ -605,7 +604,31 @@ $(function () {
       $('form#events-node-form.past-event #right-block img.form-file').click(function(event) {
         $(this).parent().find('input.form-file').trigger('click');
       });
-    } 
+    }
   }
 
+  // (Event page) Add user avatar if user push "I'll go" button
+  $(".node-type-events .panel-display .views-field-ops .flag-be-there a").live('mousedown', function(event) {
+    if (!$('.node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid').length) {
+      $('.node-type-events .panel-display .pane-events-panel-pane-3 .views-row-1').prepend('<div class="views-field-uid"></div>');
+    };
+    $.getJSON('/idevels-user/info', {format: "json"}, function(data) {
+      if ($(".node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid a[href='/users/"+data["user_name"]+"']").length) {
+        if ($(".node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid a[href='/users/"+data["user_name"]+"']").parent().parent().children().length < 2) {
+          $(".node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid a[href='/users/"+data["user_name"]+"']").parent().parent().addClass('empty');
+        };
+        $(".node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid a[href='/users/"+data["user_name"]+"']").parent().remove();
+      }
+      else {
+        if ($(".node-type-events .panel-display .pane-events-panel-pane-3 .views-row-1 .views-field-uid").hasClass('empty')) {
+          var avatar = $('<span id="ajax_avatar" class="field-content"><a>'+data["avatar"]+'</a></span>');
+        }
+        else {
+          var avatar = $('<span id="ajax_avatar" class="field-content" style="margin-right: 4px;"><a>'+data["avatar"]+'</a></span>');
+        }
+        $(".node-type-events .panel-display .pane-events-panel-pane-3 .views-row-1 .views-field-uid").prepend(avatar);
+        $('#ajax_avatar a').attr("href", '/users/'+data["user_name"]);
+      }
+    });
+  });
 });

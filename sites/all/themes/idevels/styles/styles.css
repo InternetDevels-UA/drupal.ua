@@ -294,6 +294,7 @@ ul.secondary-menu li a, ul.secondary-menu li.active-trail a {
 }
 .node .node-links .new {
   color:#FF3366;
+  display: none;
 }
 
 .node .taxonomy-links {
@@ -388,7 +389,7 @@ h1 .tag a, h2 .tag a, h1 .tag em, h2 .tag em {
 
 .node .node-links li:after {
   content:'/';
-  color:#a3a3a3;
+  color: transparent;
   padding:0 0 0 7px;
 }
 
@@ -2775,6 +2776,7 @@ h2.pane-title {
   width: 15px;
   padding-left: 0;
   text-align: center;
+  color: white;
 }
 #sidebar-right #block-views-question-block_2 .field-content{
   font-size: 10px;
@@ -3639,9 +3641,6 @@ form#user-register #edit-legal-accept-wrapper strong {
   width: 310px;
   padding-left: 0px;
   float: right;
-  background-image: url("../images/dot-v-2.png");
-  background-repeat: repeat-y;
-  background-position: top left;
 }
 
 #sidebar-right h3{
@@ -3664,14 +3663,19 @@ form#user-register #edit-legal-accept-wrapper strong {
 #sidebar-right .block:last-child {
   background-image: none;
 }
-/*.page-events */.view-Events .views-field-title{
+/*.page-events */.view-Events .views-field-title,
+                .view-Events .views-field-title h2 {
                    font: 28px 'PT Sans Narrow';
                    font-weight: 900;
 
                  }
-/*.page-events */.view-Events .views-field-title a{
+/*.page-events */.view-Events .views-field-title a,
+                .view-Events .views-field-title a h2 {
                    text-decoration: none;
                    color: #232323;
+                 }
+                 .view-Events .views-field-title a h2 {
+                  margin: 0;
                  }
 
 .page-events .views-row{
@@ -4787,10 +4791,14 @@ a.karma.up::after {
   position: relative;
   top: -15px;
 }
-.page-groups .group-subtitle a:first-child {
+.node-type-group .group-subtitle a:first-child,
+.page-groups .group-subtitle a:first-child,
+.node-type-group .group-subtitle img+a,
+.page-groups .group-subtitle img+a {
   color: black;
 }
-.page-groups .group-subtitle a:last-child {
+.page-groups .group-subtitle a+a,
+.node-type-group .group-subtitle a+a {
   font-style: italic;
 }
 form#events-node-form div > div > div.standard {
@@ -4923,7 +4931,7 @@ form#events-node-form #edit-title-wrapper .textarea-errors {
 form#events-node-form #edit-preview,
 form#events-node-form #edit-field-report-0-value-wrapper,
 form#events-node-form #edit-field-report-0-value-wrapper + a + div.textarea-identifier,
-form#events-node-form #field-photos-items, 
+form#events-node-form #field-photos-items,
 form#events-node-form #field-videos-items {
   display: none;
 }
@@ -5570,9 +5578,19 @@ body.front .pane-views,
   width: 100%;
 }
 
-.content img {
-  margin: 0px;
-  padding: 0px;
+.content img,
+.pane-node-body img {
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid #D5D3D3;
+}
+.content form img {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+span.node-title-prefix.group-subtitle img {
+  margin-right: 2px;
 }
 
 div.panel-pane div.node {
@@ -5734,8 +5752,25 @@ body.front
   margin-left: 20px;
 }
 
+.node-type-events .panel-bottom h3.pane-title {
+  margin-bottom: 15px;
+}
+
+.node-type-events .panel-bottom > div > div {
+  margin-bottom: 20px;
+}
 form#events-node-form.past-event #edit-field-report-0-value-wrapper .bue-ui {
   float: left;
+}
+.page-events .views-field-body {
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.page-events .views-field-field-city-value * {
+  display: inline;
+  font-style: normal;
 }
 
 .view-profile-view.view-display-id-page_1 > .view-content {
@@ -5768,4 +5803,13 @@ form#events-node-form.past-event #edit-field-report-0-value-wrapper .bue-ui {
 
 .view-profile-view .view-header p {
   margin-left: 100px;
+}
+.node-type-events #main .pane-field-photos .field-field-photos * {
+  display: inline-block;
+}
+
+.node-type-events #main .pane-field-photos .field-field-photos img {
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid #D5D3D3;
 }
