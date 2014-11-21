@@ -42,7 +42,25 @@ function idevels_menu() {
     'page arguments' => array('idevels_change_header_image_form'),
     'access arguments' => array('access administration pages'),
   );
+  $items['idevels-user/info'] = array(
+    'title' => 'Get user info',
+    'page callback' => 'idevels_get_userinfo',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
   return $items;
+}
+
+/**
+ * Ajax for user info (return username and avatar in json format)
+ */
+function idevels_get_userinfo() {
+  global $user;
+
+  $profile = node_load(array('uid'  => $user->uid,'type' => 'profile'));
+  $avatar = (empty($profile->field_image[0]['filepath']) ? theme('image', 'sites/default/files/dua.idevels.drupalcompany.com/imagecache/50x50/imagefield_default_images/no-image_1.jpg') : theme_imagecache('50x50', $profile->field_image[0]['filepath']));
+
+  drupal_json(array('user_name' => $user->name,'avatar' => $avatar));
 }
 
 /**
