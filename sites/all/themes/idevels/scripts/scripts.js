@@ -544,10 +544,10 @@ $(function () {
       return false;
     });
 
-    // Inicial video parser 
+    // Inicial video parser
     $('#field-videos-items .form-item .form-text').each(function () {
       if ($(this).val() != '') {
-        parseVideoURL($(this).val(), $(this).attr("id"));         
+        parseVideoURL($(this).val(), $(this).attr("id"));
       };
     });
 
@@ -619,7 +619,7 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
     });
   });
 
-  // IE hack for add image button 
+  // IE hack for add image button
   if (navigator.userAgent.match(/msie/i) || navigator.userAgent.match(/trident/i) ){
     var ua = window.navigator.userAgent;
     var msie = ua.indexOf("MSIE ");
@@ -629,7 +629,7 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
       $('form#events-node-form.past-event #right-block img.form-file').click(function(event) {
         $(this).parent().find('input.form-file').trigger('click');
       });
-    } 
+    }
   }
 
 });
