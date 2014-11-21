@@ -333,6 +333,26 @@
 	path = sites/all/modules/contrib/imageapi_optimize
 	url = http://git.drupal.org/project/imageapi_optimize.git
 	branch = 6.x-1.x
+[submodule "sites/all/modules/contrib/media_youtube"]
+	path = sites/all/modules/contrib/media_youtube
+	url = http://git.drupal.org/project/media_youtube.git
+	branch = 6.x-1.x
+[submodule "sites/all/modules/contrib/media_vimeo"]
+	path = sites/all/modules/contrib/media_vimeo
+	url = http://git.drupal.org/project/media_vimeo.git
+	branch = 6.x-1.x
+[submodule "sites/all/modules/contrib/colorbox"]
+	path = sites/all/modules/contrib/colorbox
+	url = http://git.drupal.org/project/colorbox.git
+	branch = 6.x-1.x
+[submodule "sites/all/modules/contrib/emfield"]
+	path = sites/all/modules/contrib/emfield
+	url = http://git.drupal.org/project/emfield.git
+	branch = 6.x-2.x
+[submodule "sites/all/modules/contrib/jquery_update"]
+	path = sites/all/modules/contrib/jquery_update
+	url = http://git.drupal.org/project/jquery_update.git
+	branch = 6.x-2.x
 [submodule "sites/all/modules/contrib/job_queue"]
 	path = sites/all/modules/contrib/job_queue
 	url = http://git.drupal.org/project/job_queue.git
