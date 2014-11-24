@@ -5154,6 +5154,13 @@ form#events-node-form.past-event #bue-ui-1 {
   float: left;
   clear: none;
 }
+form#events-node-form.past-event #edit-submit {
+  clear: left;
+  float: left;
+}
+form#events-node-form.past-event #edit-delete {
+  float: left;
+}
 .page-node .messages.error .item-list ul li {
   list-style: none;
 }
