@@ -96,6 +96,7 @@ function idevels_preprocess_page(&$vars) {
   if (preg_match('/events.+/', request_uri())) {
      if (!empty($node->body)) {
       $micro_data_description = strip_tags($node->body);
+      $micro_data_description = str_replace(array("\t","\n","\r"),'',$micro_data_description);
       $micro_data_description = substr($micro_data_description, 0, 200);
       $micro_data_description = substr($micro_data_description, 0, strrpos($micro_data_description, ' '));
     }
