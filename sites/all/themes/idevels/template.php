@@ -875,21 +875,22 @@ function idevels_preprocess_views_view_fields__Events__page(&$vars) {
           $term = taxonomy_get_term($field->raw);
           $name = $term->name;
           $pieces = explode(", ", $name);
-          $pieces[0] = $pieces[0] ? '<span itemprop="addressLocality">' . $pieces[0] . '</span>' : '';
+          $pieces[0] = $pieces[0] ? '<meta itemprop="addressLocality" content="' . $pieces[0] . '"/>' : '';
           if (count($pieces) > 1) {
-            $pieces[1] = '<span itemprop="addressCountry">' . $pieces[1] . '</span>';
+            $pieces[1] = '<meta itemprop="addressCountry"content="' . $pieces[1] . '"/>';
           }
-          $address = '<address itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">' . implode(', ', $pieces) . '</address>';
+          $address = '<address itemprop="location" itemscope itemtype="http://schema.org/Place">' . implode(', ', $pieces) . '</address>';
+          $address = '<address itemprop="location" itemscope itemtype="http://schema.org/Place"><div itemprop="name">' . $name . '<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">' . $pieces[1] . $pieces[0] . '</span>' . '</div>' . '</address>';
           $field->content = str_replace(">$name<", ">$address<", $field->content);
         }
         break;
 
       case 'field_event_price_value':
         if ($field->raw == t('Free')) {
-          $field->content = '<meta itemprop="priceCurrency" content="UAH"/><meta itemprop="price" content="0"/>';
+          $field->content = '<div itemprop="offers" itemscope itemtype="http://schema.org/Offer"><meta itemprop="priceCurrency" content="UAH"/><meta itemprop="price" content="0"/></div>';
         }
         else {
-          $field->content = '<meta itemprop="priceCurrency" content="UAH"/><meta itemprop="price" content="' . $field->raw . '"/>';
+          $field->content = '<div itemprop="offers" itemscope itemtype="http://schema.org/Offer"><meta itemprop="priceCurrency" content="UAH"/><meta itemprop="price" content="' . $field->raw . '"/></div>';
         }
         break;
 
