@@ -155,6 +155,7 @@ $(function () {
     $('#avatar-profile-form #edit-file').trigger('click');
   });
   $('#avatar-profile-form #edit-file').change(function () {
+    $('#edit-submit').attr('disabled', 'disabled');
     $('#avatar-profile-form .form-submit').trigger('click');
   });
   // Page change password.
