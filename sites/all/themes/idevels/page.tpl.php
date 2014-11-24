@@ -20,6 +20,7 @@
 </head>
 
 <body class="<?php print $body_classes; ?> sshow-grid" ">
+<?php if ($is_event_page): ?>
 <div style="height:0;width:0;overflow: hidden;" >
   <div itemscope itemtype="http://schema.org/Event" >
     <a itemprop="url" href="<?php print $micro_data_url; ?>"></a>
@@ -42,6 +43,7 @@
     </div>
   </div>
 </div>
+<?php  endif ;?>
 
 <div class="body-wrapper">
     <div id="page" class="page clear-block">
