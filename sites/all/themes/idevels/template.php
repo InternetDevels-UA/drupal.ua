@@ -87,12 +87,26 @@ function idevels_preprocess_page(&$vars) {
   elseif ($_GET['q'] == 'resources') {
     $vars['title'] = t('Resources');
   }
+  if (!empty($node->type) && $node->type == 'events') {
+    $vars['is_event_page'] = TRUE;
+  }
+  else {
+    $vars['is_event_page'] = FALSE;
+  }
   if (preg_match('/events.+/', request_uri())) {
+     if (!empty($node->body)) {
+      $micro_data_description = strip_tags($node->body);
+      $micro_data_description = substr($micro_data_description, 0, 200);
+      $micro_data_description = substr($micro_data_description, 0, strrpos($micro_data_description, ' '));
+    }
+    else {
+      $micro_data_description = '';
+    }
     //Get event type from taxonomy_term
     $event_type = taxonomy_get_term($node->field_event_type[0]['value']);
     $vars['micro_data_name'] = (!empty($event_type->name)) ? $event_type->name : '';
 
-    $vars['micro_data_description'] = $node->body;
+    $vars['micro_data_description'] = $micro_data_description;
     $vars['micro_data_image'] = (!empty($node->field_events_logo[0]['filepath'])) ? $node->field_events_logo[0]['filepath'] : '';
     $vars['micro_data_startDate'] = (!empty($node->field_event_date[0]['value'])) ? $node->field_event_date[0]['value'] : '';
     $vars['micro_data_endDate'] = (!empty($node->field_event_date[0]['value2'])) ? $node->field_event_date[0]['value2'] : '';
