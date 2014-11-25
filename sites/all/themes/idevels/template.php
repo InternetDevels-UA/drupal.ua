@@ -96,6 +96,7 @@ function idevels_preprocess_page(&$vars) {
   if (preg_match('/events.+/', request_uri())) {
      if (!empty($node->body)) {
       $micro_data_description = strip_tags($node->body);
+      $micro_data_description = str_replace(array("\t","\n","\r"),'',$micro_data_description);
       $micro_data_description = substr($micro_data_description, 0, 200);
       $micro_data_description = substr($micro_data_description, 0, strrpos($micro_data_description, ' '));
     }
@@ -105,11 +106,24 @@ function idevels_preprocess_page(&$vars) {
     //Get event type from taxonomy_term
     $event_type = taxonomy_get_term($node->field_event_type[0]['value']);
     $vars['micro_data_name'] = (!empty($event_type->name)) ? $event_type->name : '';
-
+    if (!empty($node->field_event_date[0]['value'])) {
+      $timestamp = strtotime($node->field_event_date[0]['value']);
+      $start_date = date('c', $timestamp);
+    }
+    else {
+      $start_date = '';
+    }
+    if (!empty($node->field_event_date[0]['value2'])) {
+      $timestamp = strtotime($node->field_event_date[0]['value2']);
+      $end_date = date('c', $timestamp);
+    }
+    else {
+      $end_date = '';
+    }
     $vars['micro_data_description'] = $micro_data_description;
     $vars['micro_data_image'] = (!empty($node->field_events_logo[0]['filepath'])) ? $node->field_events_logo[0]['filepath'] : '';
-    $vars['micro_data_startDate'] = (!empty($node->field_event_date[0]['value'])) ? $node->field_event_date[0]['value'] : '';
-    $vars['micro_data_endDate'] = (!empty($node->field_event_date[0]['value2'])) ? $node->field_event_date[0]['value2'] : '';
+    $vars['micro_data_startDate'] = $start_date;
+    $vars['micro_data_endDate'] = $end_date;
     $vars['micro_data_streetAddress'] = (!empty($node->field_address[0]['value'])) ? $node->field_address[0]['value'] : '';
     $vars['micro_data_priceCurrency'] = (!empty($node->field_event_price[0]['value'])) ? $node->field_event_price[0]['value'] : '';
 
