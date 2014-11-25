@@ -830,7 +830,7 @@ function idevels_preprocess_views_view_fields__Events__page(&$vars) {
   foreach ($vars['fields'] as $id => &$field) {
     switch ($id) {
       case 'field_event_date_value_2':
-        $field->content = substr_replace($field->content, 'itemprop="startDate" content="' . date("Y-m-d\TH:i:s", ((int) strtotime($field->raw)) + 2 * 60 * 60) . '" ', 5, 0);
+        $field->content = substr_replace($field->content, 'itemprop="startDate" content="' . date("c", strtotime($field->raw)) . '" ', 5, 0);
         break;
 
       case 'title':
