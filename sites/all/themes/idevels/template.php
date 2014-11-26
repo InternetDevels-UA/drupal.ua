@@ -872,7 +872,7 @@ function idevels_preprocess_views_view_fields__Events__page(&$vars) {
   foreach ($vars['fields'] as $id => &$field) {
     switch ($id) {
       case 'field_event_date_value_2':
-        $field->content = substr_replace($field->content, 'itemprop="startDate" content="' . $field->raw . '" ', 5, 0);
+        $field->content = substr_replace($field->content, 'itemprop="startDate" content="' . date("c", strtotime($field->raw)) . '" ', 5, 0);
         break;
 
       case 'title':
@@ -893,8 +893,10 @@ function idevels_preprocess_views_view_fields__Events__page(&$vars) {
           if (count($pieces) > 1) {
             $pieces[1] = '<meta itemprop="addressCountry"content="' . $pieces[1] . '"/>';
           }
-          $address = '<address itemprop="location" itemscope itemtype="http://schema.org/Place">' . implode(', ', $pieces) . '</address>';
-          $address = '<address itemprop="location" itemscope itemtype="http://schema.org/Place"><div itemprop="name">' . $name . '<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">' . $pieces[1] . $pieces[0] . '</span>' . '</div>' . '</address>';
+          if ($vars['fields']['field_address_value']->raw) {
+            $pieces[] = '<meta itemprop="streetAddress"  content="' . $vars['fields']['field_address_value']->raw . '"/>';
+          }
+          $address = '<address itemprop="location" itemscope itemtype="http://schema.org/Place"><div>' . $name . '<meta itemprop="name" content="' . $vars['fields']['field_address_value']->raw . '">' . '<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">' . implode('', $pieces) . '</span>' . '</div>' . '</address>';
           $field->content = str_replace(">$name<", ">$address<", $field->content);
         }
         break;

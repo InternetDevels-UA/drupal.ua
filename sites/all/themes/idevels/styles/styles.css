@@ -3684,6 +3684,10 @@ form#user-register #edit-legal-accept-wrapper strong {
   font-family: 'PT Sans';
 }
 
+.page-events .views-field-field-address-value {
+  display: none;
+}
+
 .add-events{
   display: block;
   margin-top: 20px;
