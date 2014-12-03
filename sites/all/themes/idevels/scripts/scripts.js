@@ -632,4 +632,10 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
       }
     });
   });
+
+  // Select neutral language and hide selectbox
+  if (window.location.pathname == '/node/add/post') {
+    $('select#edit-language').val($("select#edit-language option:first").val());
+    $('#edit-language-wrapper').hide();
+  };
 });
