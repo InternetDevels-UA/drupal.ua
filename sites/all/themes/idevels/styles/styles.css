@@ -3683,7 +3683,11 @@ form#user-register #edit-legal-accept-wrapper strong {
 .page-events .views-field-field-address-value {
   display: none;
 }
+<<<<<<< HEAD
 
+=======
+.add-post,
+>>>>>>> 221
 .add-events{
   display: block;
   margin-top: 20px;
@@ -3702,6 +3706,11 @@ form#user-register #edit-legal-accept-wrapper strong {
   width: 236px;
   float: right;
 }
+.add-post {
+  margin: 0 !important;
+  width: auto !important;
+}
+.add-post:hover,
 .add-events:hover{
   text-decoration: none;
 }
