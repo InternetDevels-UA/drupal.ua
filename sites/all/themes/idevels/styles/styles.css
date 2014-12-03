@@ -2513,11 +2513,7 @@ h2.title{
   max-width: 1240px;
 }
 .node .meta-links{
-<<<<<<< HEAD
 /*  margin-top: 30px;*/
-=======
-  /*margin-top: 30px;*/
->>>>>>> 157
   padding-bottom: 25px;
   margin-bottom: -20px;
 }
@@ -3683,11 +3679,7 @@ form#user-register #edit-legal-accept-wrapper strong {
 .page-events .views-field-field-address-value {
   display: none;
 }
-<<<<<<< HEAD
-
-=======
 .add-post,
->>>>>>> 221
 .add-events{
   display: block;
   margin-top: 20px;
