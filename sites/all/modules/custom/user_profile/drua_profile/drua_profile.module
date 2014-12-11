@@ -109,6 +109,7 @@ function drua_profile_block($op = 'list', $delta = 0, $edit = array()) {
         'idevels_blockfooter' => array('info' => t('Footer: Block with all information.')),
         'last_comments' => array('info' => t('Last comments')),
         'top_cities_by_events' => array('info' => t('Top cities by events')),
+        'count_users_who_will_go_to_event' => array('info' => t('Count users who will go to event')),
         'notification_block' => array('info' => t('Notification about development instruction')),
         'og_most_popular_groups' => array('info' => t('Most popular group')),
       );
@@ -420,6 +421,12 @@ function drua_profile_block($op = 'list', $delta = 0, $edit = array()) {
           return array(
             'title' => t('Cities'),
             'content' => _drua_profile_top_cities_by_events(),
+          );
+          break;
+        case 'count_users_who_will_go_to_event':
+          return array(
+            'title' => t('Count users who will go to event'),
+            'content' => _drua_profile_count_users_who_will_go_to_event(),
           );
           break;
         case 'og_most_popular_groups':
@@ -908,6 +915,12 @@ function _drua_profile_top_cities_by_events() {
     $cities[] = "<div class='views-row'><div class='views-field-name'><span class='field-content'><a href='/events?city={$row['name']}'>{$city}</a></span></div></div>";
   }
   return implode($cities);
+}
+
+function _drua_profile_count_users_who_will_go_to_event() {
+  $result = db_query('SELECT COUNT(*) FROM `flag_content` WHERE `content_id` = %s', (string) arg(1));
+  $count = db_fetch_array($result);
+  return format_plural($count['COUNT(*)'], t('1 user'), '@count users');
 }
 
 /**
