@@ -5418,7 +5418,6 @@ body.page-user .view-id-profile_view .views-field-field-bio-value label {
 #block-menu-secondary-links .menu a .tile-title {
   font-family: 'PT Sans';
 }
-
 #block-drua_profile-notification_block {
   display: block;
   height: auto;
@@ -5707,15 +5706,26 @@ body.front
 .pane-events-panel-pane-2 .view-Events .views-row {
   padding: 0;
 }
-.pane-events-panel-pane-2 .view-Events label {
+.pane-events-panel-pane-2 .view-Events label,
+.field-count-users h3 {
   display: inline-block;
   width: 180px;
 }
 .pane-events-panel-pane-2 .view-Events .views-row > div {
   margin: 10px 0 5px;
 }
-.pane-events-panel-pane-2 .view-Events .views-row > div:first-child {
-  margin-top: 0;
+.field-count-users {
+  margin: 10px 0;
+}
+.field-count-users h3 {
+  font-size: 15px !important;
+  font-weight: bold;
+  font-family: 'Pt Sans',Arial,Verdana,sans-serif;
+}
+.field-count-users h3,
+.field-count-users div {
+  margin: 0;
+  display: inline-block;
 }
 .pane-events-panel-pane-2 .view-Events .views-field-ops a {
   margin: 5px 0;
