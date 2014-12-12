@@ -596,28 +596,19 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
   });
   
   // (Event page) Add user avatar if user push "I'll go" button
-  $(".node-type-events .panel-display .views-field-ops .flag-be-there a").live('mousedown', function(event) {
-    if (!$('.node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid').length) {
-      $('.node-type-events .panel-display .pane-events-panel-pane-3 .views-row-1').prepend('<div class="views-field-uid"></div>');
-    };
-    $.getJSON('/idevels-user/info', {format: "json"}, function(data) {
-      if ($(".node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid a[href='/users/"+data["user_name"]+"']").length) {
-        if ($(".node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid a[href='/users/"+data["user_name"]+"']").parent().parent().children().length < 2) {
-          $(".node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid a[href='/users/"+data["user_name"]+"']").parent().parent().addClass('empty');
-        };
-        $(".node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid a[href='/users/"+data["user_name"]+"']").parent().remove();
-      }
-      else {
-        if ($(".node-type-events .panel-display .pane-events-panel-pane-3 .views-row-1 .views-field-uid").hasClass('empty')) {
-          var avatar = $('<span id="ajax_avatar" class="field-content"><a>'+data["avatar"]+'</a></span>');
+  $(".node-type-events .panel-display .views-field-ops .flag-be-there").live('mousedown', function(event) {
+    var nid = parseInt($(".node-type-events .panel-display .views-field-ops .flag-be-there").attr("class").replace(/[^0-9]/gi, ''));
+    setTimeout(function(){
+      $.getJSON('/node/count-flags/' + nid, {format: "json"}, function(data) {
+        var new_num = (data['count_flag']['be_there'] == undefined) ? 0 : data['count_flag']['be_there'];
+        if (new_num == 1) {
+          $('.field-count-users .pane-content').text(Drupal.t('1 userflag'));
         }
         else {
-          var avatar = $('<span id="ajax_avatar" class="field-content" style="margin-right: 4px;"><a>'+data["avatar"]+'</a></span>');
+          $('.field-count-users .pane-content').text(new_num + ' ' + Drupal.t('users'));
         }
-        $(".node-type-events .panel-display .pane-events-panel-pane-3 .views-row-1 .views-field-uid").prepend(avatar);
-        $('#ajax_avatar a').attr("href", '/users/'+data["user_name"]);
-      }
-    });
+      });
+    },200);
   });
 
   // IE hack for add image button
