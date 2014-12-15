@@ -48,7 +48,77 @@ function idevels_menu() {
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
+  $items['register-to-event'] = array(
+    'title' => 'Register for event',
+    'page callback' => 'idevels_event_register',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['node-user-info'] = array(
+    'title' => 'Info about user and curent node',
+    'page callback' => 'idevels_node_user_info',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
   return $items;
+}
+
+/**
+ * Return nid of current node and current user info.
+ */
+function idevels_node_user_info() {
+  global $user;
+  $profile = node_load(array('uid' => $user->uid, 'type' => 'profile'));
+  $alias_array = array_values(parse_url($_SERVER['HTTP_REFERER']));
+  $path = drupal_get_normal_path(substr($alias_array[2], 1));
+  $nid_array = explode('/', $path);
+  drupal_json(array(
+    'nid' => $nid_array[1],
+    'first_name' => $profile->field_first_name[0]['value'],
+    'last_name' => $profile->field_last_name[0]['value'],
+    'email' => $user->mail)
+  );
+
+}
+
+/**
+ * Ajax for register user to event.
+ */
+function idevels_event_register() {
+  module_load_include('node');
+
+  if (!empty($_POST)) {
+    $event_nid = $_POST['field_event_nid'];
+    $first_name = $_POST['field_name'];
+    $last_name = $_POST['field_lastname'];
+    $email = $_POST['field_email'];
+    $occupation_tid = (int) $_POST['field_occupation']['value'];
+    $occupation_info = $_POST['field_occupation_info'];
+    $where_you_hear_tid = (int) $_POST['field_where_you_hear']['value'];
+    $where_you_hear_info = $_POST['field_where_you_hear_info'];
+    $additional_info = $_POST['field_additional_info'];
+
+    foreach ($_POST as $key => $value) {
+      watchdog($key, $value[0]['value']);
+    }
+
+    $node = (object) array(
+      'type' => 'user_event_application',
+      'uid' => $user->uid,
+      'title' => 'Event register request',
+      'body' => '',
+      'field_event_nid' => $event_nid,
+      'field_name' => $first_name,
+      'field_lastname' => $last_name,
+      'field_email' => $email,
+      'field_occupation' => array(0 => array('value' => $occupation_tid)),
+      'field_occupation_info' => $occupation_info,
+      'field_where_you_hear' => array(0 => array('value' => $where_you_hear_tid)),
+      'field_where_you_hear_info' => $where_you_hear_info,
+      'field_additional_info' => $additional_info,
+    );
+    node_save($node);
+  }
 }
 
 /**
