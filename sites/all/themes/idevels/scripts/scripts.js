@@ -609,7 +609,7 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
   }
 
   // Remove spaces from block "drua_profile_count_users_who_will_go_to_event".
-  //$('.field-count-users .pane-content').text($.trim($('.field-count-users .pane-content').text()));
+  $('.field-count-users .pane-content').text($.trim($('.field-count-users .pane-content').text()));
 
   // (Event page) Add user avatar if user push "I'll go" button
   $(".node-type-events .panel-display .views-field-ops .flag-be-there").live('mousedown', function(event) {
