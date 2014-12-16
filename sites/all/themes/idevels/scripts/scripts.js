@@ -640,6 +640,31 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
   };
 
   $('#register-for-event').click(function(event) {
+
+    function get_object_value_by_key(obj, value) {
+      for(var key in obj) {
+        if (obj.hasOwnProperty(key) && obj[key] === value) {
+          return key;
+        }
+      }
+      return false;
+    };
+
+    var occupation_option = '';
+    var where_did_you_hear_about_event_option = '';
+
+    for(var tid in Drupal.settings.taxonomy_occupation) {
+      if (Drupal.settings.taxonomy_occupation.hasOwnProperty(tid)) {
+        occupation_option += '<option value="' + tid + '">' + Drupal.settings.taxonomy_occupation[tid] + '</option>';
+      }
+    }
+
+    for(var tid in Drupal.settings.taxonomy_where_did_you_hear_about_event) {
+      if (Drupal.settings.taxonomy_where_did_you_hear_about_event.hasOwnProperty(tid)) {
+        where_did_you_hear_about_event_option += '<option value="' + tid + '">' + Drupal.settings.taxonomy_where_did_you_hear_about_event[tid] + '</option>';
+      }
+    }
+
     var html = ' \
       <form id="ajax-event-register" accept-charset="UTF-8" method="post" enctype="multipart/form-data"> \
         <h3>'+Drupal.t("Register for event")+':</h3> \
@@ -653,24 +678,12 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
         <input type="text" maxlength="80" name="field_email[0][value]" id="edit-field-email-0-value" size="80" value="" class="form-text required text"> \
         <label for="edit-field-occupation-value">'+Drupal.t("Occupation")+':<span class="red">*</span></label> \
         <select name="field_occupation[value]" class="form-select required" id="edit-field-occupation-value"> \
-          <option value="" selected="selected">- Немає -</option> \
-          <option value="2507">інше</option> \
-          <option value="2503">навчаюсь</option> \
-          <option value="2504">працюю у компанії</option> \
-          <option value="2506">у пошуках роботи</option> \
-          <option value="2505">фрілансер</option> \
-        </select> \
+          <option value="" selected="selected">- Немає -</option>'+occupation_option+'</select> \
         <label for="edit-field-occupation-info-0-value" class="hide">'+Drupal.t("Occupation info")+':</label> \
         <input type="text" maxlength="80" name="field_occupation_info[0][value]" id="edit-field-occupation-info-0-value" size="80" value="" class="form-text text hide"> \
         <label for="edit-field-where-you-hear-value">'+Drupal.t("How did you know about this event?")+':<span class="red">*</span></label> \
         <select name="field_where_you_hear[value]" class="form-select required" id="edit-field-where-you-hear-value"> \
-          <option value="" selected="selected">- Немає -</option> \
-          <option value="2500">інформаційний сайт</option> \
-          <option value="2502">інше</option> \
-          <option value="2501">афіші</option> \
-          <option value="2498">знайомі</option> \
-          <option value="2499">соц.мережі</option> \
-        </select> \
+          <option value="" selected="selected">- Немає -</option>'+where_did_you_hear_about_event_option+'</select> \
         <label for="edit-field-where-you-hear-info-0-value" class="hide">'+Drupal.t("How did you know about this event? Details")+':</label> \
         <input type="text" maxlength="80" name="field_where_you_hear_info[0][value]" id="edit-field-where-you-hear-info-0-value" size="80" value="" class="form-text text hide"> \
         <label for="edit-field-additional-info-0-value">'+Drupal.t("Additional info")+':</label> \
@@ -683,19 +696,19 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
     $overlay.html(html);
     $overlay.appendTo($('body'));
 
-    $.getJSON('/node-user-info', {format: "json"}, function(data) {
-      $('#edit-field-event-nid-0-value').val(data['nid']);
-      $('#edit-field-name-0-value').val(data['first_name']);
-      $('#edit-field-lastname-0-value').val(data['last_name']);
-      $('#edit-field-email-0-value').val(data['email']);
-    });
+    $('#edit-field-event-nid-0-value').val(Drupal.settings.nid);
+    $('#edit-field-name-0-value').val(Drupal.settings.user_first_name);
+    $('#edit-field-lastname-0-value').val(Drupal.settings.user_last_name);
+    $('#edit-field-email-0-value').val(Drupal.settings.user_email);
 
     $('#ajax-event-register-cancel').click(function(event) {
       $overlay.remove();
       return false;
     });
+
     $('#edit-field-occupation-value').change(function(event) {
-      if ($(this).val() == 2507) {
+      //if ($(this).val() == 2507) {
+      if ($(this).val() == get_object_value_by_key(Drupal.settings.taxonomy_occupation, 'інше')) {
         $('#edit-field-occupation-info-0-value').show();
         $('#edit-field-occupation-info-0-value').prev().show();
       }
@@ -705,7 +718,7 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
       }
     });
     $('#edit-field-where-you-hear-value').change(function(event) {
-      if ($(this).val() == 2502) {
+      if ($(this).val() == get_object_value_by_key(Drupal.settings.taxonomy_where_did_you_hear_about_event, 'інше')) {
         $('#edit-field-where-you-hear-info-0-value').show();
         $('#edit-field-where-you-hear-info-0-value').prev().show();
       }

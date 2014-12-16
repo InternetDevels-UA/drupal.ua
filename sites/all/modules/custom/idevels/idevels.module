@@ -54,31 +54,7 @@ function idevels_menu() {
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
-  $items['node-user-info'] = array(
-    'title' => 'Info about user and curent node',
-    'page callback' => 'idevels_node_user_info',
-    'access arguments' => array('access content'),
-    'type' => MENU_CALLBACK,
-  );
   return $items;
-}
-
-/**
- * Return nid of current node and current user info.
- */
-function idevels_node_user_info() {
-  global $user;
-  $profile = node_load(array('uid' => $user->uid, 'type' => 'profile'));
-  $alias_array = array_values(parse_url($_SERVER['HTTP_REFERER']));
-  $path = drupal_get_normal_path(substr($alias_array[2], 1));
-  $nid_array = explode('/', $path);
-  drupal_json(array(
-    'nid' => $nid_array[1],
-    'first_name' => $profile->field_first_name[0]['value'],
-    'last_name' => $profile->field_last_name[0]['value'],
-    'email' => $user->mail)
-  );
-
 }
 
 /**
@@ -1087,6 +1063,30 @@ function idevels_add_resurses_form_submit($form, &$form_state) {
 }
 
 function idevels_init() {
+  global $user;
+  $node = menu_get_object();
+  $profile = node_load(array('uid' => $user->uid, 'type' => 'profile'));
+
+  $occupation_terms = array();
+  $where_did_you_hear_about_event_terms = array();
+
+  foreach (taxonomy_get_tree(14) as $value) {
+    $occupation_terms[$value->tid] = $value->name;
+  }
+
+  foreach (taxonomy_get_tree(13) as $value) {
+    $where_did_you_hear_about_event_terms[$value->tid] = $value->name;
+  }
+
+  drupal_add_js(array(
+    'nid' => $node->nid,
+    'user_first_name' => $profile->field_first_name[0]['value'],
+    'user_last_name' => $profile->field_last_name[0]['value'],
+    'user_email' => $user->mail,
+    'taxonomy_occupation' => $occupation_terms,
+    'taxonomy_where_did_you_hear_about_event' => $where_did_you_hear_about_event_terms,
+    ), 'setting');
+
   $path=request_uri();
   $arg = drupal_get_destination();
   if ($path=='/node/add/question' ||$path=='/node/add/question/'){
