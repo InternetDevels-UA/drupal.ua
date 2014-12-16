@@ -1079,8 +1079,8 @@ function idevels_init() {
 
   $occupation_terms = array();
   $where_did_you_hear_about_event_terms = array();
-  $occupation_vid = idevels_get_vocabulary_by_name('occupation')->vid;
-  $where_did_you_hear_about_event_vid = idevels_get_vocabulary_by_name('where did you hear about event')->vid;
+  $occupation_vid = is_object(idevels_get_vocabulary_by_name('occupation')) ? idevels_get_vocabulary_by_name('occupation')->vid : FALSE;
+  $where_did_you_hear_about_event_vid = is_object(idevels_get_vocabulary_by_name('where did you hear about event')) ? idevels_get_vocabulary_by_name('where did you hear about event')->vid : FALSE;
 
   foreach (taxonomy_get_tree($occupation_vid) as $value) {
     $occupation_terms[$value->tid] = $value->name;
