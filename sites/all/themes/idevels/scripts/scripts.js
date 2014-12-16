@@ -627,4 +627,125 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
     $('select#edit-language').val($("select#edit-language option:first").val());
     $('#edit-language-wrapper').hide();
   };
+
+  $('#register-for-event').click(function(event) {
+
+    function get_object_value_by_key(obj, value) {
+      for(var key in obj) {
+        if (obj.hasOwnProperty(key) && obj[key] === value) {
+          return key;
+        }
+      }
+      return false;
+    };
+
+    var occupation_option = '';
+    var where_did_you_hear_about_event_option = '';
+
+    for(var tid in Drupal.settings.taxonomy_occupation) {
+      if (Drupal.settings.taxonomy_occupation.hasOwnProperty(tid)) {
+        occupation_option += '<option value="' + tid + '">' + Drupal.settings.taxonomy_occupation[tid] + '</option>';
+      }
+    }
+
+    for(var tid in Drupal.settings.taxonomy_where_did_you_hear_about_event) {
+      if (Drupal.settings.taxonomy_where_did_you_hear_about_event.hasOwnProperty(tid)) {
+        where_did_you_hear_about_event_option += '<option value="' + tid + '">' + Drupal.settings.taxonomy_where_did_you_hear_about_event[tid] + '</option>';
+      }
+    }
+
+    var html = ' \
+      <form id="ajax-event-register" accept-charset="UTF-8" method="post" enctype="multipart/form-data"> \
+        <h3>'+Drupal.t("Register for event")+':</h3> \
+        <div id="js-error-box" class="messages error hide"><ul></ul></div> \
+        <input type="text" maxlength="80" name="field_event_nid[0][value]" id="edit-field-event-nid-0-value" size="80" value="" class="form-text required text hide"> \
+        <label for="edit-field-name-0-value">'+Drupal.t("Name")+':<span class="red">*</span></label> \
+        <input type="text" maxlength="80" name="field_name[0][value]" id="edit-field-name-0-value" size="80" value="" class="form-text required text"> \
+        <label for="edit-field-lastname-0-value">'+Drupal.t("Last name")+':<span class="red">*</span></label> \
+        <input type="text" maxlength="80" name="field_lastname[0][value]" id="edit-field-lastname-0-value" size="80" value="" class="form-text required text"> \
+        <label for="edit-field-email-0-value">'+Drupal.t("Email")+':<span class="red">*</span></label> \
+        <input type="text" maxlength="80" name="field_email[0][value]" id="edit-field-email-0-value" size="80" value="" class="form-text required text"> \
+        <label for="edit-field-occupation-value">'+Drupal.t("Occupation")+':<span class="red">*</span></label> \
+        <select name="field_occupation[value]" class="form-select required" id="edit-field-occupation-value"> \
+          <option value="" selected="selected">- Немає -</option>'+occupation_option+'</select> \
+        <label for="edit-field-occupation-info-0-value" class="hide">'+Drupal.t("Occupation info")+':</label> \
+        <input type="text" maxlength="80" name="field_occupation_info[0][value]" id="edit-field-occupation-info-0-value" size="80" value="" class="form-text text hide"> \
+        <label for="edit-field-where-you-hear-value">'+Drupal.t("How did you know about this event?")+':<span class="red">*</span></label> \
+        <select name="field_where_you_hear[value]" class="form-select required" id="edit-field-where-you-hear-value"> \
+          <option value="" selected="selected">- Немає -</option>'+where_did_you_hear_about_event_option+'</select> \
+        <label for="edit-field-where-you-hear-info-0-value" class="hide">'+Drupal.t("How did you know about this event? Details")+':</label> \
+        <input type="text" maxlength="80" name="field_where_you_hear_info[0][value]" id="edit-field-where-you-hear-info-0-value" size="80" value="" class="form-text text hide"> \
+        <label for="edit-field-additional-info-0-value">'+Drupal.t("Additional info")+':</label> \
+        <textarea cols="60" rows="5" name="field_additional_info[0][value]" id="edit-field-additional-info-0-value" class="form-textarea resizable textarea-processed"></textarea> \
+        <input type="submit" name="op" id="edit-submit" value="Зареєструватися" class="form-submit"> \
+        <button id="ajax-event-register-cancel"></button> \
+      </form>';
+    html = $.trim(html);
+    $overlay = $('<div id="overlay"></div>');
+    $overlay.html(html);
+    $overlay.appendTo($('body'));
+
+    $('#edit-field-event-nid-0-value').val(Drupal.settings.nid);
+    $('#edit-field-name-0-value').val(Drupal.settings.user_first_name);
+    $('#edit-field-lastname-0-value').val(Drupal.settings.user_last_name);
+    $('#edit-field-email-0-value').val(Drupal.settings.user_email);
+
+    $('#ajax-event-register-cancel').click(function(event) {
+      $overlay.remove();
+      return false;
+    });
+
+    $('#edit-field-occupation-value').change(function(event) {
+      //if ($(this).val() == 2507) {
+      if ($(this).val() == get_object_value_by_key(Drupal.settings.taxonomy_occupation, 'інше')) {
+        $('#edit-field-occupation-info-0-value').show();
+        $('#edit-field-occupation-info-0-value').prev().show();
+      }
+      else {
+        $('#edit-field-occupation-info-0-value').hide();
+        $('#edit-field-occupation-info-0-value').prev().hide();
+      }
+    });
+    $('#edit-field-where-you-hear-value').change(function(event) {
+      if ($(this).val() == get_object_value_by_key(Drupal.settings.taxonomy_where_did_you_hear_about_event, 'інше')) {
+        $('#edit-field-where-you-hear-info-0-value').show();
+        $('#edit-field-where-you-hear-info-0-value').prev().show();
+      }
+      else {
+        $('#edit-field-where-you-hear-info-0-value').hide();
+        $('#edit-field-where-you-hear-info-0-value').prev().hide();
+      }
+    });
+
+    $('#ajax-event-register').submit(function(event) {
+      event.preventDefault();
+      var errors = false;
+      $('#js-error-box ul').empty();
+      $.each($('#ajax-event-register .required'), function(index, val) {
+        $(this).removeClass('error');
+        if ($(this).val().length == 0) {
+          $(this).addClass('error');
+          $('#js-error-box ul').append('<li>' + $(this).prev().text() + ' ' + Drupal.t("Is required") + '</li>');
+          errors = true;
+        };
+      });
+      if (errors) {
+        $('#js-error-box').removeClass('hide');
+        event.preventDefault();
+        return false;
+      };
+
+      $('#edit-title').text('test');
+      $.ajax({
+        type: "POST",
+        url: "/register-to-event",
+        data: $(this).serialize(),
+        success: function(data) {
+          $overlay.remove();
+        }
+      });
+      return false;
+    });
+  });
+
 });

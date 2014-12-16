@@ -49,7 +49,53 @@ function idevels_menu() {
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
+  $items['register-to-event'] = array(
+    'title' => 'Register for event',
+    'page callback' => 'idevels_event_register',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
   return $items;
+}
+
+/**
+ * Ajax for register user to event.
+ */
+function idevels_event_register() {
+  module_load_include('node');
+
+  if (!empty($_POST)) {
+    $event_nid = $_POST['field_event_nid'];
+    $first_name = $_POST['field_name'];
+    $last_name = $_POST['field_lastname'];
+    $email = $_POST['field_email'];
+    $occupation_tid = (int) $_POST['field_occupation']['value'];
+    $occupation_info = $_POST['field_occupation_info'];
+    $where_you_hear_tid = (int) $_POST['field_where_you_hear']['value'];
+    $where_you_hear_info = $_POST['field_where_you_hear_info'];
+    $additional_info = $_POST['field_additional_info'];
+
+    foreach ($_POST as $key => $value) {
+      watchdog($key, $value[0]['value']);
+    }
+
+    $node = (object) array(
+      'type' => 'user_event_application',
+      'uid' => $user->uid,
+      'title' => 'Event register request',
+      'body' => '',
+      'field_event_nid' => $event_nid,
+      'field_name' => $first_name,
+      'field_lastname' => $last_name,
+      'field_email' => $email,
+      'field_occupation' => array(0 => array('value' => $occupation_tid)),
+      'field_occupation_info' => $occupation_info,
+      'field_where_you_hear' => array(0 => array('value' => $where_you_hear_tid)),
+      'field_where_you_hear_info' => $where_you_hear_info,
+      'field_additional_info' => $additional_info,
+    );
+    node_save($node);
+  }
 }
 
 /**
@@ -1021,7 +1067,43 @@ function idevels_add_resurses_form_submit($form, &$form_state) {
   print ctools_ajax_render($output);
 }
 
+function idevels_get_vocabulary_by_name($vocabulary_name) {
+  $vocabs = taxonomy_get_vocabularies(NULL);
+  foreach ($vocabs as $vocab_object) {
+    if ($vocab_object->name == $vocabulary_name) {
+      return $vocab_object;
+    }
+  }
+  return NULL;
+}
+
 function idevels_init() {
+  global $user;
+  $node = menu_get_object();
+  $profile = node_load(array('uid' => $user->uid, 'type' => 'profile'));
+
+  $occupation_terms = array();
+  $where_did_you_hear_about_event_terms = array();
+  $occupation_vid = is_object(idevels_get_vocabulary_by_name('occupation')) ? idevels_get_vocabulary_by_name('occupation')->vid : FALSE;
+  $where_did_you_hear_about_event_vid = is_object(idevels_get_vocabulary_by_name('where did you hear about event')) ? idevels_get_vocabulary_by_name('where did you hear about event')->vid : FALSE;
+
+  foreach (taxonomy_get_tree($occupation_vid) as $value) {
+    $occupation_terms[$value->tid] = $value->name;
+  }
+
+  foreach (taxonomy_get_tree($where_did_you_hear_about_event_vid) as $value) {
+    $where_did_you_hear_about_event_terms[$value->tid] = $value->name;
+  }
+
+  drupal_add_js(array(
+    'nid' => $node->nid,
+    'user_first_name' => $profile->field_first_name[0]['value'],
+    'user_last_name' => $profile->field_last_name[0]['value'],
+    'user_email' => $user->mail,
+    'taxonomy_occupation' => $occupation_terms,
+    'taxonomy_where_did_you_hear_about_event' => $where_did_you_hear_about_event_terms,
+    ), 'setting');
+
   $path=request_uri();
   $arg = drupal_get_destination();
   if ($path=='/node/add/question' ||$path=='/node/add/question/'){
