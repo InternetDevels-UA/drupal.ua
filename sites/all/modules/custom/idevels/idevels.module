@@ -1062,6 +1062,16 @@ function idevels_add_resurses_form_submit($form, &$form_state) {
   print ctools_ajax_render($output);
 }
 
+function idevels_get_vocabulary_by_name($vocabulary_name) {
+  $vocabs = taxonomy_get_vocabularies(NULL);
+  foreach ($vocabs as $vocab_object) {
+    if ($vocab_object->name == $vocabulary_name) {
+      return $vocab_object;
+    }
+  }
+  return NULL;
+}
+
 function idevels_init() {
   global $user;
   $node = menu_get_object();
@@ -1069,12 +1079,14 @@ function idevels_init() {
 
   $occupation_terms = array();
   $where_did_you_hear_about_event_terms = array();
+  $occupation_vid = idevels_get_vocabulary_by_name('occupation')->vid;
+  $where_did_you_hear_about_event_vid = idevels_get_vocabulary_by_name('where did you hear about event')->vid;
 
-  foreach (taxonomy_get_tree(14) as $value) {
+  foreach (taxonomy_get_tree($occupation_vid) as $value) {
     $occupation_terms[$value->tid] = $value->name;
   }
 
-  foreach (taxonomy_get_tree(13) as $value) {
+  foreach (taxonomy_get_tree($where_did_you_hear_about_event_vid) as $value) {
     $where_did_you_hear_about_event_terms[$value->tid] = $value->name;
   }
 
