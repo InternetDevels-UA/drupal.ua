@@ -62,7 +62,8 @@ function idevels_menu() {
  * Ajax for register user to event.
  */
 function idevels_event_register() {
-  module_load_include('node');
+  global $user;
+  module_load_include('inc', 'node', 'node.pages');
 
   if (!empty($_POST)) {
     $event_nid = $_POST['field_event_nid'];
@@ -74,10 +75,6 @@ function idevels_event_register() {
     $where_you_hear_tid = (int) $_POST['field_where_you_hear']['value'];
     $where_you_hear_info = $_POST['field_where_you_hear_info'];
     $additional_info = $_POST['field_additional_info'];
-
-    foreach ($_POST as $key => $value) {
-      watchdog($key, $value[0]['value']);
-    }
 
     $node = (object) array(
       'type' => 'user_event_application',
@@ -94,6 +91,7 @@ function idevels_event_register() {
       'field_where_you_hear_info' => $where_you_hear_info,
       'field_additional_info' => $additional_info,
     );
+    node_object_prepare($node);
     node_save($node);
   }
 }
