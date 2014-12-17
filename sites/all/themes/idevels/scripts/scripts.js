@@ -668,12 +668,12 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
         <label for="edit-field-occupation-value">'+Drupal.t("Occupation")+':<span class="red">*</span></label> \
         <select name="field_occupation[value]" class="form-select required" id="edit-field-occupation-value"> \
           <option value="" selected="selected">- Немає -</option>'+occupation_option+'</select> \
-        <label for="edit-field-occupation-info-0-value" class="hide">'+Drupal.t("Occupation info")+':</label> \
+        <label for="edit-field-occupation-info-0-value" class="hide">'+Drupal.t("Occupation info")+':<span class="red">*</span></label> \
         <input type="text" maxlength="80" name="field_occupation_info[0][value]" id="edit-field-occupation-info-0-value" size="80" value="" class="form-text text hide"> \
         <label for="edit-field-where-you-hear-value">'+Drupal.t("How did you know about this event?")+':<span class="red">*</span></label> \
         <select name="field_where_you_hear[value]" class="form-select required" id="edit-field-where-you-hear-value"> \
           <option value="" selected="selected">- Немає -</option>'+where_did_you_hear_about_event_option+'</select> \
-        <label for="edit-field-where-you-hear-info-0-value" class="hide">'+Drupal.t("How did you know about this event? Details")+':</label> \
+        <label for="edit-field-where-you-hear-info-0-value" class="hide">'+Drupal.t("How did you know about this event? Details")+':<span class="red">*</span></label> \
         <input type="text" maxlength="80" name="field_where_you_hear_info[0][value]" id="edit-field-where-you-hear-info-0-value" size="80" value="" class="form-text text hide"> \
         <label for="edit-field-additional-info-0-value">'+Drupal.t("Additional info")+':</label> \
         <textarea cols="60" rows="5" name="field_additional_info[0][value]" id="edit-field-additional-info-0-value" class="form-textarea resizable textarea-processed"></textarea> \
