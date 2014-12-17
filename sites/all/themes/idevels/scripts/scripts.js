@@ -690,7 +690,7 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
     $('#edit-field-lastname-0-value').val(Drupal.settings.user_last_name);
     $('#edit-field-email-0-value').val(Drupal.settings.user_email);
 
-    $('#ajax-event-register-cancel').click(function(event) {
+    $('#ajax-event-register-cancel').live('click', function(event) {
       $overlay.remove();
       return false;
     });
@@ -741,7 +741,13 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
         url: "/register-to-event",
         data: $(this).serialize(),
         success: function(data) {
-          $overlay.remove();
+          $('#ajax-event-register').remove();
+          if (Drupal.settings.user_email) {
+            $overlay.html('<div id="ajax-event-register"><h3>'+Drupal.t("Register for event")+':</h3><div id="js-error-box" class="messages status"><ul><li>'+Drupal.t("Thanks for registering")+'!</li></ul></div><button id="ajax-event-register-cancel"></button></div>');
+          }
+          else {
+            $overlay.html('<div id="ajax-event-register"><h3>'+Drupal.t("Register for event")+':</h3><div id="js-error-box" class="messages status"><ul><li>'+Drupal.t("Thanks for registering")+'!</li><li>'+Drupal.t("You can also register on this site")+' <a href="/user/register" class="user-register user active">'+Drupal.t("Registration")+'</a></li></ul></div><button id="ajax-event-register-cancel"></button></div>');
+          }
         }
       });
       return false;
