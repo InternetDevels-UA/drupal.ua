@@ -955,3 +955,18 @@ function idevels_preprocess_panels_pane(&$vars) {
     }
   }
 }
+
+/**
+ * theme_menu_local_task()
+ * Hidden event-users tabs.
+ */
+function idevels_menu_local_task($link, $active = FALSE) {
+  if (strpos($link, 'node') !== FALSE && strpos($link, 'event-users') !== FALSE) {
+    global $user;
+    $node = node_load(array('nid' => arg(1)));
+    if ($node->uid != $user->uid) {
+      return '';
+    }
+  }
+  return '<li ' . ($active ? 'class="active" ' : '') . '>' . $link . "</li>\n";
+}
