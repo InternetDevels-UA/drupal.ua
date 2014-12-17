@@ -79,11 +79,9 @@ function idevels_event_register() {
     $result = db_query(
       "SELECT `nid`
       FROM  {content_type_user_event_application}
-      WHERE `field_name_value` = '%s'
-      AND `field_lastname_value` = '%s'
-      AND `field_email_value` = '%s'
+      WHERE `field_email_value` = '%s'
       AND `field_event_nid_value` = '%s'"
-      , $first_name[0]['value'], $last_name[0]['value'], $email[0]['value'], $event_nid[0]['value']);
+      , $email[0]['value'], $event_nid[0]['value']);
 
     while ($row = db_fetch_array($result)) {
       node_delete($row['nid']);
