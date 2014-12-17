@@ -707,23 +707,26 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
     });
 
     $('#edit-field-occupation-value').change(function(event) {
-      //if ($(this).val() == 2507) {
       if ($(this).val() == get_object_value_by_key(Drupal.settings.taxonomy_occupation, 'інше')) {
         $('#edit-field-occupation-info-0-value').show();
+        $('#edit-field-occupation-info-0-value').addClass('required');
         $('#edit-field-occupation-info-0-value').prev().show();
       }
       else {
         $('#edit-field-occupation-info-0-value').hide();
+        $('#edit-field-occupation-info-0-value').removeClass('required');
         $('#edit-field-occupation-info-0-value').prev().hide();
       }
     });
     $('#edit-field-where-you-hear-value').change(function(event) {
       if ($(this).val() == get_object_value_by_key(Drupal.settings.taxonomy_where_did_you_hear_about_event, 'інше')) {
         $('#edit-field-where-you-hear-info-0-value').show();
+        $('#edit-field-where-you-hear-info-0-value').addClass('required');
         $('#edit-field-where-you-hear-info-0-value').prev().show();
       }
       else {
         $('#edit-field-where-you-hear-info-0-value').hide();
+        $('#edit-field-where-you-hear-info-0-value').removeClass('required');
         $('#edit-field-where-you-hear-info-0-value').prev().hide();
       }
     });
