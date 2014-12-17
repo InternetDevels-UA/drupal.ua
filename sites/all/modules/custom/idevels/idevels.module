@@ -65,6 +65,7 @@ function idevels_event_register() {
   global $user;
   module_load_include('inc', 'node', 'node.pages');
 
+
   if (!empty($_POST)) {
     $event_nid = $_POST['field_event_nid'];
     $first_name = $_POST['field_name'];
@@ -75,6 +76,19 @@ function idevels_event_register() {
     $where_you_hear_tid = (int) $_POST['field_where_you_hear']['value'];
     $where_you_hear_info = $_POST['field_where_you_hear_info'];
     $additional_info = $_POST['field_additional_info'];
+
+    $result = db_query(
+      "SELECT `nid`
+      FROM  {content_type_user_event_application}
+      WHERE `field_name_value` = '%s'
+      AND `field_lastname_value` = '%s'
+      AND `field_email_value` = '%s'
+      AND `field_event_nid_value` = '%s'"
+      , $first_name[0]['value'], $last_name[0]['value'], $email[0]['value'], $event_nid[0]['value']);
+
+    while ($row = db_fetch_array($result)) {
+      node_delete($row['nid']);
+    }
 
     $node = (object) array(
       'type' => 'user_event_application',
