@@ -346,9 +346,38 @@ function event_user_views_default_views() {
       'relationship' => 'none',
     ),
     'created' => array(
+      'label' => 'Дата реєстрації',
+      'alter' => array(
+        'alter_text' => 0,
+        'text' => '',
+        'make_link' => 0,
+        'path' => '',
+        'absolute' => 0,
+        'link_class' => '',
+        'alt' => '',
+        'rel' => '',
+        'prefix' => '',
+        'suffix' => '',
+        'target' => '',
+        'help' => '',
+        'trim' => 0,
+        'max_length' => '',
+        'word_boundary' => 1,
+        'ellipsis' => 1,
+        'html' => 0,
+        'strip_tags' => 0,
+      ),
+      'empty' => '',
+      'hide_empty' => 0,
+      'empty_zero' => 0,
+      'hide_alter_empty' => 1,
+      'date_format' => 'small',
+      'custom_date_format' => '',
+      'exclude' => 0,
       'id' => 'created',
       'table' => 'node',
       'field' => 'created',
+      'relationship' => 'none',
     ),
   ));
   $handler->override_option('sorts', array(
@@ -601,9 +630,41 @@ function event_user_views_default_views() {
       'relationship' => 'none',
     ),
     'created' => array(
+      'label' => 'Дата реєстрації',
+      'alter' => array(
+        'alter_text' => 0,
+        'text' => '',
+        'make_link' => 0,
+        'path' => '',
+        'absolute' => 0,
+        'link_class' => '',
+        'alt' => '',
+        'rel' => '',
+        'prefix' => '',
+        'suffix' => '',
+        'target' => '',
+        'help' => '',
+        'trim' => 0,
+        'max_length' => '',
+        'word_boundary' => 1,
+        'ellipsis' => 1,
+        'html' => 0,
+        'strip_tags' => 0,
+      ),
+      'empty' => '',
+      'hide_empty' => 0,
+      'empty_zero' => 0,
+      'hide_alter_empty' => 1,
+      'date_format' => 'small',
+      'custom_date_format' => '',
+      'exclude' => 0,
       'id' => 'created',
       'table' => 'node',
       'field' => 'created',
+      'override' => array(
+        'button' => 'Використовувати базове',
+      ),
+      'relationship' => 'none',
     ),
     'field_occupation_value' => array(
       'label' => 'Рід занять',
@@ -841,6 +902,56 @@ function event_user_views_default_views() {
   ));
   $handler->override_option('empty', 'На даний момент ще ніхто не зареєструвався');
   $handler->override_option('empty_format', '1');
+  $handler->override_option('style_options', array(
+    'grouping' => '',
+    'override' => 1,
+    'sticky' => 0,
+    'order' => 'asc',
+    'summary' => '',
+    'columns' => array(
+      'field_name_value' => 'field_name_value',
+      'field_lastname_value' => 'field_lastname_value',
+      'created' => 'created',
+      'field_occupation_value' => 'field_occupation_value',
+      'field_occupation_info_value' => 'field_occupation_info_value',
+      'field_where_you_hear_value' => 'field_where_you_hear_value',
+      'field_where_you_hear_info_value' => 'field_where_you_hear_info_value',
+      'field_additional_info_value' => 'field_additional_info_value',
+    ),
+    'info' => array(
+      'field_name_value' => array(
+        'sortable' => 1,
+        'separator' => '',
+      ),
+      'field_lastname_value' => array(
+        'sortable' => 1,
+        'separator' => '',
+      ),
+      'created' => array(
+        'sortable' => 1,
+        'separator' => '',
+      ),
+      'field_occupation_value' => array(
+        'separator' => '',
+      ),
+      'field_occupation_info_value' => array(
+        'sortable' => 1,
+        'separator' => '',
+      ),
+      'field_where_you_hear_value' => array(
+        'separator' => '',
+      ),
+      'field_where_you_hear_info_value' => array(
+        'sortable' => 1,
+        'separator' => '',
+      ),
+      'field_additional_info_value' => array(
+        'sortable' => 1,
+        'separator' => '',
+      ),
+    ),
+    'default' => '-1',
+  ));
   $handler->override_option('path', 'node/%/event-users');
   $handler->override_option('menu', array(
     'type' => 'tab',
