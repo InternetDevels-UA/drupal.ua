@@ -734,6 +734,7 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
     $('#ajax-event-register').submit(function(event) {
       event.preventDefault();
       var errors = false;
+      var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       $('#js-error-box ul').empty();
       $.each($('#ajax-event-register .required'), function(index, val) {
         $(this).removeClass('error');
@@ -743,6 +744,11 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
           errors = true;
         };
       });
+      if (!re.test($('#edit-field-email-0-value').val())) {
+        $('#edit-field-email-0-value').addClass('error');
+        $('#js-error-box ul').append('<li>' + $('#edit-field-email-0-value').prev().text() + ' ' + Drupal.t("Not valid email") + '</li>');
+        errors = true;
+      };
       if (errors) {
         $('#js-error-box').removeClass('hide');
         event.preventDefault();
