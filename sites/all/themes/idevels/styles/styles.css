@@ -5393,15 +5393,8 @@ body.page-user .view-id-profile_view .views-field-field-bio-value label {
   padding: 5px 2px 2px 2px;
 }
 .pane-events-panel-pane-2 .views-field-ops .field-content,
-#add_event_report {
-/*  display: inline-block;
-  padding: 2px 10px;
-  background-color: #6aa84f;
-  border: solid 2px #333;
-  -moz-box-shadow: 4px 4px 2px #222;
-  -webkit-box-shadow: 4px 4px 2px #222;
-  box-shadow: 4px 4px 2px #222;*/
-  /*font-size: 13px;*/
+#register-for-event {
+  color: black;
   border: 1px solid #e3e3e3;
   background: linear-gradient(to bottom,#f7f7f7,#edebeb);
   padding: 5px 12px;
@@ -5412,14 +5405,25 @@ body.page-user .view-id-profile_view .views-field-field-bio-value label {
   cursor: pointer;
   position: relative;
 }
+#div-register-for-event {
+  width: 100%;
+  float: left;
+  clear: both;
+}
+#div-register-for-event > .pane-content {
+  float: left;
+  width: auto;
+  height: auto;
+}
 #add_event_report {
   display: none;
   color: black;
   text-decoration: none;
 }
 .pane-events-panel-pane-2 .views-field-ops .field-content:hover,
-#add_event_report:hover {
+#register-for-event:hover {
    border: 1px solid #999;
+   text-decoration: none;
 }
 .node-type-events .container-12 .grid-4 {
   margin-bottom: 10px;
