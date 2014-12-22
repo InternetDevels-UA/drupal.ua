@@ -104,6 +104,7 @@ function idevels_event_register() {
     );
     node_object_prepare($node);
     node_save($node);
+    _idevels_email_notification_about_event(0, 0);
   }
 }
 
@@ -1183,10 +1184,10 @@ function _idevels_events_access(){
  * Find events;
  */
 function idevels_cron() {
-  $time_periods = array(0, 1, 7, cal_days_in_month(CAL_GREGORIAN, (int) date('n'), (int) date('Y')));
+  $time_periods = array(1, 7, cal_days_in_month(CAL_GREGORIAN, (int) date('n'), (int) date('Y')));
 
   foreach ($time_periods as $i => $time_period) {
-    _idevels_email_notification_about_event($i/*+1*/, $time_period);
+    _idevels_email_notification_about_event($i+1, $time_period);
   }
 }
 
