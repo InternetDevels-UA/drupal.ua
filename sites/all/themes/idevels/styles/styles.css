@@ -5053,7 +5053,8 @@ form#events-node-form.past-event #right-block #add-video:hover {
   z-index: 1000; /* high z-index */
   background: rgba(0,0,0,0.75);
 }
-#overlay #add-video-pop-up {
+#overlay #add-video-pop-up,
+#overlay #ajax-event-register {
   position: fixed;
   left: 50%;
   top: 50%;
@@ -5063,6 +5064,36 @@ form#events-node-form.past-event #right-block #add-video:hover {
   padding: 10px;
   border: 1px solid #e3e3e3;
   border-radius: 10px;
+}
+#overlay #ajax-event-register {
+  top: 100px;
+  width: 532px;
+  margin-left: -266px;
+  float: left;
+  clear: both;
+}
+#overlay #ajax-event-register > * {
+  float: left;
+  width: 510px;
+}
+#overlay #ajax-event-register #ajax-event-register-cancel {
+  position: absolute;
+  top: 10px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  background: url("../images/answers/b_close.png") no-repeat scroll -10px -10px transparent;
+  border: none;
+  cursor: pointer;
+}
+#overlay #ajax-event-register textarea {
+  resize: none;
+}
+#overlay #ajax-event-register input[type=submit] {
+  margin-bottom: 0;
+}
+#overlay #ajax-event-register #js-error-box {
+  margin-left: 0;
 }
 #overlay #add-video-pop-up input {
   width: 300px;
@@ -5856,4 +5887,10 @@ form#events-node-form.past-event #edit-field-report-0-value-wrapper .bue-ui {
   border-radius: 4px;
   -webkit-border-radius: 4px;
   box-shadow: 0 0 1px 0 #aaa;
+}
+.hide {
+  display: none;
+}
+.red {
+  color: red;
 }
