@@ -4917,15 +4917,8 @@ form#events-node-form #edit-field-events-logo-0-ahah-wrapper {
   padding: 5px 2px 2px 2px;
 }
 .pane-events-panel-pane-2 .views-field-ops .field-content,
-#add_event_report {
-/*  display: inline-block;
-  padding: 2px 10px;
-  background-color: #6aa84f;
-  border: solid 2px #333;
-  -moz-box-shadow: 4px 4px 2px #222;
-  -webkit-box-shadow: 4px 4px 2px #222;
-  box-shadow: 4px 4px 2px #222;*/
-  /*font-size: 13px;*/
+#register-for-event {
+  color: black;
   border: 1px solid #e3e3e3;
   background: linear-gradient(to bottom,#f7f7f7,#edebeb);
   padding: 5px 12px;
@@ -4936,14 +4929,20 @@ form#events-node-form #edit-field-events-logo-0-ahah-wrapper {
   cursor: pointer;
   position: relative;
 }
-#add_event_report {
-  display: none;
-  color: black;
-  text-decoration: none;
+#div-register-for-event {
+  width: 100%;
+  float: left;
+  clear: both;
+}
+#div-register-for-event > .pane-content {
+  float: left;
+  width: auto;
+  height: auto;
 }
 .pane-events-panel-pane-2 .views-field-ops .field-content:hover,
-#add_event_report:hover {
+#register-for-event:hover {
    border: 1px solid #999;
+   text-decoration: none;
 }
 .node-type-events .container-12 .grid-4 {
   margin-bottom: 10px;
@@ -5020,10 +5019,6 @@ form#events-node-form #edit-field-report-0-value-wrapper + a + div.textarea-iden
 form#events-node-form #field-photos-items,
 form#events-node-form #field-videos-items {
   display: none;
-}
-.node-type-events .pane-addthis-0 {
-  float: right;
-  margin-right: 15px;
 }
 form#events-node-form #edit-field-new-teaser-0-value,
 form#events-node-form #edit-body {
@@ -5771,9 +5766,6 @@ body.front
   display: inline-block;
   margin: 5px 0 0 !important;
 }
-.pane-events-panel-pane-3 .views-row {
-  padding: 5px 2px 2px 2px;
-}
 .pane-events-panel-pane-3 .view-header {
   margin: 14px 0 10px 0;
   background-color: transparent;
@@ -5802,7 +5794,7 @@ body.front
   margin-right: 0;
 }
 .node-type-events .panel-col-last .pane-custom.pane-1 .pane-content,
-.node-type-events .panel-col-last .pane-custom.pane-2 .pane-content  {
+.node-type-events .panel-col-last .pane-custom.pane-2 .pane-content {
   width: 100%;
   text-align: center;
 }
@@ -5885,7 +5877,6 @@ form#events-node-form.past-event #edit-field-report-0-value-wrapper .bue-ui {
 body.page-user ul.primary li.active {
   display: none;
 }
-<<<<<<< HEAD
 .pane-drua-profile-count-users-who-will-go-to-event .pane-content {
   font-size: 18px;
   text-align: center;
