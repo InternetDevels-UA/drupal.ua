@@ -611,16 +611,10 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
   // Remove spaces from block "drua_profile_count_users_who_will_go_to_event".
   $('.field-count-users .pane-content').text($.trim($('.field-count-users .pane-content').text()));
 
-  // (Event page) Add user avatar if user push "I'll go" button
-  $(".node-type-events .panel-display .views-field-ops .flag-be-there").live('mousedown', function(event) {
-    var nid = parseInt($(".node-type-events .panel-display .views-field-ops .flag-be-there").attr("class").replace(/[^0-9]/gi, ''));
-    setTimeout(function(){
-      $.getJSON('/node/count-flags/' + nid, {format: "json"}, function(data) {
-        var new_num = (data['count_flag']['be_there'] == undefined) ? 0 : data['count_flag']['be_there'];
-        $('.field-count-users .pane-content').text(new_num);
-      });
-    },200);
-  });
+  // If user are alredy registred
+  if (Drupal.settings.are_user_register_for_event) {
+    $('#register-for-event').text(Drupal.t('Thanks for registering'));
+  };
 
   // Select neutral language and hide selectbox
   if (window.location.pathname == '/node/add/post' || window.location.pathname == '/groups/add/post') {
@@ -757,6 +751,12 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
           else {
             $overlay.html('<div id="ajax-event-register"><h3>'+Drupal.t("Register for event")+':</h3><div id="js-error-box" class="messages status"><ul><li>'+Drupal.t("Thanks for registering")+'!</li><li>'+Drupal.t("You can also register on this site")+' <a href="/user/register" class="user-register user active">'+Drupal.t("Registration")+'</a></li></ul></div><button id="ajax-event-register-cancel"></button></div>');
           }
+          // Refresh number of users who will go to event
+          $.getJSON('/node/count-flags/' + Drupal.settings.nid, {format: "json"}, function(data) {
+            var new_num = (data['count_flag'] == undefined) ? 0 : data['count_flag'];
+            $('.field-count-users .pane-content').text(new_num);
+          });
+          $('#register-for-event').text(Drupal.t('Thanks for registering'));
         }
       });
       return false;
