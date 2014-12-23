@@ -1188,7 +1188,7 @@ function ua_month_perfecty($timestamp) {
   $month_translated = t($month_english);
   $output = t("@d {$month_english} @g:@i", array(
     '@d' => format_date($timestamp, 'custom', 'd'),
-    '@g' => format_date($timestamp, 'custom', 'g'),
+    '@g' => format_date($timestamp, 'custom', 'H'),
     '@i' => format_date($timestamp, 'custom', 'i'),
   ));
   return $output;
@@ -1240,7 +1240,7 @@ function _idevels_email_notification_about_event($i, $time_period, $email, $nid)
         ) t1
         LEFT JOIN  `files` ON  `t1`.`field_events_logo_fid` =  `files`.`fid`
         WHERE `t1`.`field_event_date_value` LIKE LOWER('%%%s%%')"
-      , date('Y-m-d', time() + $time_period * 24 * 60 * 60));
+      , date('Y-m-d', time() + $time_period * 24 * 60 * 60 - 2 * 60 * 60));
   }
   elseif ($email && $nid) {
     $result = db_query(
@@ -1278,7 +1278,7 @@ function _idevels_email_notification_about_event($i, $time_period, $email, $nid)
     $tokens = array(
       '!logo' => $event_request->filepath ? theme_imagecache('100x100', $event_request->filepath) : '',
       '!name' => $event_request->field_name_value,
-      '!date' => ua_month_perfecty($timestamp),
+      '!date' => ua_month_perfecty($timestamp + 2 * 60 * 60),
       '!event_name' => $event_request->title,
       '!city' => $city,
       '!link' => $base_url . '/node/' . $event_request->nid,
