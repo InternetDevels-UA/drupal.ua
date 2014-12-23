@@ -601,6 +601,7 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
   // If user are alredy registred
   if (Drupal.settings.are_user_register_for_event) {
     $('#register-for-event').text(Drupal.t('Thanks for registering'));
+    $('#register-for-event').css('color','#999');
   };
 
   // IE hack for add image button
@@ -615,6 +616,15 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
       });
     }
   }
+
+  // Remove spaces from block "drua_profile_count_users_who_will_go_to_event".
+  $('.field-count-users .pane-content').text($.trim($('.field-count-users .pane-content').text()));
+
+  // If user are alredy registred
+  if (Drupal.settings.are_user_register_for_event) {
+    $('#register-for-event').text(Drupal.t('Thanks for registering'));
+    $('#register-for-event').css('color','#999');
+  };
 
   // Select neutral language and hide selectbox
   if (window.location.pathname == '/node/add/post' || window.location.pathname == '/groups/add/post') {
