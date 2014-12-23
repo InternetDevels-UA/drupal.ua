@@ -74,6 +74,13 @@ function drua_profile_menu() {
     'page arguments' => array('drua_profile_settings_page'),
     'access arguments' => array('access administration pages'),
   );
+  $items["admin/settings/idevels_send_new_events"] = array(
+    'title' => 'Idevels send new events',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('idevels_send_new_events_settings_form'),
+    'access arguments' => array('access administration pages'),
+  );
+
   return $items;
 }
 
@@ -1321,7 +1328,7 @@ function drua_profile_settings_page() {
 function drua_profile_settings_page_submit($form, &$form_state) {
   if ($form_state['values']['drua_profile_settings_page']) {
     drupal_set_message(t('All users inforamation has beed updated'));
-    db_query('UPDATE {content_field_send_mail_about_new_events} SET field_send_mail_about_new_events_value = %b',
+    db_query('UPDATE {content_type_profile} SET field_send_mail_about_new_events_value = %b',
       array(1));
     $form_state['values']['drua_profile_settings_page'] = 0;
   }

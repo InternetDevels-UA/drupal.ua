@@ -1,0 +1,5 @@
+name = Idevels send new events
+description = "Send notification about new events"
+package = Internetdevels
+dependencies[] = job_queue
+core = 6.x
