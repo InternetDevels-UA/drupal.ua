@@ -1184,7 +1184,7 @@ function _idevels_events_access(){
  * Find events;
  */
 function idevels_cron() {
-  $time_periods = array(1, 7, cal_days_in_month(CAL_GREGORIAN, (int) date('n'), (int) date('Y')));
+  $time_periods = array(1, 6, cal_days_in_month(CAL_GREGORIAN, (int) date('n'), (int) date('Y')) - 1);
 
   foreach ($time_periods as $i => $time_period) {
     _idevels_email_notification_about_event($i+1, $time_period, FALSE, FALSE);
