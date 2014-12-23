@@ -624,6 +624,10 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
 
   $('#register-for-event').click(function(event) {
 
+    if (Drupal.settings.are_user_register_for_event) {
+      return false;
+    }
+
     function get_object_value_by_key(obj, value) {
       for(var key in obj) {
         if (obj.hasOwnProperty(key) && obj[key] === value) {
