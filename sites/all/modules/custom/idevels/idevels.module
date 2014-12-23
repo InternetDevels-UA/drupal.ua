@@ -105,6 +105,7 @@ function idevels_event_register() {
     );
     node_object_prepare($node);
     node_save($node);
+    _idevels_email_notification_about_event(0, FALSE, $email[0]['value'], $event_nid[0]['value']);
   }
 }
 
@@ -1202,5 +1203,96 @@ function _idevels_events_access(){
   }
   else {
     return TRUE;
+  }
+}
+
+/**
+ * Implementation of hook_cron.
+ * Find events;
+ */
+function idevels_cron() {
+  $time_periods = array(1, 7, cal_days_in_month(CAL_GREGORIAN, (int) date('n'), (int) date('Y')));
+
+  foreach ($time_periods as $i => $time_period) {
+    _idevels_email_notification_about_event($i+1, $time_period, FALSE, FALSE);
+  }
+}
+
+/**
+ * Custom function
+ * Send email for all users who register for event.
+ * $time_period in days.
+ */
+function _idevels_email_notification_about_event($i, $time_period, $email, $nid) {
+  global $base_url;
+  module_load_include('inc', 'mimemail', 'includes/mimemail.rules');
+
+  $template = node_load(array('uid' => 1, 'type' => 'email_template_user_event'));
+
+  if ($time_period) {
+    $result = db_query(
+        "SELECT *
+        FROM (
+            SELECT `content_type_user_event_application`.`field_name_value`, `content_type_user_event_application`.`field_email_value`, `content_type_events`.`field_event_date_value`, `node`.`title`, `content_type_events`.`field_city_value`, `content_type_events`.`nid`, `content_type_events`.`field_events_logo_fid`
+            FROM  `content_type_user_event_application`
+            LEFT JOIN  `content_type_events` ON  `content_type_user_event_application`.`field_event_nid_value` =  `content_type_events`.`nid`
+            LEFT JOIN  `node` ON  `content_type_user_event_application`.`field_event_nid_value` =  `node`.`nid`
+        ) t1
+        LEFT JOIN  `files` ON  `t1`.`field_events_logo_fid` =  `files`.`fid`
+        WHERE `t1`.`field_event_date_value` LIKE LOWER('%%%s%%')"
+      , date('Y-m-d', time() + $time_period * 24 * 60 * 60));
+  }
+  elseif ($email && $nid) {
+    $result = db_query(
+        "SELECT *
+        FROM (
+            SELECT `content_type_user_event_application`.`field_name_value`, `content_type_user_event_application`.`field_email_value`, `content_type_events`.`field_event_date_value`, `node`.`title`, `content_type_events`.`field_city_value`, `content_type_events`.`nid`, `content_type_events`.`field_events_logo_fid`
+            FROM  `content_type_user_event_application`
+            LEFT JOIN  `content_type_events` ON  `content_type_user_event_application`.`field_event_nid_value` =  `content_type_events`.`nid`
+            LEFT JOIN  `node` ON  `content_type_user_event_application`.`field_event_nid_value` =  `node`.`nid`
+        ) t1
+        LEFT JOIN  `files` ON  `t1`.`field_events_logo_fid` =  `files`.`fid`
+        WHERE `t1`.`field_email_value` = '%s'
+        AND `t1`.`nid` = %s"
+      , $email, $nid);
+  }
+  else {
+    watchdog('idevels', 'wrong parameters for function _idevels_email_notification_about_event', WATCHDOG_ERROR);
+  }
+
+  $body = str_replace('!body', $template->field_email_body[$i]['value'], $template->body);
+
+  while ($event_request = db_fetch_object($result)) {
+
+    $timestamp = strtotime($event_request->field_event_date_value);
+    $city = taxonomy_get_term($event_request->field_city_value)->name ?: FALSE;
+
+    $tokens = array(
+      '!logo' => $event_request->filepath ? theme_imagecache('100x100', $event_request->filepath) : '',
+      '!name' => $event_request->field_name_value,
+      '!date' => ua_month_perfecty($timestamp),
+      '!event_name' => $event_request->title,
+      '!city' => $city,
+      '!link' => $base_url . '/node/' . $event_request->nid,
+    );
+
+    foreach ($tokens as $token => $value) {
+      $body = str_replace($token, $value, $body);
+    }
+
+    $settings = array();
+    $settings['from'] = variable_get('site_mail', '');
+    $settings['to'] = $event_request->field_email_value;
+    $settings['subject'] = $template->title;
+    $settings['body'] = $body;
+    $settings['headers'] = array();
+    $message['headers']['Content-Type'] = 'text/html; charset=utf-8';
+
+    if (function_exists('mimemail_rules_action_mail_to_user')) {
+      mimemail_rules_action_mail_to_user(NULL, $settings);
+    }
+    else {
+      watchdog('idevels', 'function mimemail_rules_action_mail_to_user not exists', WATCHDOG_ERROR);
+    }
   }
 }
