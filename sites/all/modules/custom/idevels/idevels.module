@@ -1266,6 +1266,14 @@ function _idevels_email_notification_about_event($i, $time_period, $email, $nid)
 
     $timestamp = strtotime($event_request->field_event_date_value);
     $city = taxonomy_get_term($event_request->field_city_value)->name ?: FALSE;
+    $user = user_load(array('mail' => $event_request->field_email_value));
+
+    if ($user) {
+      $body = str_replace('!unsubscribe', $template->field_email_body[4]['value'], $body);
+    }
+    else {
+      $body = str_replace('!unsubscribe', '', $body);
+    }
 
     $tokens = array(
       '!logo' => $event_request->filepath ? theme_imagecache('100x100', $event_request->filepath) : '',
@@ -1274,25 +1282,20 @@ function _idevels_email_notification_about_event($i, $time_period, $email, $nid)
       '!event_name' => $event_request->title,
       '!city' => $city,
       '!link' => $base_url . '/node/' . $event_request->nid,
+      '!unsubscribe_link' => $base_url . '/user/' . $user->uid . '/edit/newsletter',
     );
 
     foreach ($tokens as $token => $value) {
       $body = str_replace($token, $value, $body);
     }
 
-    $settings = array();
-    $settings['from'] = variable_get('site_mail', '');
-    $settings['to'] = $event_request->field_email_value;
-    $settings['subject'] = $template->title;
-    $settings['body'] = $body;
-    $settings['headers'] = array();
-    $message['headers']['Content-Type'] = 'text/html; charset=utf-8';
+    $message = array(
+      'to' => $event_request->field_email_value,
+      'subject' => $template->title,
+      'body' => $body,
+      'headers' => array('From' => variable_get('site_mail', ''), 'Content-Type' => 'text/html; charset=utf-8'),
+    );
 
-    if (function_exists('mimemail_rules_action_mail_to_user')) {
-      mimemail_rules_action_mail_to_user(NULL, $settings);
-    }
-    else {
-      watchdog('idevels', 'function mimemail_rules_action_mail_to_user not exists', WATCHDOG_ERROR);
-    }
+    drupal_mail_send($message);
   }
 }
