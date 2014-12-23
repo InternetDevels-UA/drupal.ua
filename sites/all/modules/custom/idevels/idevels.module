@@ -1254,7 +1254,7 @@ function _idevels_email_notification_about_event($i, $time_period, $email, $nid)
       '!date' => ua_month_perfecty($timestamp + 2 * 60 * 60),
       '!event_name' => $event_request->title,
       '!city' => $city,
-      '!link' => $base_url . '/node/' . $event_request->nid,
+      '!link' => $base_url . '/' . drupal_get_path_alias('node/' . $event_request->nid),
       '!unsubscribe_link' => $base_url . '/user/' . $user->uid . '/edit/newsletter',
     );
 
