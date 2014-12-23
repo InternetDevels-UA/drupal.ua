@@ -614,6 +614,7 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
   // If user are alredy registred
   if (Drupal.settings.are_user_register_for_event) {
     $('#register-for-event').text(Drupal.t('Thanks for registering'));
+    $('#register-for-event').css('color','#999');
   };
 
   // Select neutral language and hide selectbox
