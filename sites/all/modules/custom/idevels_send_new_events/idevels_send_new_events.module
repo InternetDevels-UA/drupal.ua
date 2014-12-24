@@ -7,7 +7,6 @@ function idevels_send_new_events_cron() {
   $time = strtotime('-7 day');
   $result = db_result(db_query("SELECT node.nid AS nid FROM node node WHERE (node.type in ('events')) AND (node.created > %d)", array($time)));
   if ($result) {
-    Global $base_url;
     $output = idevels_send_new_events_make_message();
     $current_month = date('m');
     $month = explode('|', trim(t('|January|February|March|April|May|June|July|August|September|October|November|December')));
@@ -25,7 +24,7 @@ function idevels_send_new_events_cron() {
     $users = (db_query("SELECT users.uid AS uid, users.name AS user_name,users.mail AS user_mail FROM users users INNER JOIN node node_users ON users.uid = node_users.uid AND node_users.type = 'profile' LEFT JOIN content_type_profile node_users_node_data_field_send_mail_about_new_events ON node_users.vid = node_users_node_data_field_send_mail_about_new_events.vid WHERE (node_users_node_data_field_send_mail_about_new_events.field_send_mail_about_new_events_value) = ('1')"));
     while ($user = db_fetch_array($users)) {
       $output = str_replace("@user_name", $user['user_name'], $output);
-      $output = str_replace("@unsubscribe_here", '<a href="' . $base_url . '/' . $user['uid'] . '/' . 'edit/profile" style="color: #21c2f8;text-decoration: none;">' . t('here') . '</a>', $output);
+      $output = str_replace("@unsubscribe_here", '<a href="' . url($user['uid'] . '/edit/profile', array('abolute' => TRUE,)) . '" style="color: #21c2f8;text-decoration: none;">' . t('here') . '</a>', $output);
       $message['to'] = $user['user_mail'];
       $message['body'] = $output;
       job_queue_add('drupal_mail_send', 'Send mail for user - ' . $user['user_name'] . ', user email - ' . $user['user_mail'], array($message), '', TRUE);
@@ -210,19 +209,18 @@ function idevels_send_new_events_settings_form_validate($form, &$form_state) {
 function idevels_send_new_events_make_message() {
   $time = strtotime('-7 day');
   $NewEvents = db_query("SELECT node.nid AS nid FROM node node WHERE (node.type in ('events')) AND (node.created > %d)", array($time));
-  Global $base_url;
-  $headerlogo = $base_url . '/' . drupal_get_path('module', 'idevels_send_new_events') . '/img/header_logo.png';
-  $vk_img = $base_url . '/' . drupal_get_path('module', 'idevels_send_new_events') . '/img/vk.png';
+  $headerlogo = url(trim(drupal_get_path('module', 'idevels_send_new_events') . '/img/header_logo.png', '/'), array('absolute' => TRUE,));
+  $vk_img = url(trim(drupal_get_path('module', 'idevels_send_new_events') . '/img/vk.png', '/'), array('absolute' => TRUE,));
   $vk_link = variable_get('idevels_send_new_events_vk', "");
-  $facebook_img = $base_url . '/' . drupal_get_path('module', 'idevels_send_new_events') . '/img/facebook.png';
+  $facebook_img = url(trim(drupal_get_path('module', 'idevels_send_new_events') . '/img/facebook.png', '/'), array('absolute' => TRUE,));
   $facebook_link = variable_get('idevels_send_new_events_facebook', "");
-  $twitter_img = $base_url . '/' . drupal_get_path('module', 'idevels_send_new_events') . '/img/twitter.png';
+  $twitter_img = url(trim(drupal_get_path('module', 'idevels_send_new_events') . '/img/twitter.png', '/'), array('absolute' => TRUE,));
   $twitter_link = variable_get('idevels_send_new_events_twitter', "");
-  $deffaultimage = $base_url . '/' . variable_get('idevels_send_new_events_default_image', '');
+  $deffaultimage = url(trim(variable_get('idevels_send_new_events_default_image', ''), '/'), array('absolute' => TRUE,));
   $headertext = str_replace("\r\n", "<br>", variable_get('idevels_send_new_events_top', "Header information"));
   $footer_top = variable_get('idevels_send_new_events_footer_top', "Footer top information");
   $footer_bottom = str_replace("\r\n", "<br>", variable_get('idevels_send_new_events_footer_bottom', "Footer bottom information"));
-  $footer_bottom = str_replace("@site_link", '<a href="' . $base_url . '"  style="color: #21c2f8;text-decoration: none;">' . variable_get('site_name', '') . '</a>', $footer_bottom);
+  $footer_bottom = str_replace("@site_link", '<a href="' . url('', array('absolute' => TRUE,)) . '"  style="color: #21c2f8;text-decoration: none;text-transform: lowercase;">' . variable_get('site_name', '') . '</a>', $footer_bottom);
   $footer_supported_by = variable_get('idevels_send_new_events_footer_supported_by', "Supported by");
   $text = array(
     'headerlogo' => $headerlogo,
@@ -242,16 +240,16 @@ function idevels_send_new_events_make_message() {
     $node = node_load($NewEvent['nid'], NULL, TRUE);
     $timestamp = strtotime($node->field_event_date[0]['value']);
     $date = date('d.m.Y', $timestamp);
-    $image = (isset($node->field_events_logo[0]['filepath'])) ? $base_url . '/' . $node->field_events_logo[0]['filepath'] : $text['deffaultimage'];
+    $image = (isset($node->field_events_logo[0]['filepath'])) ? url($node->field_events_logo[0]['filepath'], array('absolute' => TRUE,)) : $text['deffaultimage'];
     $text['events'][] = array(
       'title' => $node->title,
       'date' => $date,
       'body' => drupal_substr($node->body, 0, 300),
-      'readmore_link' => $base_url . '/' . $node->path,
-      'readmore_text' => t('Read more'),
+      'readmore_link' => url($node->path, array('absolute' => TRUE,)),
+      'readmore_text' => t('Read more...'),
       'logo' => $image,
-      'register_link' => $base_url . '/' . $node->path,
-      'register_text' => t('Register for event'),
+      'register_link' => url($node->path, array('absolute' => TRUE,)),
+      'register_text' => t('Sign up'),
     );
   }
   return theme('idevels_send_new_events_template', $text);

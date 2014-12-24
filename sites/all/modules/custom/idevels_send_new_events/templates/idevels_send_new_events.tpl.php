@@ -1,6 +1,6 @@
 <table style="width:650px;color: #2f383d;margin: 30px auto 0 auto;" cellpadding="0" cellspacing="0">
   <tr>
-    <td colspan="2"><img src="<?php print $message['headerlogo']; ?>" style="width:100%"></td>
+    <td colspan="2"><img src="<?php print $message['headerlogo']; ?>" height="80px" width="650px"></td>
   </tr>
   <tr><td colspan="2" height="10px">&nbsp;</td></tr>
   <tr style="height: 110px;">
@@ -14,7 +14,7 @@
         <div style="font-weight: bold;font-family: georgia, serif;line-height: 1.2em;font-size: 18px;"><?php print $item['title']; ?></div>
         <div style="font-family: Helvetica,Arial,sans-serif; font-size: 13px;font-style: italic;line-height: 1.5em;"><?php print $item['date']; ?></div>
         <div style="font-family: Helvetica,Arial,sans-serif;font-size: 13px;line-height: 1.5em;margin-bottom: 10px;"> <?php print $item['body']; ?>
-        <a href="<?php print $item['readmore_link'];?>" style="color:#21c2f8;text-decoration: none;"><?php print $item['readmore_text'];?>...</a>
+        <a href="<?php print $item['readmore_link'];?>" style="color:#21c2f8;text-decoration: none;"><?php print $item['readmore_text'];?></a>
         </div>
         <a href="<?php print $item['register_link'];?>" style="color: white;background-color: #2f383d;text-decoration: none;padding: 5px 10px;"><?php print $item['register_text'];?></a>
         </td>
