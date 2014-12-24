@@ -1,4 +1,33 @@
 $(function () {
+
+  function createCookie(name, value, days) {
+    var expires;
+
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toGMTString();
+    } else {
+        expires = "";
+    }
+    document.cookie = escape(name) + "=" + escape(value) + expires + "; path=/";
+  }
+
+  function readCookie(name) {
+      var nameEQ = escape(name) + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+          if (c.indexOf(nameEQ) === 0) return unescape(c.substring(nameEQ.length, c.length));
+      }
+      return null;
+  }
+
+  function eraseCookie(name) {
+      createCookie(name, "", -1);
+  }
+
   hideNonLine($('.user-front .view-Users-front-profiles .views-row'));
 
 
@@ -620,8 +649,12 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
   // Remove spaces from block "drua_profile_count_users_who_will_go_to_event".
   $('.field-count-users .pane-content').text($.trim($('.field-count-users .pane-content').text()));
 
-  // If user are alredy registred
-  if (Drupal.settings.are_user_register_for_event) {
+  if ($('.not-pastevent').length == 0) {
+    // if this is not future event
+    $('#div-register-for-event').remove();
+  }
+  else if ((Drupal.settings.are_user_register_for_event && Drupal.settings.are_user_register_for_event != 0) || readCookie('event_'+Drupal.settings.nid)) {
+    // If user are alredy registred
     $('#register-for-event').text(Drupal.t('Thanks for registering'));
     $('#register-for-event').css('color','#999');
   };
@@ -634,7 +667,7 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
 
   $('#register-for-event').click(function(event) {
 
-    if (Drupal.settings.are_user_register_for_event) {
+    if ((Drupal.settings.are_user_register_for_event && Drupal.settings.are_user_register_for_event != 0) || readCookie('event_'+Drupal.settings.nid)) {
       return false;
     }
 
@@ -771,6 +804,8 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
             $('.field-count-users .pane-content').text(new_num);
           });
           $('#register-for-event').text(Drupal.t('Thanks for registering'));
+          $('#register-for-event').css('color','#999');
+          createCookie('event_'+Drupal.settings.nid, true, 2*365);
         }
       });
       return false;
