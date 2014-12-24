@@ -1110,7 +1110,7 @@ function idevels_init() {
     'user_first_name' => $profile->field_first_name[0]['value'],
     'user_last_name' => $profile->field_last_name[0]['value'],
     'user_email' => $user->mail,
-    'are_user_register_for_event' => $count,
+    'are_user_register_for_event' => $count['COUNT(*)'],
     'taxonomy_occupation' => $occupation_terms,
     'taxonomy_where_did_you_hear_about_event' => $where_did_you_hear_about_event_terms,
     ), 'setting');
