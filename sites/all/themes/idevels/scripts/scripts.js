@@ -792,10 +792,10 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
           }
           else {
             $overlay.html('<div id="ajax-event-register"><h3>'+Drupal.t("Register for event")+':</h3><div id="js-error-box" class="messages status"><ul><li>'+Drupal.t("Thanks for registering")+'!</li><li>'+Drupal.t("You can also register on this site")+' <a href="/user/register" class="user-register user active">'+Drupal.t("Registration")+'</a></li></ul></div><button id="ajax-event-register-cancel"></button></div>');
-            $overlay.click(function(event) {
-              $(this).remove();
-            });
           }
+          $overlay.click(function(event) {
+            $(this).remove();
+          });
           // Refresh number of users who will go to event
           $.getJSON('/node/count-flags/' + Drupal.settings.nid, {format: "json"}, function(data) {
             var new_num = (data['count_flag'] == undefined) ? 0 : data['count_flag'];
