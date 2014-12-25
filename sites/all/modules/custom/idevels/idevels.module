@@ -104,7 +104,7 @@ function idevels_event_register() {
     );
     node_object_prepare($node);
     node_save($node);
-    _idevels_email_notification_about_event(3, FALSE, $email[0]['value'], $event_nid[0]['value']);
+    _idevels_email_notification_about_event(0, FALSE, $email[0]['value'], $event_nid[0]['value']);
   }
 }
 
@@ -1249,10 +1249,10 @@ function _idevels_email_notification_about_event($i, $time_period, $email, $nid)
     }
 
     $subjects = array(
+      t("Thank You for your Event Registration at @event_name", array('@event_name' => $event_request->title)),
       t("Event @event_name will be tomorrow", array('@event_name' => $event_request->title)),
       t("Event @event_name will be in a week", array('@event_name' => $event_request->title)),
       t("Event @event_name will be in a month", array('@event_name' => $event_request->title)),
-      t("Thank You for your Event Registration at @event_name", array('@event_name' => $event_request->title)),
     );
 
     $tokens = array(
