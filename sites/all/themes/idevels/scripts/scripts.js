@@ -711,7 +711,7 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
         <label for="edit-field-where-you-hear-info-0-value" class="hide">'+Drupal.t("How did you know about this event? Details")+':<span class="red">*</span></label> \
         <input type="text" maxlength="80" name="field_where_you_hear_info[0][value]" id="edit-field-where-you-hear-info-0-value" size="80" value="" class="form-text text hide"> \
         <label for="edit-field-additional-info-0-value">'+Drupal.t("Additional info")+':</label> \
-        <textarea cols="60" rows="5" name="field_additional_info[0][value]" id="edit-field-additional-info-0-value" class="form-textarea resizable textarea-processed"></textarea> \
+        <textarea cols="60" rows="5" name="field_additional_info[0][value]" id="edit-field-additional-info-0-value" class="form-textarea resizable textarea-processed" maxlength="254"></textarea> \
         <input type="submit" name="op" id="edit-submit" value="Зареєструватися" class="form-submit"> \
         <button id="ajax-event-register-cancel"></button> \
       </form>';
@@ -768,7 +768,8 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
           errors = true;
         };
       });
-      if (!re.test($('#edit-field-email-0-value').val())) {
+      $('#edit-field-email-0-value').val($('#edit-field-email-0-value').val().replace(/[&\/\\#,+()$~%'":*?!^<>{}]/g, ''));
+      if ($('#edit-field-email-0-value').val() != '' && !re.test($('#edit-field-email-0-value').val())) {
         $('#edit-field-email-0-value').addClass('error');
         $('#js-error-box ul').append('<li>' + $('#edit-field-email-0-value').prev().text() + ' ' + Drupal.t("Not valid email") + '</li>');
         errors = true;
@@ -791,6 +792,9 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
           }
           else {
             $overlay.html('<div id="ajax-event-register"><h3>'+Drupal.t("Register for event")+':</h3><div id="js-error-box" class="messages status"><ul><li>'+Drupal.t("Thanks for registering")+'!</li><li>'+Drupal.t("You can also register on this site")+' <a href="/user/register" class="user-register user active">'+Drupal.t("Registration")+'</a></li></ul></div><button id="ajax-event-register-cancel"></button></div>');
+            $overlay.click(function(event) {
+              $(this).remove();
+            });
           }
           // Refresh number of users who will go to event
           $.getJSON('/node/count-flags/' + Drupal.settings.nid, {format: "json"}, function(data) {
