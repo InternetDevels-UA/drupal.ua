@@ -84,28 +84,26 @@ function idevels_event_register() {
       AND `field_event_nid_value` = '%s'"
       , $email[0]['value'], $event_nid[0]['value']);
 
-    while ($row = db_fetch_array($result)) {
-      node_delete($row['nid']);
+    if (!($row = db_fetch_array($result))) {
+      $node = (object) array(
+        'type' => 'user_event_application',
+        'uid' => $user->uid,
+        'title' => 'Event register request',
+        'body' => '',
+        'field_event_nid' => $event_nid,
+        'field_name' => $first_name,
+        'field_lastname' => $last_name,
+        'field_email' => $email,
+        'field_occupation' => array(0 => array('value' => $occupation_tid)),
+        'field_occupation_info' => $occupation_info,
+        'field_where_you_hear' => array(0 => array('value' => $where_you_hear_tid)),
+        'field_where_you_hear_info' => $where_you_hear_info,
+        'field_additional_info' => $additional_info,
+      );
+      node_object_prepare($node);
+      node_save($node);
+      _idevels_email_notification_about_event(3, FALSE, $email[0]['value'], $event_nid[0]['value']);
     }
-
-    $node = (object) array(
-      'type' => 'user_event_application',
-      'uid' => $user->uid,
-      'title' => 'Event register request',
-      'body' => '',
-      'field_event_nid' => $event_nid,
-      'field_name' => $first_name,
-      'field_lastname' => $last_name,
-      'field_email' => $email,
-      'field_occupation' => array(0 => array('value' => $occupation_tid)),
-      'field_occupation_info' => $occupation_info,
-      'field_where_you_hear' => array(0 => array('value' => $where_you_hear_tid)),
-      'field_where_you_hear_info' => $where_you_hear_info,
-      'field_additional_info' => $additional_info,
-    );
-    node_object_prepare($node);
-    node_save($node);
-    _idevels_email_notification_about_event(3, FALSE, $email[0]['value'], $event_nid[0]['value']);
   }
 }
 
