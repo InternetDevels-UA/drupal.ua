@@ -1,4 +1,33 @@
 $(function () {
+
+  function createCookie(name, value, days) {
+    var expires;
+
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toGMTString();
+    } else {
+        expires = "";
+    }
+    document.cookie = escape(name) + "=" + escape(value) + expires + "; path=/";
+  }
+
+  function readCookie(name) {
+      var nameEQ = escape(name) + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+          if (c.indexOf(nameEQ) === 0) return unescape(c.substring(nameEQ.length, c.length));
+      }
+      return null;
+  }
+
+  function eraseCookie(name) {
+      createCookie(name, "", -1);
+  }
+
   hideNonLine($('.user-front .view-Users-front-profiles .views-row'));
 
 
@@ -608,30 +637,18 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
     }
   }
 
-  // (Event page) Add user avatar if user push "I'll go" button
-  $(".node-type-events .panel-display .views-field-ops .flag-be-there a").live('mousedown', function(event) {
-    if (!$('.node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid').length) {
-      $('.node-type-events .panel-display .pane-events-panel-pane-3 .views-row-1').prepend('<div class="views-field-uid"></div>');
-    };
-    $.getJSON('/idevels-user/info', {format: "json"}, function(data) {
-      if ($(".node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid a[href='/users/"+data["user_name"]+"']").length) {
-        if ($(".node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid a[href='/users/"+data["user_name"]+"']").parent().parent().children().length < 2) {
-          $(".node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid a[href='/users/"+data["user_name"]+"']").parent().parent().addClass('empty');
-        };
-        $(".node-type-events .panel-display .pane-events-panel-pane-3 .views-field-uid a[href='/users/"+data["user_name"]+"']").parent().remove();
-      }
-      else {
-        if ($(".node-type-events .panel-display .pane-events-panel-pane-3 .views-row-1 .views-field-uid").hasClass('empty')) {
-          var avatar = $('<span id="ajax_avatar" class="field-content"><a>'+data["avatar"]+'</a></span>');
-        }
-        else {
-          var avatar = $('<span id="ajax_avatar" class="field-content" style="margin-right: 4px;"><a>'+data["avatar"]+'</a></span>');
-        }
-        $(".node-type-events .panel-display .pane-events-panel-pane-3 .views-row-1 .views-field-uid").prepend(avatar);
-        $('#ajax_avatar a').attr("href", '/users/'+data["user_name"]);
-      }
-    });
-  });
+  // Remove spaces from block "drua_profile_count_users_who_will_go_to_event".
+  $('.field-count-users .pane-content').text($.trim($('.field-count-users .pane-content').text()));
+
+  if ($('.not-pastevent').length == 0) {
+    // if this is not future event
+    $('#div-register-for-event').remove();
+  }
+  else if ((Drupal.settings.are_user_register_for_event && Drupal.settings.are_user_register_for_event != 0) || readCookie('event_'+Drupal.settings.nid)) {
+    // If user are alredy registred
+    $('#register-for-event').text(Drupal.t('Thanks for registering'));
+    $('#register-for-event').css('color','#999');
+  };
 
   // Select neutral language and hide selectbox
   if (window.location.pathname == '/node/add/post' || window.location.pathname == '/groups/add/post') {
@@ -640,6 +657,10 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
   };
 
   $('#register-for-event').click(function(event) {
+
+    if ((Drupal.settings.are_user_register_for_event && Drupal.settings.are_user_register_for_event != 0) || readCookie('event_'+Drupal.settings.nid)) {
+      return false;
+    }
 
     function get_object_value_by_key(obj, value) {
       for(var key in obj) {
@@ -687,7 +708,7 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
         <label for="edit-field-where-you-hear-info-0-value" class="hide">'+Drupal.t("How did you know about this event? Details")+':<span class="red">*</span></label> \
         <input type="text" maxlength="80" name="field_where_you_hear_info[0][value]" id="edit-field-where-you-hear-info-0-value" size="80" value="" class="form-text text hide"> \
         <label for="edit-field-additional-info-0-value">'+Drupal.t("Additional info")+':</label> \
-        <textarea cols="60" rows="5" name="field_additional_info[0][value]" id="edit-field-additional-info-0-value" class="form-textarea resizable textarea-processed"></textarea> \
+        <textarea cols="60" rows="5" name="field_additional_info[0][value]" id="edit-field-additional-info-0-value" class="form-textarea resizable textarea-processed" maxlength="254"></textarea> \
         <input type="submit" name="op" id="edit-submit" value="Зареєструватися" class="form-submit"> \
         <button id="ajax-event-register-cancel"></button> \
       </form>';
@@ -744,7 +765,7 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
           errors = true;
         };
       });
-      if (!re.test($('#edit-field-email-0-value').val())) {
+      if ($('#edit-field-email-0-value').val() != '' && (!re.test($('#edit-field-email-0-value').val()) || /^[a-zA-Z0-9-.+_@]*$/.test($('#edit-field-email-0-value').val()) == false)) {
         $('#edit-field-email-0-value').addClass('error');
         $('#js-error-box ul').append('<li>' + $('#edit-field-email-0-value').prev().text() + ' ' + Drupal.t("Not valid email") + '</li>');
         errors = true;
@@ -768,6 +789,17 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
           else {
             $overlay.html('<div id="ajax-event-register"><h3>'+Drupal.t("Register for event")+':</h3><div id="js-error-box" class="messages status"><ul><li>'+Drupal.t("Thanks for registering")+'!</li><li>'+Drupal.t("You can also register on this site")+' <a href="/user/register" class="user-register user active">'+Drupal.t("Registration")+'</a></li></ul></div><button id="ajax-event-register-cancel"></button></div>');
           }
+          $overlay.click(function(event) {
+            $(this).remove();
+          });
+          // Refresh number of users who will go to event
+          $.getJSON('/node/count-flags/' + Drupal.settings.nid, {format: "json"}, function(data) {
+            var new_num = (data['count_flag'] == undefined) ? 0 : data['count_flag'];
+            $('.field-count-users .pane-content').text(new_num);
+          });
+          $('#register-for-event').text(Drupal.t('Thanks for registering'));
+          $('#register-for-event').css('color','#999');
+          createCookie('event_'+Drupal.settings.nid, true, 2*365);
         }
       });
       return false;
