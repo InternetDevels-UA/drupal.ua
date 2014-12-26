@@ -42,9 +42,16 @@ function idevels_menu() {
     'page arguments' => array('idevels_change_header_image_form'),
     'access arguments' => array('access administration pages'),
   );
-  $items['idevels-user/info'] = array(
-    'title' => 'Get user info',
-    'page callback' => 'idevels_get_userinfo',
+  $items['node/count-flags/%'] = array(
+    'title' => 'Count flags for node',
+    'page arguments'   => array(2),
+    'page callback' => 'idevels_node_count_flags',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['register-to-event'] = array(
+    'title' => 'Register for event',
+    'page callback' => 'idevels_event_register',
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
@@ -52,15 +59,62 @@ function idevels_menu() {
 }
 
 /**
+ * Ajax for register user to event.
+ */
+function idevels_event_register() {
+  global $user;
+  module_load_include('inc', 'node', 'node.pages');
+
+
+  if (!empty($_POST)) {
+    $event_nid = $_POST['field_event_nid'];
+    $first_name = $_POST['field_name'];
+    $last_name = $_POST['field_lastname'];
+    $email = $_POST['field_email'];
+    $occupation_tid = (int) $_POST['field_occupation']['value'];
+    $occupation_info = $_POST['field_occupation_info'];
+    $where_you_hear_tid = (int) $_POST['field_where_you_hear']['value'];
+    $where_you_hear_info = $_POST['field_where_you_hear_info'];
+    $additional_info = $_POST['field_additional_info'];
+
+    $result = db_query(
+      "SELECT `nid`
+      FROM  {content_type_user_event_application}
+      WHERE `field_email_value` = '%s'
+      AND `field_event_nid_value` = '%s'"
+      , $email[0]['value'], $event_nid[0]['value']);
+
+    while ($row = db_fetch_array($result)) {
+      node_delete($row['nid']);
+    }
+
+    $node = (object) array(
+      'type' => 'user_event_application',
+      'uid' => $user->uid,
+      'title' => 'Event register request',
+      'body' => '',
+      'field_event_nid' => $event_nid,
+      'field_name' => $first_name,
+      'field_lastname' => $last_name,
+      'field_email' => $email,
+      'field_occupation' => array(0 => array('value' => $occupation_tid)),
+      'field_occupation_info' => $occupation_info,
+      'field_where_you_hear' => array(0 => array('value' => $where_you_hear_tid)),
+      'field_where_you_hear_info' => $where_you_hear_info,
+      'field_additional_info' => $additional_info,
+    );
+    node_object_prepare($node);
+    node_save($node);
+  }
+}
+
+/**
  * Ajax for user info (return username and avatar in json format)
  */
-function idevels_get_userinfo() {
-  global $user;
-
-  $profile = node_load(array('uid'  => $user->uid,'type' => 'profile'));
-  $avatar = (empty($profile->field_image[0]['filepath']) ? theme('image', 'sites/default/files/dua.idevels.drupalcompany.com/imagecache/50x50/imagefield_default_images/no-image_1.jpg') : theme_imagecache('50x50', $profile->field_image[0]['filepath']));
-
-  drupal_json(array('user_name' => $user->name,'avatar' => $avatar));
+function idevels_node_count_flags($nid) {
+  $result = db_query('SELECT COUNT(*) FROM `content_type_user_event_application` WHERE `field_event_nid_value` = %s', $nid);
+  $count = db_fetch_array($result);
+  drupal_json(array('count_flag' => $count['COUNT(*)']));
 }
 
 /**
@@ -395,7 +449,7 @@ function idevels_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'events_node_form') {
     $form['title']['#maxlength'] = 80;
     $form['#id'] = 'events-node-form';
-    if ($form['field_event_date'][0]['#default_value']['value2'] != '' && strtotime($form['field_event_date'][0]['#default_value']['value2']) < time()) {
+/*    if ($form['field_event_date'][0]['#default_value']['value2'] != '' && strtotime($form['field_event_date'][0]['#default_value']['value2']) < time()) {
       $form['#attributes']['class'] = 'past-event';
       $form['body_field']['#prefix'] = '<div style="display: none;">';
       $form['body_field']['#suffix'] = '</div>';
@@ -414,7 +468,7 @@ function idevels_form_alter(&$form, &$form_state, $form_id) {
       $form['title']['#attributes']['readonly'] = 'readonly';
       $form['buttons']['submit']['#value'] = t('Add report');
     }
-    elseif ($form['field_event_date'][0]['#default_value']['value2'] != '' && strtotime($form['field_event_date'][0]['#default_value']['value']) < time()) {
+    else*/if ($form['field_event_date'][0]['#default_value']['value2'] != '' && strtotime($form['field_event_date'][0]['#default_value']['value']) < time()) {
       $form['#attributes']['class'] = 'present-event';
     }
     else {
@@ -1016,7 +1070,51 @@ function idevels_add_resurses_form_submit($form, &$form_state) {
   print ctools_ajax_render($output);
 }
 
+function idevels_get_vocabulary_by_name($vocabulary_name) {
+  $vocabs = taxonomy_get_vocabularies(NULL);
+  foreach ($vocabs as $vocab_object) {
+    if ($vocab_object->name == $vocabulary_name) {
+      return $vocab_object;
+    }
+  }
+  return NULL;
+}
+
 function idevels_init() {
+  global $user;
+  $node = menu_get_object();
+  $profile = node_load(array('uid' => $user->uid, 'type' => 'profile'));
+
+  $occupation_terms = array();
+  $where_did_you_hear_about_event_terms = array();
+  $occupation_vid = is_object(idevels_get_vocabulary_by_name('occupation')) ? idevels_get_vocabulary_by_name('occupation')->vid : FALSE;
+  $where_did_you_hear_about_event_vid = is_object(idevels_get_vocabulary_by_name('where did you hear about event')) ? idevels_get_vocabulary_by_name('where did you hear about event')->vid : FALSE;
+
+  foreach (taxonomy_get_tree($occupation_vid) as $value) {
+    $occupation_terms[$value->tid] = $value->name;
+  }
+
+  foreach (taxonomy_get_tree($where_did_you_hear_about_event_vid) as $value) {
+    $where_did_you_hear_about_event_terms[$value->tid] = $value->name;
+  }
+
+  $count = 0;
+
+  if ($profile && $node->type == 'events') {
+    $result = db_query('SELECT COUNT(*) FROM `content_type_user_event_application` WHERE `field_event_nid_value` = %s AND `field_email_value` = "%s"', (string) arg(1), $user->mail);
+    $count = db_fetch_array($result);
+  }
+
+  drupal_add_js(array(
+    'nid' => $node->nid,
+    'user_first_name' => $profile->field_first_name[0]['value'],
+    'user_last_name' => $profile->field_last_name[0]['value'],
+    'user_email' => $user->mail,
+    'are_user_register_for_event' => $count['COUNT(*)'],
+    'taxonomy_occupation' => $occupation_terms,
+    'taxonomy_where_did_you_hear_about_event' => $where_did_you_hear_about_event_terms,
+    ), 'setting');
+
   $path=request_uri();
   $arg = drupal_get_destination();
   if ($path=='/node/add/question' ||$path=='/node/add/question/'){
