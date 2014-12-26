@@ -1,0 +1,256 @@
+<?php
+/**
+ * Implements hook_cron().
+ * Generates mailing list
+ **/
+function idevels_send_new_events_cron() {
+  $time = strtotime('-7 day');
+  $result = db_result(db_query("SELECT node.nid AS nid FROM node node WHERE (node.type in ('events')) AND (node.created > %d)", array($time)));
+  if ($result) {
+    $output = idevels_send_new_events_make_message();
+    $current_month = date('m');
+    $month = explode('|', trim(t('|January|February|March|April|May|June|July|August|September|October|November|December')));
+    $message = array(
+      'subject' => t('Interesting events in') . ' ' . $month[$current_month],
+      'headers' => array(
+        'Reply-To' => variable_get('idevels_send_new_events_reply', variable_get('site_name', '')),
+        'MIME-Version' => '1.0',
+        'Content-Type' => 'text/html; charset=UTF-8; format=flowed; delsp=yes',
+        'Content-Transfer-Encoding' => '8Bit',
+        'From' => variable_get('idevels_send_new_events_from', variable_get('site_name', '')),
+        'X-Mailer' => 'Drupal',
+      ),
+    );
+    $users = (db_query("SELECT users.uid AS uid, users.name AS user_name,users.mail AS user_mail FROM users users INNER JOIN node node_users ON users.uid = node_users.uid AND node_users.type = 'profile' LEFT JOIN content_type_profile node_users_node_data_field_send_mail_about_new_events ON node_users.vid = node_users_node_data_field_send_mail_about_new_events.vid WHERE (node_users_node_data_field_send_mail_about_new_events.field_send_mail_about_new_events_value) = ('1')"));
+    while ($user = db_fetch_array($users)) {
+      $output = str_replace("@user_name", $user['user_name'], $output);
+      $output = str_replace("@unsubscribe_here", '<a href="' . url($user['uid'] . '/edit/profile', array('abolute' => TRUE,)) . '" style="color: #21c2f8;text-decoration: none;">' . t('here') . '</a>', $output);
+      $message['to'] = $user['user_mail'];
+      $message['body'] = $output;
+      job_queue_add('drupal_mail_send', 'Send mail for user - ' . $user['user_name'] . ', user email - ' . $user['user_mail'], array($message), '', TRUE);
+    }
+  }
+  return TRUE;
+}
+
+/**
+ *  Implements hook_theme.
+ */
+function idevels_send_new_events_theme() {
+  $path = drupal_get_path('module', 'idevels_send_new_events') . '/templates';
+  return array(
+    'idevels_send_new_events_template' => array(
+      'template' => 'idevels_send_new_events',
+      'arguments' => array('message' => array()),
+      'path' => $path,
+    ),
+  );
+}
+
+/**
+ * Page for display admin a settings for send email notification about new events.
+ */
+function idevels_send_new_events_settings_form() {
+  $form['#attributes']['enctype'] = "multipart/form-data";
+  $form['idevels_send_new_events_settings_form']['reply'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Mail Reply-To'),
+    '#default_value' => variable_get('idevels_send_new_events_reply', variable_get('site_name', '')),
+    '#size' => 60,
+    '#maxlength' => 120,
+    '#required' => TRUE,
+  );
+  $form['idevels_send_new_events_settings_form']['from'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Mail From'),
+    '#default_value' => variable_get('idevels_send_new_events_from', variable_get('site_name', '')),
+    '#size' => 60,
+    '#maxlength' => 120,
+    '#required' => TRUE,
+  );
+  $default_image = variable_get('idevels_send_new_events_default_image', '');
+  if ($default_image != '') {
+    $form['idevels_send_new_events_settings_form']['default_image_preview'] = array(
+      '#value' => '<img src="/' . $default_image . '" width="112px" >',
+    );
+  }
+  $form['idevels_send_new_events_settings_form']['default_image'] = array(
+    '#type' => 'file',
+    '#title' => t('Default image for none logo events'),
+    '#size' => 40,
+    '#description' => t('Upload a file, allowed extensions: jpg, jpeg, png, gif'),
+    '#default_value' => variable_get('idevels_send_new_events_default_image', ''),
+    '#upload_location' => 'public://new_event_sender_default_image/',
+  );
+  $form['idevels_send_new_events_settings_form']['top'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Header information'),
+    '#default_value' => variable_get('idevels_send_new_events_top', "Header information"),
+    '#required' => TRUE,
+    '#description' => t('You can use token @user_name'),
+  );
+  $form['idevels_send_new_events_settings_form']['footer_top'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Fotter top information'),
+    '#default_value' => variable_get('idevels_send_new_events_footer_top', "Footer top information"),
+    '#required' => TRUE,
+  );
+  $form['idevels_send_new_events_settings_form']['footer_supported_by'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Fotter bottom supported by'),
+    '#default_value' => variable_get('idevels_send_new_events_footer_supported_by', "Supported by"),
+    '#required' => TRUE,
+  );
+  $form['idevels_send_new_events_settings_form']['footer_bottom'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Fotter bottom information'),
+    '#default_value' => variable_get('idevels_send_new_events_footer_bottom', "Footer bottom information"),
+    '#required' => TRUE,
+    '#description' => t('You can use token @site_link, @unsubscribe_here'),
+  );
+  $form['idevels_send_new_events_settings_form']['facebook'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Facebook link in footer'),
+    '#default_value' => variable_get('idevels_send_new_events_facebook', ""),
+    '#size' => 60,
+    '#maxlength' => 120,
+    '#required' => TRUE,
+  );
+  $form['idevels_send_new_events_settings_form']['vk'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Vk link in footer'),
+    '#default_value' => variable_get('idevels_send_new_events_vk', ""),
+    '#size' => 60,
+    '#maxlength' => 120,
+    '#required' => TRUE,
+  );
+  $form['idevels_send_new_events_settings_form']['twitter'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Twitter link in footer'),
+    '#default_value' => variable_get('idevels_send_new_events_twitter', ""),
+    '#size' => 60,
+    '#maxlength' => 120,
+    '#required' => TRUE,
+  );
+
+  $form['#submit'][] = 'idevels_send_new_events_settings_form_submit';
+  $form['#validate'][] = 'idevels_send_new_events_settings_form_validate';
+  return system_settings_form($form);
+}
+
+/**
+ * Submit for idevels_send_new_events_settings_form
+ * save all values to variable
+ */
+function idevels_send_new_events_settings_form_submit($form, &$form_state) {
+  $values = $form_state['values'];
+  if (isset ($values['reply']) && !empty($values['reply'])) {
+    variable_set('idevels_send_new_events_reply', $values['reply']);
+  }
+  if (isset ($values['from']) && !empty($values['from'])) {
+    variable_set('idevels_send_new_events_from', $values['from']);
+  }
+  if (isset ($values['top']) && !empty($values['top'])) {
+    variable_set('idevels_send_new_events_top', $values['top']);
+  }
+  if (isset ($values['facebook']) && !empty($values['facebook'])) {
+    variable_set('idevels_send_new_events_facebook', $values['facebook']);
+  }
+  if (isset ($values['vk']) && !empty($values['vk'])) {
+    variable_set('idevels_send_new_events_vk', $values['vk']);
+  }
+  if (isset ($values['twitter']) && !empty($values['twitter'])) {
+    variable_set('idevels_send_new_events_twitter', $values['twitter']);
+  }
+  if (isset ($values['footer_top']) && !empty($values['footer_top'])) {
+    variable_set('idevels_send_new_events_footer_top', $values['footer_top']);
+  }
+  if (isset ($values['footer_bottom']) && !empty($values['footer_bottom'])) {
+    variable_set('idevels_send_new_events_footer_bottom', $values['footer_bottom']);
+  }
+  if (isset ($values['footer_supported_by']) && !empty($values['footer_supported_by'])) {
+    variable_set('idevels_send_new_events_footer_supported_by', $values['footer_supported_by']);
+  }
+  if (isset($form_state['storage']['file'])) {
+    variable_set('idevels_send_new_events_default_image', $form_state['storage']['file']);
+  }
+}
+
+/**
+ * Validate for idevels_send_new_events_settings_form
+ * function for validate 'default_image' field
+ */
+function idevels_send_new_events_settings_form_validate($form, &$form_state) {
+  $field = 'default_image';
+  $directory = file_directory_path() . '/new_event_sender_default_image';
+  if (file_check_directory($directory, FILE_CREATE_DIRECTORY, $field)) {
+    $extensions = array('png', 'gif', 'jpg', 'jpeg');
+    if ($file = file_save_upload($field, array(), $directory)) {
+      if (!in_array(pathinfo($file->filepath, PATHINFO_EXTENSION), $extensions) OR !in_array(end(explode(".", $file->filename)), $extensions) OR substr($file->filename, -5, 5) == '_.txt') {
+        file_delete($file->filepath);
+        form_set_error('default_image', t('File extensions not allowed'));
+      }
+      elseif ($file->filesize > 20000000) {
+        file_delete($file->filepath);
+        form_set_error('default_image', t("File can't be more than 20Mb"));
+      }
+      else {
+        file_set_status($file, FILE_STATUS_PERMANENT);
+        $form_state['storage']['file'] = $file->filepath;
+      }
+    }
+  }
+}
+
+/**
+ * Function for generate body of email
+ * return 'html'
+ */
+function idevels_send_new_events_make_message() {
+  $time = strtotime('-7 day');
+  $NewEvents = db_query("SELECT node.nid AS nid FROM node node WHERE (node.type in ('events')) AND (node.created > %d)", array($time));
+  $headerlogo = url(trim(drupal_get_path('module', 'idevels_send_new_events') . '/img/header_logo.png', '/'), array('absolute' => TRUE,));
+  $vk_img = url(trim(drupal_get_path('module', 'idevels_send_new_events') . '/img/vk.png', '/'), array('absolute' => TRUE,));
+  $vk_link = variable_get('idevels_send_new_events_vk', "");
+  $facebook_img = url(trim(drupal_get_path('module', 'idevels_send_new_events') . '/img/facebook.png', '/'), array('absolute' => TRUE,));
+  $facebook_link = variable_get('idevels_send_new_events_facebook', "");
+  $twitter_img = url(trim(drupal_get_path('module', 'idevels_send_new_events') . '/img/twitter.png', '/'), array('absolute' => TRUE,));
+  $twitter_link = variable_get('idevels_send_new_events_twitter', "");
+  $deffaultimage = url(trim(variable_get('idevels_send_new_events_default_image', ''), '/'), array('absolute' => TRUE,));
+  $headertext = str_replace("\r\n", "<br>", variable_get('idevels_send_new_events_top', "Header information"));
+  $footer_top = variable_get('idevels_send_new_events_footer_top', "Footer top information");
+  $footer_bottom = str_replace("\r\n", "<br>", variable_get('idevels_send_new_events_footer_bottom', "Footer bottom information"));
+  $footer_bottom = str_replace("@site_link", '<a href="' . url('', array('absolute' => TRUE,)) . '"  style="color: #21c2f8;text-decoration: none;text-transform: lowercase;">' . variable_get('site_name', '') . '</a>', $footer_bottom);
+  $footer_supported_by = variable_get('idevels_send_new_events_footer_supported_by', "Supported by");
+  $text = array(
+    'headerlogo' => $headerlogo,
+    'vk_img' => $vk_img,
+    'vk_link' => $vk_link,
+    'facebook_img' => $facebook_img,
+    'facebook_link' => $facebook_link,
+    'twitter_img' => $twitter_img,
+    'twitter_link' => $twitter_link,
+    'deffaultimage' => $deffaultimage,
+    'headertext' => $headertext,
+    'footer_top' => $footer_top,
+    'footer_bottom' => $footer_bottom,
+    'footer_supported_by' => $footer_supported_by,
+  );
+  while ($NewEvent = db_fetch_array($NewEvents)) {
+    $node = node_load($NewEvent['nid'], NULL, TRUE);
+    $timestamp = strtotime($node->field_event_date[0]['value']);
+    $date = date('d.m.Y', $timestamp);
+    $image = (isset($node->field_events_logo[0]['filepath'])) ? url($node->field_events_logo[0]['filepath'], array('absolute' => TRUE,)) : $text['deffaultimage'];
+    $text['events'][] = array(
+      'title' => $node->title,
+      'date' => $date,
+      'body' => drupal_substr($node->body, 0, 300),
+      'readmore_link' => url($node->path, array('absolute' => TRUE,)),
+      'readmore_text' => t('Read more...'),
+      'logo' => $image,
+      'register_link' => url($node->path, array('absolute' => TRUE,)),
+      'register_text' => t('Sign up'),
+    );
+  }
+  return theme('idevels_send_new_events_template', $text);
+}

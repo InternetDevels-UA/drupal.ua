@@ -68,6 +68,18 @@ function drua_profile_menu() {
     'access callback' => TRUE,
     'type'            => MENU_CALLBACK,
   );
+  $items["admin/settings/drua_profile"] = array(
+    'title' => 'Drupal ua Profile',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('drua_profile_settings_page'),
+    'access arguments' => array('access administration pages'),
+  );
+  $items["admin/settings/idevels_send_new_events"] = array(
+    'title' => 'Idevels send new events',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('idevels_send_new_events_settings_form'),
+    'access arguments' => array('access administration pages'),
+  );
 
   return $items;
 }
@@ -1307,4 +1319,30 @@ function notification_instruction_block_items() {
       )
     ) . '</span>';
   return $output;
+}
+
+/**
+ * Settings form for drua_profile.
+ */
+function drua_profile_settings_page() {
+    $form['drua_profile_settings_page']= array(
+    '#type' => 'checkbox',
+    '#title' => t('Update all users notification value'),
+    '#default_value' => variable_get('drua_profile_settings_page', '0'),
+  );
+  $form['#submit'][]='drua_profile_settings_page_submit';
+
+  return system_settings_form($form);
+}
+
+/**
+ * Submit for form drua_profile.
+ */
+function drua_profile_settings_page_submit($form, &$form_state) {
+  if ($form_state['values']['drua_profile_settings_page']) {
+    drupal_set_message(t('All users inforamation has beed updated'));
+    db_query('UPDATE {content_type_profile} SET field_send_mail_about_new_events_value = %b',
+      array(1));
+    $form_state['values']['drua_profile_settings_page'] = 0;
+  }
 }
