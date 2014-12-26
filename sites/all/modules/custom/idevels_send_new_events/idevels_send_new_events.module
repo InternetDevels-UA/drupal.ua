@@ -24,7 +24,7 @@ function idevels_send_new_events_cron() {
     $users = (db_query("SELECT users.uid AS uid, users.name AS user_name,users.mail AS user_mail FROM users users INNER JOIN node node_users ON users.uid = node_users.uid AND node_users.type = 'profile' LEFT JOIN content_type_profile node_users_node_data_field_send_mail_about_new_events ON node_users.vid = node_users_node_data_field_send_mail_about_new_events.vid WHERE (node_users_node_data_field_send_mail_about_new_events.field_send_mail_about_new_events_value) = ('1')"));
     while ($user = db_fetch_array($users)) {
       $output = str_replace("@user_name", $user['user_name'], $output);
-      $output = str_replace("@unsubscribe_here", '<a href="' . url($user['uid'] . '/edit/profile', array('abolute' => TRUE,)) . '" style="color: #21c2f8;text-decoration: none;">' . t('here') . '</a>', $output);
+      $output = str_replace("@unsubscribe_here", '<a href="' . url('user/'.$user['uid'] . '/edit/profile', array('abolute' => TRUE,)) . '" style="color: #21c2f8;text-decoration: none;">' . t('here') . '</a>', $output);
       $message['to'] = $user['user_mail'];
       $message['body'] = $output;
       job_queue_add('drupal_mail_send', 'Send mail for user - ' . $user['user_name'] . ', user email - ' . $user['user_mail'], array($message), '', TRUE);
