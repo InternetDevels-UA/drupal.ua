@@ -337,7 +337,7 @@ function idevels_views_pre_render(&$view) {
     // }
     $view->attachment_before = $attachment;
   }
-  elseif ($view->name == 'Events' && $view->current_display == 'panel_pane_3') {
+  elseif ($view->name == 'Events' && $view->current_display == 'panel_pane_2') {
     drupal_set_breadcrumb(array(
       l(t('Home'), NULL),
       l(t('Events'), 'events'),
@@ -1266,10 +1266,10 @@ function _idevels_email_notification_about_event($i, $time_period, $email, $nid)
     }
 
     $subjects = array(
+      t("Thank You for your Event Registration at @event_name", array('@event_name' => $event_request->title)),
       t("Event @event_name will be tomorrow", array('@event_name' => $event_request->title)),
       t("Event @event_name will be in a week", array('@event_name' => $event_request->title)),
       t("Event @event_name will be in a month", array('@event_name' => $event_request->title)),
-      t("Thank You for your Event Registration at @event_name", array('@event_name' => $event_request->title)),
     );
 
     $tokens = array(
