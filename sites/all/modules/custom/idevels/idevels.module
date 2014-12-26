@@ -84,27 +84,26 @@ function idevels_event_register() {
       AND `field_event_nid_value` = '%s'"
       , $email[0]['value'], $event_nid[0]['value']);
 
-    while ($row = db_fetch_array($result)) {
-      node_delete($row['nid']);
+    if (!($row = db_fetch_array($result))) {
+      $node = (object) array(
+        'type' => 'user_event_application',
+        'uid' => $user->uid,
+        'title' => 'Event register request',
+        'body' => '',
+        'field_event_nid' => $event_nid,
+        'field_name' => $first_name,
+        'field_lastname' => $last_name,
+        'field_email' => $email,
+        'field_occupation' => array(0 => array('value' => $occupation_tid)),
+        'field_occupation_info' => $occupation_info,
+        'field_where_you_hear' => array(0 => array('value' => $where_you_hear_tid)),
+        'field_where_you_hear_info' => $where_you_hear_info,
+        'field_additional_info' => $additional_info,
+      );
+      node_object_prepare($node);
+      node_save($node);
+      _idevels_email_notification_about_event(3, FALSE, $email[0]['value'], $event_nid[0]['value']);
     }
-
-    $node = (object) array(
-      'type' => 'user_event_application',
-      'uid' => $user->uid,
-      'title' => 'Event register request',
-      'body' => '',
-      'field_event_nid' => $event_nid,
-      'field_name' => $first_name,
-      'field_lastname' => $last_name,
-      'field_email' => $email,
-      'field_occupation' => array(0 => array('value' => $occupation_tid)),
-      'field_occupation_info' => $occupation_info,
-      'field_where_you_hear' => array(0 => array('value' => $where_you_hear_tid)),
-      'field_where_you_hear_info' => $where_you_hear_info,
-      'field_additional_info' => $additional_info,
-    );
-    node_object_prepare($node);
-    node_save($node);
   }
 }
 
@@ -1178,7 +1177,7 @@ function ua_month_perfecty($timestamp) {
   $month_translated = t($month_english);
   $output = t("@d {$month_english} @g:@i", array(
     '@d' => format_date($timestamp, 'custom', 'd'),
-    '@g' => format_date($timestamp, 'custom', 'g'),
+    '@g' => format_date($timestamp, 'custom', 'H'),
     '@i' => format_date($timestamp, 'custom', 'i'),
   ));
   return $output;
@@ -1194,5 +1193,106 @@ function _idevels_events_access(){
   }
   else {
     return TRUE;
+  }
+}
+
+/**
+ * Implementation of hook_cron.
+ * Find events;
+ */
+function idevels_cron() {
+  $time_periods = array(1, 6, cal_days_in_month(CAL_GREGORIAN, (int) date('n'), (int) date('Y')) - 1);
+
+  foreach ($time_periods as $i => $time_period) {
+    _idevels_email_notification_about_event($i+1, $time_period, FALSE, FALSE);
+  }
+}
+
+/**
+ * Custom function
+ * Send email for all users who register for event.
+ * $time_period in days.
+ */
+function _idevels_email_notification_about_event($i, $time_period, $email, $nid) {
+  global $base_url;
+  module_load_include('inc', 'mimemail', 'includes/mimemail.rules');
+
+  $template = node_load(array('uid' => 1, 'type' => 'email_template_user_event'));
+
+  if ($time_period) {
+    $result = db_query(
+        "SELECT *
+        FROM (
+            SELECT `content_type_user_event_application`.`field_name_value`, `content_type_user_event_application`.`field_email_value`, `content_type_events`.`field_event_date_value`, `node`.`title`, `content_type_events`.`field_city_value`, `content_type_events`.`nid`, `content_type_events`.`field_events_logo_fid`
+            FROM  `content_type_user_event_application`
+            LEFT JOIN  `content_type_events` ON  `content_type_user_event_application`.`field_event_nid_value` =  `content_type_events`.`nid`
+            LEFT JOIN  `node` ON  `content_type_user_event_application`.`field_event_nid_value` =  `node`.`nid`
+        ) t1
+        LEFT JOIN  `files` ON  `t1`.`field_events_logo_fid` =  `files`.`fid`
+        WHERE `t1`.`field_event_date_value` LIKE LOWER('%%%s%%')"
+      , date('Y-m-d', time() + $time_period * 24 * 60 * 60 - 2 * 60 * 60));
+  }
+  elseif ($email && $nid) {
+    $result = db_query(
+        "SELECT *
+        FROM (
+            SELECT `content_type_user_event_application`.`field_name_value`, `content_type_user_event_application`.`field_email_value`, `content_type_events`.`field_event_date_value`, `node`.`title`, `content_type_events`.`field_city_value`, `content_type_events`.`nid`, `content_type_events`.`field_events_logo_fid`
+            FROM  `content_type_user_event_application`
+            LEFT JOIN  `content_type_events` ON  `content_type_user_event_application`.`field_event_nid_value` =  `content_type_events`.`nid`
+            LEFT JOIN  `node` ON  `content_type_user_event_application`.`field_event_nid_value` =  `node`.`nid`
+        ) t1
+        LEFT JOIN  `files` ON  `t1`.`field_events_logo_fid` =  `files`.`fid`
+        WHERE `t1`.`field_email_value` = '%s'
+        AND `t1`.`nid` = %s"
+      , $email, $nid);
+  }
+  else {
+    watchdog('idevels', 'wrong parameters for function _idevels_email_notification_about_event', WATCHDOG_ERROR);
+  }
+
+  $body = str_replace('!body', $template->field_email_body[$i]['value'], $template->body);
+
+  while ($event_request = db_fetch_object($result)) {
+
+    $timestamp = strtotime($event_request->field_event_date_value);
+    $city = taxonomy_get_term($event_request->field_city_value)->name ?: FALSE;
+    $user = user_load(array('mail' => $event_request->field_email_value));
+
+    if ($user) {
+      $body = str_replace('!unsubscribe', $template->field_email_body[4]['value'], $body);
+    }
+    else {
+      $body = str_replace('!unsubscribe', '', $body);
+    }
+
+    $subjects = array(
+      t("Event @event_name will be tomorrow", array('@event_name' => $event_request->title)),
+      t("Event @event_name will be in a week", array('@event_name' => $event_request->title)),
+      t("Event @event_name will be in a month", array('@event_name' => $event_request->title)),
+      t("Thank You for your Event Registration at @event_name", array('@event_name' => $event_request->title)),
+    );
+
+    $tokens = array(
+      '!logo' => $event_request->filepath ? theme_imagecache('100x100', $event_request->filepath) : '',
+      '!name' => $event_request->field_name_value,
+      '!date' => ua_month_perfecty($timestamp + 2 * 60 * 60),
+      '!event_name' => $event_request->title,
+      '!city' => $city,
+      '!link' => $base_url . '/' . drupal_get_path_alias('node/' . $event_request->nid),
+      '!unsubscribe_link' => $base_url . '/user/' . $user->uid . '/edit/newsletter',
+    );
+
+    foreach ($tokens as $token => $value) {
+      $body = str_replace($token, $value, $body);
+    }
+
+    $message = array(
+      'to' => $event_request->field_email_value,
+      'subject' => $subjects[$i],
+      'body' => $body,
+      'headers' => array('From' => variable_get('site_mail', ''), 'Content-Type' => 'text/html; charset=utf-8'),
+    );
+
+    drupal_mail_send($message);
   }
 }
