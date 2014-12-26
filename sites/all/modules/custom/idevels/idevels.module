@@ -405,6 +405,19 @@ function idevels_views_pre_render(&$view) {
   elseif ($view->name == 'question' && $view->current_display == 'block_1') {
     drupal_set_title(t('Questions/Answers'));
   }
+  elseif ($view->name == 'event_users' && $view->current_display == 'page_1') {
+    drupal_set_breadcrumb(array(
+        l(t('Home'), NULL),
+        l(t('Events'), 'events'),
+        t('Event users'),
+      )
+    );
+    global $user;
+    $node = node_load(array('nid' => $view->args[0]));
+    if ($node->uid != $user->uid) {
+      drupal_access_denied();
+    }
+  }
 }
 
 /**

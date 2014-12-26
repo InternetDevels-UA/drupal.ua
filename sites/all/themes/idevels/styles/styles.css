@@ -5898,3 +5898,33 @@ body.page-user ul.primary li.active {
 .red {
   color: red;
 }
+.view-id-event_users table {
+  width: 100%;
+  height: auto;
+  word-wrap: break-word;
+  border: black 1px solid !important;
+  text-align: left;
+}
+
+.view-id-event_users table td ,
+.view-id-event_users table th {
+  padding: 2px 5px !important;
+  border: black 1px solid !important;
+  vertical-align: top !important;
+}
+
+.view-id-event_users table th:first-child {
+  -moz-border-radius: 0;
+  -webkit-border-top-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.view-id-event_users table th:last-child {
+  -moz-border-radius: 0;
+  -webkit-border-top-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.view-id-event_users table th a {
+  color: black;
+}

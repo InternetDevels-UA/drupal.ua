@@ -1,0 +1,8 @@
+name = "Event user"
+description = "Список користувачів зареєстрованих на подію"
+core = "6.x"
+package = "Features"
+dependencies[] = "content"
+dependencies[] = "views"
+features[views][] = "event_users"
+features[views_api][] = "api:2"
