@@ -102,7 +102,7 @@ function idevels_event_register() {
       );
       node_object_prepare($node);
       node_save($node);
-      _idevels_email_notification_about_event(3, FALSE, $email[0]['value'], $event_nid[0]['value']);
+      _idevels_email_notification_about_event(0, FALSE, $email[0]['value'], $event_nid[0]['value']);
     }
   }
 }
