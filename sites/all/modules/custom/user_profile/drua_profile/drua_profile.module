@@ -920,7 +920,7 @@ function _drua_profile_top_cities_by_events() {
 function _drua_profile_count_users_who_will_go_to_event() {
   $result = db_query('SELECT COUNT(*) FROM `content_type_user_event_application` WHERE `field_event_nid_value` = %s', (string) arg(1));
   $count = db_fetch_array($result);
-  return $count['COUNT(*)'];
+  return ' ' . $count['COUNT(*)'];
 }
 
 /**
