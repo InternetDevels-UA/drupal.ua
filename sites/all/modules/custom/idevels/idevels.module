@@ -339,7 +339,7 @@ function idevels_views_pre_render(&$view) {
     // }
     $view->attachment_before = $attachment;
   }
-  elseif ($view->name == 'Events' && $view->current_display == 'panel_pane_3') {
+  elseif ($view->name == 'Events' && $view->current_display == 'panel_pane_2') {
     drupal_set_breadcrumb(array(
       l(t('Home'), NULL),
       l(t('Events'), 'events'),
