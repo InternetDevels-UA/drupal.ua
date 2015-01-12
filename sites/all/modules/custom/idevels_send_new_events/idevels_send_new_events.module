@@ -8,15 +8,17 @@ function idevels_send_new_events_cron() {
   $result = db_result(db_query("SELECT node.nid AS nid FROM node node WHERE (node.type in ('events')) AND (node.created > %d)", array($time)));
   if ($result) {
     $output = idevels_send_new_events_make_message();
-    $current_month = t(date('F'));
+    $current_month = date('m');
+    $current_month = number_format($current_month);
+    $month = explode('|', t('|January|February|March|April|May|June|July|August|September|October|November|December'));
     $message = array(
-      'subject' => t('Interesting events in') . ' ' . $current_month,
+      'subject' => t('Interesting events in') . ' ' . $month[$current_month],
       'headers' => array(
-        'Reply-To' => variable_get('idevels_send_new_events_reply', variable_get('site_name', '')),
+        'Reply-To' => variable_get('idevels_send_new_events_reply', 'support@drupal.ua'),
         'MIME-Version' => '1.0',
         'Content-Type' => 'text/html; charset=UTF-8; format=flowed; delsp=yes',
         'Content-Transfer-Encoding' => '8Bit',
-        'From' => variable_get('idevels_send_new_events_from', variable_get('site_name', '')),
+        'From' => variable_get('idevels_send_new_events_from', 'support@drupal.ua'),
         'X-Mailer' => 'Drupal',
       ),
     );
