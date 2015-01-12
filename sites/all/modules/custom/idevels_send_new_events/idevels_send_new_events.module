@@ -8,10 +8,9 @@ function idevels_send_new_events_cron() {
   $result = db_result(db_query("SELECT node.nid AS nid FROM node node WHERE (node.type in ('events')) AND (node.created > %d)", array($time)));
   if ($result) {
     $output = idevels_send_new_events_make_message();
-    $current_month = date('m');
-    $month = explode('|', trim(t('|January|February|March|April|May|June|July|August|September|October|November|December')));
+    $current_month = t(date('F'));
     $message = array(
-      'subject' => t('Interesting events in') . ' ' . $month[$current_month],
+      'subject' => t('Interesting events in') . ' ' . $current_month,
       'headers' => array(
         'Reply-To' => variable_get('idevels_send_new_events_reply', variable_get('site_name', '')),
         'MIME-Version' => '1.0',
@@ -21,7 +20,7 @@ function idevels_send_new_events_cron() {
         'X-Mailer' => 'Drupal',
       ),
     );
-    $users = (db_query("SELECT users.uid AS uid, users.name AS user_name,users.mail AS user_mail FROM users users INNER JOIN node node_users ON users.uid = node_users.uid AND node_users.type = 'profile' LEFT JOIN content_type_profile node_users_node_data_field_send_mail_about_new_events ON node_users.vid = node_users_node_data_field_send_mail_about_new_events.vid WHERE (node_users_node_data_field_send_mail_about_new_events.field_send_mail_about_new_events_value) = ('1')"));
+    $users = (db_query("SELECT users.uid AS uid, users.name AS user_name,users.mail AS user_mail FROM users INNER JOIN node node_users ON users.uid = node_users.uid AND node_users.type = 'profile' LEFT JOIN content_type_profile node_users_node_data_field_send_mail_about_new_events ON node_users.vid = node_users_node_data_field_send_mail_about_new_events.vid WHERE (node_users_node_data_field_send_mail_about_new_events.field_send_mail_about_new_events_value) = ('1')"));
     while ($user = db_fetch_array($users)) {
       $output = str_replace("@user_name", $user['user_name'], $output);
       $output = str_replace("@unsubscribe_here", '<a href="' . url('user/'.$user['uid'] . '/edit/profile', array('abolute' => TRUE,)) . '" style="color: #21c2f8;text-decoration: none;">' . t('here') . '</a>', $output);
