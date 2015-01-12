@@ -59,6 +59,13 @@ function idevels_menu() {
 }
 
 /**
+ * Implements hook_mail_alter().
+ */
+function idevels_mail_alter(&$message) {
+  $message['headers']['From'] = 'Drupal.ua <support@drupal.ua>';
+}
+
+/**
  * Ajax for register user to event.
  */
 function idevels_event_register() {
