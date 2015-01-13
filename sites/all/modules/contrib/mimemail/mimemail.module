@@ -323,10 +323,10 @@ function mimemail($sender, $recipient, $subject, $body, $plaintext = NULL, $head
   drupal_alter('mail', $message);
 
   if (function_exists($engine_prepare_message)) {
-    $message = $engine_prepare_message($message['from'], $message['to'], $message['subject'], $message['body'], $plaintext, $message['headers'], $text, $attachments, $message['mailkey']);
+    $message = $engine_prepare_message($message['from'], $message['to'], $message['subject'], $body, $plaintext, $message['headers'], $text, $attachments, $message['mailkey']);
   }
   else {
-    $message = mimemail_prepare_message($message['from'], $message['to'], $message['subject'], $message['body'], $plaintext, $message['headers'], $text, $attachments, $message['mailkey']);
+    $message = mimemail_prepare_message($message['from'], $message['to'], $message['subject'], $body, $plaintext, $message['headers'], $text, $attachments, $message['mailkey']);
   }
 
   // Optionally send e-mail.

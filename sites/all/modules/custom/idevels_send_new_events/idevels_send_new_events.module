@@ -22,7 +22,6 @@ function idevels_send_new_events_cron() {
         'X-Mailer' => 'Drupal',
         'Sender' => variable_get('idevels_send_new_events_from', 'support@drupal.ua'),
         'mailed-by' => 'drupal.ua',
-        'signed-by' => 'drupal.ua',
       ),
     );
     $users = (db_query("SELECT users.uid AS uid, users.name AS user_name,users.mail AS user_mail FROM users INNER JOIN node node_users ON users.uid = node_users.uid AND node_users.type = 'profile' LEFT JOIN content_type_profile node_users_node_data_field_send_mail_about_new_events ON node_users.vid = node_users_node_data_field_send_mail_about_new_events.vid WHERE (node_users_node_data_field_send_mail_about_new_events.field_send_mail_about_new_events_value) = ('1')"));
