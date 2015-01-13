@@ -62,7 +62,7 @@ function idevels_menu() {
  * Implements hook_mail_alter().
  */
 function idevels_mail_alter(&$message) {
-  $message['headers']['From'] $message['headers']['Sender'] = 'Drupal.ua <support@drupal.ua>';
+  $message['headers']['From'] = $message['headers']['Sender'] = 'Drupal.ua <support@drupal.ua>';
   $message['headers']['mailed-by'] = $message['headers']['signed-by'] = 'drupal.ua';
 }
 
