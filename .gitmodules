@@ -169,9 +169,6 @@
 [submodule "sites/all/modules/contrib/messaging"]
 	path = sites/all/modules/contrib/messaging
 	url = git://git.drupal.org/project/messaging.git
-[submodule "sites/all/modules/contrib/mimemail"]
-	path = sites/all/modules/contrib/mimemail
-	url = git://git.drupal.org/project/mimemail.git
 [submodule "sites/all/modules/contrib/node_clone"]
 	path = sites/all/modules/contrib/node_clone
 	url = git://git.drupal.org/project/node_clone.git
