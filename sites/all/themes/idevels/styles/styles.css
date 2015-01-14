@@ -5440,6 +5440,7 @@ body.page-user .view-id-profile_view .views-field-field-bio-value label {
   width: 100%;
   float: left;
   clear: both;
+  height: 48px;
 }
 #div-register-for-event > .pane-content {
   float: left;
@@ -5451,8 +5452,11 @@ body.page-user .view-id-profile_view .views-field-field-bio-value label {
   color: black;
   text-decoration: none;
 }
-.pane-events-panel-pane-2 .views-field-ops .field-content:hover,
 #register-for-event:hover {
+  border: 1px solid #39A4F2;
+  text-decoration: none;
+}
+.pane-events-panel-pane-2 .views-field-ops .field-content:hover {
    border: 1px solid #999;
    text-decoration: none;
 }
@@ -5930,4 +5934,12 @@ body.page-user ul.primary li.active {
 }
 .view-events-subscribers .feed-icon {
   display: block;
+}
+#register-for-event {
+  background: linear-gradient(to bottom,#2173AF,#2685CA);
+  box-shadow: 0 1px 0 0 #2173AF inset,0 -1px 0 0 #2173AF inset;
+  border: 1px solid #2173AF;
+  color: #FFF;
+  font-weight: bold;
+  padding: 10px 152px;
 }

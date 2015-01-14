@@ -647,7 +647,7 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
   else if ((Drupal.settings.are_user_register_for_event && Drupal.settings.are_user_register_for_event != 0) || readCookie('event_'+Drupal.settings.nid)) {
     // If user are alredy registred
     $('#register-for-event').text(Drupal.t('Thanks for registering'));
-    $('#register-for-event').css('color','#999');
+    $('#register-for-event').css('color','#FFF');
   };
 
   // Select neutral language and hide selectbox
@@ -798,7 +798,7 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
             $('.field-count-users .pane-content').text(new_num);
           });
           $('#register-for-event').text(Drupal.t('Thanks for registering'));
-          $('#register-for-event').css('color','#999');
+          $('#register-for-event').css('color','#FFF');
           createCookie('event_'+Drupal.settings.nid, true, 2*365);
         }
       });
