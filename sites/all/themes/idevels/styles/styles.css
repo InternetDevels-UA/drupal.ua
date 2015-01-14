@@ -5928,3 +5928,6 @@ body.page-user ul.primary li.active {
 .view-id-event_users table th a {
   color: black;
 }
+.view-events-subscribers .feed-icon {
+  display: block;
+}
