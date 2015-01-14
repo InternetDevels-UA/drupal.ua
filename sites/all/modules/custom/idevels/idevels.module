@@ -75,7 +75,7 @@ function idevels_event_register() {
 
 
   if (!empty($_POST)) {
-    $event_nid = $_POST['field_event_nid'];
+    $event_nid = $_POST['field_nid_event'];
     $first_name = $_POST['field_name'];
     $last_name = $_POST['field_lastname'];
     $email = $_POST['field_email'];
@@ -89,8 +89,8 @@ function idevels_event_register() {
       "SELECT `nid`
       FROM  {content_type_user_event_application}
       WHERE `field_email_value` = '%s'
-      AND `field_event_nid_value` = '%s'"
-      , $email[0]['value'], $event_nid[0]['value']);
+      AND `field_nid_event_nid` = '%s'"
+      , $email[0]['value'], $event_nid[0]['nid']);
 
     if (!($row = db_fetch_array($result))) {
       $node = (object) array(
@@ -98,7 +98,7 @@ function idevels_event_register() {
         'uid' => $user->uid,
         'title' => 'Event register request',
         'body' => '',
-        'field_event_nid' => $event_nid,
+        'field_nid_event' => $event_nid,
         'field_name' => $first_name,
         'field_lastname' => $last_name,
         'field_email' => $email,
@@ -110,7 +110,7 @@ function idevels_event_register() {
       );
       node_object_prepare($node);
       node_save($node);
-      _idevels_email_notification_about_event(0, FALSE, $email[0]['value'], $event_nid[0]['value']);
+      _idevels_email_notification_about_event(0, FALSE, $email[0]['value'], $event_nid[0]['nid']);
     }
   }
 }
@@ -119,7 +119,7 @@ function idevels_event_register() {
  * Ajax for user info (return username and avatar in json format)
  */
 function idevels_node_count_flags($nid) {
-  $result = db_query('SELECT COUNT(*) FROM `content_type_user_event_application` WHERE `field_event_nid_value` = %s', $nid);
+  $result = db_query('SELECT COUNT(*) FROM `content_type_user_event_application` WHERE `field_nid_event_nid` = %s', $nid);
   $count = db_fetch_array($result);
   drupal_json(array('count_flag' => $count['COUNT(*)']));
 }
@@ -1121,7 +1121,7 @@ function idevels_init() {
   $count = 0;
 
   if ($profile && $node->type == 'events') {
-    $result = db_query('SELECT COUNT(*) FROM `content_type_user_event_application` WHERE `field_event_nid_value` = %s AND `field_email_value` = "%s"', (string) arg(1), $user->mail);
+    $result = db_query('SELECT COUNT(*) FROM `content_type_user_event_application` WHERE `field_nid_event_nid` = %s AND `field_email_value` = "%s"', (string) arg(1), $user->mail);
     $count = db_fetch_array($result);
   }
 
@@ -1233,8 +1233,8 @@ function _idevels_email_notification_about_event($i, $time_period, $email, $nid)
         FROM (
             SELECT `content_type_user_event_application`.`field_name_value`, `content_type_user_event_application`.`field_email_value`, `content_type_events`.`field_event_date_value`, `node`.`title`, `content_type_events`.`field_city_value`, `content_type_events`.`nid`, `content_type_events`.`field_events_logo_fid`
             FROM  `content_type_user_event_application`
-            LEFT JOIN  `content_type_events` ON  `content_type_user_event_application`.`field_event_nid_value` =  `content_type_events`.`nid`
-            LEFT JOIN  `node` ON  `content_type_user_event_application`.`field_event_nid_value` =  `node`.`nid`
+            LEFT JOIN  `content_type_events` ON  `content_type_user_event_application`.`field_nid_event_nid` =  `content_type_events`.`nid`
+            LEFT JOIN  `node` ON  `content_type_user_event_application`.`field_nid_event_nid` =  `node`.`nid`
         ) t1
         LEFT JOIN  `files` ON  `t1`.`field_events_logo_fid` =  `files`.`fid`
         WHERE `t1`.`field_event_date_value` LIKE LOWER('%%%s%%')"
@@ -1246,8 +1246,8 @@ function _idevels_email_notification_about_event($i, $time_period, $email, $nid)
         FROM (
             SELECT `content_type_user_event_application`.`field_name_value`, `content_type_user_event_application`.`field_email_value`, `content_type_events`.`field_event_date_value`, `node`.`title`, `content_type_events`.`field_city_value`, `content_type_events`.`nid`, `content_type_events`.`field_events_logo_fid`
             FROM  `content_type_user_event_application`
-            LEFT JOIN  `content_type_events` ON  `content_type_user_event_application`.`field_event_nid_value` =  `content_type_events`.`nid`
-            LEFT JOIN  `node` ON  `content_type_user_event_application`.`field_event_nid_value` =  `node`.`nid`
+            LEFT JOIN  `content_type_events` ON  `content_type_user_event_application`.`field_nid_event_nid` =  `content_type_events`.`nid`
+            LEFT JOIN  `node` ON  `content_type_user_event_application`.`field_nid_event_nid` =  `node`.`nid`
         ) t1
         LEFT JOIN  `files` ON  `t1`.`field_events_logo_fid` =  `files`.`fid`
         WHERE `t1`.`field_email_value` = '%s'
