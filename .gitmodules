@@ -353,3 +353,7 @@
 [submodule "sites/all/modules/contrib/job_queue"]
 	path = sites/all/modules/contrib/job_queue
 	url = http://git.drupal.org/project/job_queue.git
+[submodule "sites/all/modules/contrib/nodereference_field"]
+	path = sites/all/modules/contrib/nodereference_field
+	url = http://git.drupal.org/project/nodereference_field.git
+	branch = master
