@@ -14,14 +14,14 @@ function drua_profile_theme() {
     'drua_block_status' => array('arguments' => array('status' => FALSE)),
     'drua_block_drupal_active' => array('arguments' => array('user_data' => NULL)),
     'drua_block_domen_active' => array('arguments' => array('data' => NULL)),
-  
+
     'drua_block_karma' => array(
       'arguments' => array(
       'karma_value' => NULL,
-      'change_karma' => FALSE 
+      'change_karma' => FALSE
       )
     ),
-    
+
     'drua_block_top' => array('arguments' => array('top_value' => NULL)),
   );
 }
@@ -164,7 +164,7 @@ function drua_profile_block($op = 'list', $delta = 0, $edit = array()) {
           if (!$account || !$account->uid) {
             return;
           }
-          
+
           $user_fields = _drua_profile_fields_load($account->uid, array(
             'country' => '',
             'country_name' => '',
@@ -178,8 +178,8 @@ function drua_profile_block($op = 'list', $delta = 0, $edit = array()) {
             'linkedin' => '',
             'email' => $account->mail,
           ));
-          
-          
+
+
           if (!$user_fields['show_email']) {
             unset($user_fields['email']);
           }
@@ -212,7 +212,7 @@ function drua_profile_block($op = 'list', $delta = 0, $edit = array()) {
             );
           }
           break;
-          
+
         case 'profile_avatar':
           if (arg(0) == 'node') {
             $node = node_load(array('nid' => arg(1)));
@@ -221,7 +221,7 @@ function drua_profile_block($op = 'list', $delta = 0, $edit = array()) {
           if (!$account || !$account->uid) {
             return;
             //TODO guest
-            
+
             $user_data = array(
               'uid' => 0,
               'status' => 0,
@@ -240,7 +240,7 @@ function drua_profile_block($op = 'list', $delta = 0, $edit = array()) {
           }
           else {
             $user_fields = _drua_profile_fields_load($account->uid, array('avatar' => '', ));
-            
+
             //TODO fix load data (karma, medals)
 
             $user_data = array(
@@ -266,7 +266,7 @@ function drua_profile_block($op = 'list', $delta = 0, $edit = array()) {
             'content' => theme('drua_block_avatar_block', $user_data),
           );
           break;
-          
+
         case 'profile_drupal':
           if ($account) {
             $user_fields = _drua_profile_fields_load($account->uid, array('drupal_parser' => '', ));
@@ -865,10 +865,10 @@ function drua_profile_user_pass_reset(&$form_state, $uid, $timestamp, $hashed_pa
  */
 function _drua_profile_last_comments() {
   $result = db_query(
-    'SELECT `comments`.`timestamp` , `node`.`title` , `node_comment_statistics`.`comment_count` , `comments`.`cid` , `node`.`nid` 
+    'SELECT `comments`.`timestamp` , `node`.`title` , `node_comment_statistics`.`comment_count` , `comments`.`cid` , `node`.`nid`
     FROM (SELECT * FROM `comments` ORDER BY `comments`.`timestamp` DESC) `comments`
-    INNER JOIN `node` ON `comments`.`nid` = `node`.`nid` 
-    INNER JOIN `node_comment_statistics` ON `node`.`nid` = `node_comment_statistics`.`nid` 
+    INNER JOIN `node` ON `comments`.`nid` = `node`.`nid`
+    INNER JOIN `node_comment_statistics` ON `node`.`nid` = `node_comment_statistics`.`nid`
     WHERE `node`.`status` =1
     GROUP BY `node`.`nid`
     ORDER BY `comments`.`timestamp` DESC
@@ -916,10 +916,10 @@ function _drua_profile_og_most_popular_groups() {
 function _drua_profile_top_cities_by_events() {
   $result = db_query(
     'SELECT  `term_data`.`name`
-    FROM  `content_type_events` 
-    INNER JOIN  `term_data` ON  `content_type_events`.`field_city_value` =  `term_data`.`tid` 
-    GROUP BY  `field_city_value` 
-    ORDER BY COUNT(  `field_city_value` ) DESC 
+    FROM  `content_type_events`
+    INNER JOIN  `term_data` ON  `content_type_events`.`field_city_value` =  `term_data`.`tid`
+    GROUP BY  `field_city_value`
+    ORDER BY COUNT(  `field_city_value` ) DESC
     LIMIT 0 , 10'
   );
   while ($row = db_fetch_array($result)) {
@@ -930,7 +930,7 @@ function _drua_profile_top_cities_by_events() {
 }
 
 function _drua_profile_count_users_who_will_go_to_event() {
-  $result = db_query('SELECT COUNT(*) FROM `content_type_user_event_application` WHERE `field_event_nid_value` = %s', (string) arg(1));
+  $result = db_query('SELECT COUNT(*) FROM `content_type_user_event_application` WHERE `field_nid_event_nid` = %s', (string) arg(1));
   $count = db_fetch_array($result);
   return ' ' . $count['COUNT(*)'];
 }
@@ -959,32 +959,32 @@ function _drua_profile_fields_load($uid, $fields) {
       case 'about':
         $fields[$key] = check_markup($node->field_bio[0]['value'], $node->field_bio[0]['format']);
         break;
-        
+
       case 'field_skype':
       case 'skype':
         $fields[$key] = check_plain($node->field_skype[0]['value']);
         break;
-        
+
       case 'field_jabber':
       case 'jabber':
         $fields[$key] = check_plain($node->field_jabber[0]['value']);
         break;
-        
+
       case 'field_icq':
       case 'icq':
         $fields[$key] = check_plain($node->field_icq[0]['value']);
         break;
-        
+
       case 'field_show_email':
       case 'show_email':
         $fields[$key] = $node->field_show_email[0]['value'];
         break;
-        
+
       case 'field_phone':
       case 'phone':
         $fields[$key] = check_plain($node->field_phone[0]['value']);
         break;
-      
+
       case 'country':
       case 'country_name':
       case 'city':
@@ -992,7 +992,7 @@ function _drua_profile_fields_load($uid, $fields) {
       case 'postal_code':
         $fields[$key] = $node->field_location[0][$key];
         break;
-        
+
       case 'twitter':
         if (is_array($field_social) && count($field_social)) {
           foreach ($field_social as $social) {
@@ -1004,7 +1004,7 @@ function _drua_profile_fields_load($uid, $fields) {
           }
         }
         break;
-        
+
       case 'linkedin':
         if (is_array($field_social) && count($field_social)) {
           foreach ($field_social as $social) {
@@ -1016,12 +1016,12 @@ function _drua_profile_fields_load($uid, $fields) {
           }
         }
         break;
-        
+
       case 'field_image':
       case 'avatar':
         $fields[$key] = $node->field_image[0];
         break;
-        
+
       case 'drupal_parser':
       case 'field_account':
         $fields[$key] = $node->field_account[0]['value'];
@@ -1272,7 +1272,7 @@ function theme_drua_block_drupal_active($user_data = NULL) {
         }
         $org_project .= '</div>';
     }
-  
+
   if (!empty($org_project)) {
     $output .= '
   <div class="project_org_wrap">

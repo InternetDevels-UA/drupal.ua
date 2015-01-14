@@ -17,7 +17,7 @@ function event_user_views_default_views() {
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
   $handler = $view->new_display('default', 'Типово', 'default');
   $handler->override_option('fields', array(
-    'field_event_nid_value' => array(
+    'field_nid_event_nid' => array(
       'label' => 'Event nid',
       'alter' => array(
         'alter_text' => 0,
@@ -53,9 +53,9 @@ function event_user_views_default_views() {
         'multiple_reversed' => FALSE,
       ),
       'exclude' => 0,
-      'id' => 'field_event_nid_value',
-      'table' => 'node_data_field_event_nid',
-      'field' => 'field_event_nid_value',
+      'id' => 'field_nid_event_nid',
+      'table' => 'node_data_field_nid_event',
+      'field' => 'field_nid_event_nid',
       'relationship' => 'none',
     ),
     'field_name_value' => array(
@@ -388,7 +388,7 @@ function event_user_views_default_views() {
     ),
   ));
   $handler->override_option('arguments', array(
-    'field_event_nid_value' => array(
+    'field_nid_event_nid' => array(
       'default_action' => 'empty',
       'style_plugin' => 'default_summary',
       'style_options' => array(),
@@ -406,9 +406,9 @@ function event_user_views_default_views() {
       'case' => 'none',
       'path_case' => 'none',
       'transform_dash' => 0,
-      'id' => 'field_event_nid_value',
-      'table' => 'node_data_field_event_nid',
-      'field' => 'field_event_nid_value',
+      'id' => 'field_nid_event_nid',
+      'table' => 'node_data_field_nid_event',
+      'field' => 'field_nid_event_nid',
       'validate_user_argument_type' => 'uid',
       'validate_user_roles' => array(
         2 => 0,
@@ -502,7 +502,7 @@ function event_user_views_default_views() {
     'order' => 'asc',
     'summary' => '',
     'columns' => array(
-      'field_event_nid_value' => 'field_event_nid_value',
+      'field_nid_event_nid' => 'field_nid_event_nid',
       'field_name_value' => 'field_name_value',
       'field_additional_info_value' => 'field_additional_info_value',
       'field_where_you_hear_value' => 'field_where_you_hear_value',
@@ -512,7 +512,7 @@ function event_user_views_default_views() {
       'field_occupation_info_value' => 'field_occupation_info_value',
     ),
     'info' => array(
-      'field_event_nid_value' => array(
+      'field_nid_event_nid' => array(
         'sortable' => 1,
         'separator' => '',
       ),
