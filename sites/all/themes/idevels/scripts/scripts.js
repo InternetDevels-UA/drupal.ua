@@ -693,7 +693,7 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
       <form id="ajax-event-register" accept-charset="UTF-8" method="post" enctype="multipart/form-data"> \
         <h3>'+Drupal.t("Register for event")+':</h3> \
         <div id="js-error-box" class="messages error hide"><ul></ul></div> \
-        <input type="text" maxlength="80" name="field_nid_event[0][nid]" id="edit-field-event-nid-0-nid" size="80" value="" class="form-text required text hide"> \
+        <input type="text" maxlength="80" name="field_nid_event[0][nid]" id="edit-field-nid-event-0-nid" size="80" value="" class="form-text required text hide"> \
         <label for="edit-field-name-0-value">'+Drupal.t("Name")+':<span class="red">*</span></label> \
         <input type="text" maxlength="80" name="field_name[0][value]" id="edit-field-name-0-value" size="80" value="" class="form-text required text"> \
         <label for="edit-field-lastname-0-value">'+Drupal.t("Last name")+':<span class="red">*</span></label> \
@@ -720,7 +720,7 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
     $overlay.html(html);
     $overlay.appendTo($('body'));
 
-    $('#edit-field-event-nid-0-value').val(Drupal.settings.nid);
+    $('#edit-field-nid-event-0-nid').val(Drupal.settings.nid);
     $('#edit-field-name-0-value').val(Drupal.settings.user_first_name);
     $('#edit-field-lastname-0-value').val(Drupal.settings.user_last_name);
     $('#edit-field-email-0-value').val(Drupal.settings.user_email);
