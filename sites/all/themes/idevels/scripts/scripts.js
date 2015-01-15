@@ -805,5 +805,8 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
       return false;
     });
   });
+  if (Drupal.settings.open_register_popup == 1) {
+    $('#register-for-event').trigger('click');
+  }
 
 });
