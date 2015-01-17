@@ -387,7 +387,7 @@ $(function () {
             map.setCenter(results[0].geometry.location); // set the map region to center
             marker.setPosition(results[0].geometry.location); // change the marker position
             $lan.val(results[0].geometry.location['k']);
-            $lng.val(results[0].geometry.location['B']);
+            $lng.val(results[0].geometry.location['D']);
           } else {
             alert(Drupal.t('Geocode was not successful for the following reason')+': ' + status);
           }
