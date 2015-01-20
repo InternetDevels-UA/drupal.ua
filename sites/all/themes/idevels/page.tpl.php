@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1.0, user-scalable=no" />
 </head>
 
-<body class="<?php print $body_classes; ?> sshow-grid" ">
+<body class="<?php print $body_classes; ?> sshow-grid">
 <?php if ($is_event_page): ?>
 <div style="height:0;width:0;overflow: hidden;" >
   <div itemscope itemtype="http://schema.org/Event" >
