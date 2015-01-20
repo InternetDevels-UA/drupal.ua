@@ -387,7 +387,7 @@ $(function () {
             map.setCenter(results[0].geometry.location); // set the map region to center
             marker.setPosition(results[0].geometry.location); // change the marker position
             $lan.val(results[0].geometry.location['k']);
-            $lng.val(results[0].geometry.location['B']);
+            $lng.val(results[0].geometry.location['D']);
           } else {
             alert(Drupal.t('Geocode was not successful for the following reason')+': ' + status);
           }
@@ -650,7 +650,7 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
   else if ((Drupal.settings.are_user_register_for_event && Drupal.settings.are_user_register_for_event != 0) || readCookie('event_'+Drupal.settings.nid)) {
     // If user are alredy registred
     $('#register-for-event').text(Drupal.t('Thanks for registering'));
-    $('#register-for-event').css('color','#999');
+    $('#register-for-event').css('color','#FFF');
   };
 
   // Select neutral language and hide selectbox
@@ -702,12 +702,12 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
         <input type="text" maxlength="80" name="field_email[0][value]" id="edit-field-email-0-value" size="80" value="" class="form-text required text"> \
         <label for="edit-field-occupation-value">'+Drupal.t("Occupation")+':<span class="red">*</span></label> \
         <select name="field_occupation[value]" class="form-select required" id="edit-field-occupation-value"> \
-          <option value="" selected="selected">- Немає -</option>'+occupation_option+'</select> \
+          <option value="" selected="selected">'+Drupal.t("- Choose -")+'</option>'+occupation_option+'</select> \
         <label for="edit-field-occupation-info-0-value" class="hide">'+Drupal.t("Occupation info")+':<span class="red">*</span></label> \
         <input type="text" maxlength="80" name="field_occupation_info[0][value]" id="edit-field-occupation-info-0-value" size="80" value="" class="form-text text hide"> \
         <label for="edit-field-where-you-hear-value">'+Drupal.t("How did you know about this event?")+':<span class="red">*</span></label> \
         <select name="field_where_you_hear[value]" class="form-select required" id="edit-field-where-you-hear-value"> \
-          <option value="" selected="selected">- Немає -</option>'+where_did_you_hear_about_event_option+'</select> \
+          <option value="" selected="selected">'+Drupal.t("- Choose -")+'</option>'+where_did_you_hear_about_event_option+'</select> \
         <label for="edit-field-where-you-hear-info-0-value" class="hide">'+Drupal.t("How did you know about this event? Details")+':<span class="red">*</span></label> \
         <input type="text" maxlength="80" name="field_where_you_hear_info[0][value]" id="edit-field-where-you-hear-info-0-value" size="80" value="" class="form-text text hide"> \
         <label for="edit-field-additional-info-0-value">'+Drupal.t("Additional info")+':</label> \
@@ -801,12 +801,15 @@ if ($(".node-type-events time.not-pastevent").length > 0) {
             $('.field-count-users .pane-content').text(new_num);
           });
           $('#register-for-event').text(Drupal.t('Thanks for registering'));
-          $('#register-for-event').css('color','#999');
+          $('#register-for-event').css('color','#FFF');
           createCookie('event_'+Drupal.settings.nid, true, 2*365);
         }
       });
       return false;
     });
   });
+  if (Drupal.settings.open_register_popup == 1) {
+    $('#register-for-event').trigger('click');
+  }
 
 });

@@ -5925,3 +5925,11 @@ body.page-user ul.primary li.active {
 .view-events-subscribers .feed-icon {
   display: block;
 }
+#register-for-event {
+  background: linear-gradient(to bottom,#2173AF,#2685CA);
+  box-shadow: 0 1px 0 0 #2173AF inset,0 -1px 0 0 #2173AF inset;
+  border: 1px solid #2173AF;
+  color: #FFF;
+  font-weight: bold;
+  padding: 10px 152px;
+}

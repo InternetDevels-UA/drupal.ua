@@ -1135,6 +1135,7 @@ function idevels_init() {
   }
 
   drupal_add_js(array(
+    'open_register_popup' => !empty($_GET['register']) ? 1 : 0,
     'nid' => $node->nid,
     'user_first_name' => $profile->field_first_name[0]['value'],
     'user_last_name' => $profile->field_last_name[0]['value'],
