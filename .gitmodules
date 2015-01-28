@@ -357,3 +357,7 @@
 	path = sites/all/modules/contrib/nodereference_field
 	url = http://git.drupal.org/project/nodereference_field.git
 	branch = master
+[submodule "sites/all/modules/contrib/mandrill"]
+	path = sites/all/modules/contrib/mandrill
+	url = http://git.drupal.org/project/mandrill.git
+	branch = 6.x-1.x
