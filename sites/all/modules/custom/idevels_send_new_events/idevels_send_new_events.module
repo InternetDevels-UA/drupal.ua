@@ -24,7 +24,12 @@ function idevels_send_new_events_cron() {
         'mailed-by' => 'drupal.ua',
       ),
     );
-    $users = (db_query("SELECT users.uid AS uid, users.name AS user_name,users.mail AS user_mail FROM users INNER JOIN node node_users ON users.uid = node_users.uid AND node_users.type = 'profile' LEFT JOIN content_type_profile node_users_node_data_field_send_mail_about_new_events ON node_users.vid = node_users_node_data_field_send_mail_about_new_events.vid WHERE (node_users_node_data_field_send_mail_about_new_events.field_send_mail_about_new_events_value) = ('1')"));
+    $users = (db_query("SELECT users.uid AS uid, users.name AS user_name,users.mail AS user_mail FROM users
+        INNER JOIN node node_users ON users.uid = node_users.uid AND node_users.type = 'profile'
+        LEFT JOIN content_type_profile node_users_node_data_field_send_mail_about_new_events ON node_users.vid = node_users_node_data_field_send_mail_about_new_events.vid
+        LEFT JOIN simplenews_subscriptions subscription ON users.uid = subscription.uid
+        LEFT JOIN simplenews_snid_tid subscription_active ON subscription.snid = subscription_active.snid
+        WHERE subscription_active.tid = 2710 AND subscription_active.status = 1"));
     while ($subscriber = db_fetch_array($users)) {
       $output = $template;
       $output = str_replace("@user_name", $subscriber['user_name'], $output);
