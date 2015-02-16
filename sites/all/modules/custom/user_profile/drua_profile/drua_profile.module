@@ -402,7 +402,7 @@ function drua_profile_block($op = 'list', $delta = 0, $edit = array()) {
           if ($count == '1') {
             $link_title = t('!count professional', array('!count' => $count));
           }
-          $output = '<div class="lc"><div class="copyright">' . t('© 2010—2014 ') . l('Drupal.ua', 'http://www.drupal.ua') . '</div>
+          $output = '<div class="lc"><div class="copyright">' . t('© 2010—!current_year ', array('!current_year' => date("Y"))) . l('Drupal.ua', 'http://www.drupal.ua') . '</div>
                      <div class="count">' . t('Our ') . l($link_title, 'users-lists') . '</div></div>';
           /*$output = '<div class="lc"><div class="copyright">' . t('© 2010—2014 ') . l('Drupal.ua', 'http://www.drupal.ua'). t(' is supported by ') . l('InternetDevels', 'http://internetdevels.com') . t(' and group of volunteers.') . '</div>
                      <div class="count">' . t('Our ') . l($link_title, 'users-lists') . '</div></div>';*/
