@@ -361,7 +361,7 @@ function idevels_send_new_events_make_message($events = '', $new_events = '', $q
     $author = !empty($author->name) ? $author->name : '';
     $body = strip_tags($node->body);
     $text['posts_label'] = t('New posts');
-    $text['all_posts_label'] = '<a style="color:#fff;text-decoration: none;width: 100%;line-height: 31px;display: block;" href="' . url('groups',array('absolute' => TRUE)) . '">' . t('All posts') . '</a>';
+    $text['all_posts_label'] = '<a style="color:#fff;text-decoration: none;width: 100%;line-height: 31px;display: block;" href="' . url('groups',array('absolute' => TRUE)) . '">' . t('Posts all') . '</a>';
     $text['posts'][] = array(
       'title' => $node->title,
       'body' => views_trim_text(array('max_length' => 200, 'ellipsis' => TRUE, 'word_boundary' => FALSE), $body),
