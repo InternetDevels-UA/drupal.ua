@@ -1,4 +1,21 @@
 <?php
+
+define('NEWSLETTER_INTERESTING_EVENTS_TID', 2710);
+
+/**
+ * Implements hook_menu().
+ */
+function idevels_send_new_events_menu() {
+  $items = array();
+  $items['account/%user/%'] = array(
+    'page callback'   => 'idevels_send_new_events_unsubscribe',
+    'page arguments'  => array(1, 2),
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
 /**
  * Implements hook_cron().
  * Generates mailing list
@@ -44,7 +61,8 @@ function idevels_send_new_events_cron() {
     while ($subscriber = db_fetch_array($users)) {
       $output = $template;
       $output = str_replace("@user_name", $subscriber['user_name'], $output);
-      $output = str_replace("@unsubscribe_here", '<a href="' . url('user/'.$subscriber['uid'] . '/edit/profile', array('abolute' => TRUE,)) . '" style="color: #21c2f8;text-decoration: none;">' . t('here') . '</a>', $output);
+      $hash = md5($subscriber['uid']);
+      $output = str_replace("@unsubscribe_here", '<a href="' . url('account/' . $subscriber['uid'] . '/' . $hash, array('absolute' => TRUE,)) . '" style="color: #21c2f8;text-decoration: none;">' . t('here') . '</a>', $output);
       $message['to'] = $subscriber['user_mail'];
       $message['body'] = $output;
       job_queue_add('drupal_mail_send', 'Send mail for user - ' . $subscriber['user_name'] . ', user email - ' . $subscriber['user_mail'], array($message), '', TRUE);
@@ -354,4 +372,18 @@ function idevels_send_new_events_make_message($events = '', $new_events = '', $q
   }
 
   return theme('idevels_send_new_events_template', $text);
+}
+
+/**
+ * Page callback function for unsubscribe.
+ */
+function idevels_send_new_events_unsubscribe($account, $hash) {
+  if (!empty($account->uid)) {
+    $hash_to_check = md5($account->uid);
+    if ($hash_to_check == $hash) {
+      simplenews_unsubscribe_user($account->mail, NEWSLETTER_INTERESTING_EVENTS_TID, FALSE, 'mass unsubscribe');
+      drupal_set_message(t('You have unsubscribed from newsletters about interesting events'));
+    }
+  }
+  drupal_goto();
 }
