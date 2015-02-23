@@ -81,8 +81,8 @@
       <td colspan="2">
         <table style="width:650px;color: #2f383d;margin: 0 auto;"><tbody>
         <tr style="font-weight: bold;font-family: georgia, serif;line-height: 1.2em;font-size: 14px;">
-          <td style="display: inline-block;"><?php print $item['title']; ?></div>
-          <td style="text-align:right;display: inline-block;font-family: Helvetica,Arial,sans-serif; font-size: 13px;font-style: italic;line-height: 1.5em;color: #787878;font-weight: normal;"><?php print $item['city']; ?></div>
+          <td><?php print $item['title']; ?></div>
+          <td style="text-align:right;font-family: Helvetica,Arial,sans-serif; font-size: 13px;font-style: italic;line-height: 1.5em;color: #787878;font-weight: normal;"><?php print $item['city']; ?></div>
         </tr>
         </tbody></table>
         <div style="font-family: Helvetica,Arial,sans-serif;font-size: 12px;line-height: 1.5em;margin-bottom: 10px;"> <?php print $item['body']; ?>
@@ -109,7 +109,7 @@
         <table style="width:650px;color: #2f383d;margin: 0 auto;"><tbody>
         <tr>
           <td style="font-weight: bold;font-family: georgia, serif;line-height: 1.2em;font-size: 14px;"><?php print $item['title']; ?></div>
-          <td style="text-align:right;display: inline-block;font-family: Helvetica,Arial,sans-serif; font-size: 13px;font-style: italic;line-height: 1.5em;color: #787878;font-weight: normal;"><?php print $item['author']; ?></div>
+          <td style="text-align:right;font-family: Helvetica,Arial,sans-serif; font-size: 13px;font-style: italic;line-height: 1.5em;color: #787878;font-weight: normal;"><?php print $item['author']; ?></div>
         </tr>
         </tbody></table>
         <div style="font-family: Helvetica,Arial,sans-serif;font-size: 12px;line-height: 1.5em;margin-bottom: 10px;"> <?php print $item['body']; ?>
