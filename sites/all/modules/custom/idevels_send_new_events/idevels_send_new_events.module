@@ -4,10 +4,21 @@
  * Generates mailing list
  **/
 function idevels_send_new_events_cron() {
-  $time = strtotime('-7 day');
-  $result = db_result(db_query("SELECT node.nid AS nid FROM node node WHERE (node.type in ('events')) AND (node.created > %d)", array($time)));
-  if ($result) {
-    $template = idevels_send_new_events_make_message();
+  $time       = strtotime('-7 day');
+  $new_events = db_query("SELECT node.nid AS nid FROM node node WHERE (node.status = '1' AND node.type in ('events')) AND (node.created > %d)", array($time));
+  $events     = db_query(
+    "SELECT `content_type_events`.`nid`
+     FROM  `content_type_events`
+     INNER JOIN  `node` ON  `content_type_events`.`nid` =  `node`.`nid`
+     WHERE (STR_TO_DATE(`content_type_events`.`field_event_date_value`, '%Y-%m-%%dT%T') > NOW() AND STR_TO_DATE(`content_type_events`.`field_event_date_value`, '%Y-%m-%%dT%T') < NOW()+INTERVAL 7 DAY)
+     LIMIT 5"
+  );
+  $questions  = db_query("SELECT node.nid AS nid FROM node node WHERE (node.status = '1' AND  node.type in ('helper')) AND (node.created > %d)", array($time));
+  $vacancies  = db_query("SELECT node.nid AS nid FROM node node WHERE (node.status = '1' AND node.type in ('vacancies')) AND (node.created > %d)", array($time));
+  $posts      = db_query("SELECT node.nid AS nid FROM node node WHERE (node.status = '1' AND node.type in ('post')) AND (node.created > %d)", array($time));
+
+  if ($events || $new_events || $questions || $vacancies || $post) {
+    $template = idevels_send_new_events_make_message($events, $new_events, $questions, $vacancies, $posts);
     $current_month = date('m');
     $current_month = number_format($current_month);
     $month = explode('|', t('|January|February|March|April|May|June|July|August|September|October|November|December'));
@@ -215,9 +226,8 @@ function idevels_send_new_events_settings_form_validate($form, &$form_state) {
  * Function for generate body of email
  * return 'html'
  */
-function idevels_send_new_events_make_message() {
+function idevels_send_new_events_make_message($events = '', $new_events = '', $questions = '', $vacancies = '', $posts = '') {
   $time = strtotime('-7 day');
-  $NewEvents = db_query("SELECT node.nid AS nid FROM node node WHERE (node.type in ('events')) AND (node.created > %d)", array($time));
   $headerlogo = url(trim(drupal_get_path('module', 'idevels_send_new_events') . '/img/header_logo.png', '/'), array('absolute' => TRUE,));
   $vk_img = url(trim(drupal_get_path('module', 'idevels_send_new_events') . '/img/vk.png', '/'), array('absolute' => TRUE,));
   $vk_link = variable_get('idevels_send_new_events_vk', "");
@@ -245,21 +255,103 @@ function idevels_send_new_events_make_message() {
     'footer_bottom' => $footer_bottom,
     'footer_supported_by' => $footer_supported_by,
   );
-  while ($NewEvent = db_fetch_array($NewEvents)) {
-    $node = node_load($NewEvent['nid'], NULL, TRUE);
+
+  // Closest events.
+  $closest_event_nids = array();
+  while ($closest_event = db_fetch_array($events)) {
+    $closest_event_nids[] = $closest_event['nid'];
+    $node = node_load($closest_event['nid'], NULL, TRUE);
+    // Get city name from taxonomy_term.
+    $city = taxonomy_get_term($node->field_city[0]['value']);
+    $city = (!empty($city->name)) ? $city->name : '';
     $timestamp = strtotime($node->field_event_date[0]['value']);
-    $date = date('d.m.Y', $timestamp);
-    $image = (isset($node->field_events_logo[0]['filepath'])) ? url($node->field_events_logo[0]['filepath'], array('absolute' => TRUE,)) : $text['deffaultimage'];
+    $date = date('d/m/Y', $timestamp);
+    $image = isset($node->field_events_logo[0]['filepath']) ? url($node->field_events_logo[0]['filepath'], array('absolute' => TRUE)) : $text['deffaultimage'];
+    $body = strip_tags($node->body);
+    $text['events_label'] = t('Closest events');
     $text['events'][] = array(
       'title' => $node->title,
-      'date' => $date,
-      'body' => drupal_substr($node->body, 0, 300),
-      'readmore_link' => url($node->path, array('absolute' => TRUE,)),
-      'readmore_text' => t('Read more...'),
+      'date'  => $date . ' • ' . $city,
+      'body'  => views_trim_text(array('max_length' => 200, 'ellipsis' => TRUE, 'word_boundary' => FALSE), $body),
+      'readmore_link' => url($node->path, array('absolute' => TRUE)),
+      'readmore_text' => t('Learn more'),
       'logo' => $image,
-      'register_link' => url($node->path, array('absolute' => TRUE,)),
+      'register_link' => url($node->path, array('absolute' => TRUE)),
       'register_text' => t('Sign up'),
     );
   }
+  // New events.
+  while ($new_event = db_fetch_array($new_events)) {
+    if (!in_array($new_event['nid'], $closest_event_nids)) {
+      $node = node_load($new_event['nid'], NULL, TRUE);
+      $timestamp = strtotime($node->field_event_date[0]['value']);
+      $date = date('d/m/Y', $timestamp);
+      $image = isset($node->field_events_logo[0]['filepath']) ? url($node->field_events_logo[0]['filepath'], array('absolute' => TRUE)) : $text['deffaultimage'];
+      $body = strip_tags($node->body);
+      $text['new_events_label'] = t('New events');
+      $text['all_new_events_label'] = '<a style="color:#fff;text-decoration: none;width: 100%;line-height: 31px;display: block;" href="' . url('events',array('absolute' => TRUE)) . '">' . t('All events') . '</a>';
+      $text['new_events'][] = array(
+        'title' => $node->title,
+        'date'  => $date,
+        'body'  => views_trim_text(array('max_length' => 90, 'ellipsis' => TRUE, 'word_boundary' => FALSE), $body),
+        'readmore_link' => url($node->path, array('absolute' => TRUE)),
+        'readmore_text' => t('Learn more'),
+        'logo' => $image,
+        'register_link' => url($node->path, array('absolute' => TRUE)),
+        'register_text' => t('Sign up'),
+      );
+    }
+  }
+
+  // New questions.
+  while ($new_question = db_fetch_array($questions)) {
+    $node = node_load($new_question['nid'], NULL, TRUE);
+    $body = strip_tags($node->body);
+    $text['questions_label'] = t('New questions');
+    $text['all_questions_label'] = '<a style="color:#fff;text-decoration: none;width: 100%;line-height: 31px;display: block;" href="' . url('question',array('absolute' => TRUE)) . '">' . t('All questions') . '</a>';
+    $text['questions'][] = array(
+      'title' => $node->title,
+      'body' => views_trim_text(array('max_length' => 200, 'ellipsis' => TRUE, 'word_boundary' => FALSE), $body),
+      'readmore_link' => url($node->path, array('absolute' => TRUE)),
+      'readmore_text' => t('Learn more'),
+    );
+  }
+
+  // New vacancies.
+  while ($new_vacancy = db_fetch_array($vacancies)) {
+    $node = node_load($new_vacancy['nid'], NULL, TRUE);
+    $company = !empty($node->field_company[0]['title']) ? $node->field_company[0]['title'] . ' • ' : '';
+    // Get city name from taxonomy_term.
+    $city = taxonomy_get_term($node->field_cities[0]['value']);
+    $city = (!empty($city->name)) ? $city->name : '';
+    $body = strip_tags($node->body);
+    $text['vacancies_label'] = t('New vacancies');
+    $text['all_vacancies_label'] = '<a style="color:#fff;text-decoration: none;width: 100%;line-height: 31px;display: block;" href="' . url('vacancies',array('absolute' => TRUE)) . '">' . t('All vacancies') . '</a>';
+    $text['vacancies'][] = array(
+      'title' => $node->title,
+      'body' => views_trim_text(array('max_length' => 400, 'ellipsis' => TRUE, 'word_boundary' => FALSE), $body),
+      'readmore_link' => url($node->path, array('absolute' => TRUE)),
+      'readmore_text' => t('Learn more'),
+      'city' => $company . $city,
+    );
+  }
+
+  // New posts.
+  while ($new_post = db_fetch_array($posts)) {
+    $node = node_load($new_post['nid'], NULL, TRUE);
+    $author = user_load($node->uid);
+    $author = !empty($author->name) ? $author->name : '';
+    $body = strip_tags($node->body);
+    $text['posts_label'] = t('New posts');
+    $text['all_posts_label'] = '<a style="color:#fff;text-decoration: none;width: 100%;line-height: 31px;display: block;" href="' . url('groups',array('absolute' => TRUE)) . '">' . t('All posts') . '</a>';
+    $text['posts'][] = array(
+      'title' => $node->title,
+      'body' => views_trim_text(array('max_length' => 200, 'ellipsis' => TRUE, 'word_boundary' => FALSE), $body),
+      'readmore_link' => url($node->path, array('absolute' => TRUE)),
+      'readmore_text' => t('Learn more'),
+      'author' => $author,
+    );
+  }
+
   return theme('idevels_send_new_events_template', $text);
 }
