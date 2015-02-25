@@ -9,7 +9,7 @@
   <?php if (!empty($message['questions'])): ?>
     <tr style="padding-bottom: 10px; height: 40px;" valign="top">
       <td>
-        <div style="font-weight: bold;font-family: georgia, serif;line-height: 1.2em;font-size: 18px; text-transform: uppercase; border-bottom: 2px solid #21c2f8;width: 210px;"><?php print $message['questions_label'] ?></div>
+        <div style="font-weight: bold;font-family: georgia, serif;line-height: 1.2em;font-size: 18px; text-transform: uppercase; border-bottom: 2px solid #21c2f8;width: 230px;"><?php print $message['questions_label'] ?></div>
       </td>
     </tr>
     <?php foreach ($message['questions'] as $delta => $item) : ?>
@@ -31,7 +31,7 @@
   <?php if (!empty($message['events'])): ?>
     <tr style="padding-bottom: 10px;height: 40px;" valign="top">
       <td>
-        <div style="font-weight: bold;font-family: georgia, serif;line-height: 1.2em;font-size: 18px; text-transform: uppercase; border-bottom: 2px solid #21c2f8;width: 210px;"><?php print $message['events_label'] ?></div>
+        <div style="font-weight: bold;font-family: georgia, serif;line-height: 1.2em;font-size: 18px; text-transform: uppercase; border-bottom: 2px solid #21c2f8;width: 230px;"><?php print $message['events_label'] ?></div>
       </td>
     </tr>
   <?php foreach ($message['events'] as $delta => $item) : ?>
@@ -40,7 +40,7 @@
         <img src="<?php print $item['logo']; ?>" style="width:112px;height:auto;"></td>
       <td>
         <div style="font-weight: bold;font-family: georgia, serif;line-height: 1.2em;font-size: 14px;"><?php print $item['title']; ?></div>
-        <div style="font-family: Helvetica,Arial,sans-serif; font-size: 13px;font-style: italic;line-height: 1.5em;color: #787878;"><?php print $item['date']; ?></div>
+        <div style="font-family: Helvetica,Arial,sans-serif; font-size: 13px;line-height: 1.5em;color: #787878;"><?php print $item['date']; ?></div>
         <div style="font-family: Helvetica,Arial,sans-serif;font-size: 12px;line-height: 1.5em;margin-bottom: 10px;"> <?php print $item['body']; ?>
           <br /><a href="<?php print $item['readmore_link'];?>" style="color:#21c2f8;"><?php print $item['readmore_text'];?></a>
         </div>
@@ -50,14 +50,14 @@
   <?php if (!empty($message['new_events'])): ?>
     <tr style="padding-bottom: 10px;height: 40px;" valign="top">
       <td>
-        <div style="font-weight: bold;font-family: georgia, serif;line-height: 1.2em;font-size: 18px; text-transform: uppercase;"><?php print $message['new_events_label'] ?></div>
+        <div style="font-weight: bold;font-family: georgia, serif;line-height: 1.2em;font-size: 18px; text-transform: uppercase;border-bottom: 2px solid #21C2F8;"><?php print $message['new_events_label'] ?></div>
       </td>
     </tr>
   <?php foreach ($message['new_events'] as $delta => $item) : ?>
     <tr style="padding-bottom: 10px; height: 80px;" valign="top">
       <td colspan="2">
         <div style="font-weight: bold;font-family: georgia, serif;line-height: 1.2em;font-size: 14px;display: inline-block;"><?php print $item['title']; ?>,</div>
-        <div style="font-family: Helvetica,Arial,sans-serif; font-size: 13px;font-style: italic;line-height: 1.5em;display: inline-block;color: #787878;"><?php print $item['date']; ?></div>
+        <div style="font-family: Helvetica,Arial,sans-serif; font-size: 13px;line-height: 1.5em;display: inline-block;color: #787878;"><?php print $item['date']; ?></div>
         <div style="font-family: Helvetica,Arial,sans-serif;font-size: 12px;line-height: 1.5em;margin-bottom: 10px;"> <?php print $item['body']; ?>
           <br /><a href="<?php print $item['readmore_link'];?>" style="color:#21c2f8;"><?php print $item['readmore_text'];?></a>
         </div>
@@ -73,18 +73,14 @@
   <?php if (!empty($message['vacancies'])): ?>
     <tr style="padding-bottom: 10px; height: 40px;" valign="top">
       <td>
-        <div style="font-weight: bold;font-family: georgia, serif;line-height: 1.2em;font-size: 18px; text-transform: uppercase; border-bottom: 2px solid #21c2f8;width: 210px;"><?php print $message['vacancies_label'] ?></div>
+        <div style="font-weight: bold;font-family: georgia, serif;line-height: 1.2em;font-size: 18px; text-transform: uppercase; border-bottom: 2px solid #21c2f8;width: 230px;"><?php print $message['vacancies_label'] ?></div>
       </td>
     </tr>
   <?php foreach ($message['vacancies'] as $delta => $item) : ?>
     <tr style="padding-bottom: 10px; height: 100px;" valign="top">
       <td colspan="2">
-        <table style="width:650px;color: #2f383d;margin: 0 auto;"><tbody>
-        <tr style="font-weight: bold;font-family: georgia, serif;line-height: 1.2em;font-size: 14px;">
-          <td><?php print $item['title']; ?></div>
-          <td style="text-align:right;font-family: Helvetica,Arial,sans-serif; font-size: 13px;font-style: italic;line-height: 1.5em;color: #787878;font-weight: normal;"><?php print $item['city']; ?></div>
-        </tr>
-        </tbody></table>
+        <div style="display:inline-block;width:385px;font-weight: bold;font-family: georgia, serif;line-height: 1.2em;font-size: 14px;"><?php print $item['title']; ?></div>
+        <div style="width: 250px;text-align:right;font-family: Helvetica,Arial,sans-serif; font-size: 13px;line-height: 1.5em;color: #787878;font-weight: normal;display:inline-block;"><?php print $item['city']; ?></div>
         <div style="font-family: Helvetica,Arial,sans-serif;font-size: 12px;line-height: 1.5em;margin-bottom: 10px;"> <?php print $item['body']; ?>
           <br /><a href="<?php print $item['readmore_link'];?>" style="color:#21c2f8;"><?php print $item['readmore_text'];?></a>
         </div>
@@ -100,18 +96,14 @@
   <?php if (!empty($message['posts'])): ?>
     <tr style="padding-bottom: 10px;height: 40px;" valign="top">
       <td>
-        <div style="font-weight: bold;font-family: georgia, serif;line-height: 1.2em;font-size: 18px; text-transform: uppercase; border-bottom: 2px solid #21c2f8;width: 210px;"><?php print $message['posts_label'] ?></div>
+        <div style="font-weight: bold;font-family: georgia, serif;line-height: 1.2em;font-size: 18px; text-transform: uppercase; border-bottom: 2px solid #21c2f8;width: 230px;"><?php print $message['posts_label'] ?></div>
       </td>
     </tr>
   <?php foreach ($message['posts'] as $delta => $item) : ?>
     <tr style="padding-bottom: 10px;height: 100px;" valign="top">
       <td colspan="2">
-        <table style="width:650px;color: #2f383d;margin: 0 auto;"><tbody>
-        <tr>
-          <td style="font-weight: bold;font-family: georgia, serif;line-height: 1.2em;font-size: 14px;"><?php print $item['title']; ?></div>
-          <td style="text-align:right;font-family: Helvetica,Arial,sans-serif; font-size: 13px;font-style: italic;line-height: 1.5em;color: #787878;font-weight: normal;"><?php print $item['author']; ?></div>
-        </tr>
-        </tbody></table>
+        <div style="display:inline-block;width:385px;font-weight: bold;font-family: georgia, serif;line-height: 1.2em;font-size: 14px;"><?php print $item['title']; ?></div>
+        <div style="width: 250px;display:inline-block;text-align:right;font-family: Helvetica,Arial,sans-serif; font-size: 13px;line-height: 1.5em;color: #787878;font-weight: normal;"><?php print $item['author']; ?></div>
         <div style="font-family: Helvetica,Arial,sans-serif;font-size: 12px;line-height: 1.5em;margin-bottom: 10px;"> <?php print $item['body']; ?>
           <br /><a href="<?php print $item['readmore_link'];?>" style="color:#21c2f8;"><?php print $item['readmore_text'];?></a>
         </div>
