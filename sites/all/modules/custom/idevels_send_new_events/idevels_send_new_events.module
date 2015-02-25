@@ -22,12 +22,13 @@ function idevels_send_new_events_menu() {
  **/
 function idevels_send_new_events_cron() {
   $time       = strtotime('-7 day');
-  $new_events = db_query("SELECT node.nid AS nid FROM node node WHERE (node.status = '1' AND node.type in ('events')) AND (node.created > %d)", array($time));
+  $new_events = db_query("SELECT node.nid AS nid FROM node node WHERE (node.status = '1' AND node.type in ('events')) AND (node.created > %d) ORDER BY node.created DESC", array($time));
   $events     = db_query(
     "SELECT `content_type_events`.`nid`
      FROM  `content_type_events`
      INNER JOIN  `node` ON  `content_type_events`.`nid` =  `node`.`nid`
      WHERE (STR_TO_DATE(`content_type_events`.`field_event_date_value`, '%Y-%m-%%dT%T') > NOW() AND STR_TO_DATE(`content_type_events`.`field_event_date_value`, '%Y-%m-%%dT%T') < NOW()+INTERVAL 7 DAY)
+     ORDER BY `field_event_date_value` DESC
      LIMIT 5"
   );
   $questions  = db_query("SELECT node.nid AS nid FROM node node WHERE (node.status = '1' AND  node.type in ('helper')) AND (node.created > %d)", array($time));
@@ -36,11 +37,8 @@ function idevels_send_new_events_cron() {
 
   if ($events || $new_events || $questions || $vacancies || $post) {
     $template = idevels_send_new_events_make_message($events, $new_events, $questions, $vacancies, $posts);
-    $current_month = date('m');
-    $current_month = number_format($current_month);
-    $month = explode('|', t('|January|February|March|April|May|June|July|August|September|October|November|December'));
     $message = array(
-      'subject' => t('Interesting events in') . ' ' . $month[$current_month],
+      'subject' => t('Interesting events'),
       'headers' => array(
         'Reply-To' => variable_get('idevels_send_new_events_reply', 'support@drupal.ua'),
         'MIME-Version' => '1.0',
