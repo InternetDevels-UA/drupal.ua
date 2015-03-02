@@ -22,13 +22,13 @@ function idevels_send_new_events_menu() {
  **/
 function idevels_send_new_events_cron() {
   $time       = strtotime('-7 day');
-  $new_events = db_query("SELECT node.nid AS nid FROM node node WHERE (node.status = '1' AND node.type in ('events')) AND (node.created > %d) ORDER BY node.created DESC", array($time));
+  $new_events = db_query("SELECT node.nid AS nid FROM node node WHERE (node.status = '1' AND node.type in ('events')) AND (node.created > %d) ORDER BY node.created ASC", array($time));
   $events     = db_query(
     "SELECT `content_type_events`.`nid`
      FROM  `content_type_events`
      INNER JOIN  `node` ON  `content_type_events`.`nid` =  `node`.`nid`
      WHERE (STR_TO_DATE(`content_type_events`.`field_event_date_value`, '%Y-%m-%%dT%T') > NOW() AND STR_TO_DATE(`content_type_events`.`field_event_date_value`, '%Y-%m-%%dT%T') < NOW()+INTERVAL 7 DAY)
-     ORDER BY `field_event_date_value` DESC
+     ORDER BY `field_event_date_value` ASC
      LIMIT 5"
   );
   $questions  = db_query("SELECT node.nid AS nid FROM node node WHERE (node.status = '1' AND  node.type in ('helper')) AND (node.created > %d)", array($time));
@@ -288,7 +288,7 @@ function idevels_send_new_events_make_message($events = '', $new_events = '', $q
     $text['events'][] = array(
       'title' => $node->title,
       'date'  => $date . ' • ' . $city,
-      'body'  => views_trim_text(array('max_length' => 200, 'ellipsis' => TRUE, 'word_boundary' => FALSE), $body),
+      'body'  => views_trim_text(array('max_length' => 400, 'ellipsis' => TRUE, 'word_boundary' => TRUE), $body),
       'readmore_link' => url($node->path, array('absolute' => TRUE)),
       'readmore_text' => t('Learn more'),
       'logo' => $image,
@@ -309,7 +309,7 @@ function idevels_send_new_events_make_message($events = '', $new_events = '', $q
       $text['new_events'][] = array(
         'title' => $node->title,
         'date'  => $date,
-        'body'  => views_trim_text(array('max_length' => 90, 'ellipsis' => TRUE, 'word_boundary' => FALSE), $body),
+        'body'  => views_trim_text(array('max_length' => 400, 'ellipsis' => TRUE, 'word_boundary' => TRUE), $body),
         'readmore_link' => url($node->path, array('absolute' => TRUE)),
         'readmore_text' => t('Learn more'),
         'logo' => $image,
@@ -327,7 +327,7 @@ function idevels_send_new_events_make_message($events = '', $new_events = '', $q
     $text['all_questions_label'] = '<a style="color:#fff;text-decoration: none;width: 100%;line-height: 31px;display: block;" href="' . url('question',array('absolute' => TRUE)) . '">' . t('All questions') . '</a>';
     $text['questions'][] = array(
       'title' => $node->title,
-      'body' => views_trim_text(array('max_length' => 200, 'ellipsis' => TRUE, 'word_boundary' => FALSE), $body),
+      'body' => views_trim_text(array('max_length' => 400, 'ellipsis' => TRUE, 'word_boundary' => TRUE), $body),
       'readmore_link' => url($node->path, array('absolute' => TRUE)),
       'readmore_text' => t('Learn more'),
     );
@@ -345,7 +345,7 @@ function idevels_send_new_events_make_message($events = '', $new_events = '', $q
     $text['all_vacancies_label'] = '<a style="color:#fff;text-decoration: none;width: 100%;line-height: 31px;display: block;" href="' . url('vacancies',array('absolute' => TRUE)) . '">' . t('All vacancies') . '</a>';
     $text['vacancies'][] = array(
       'title' => $node->title,
-      'body' => views_trim_text(array('max_length' => 400, 'ellipsis' => TRUE, 'word_boundary' => FALSE), $body),
+      'body' => views_trim_text(array('max_length' => 400, 'ellipsis' => TRUE, 'word_boundary' => TRUE), $body),
       'readmore_link' => url($node->path, array('absolute' => TRUE)),
       'readmore_text' => t('Learn more'),
       'city' => $company . $city,
@@ -362,7 +362,7 @@ function idevels_send_new_events_make_message($events = '', $new_events = '', $q
     $text['all_posts_label'] = '<a style="color:#fff;text-decoration: none;width: 100%;line-height: 31px;display: block;" href="' . url('groups',array('absolute' => TRUE)) . '">' . t('Posts all') . '</a>';
     $text['posts'][] = array(
       'title' => $node->title,
-      'body' => views_trim_text(array('max_length' => 200, 'ellipsis' => TRUE, 'word_boundary' => FALSE), $body),
+      'body' => views_trim_text(array('max_length' => 400, 'ellipsis' => TRUE, 'word_boundary' => TRUE), $body),
       'readmore_link' => url($node->path, array('absolute' => TRUE)),
       'readmore_text' => t('Learn more'),
       'author' => $author,
