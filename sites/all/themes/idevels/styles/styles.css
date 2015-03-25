@@ -5625,11 +5625,9 @@ body.front .pane-views,
 .view-group .views-row {
   margin: 5px 10px 10px 0px;
 }
-
-.footer-third,
 #sidebar-right {
-  margin-right: 20px;
   width: 340px;
+  margin-right: 20px;
 }
 
 #cke_edit-submitted-povidomlennya {
