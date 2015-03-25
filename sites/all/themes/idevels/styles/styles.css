@@ -5341,6 +5341,7 @@ body.page-user .view-id-profile_view .views-field-field-bio-value label {
   width:370px;
   margin: 0px;
   word-wrap: break-word;
+  padding-right: 7px;
 }
 
 .view-upcoming-events .views-row,
