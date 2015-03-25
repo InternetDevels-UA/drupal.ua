@@ -109,7 +109,7 @@ $(function () {
 
   $.each(tagsrow, function(idx, itm) { tags.append(itm); });
   var count = $('.view-tegs-front .view-content .views-row').length;
-  count = count -10;
+  count = count -19;
   $('.view-tegs-front .view-content .views-row').slice(-count).hide();
 
   // Change orientation on mobile device.
