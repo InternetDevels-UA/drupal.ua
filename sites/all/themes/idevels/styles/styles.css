@@ -5953,3 +5953,9 @@ body.page-user ul.primary li.active {
   color: #000;
   text-decoration: underline;
 }
+.view-id-upcoming_events .field-content img {
+  margin-top: 7px;
+}
+.pane-upcoming-events-panel-pane-1 .pane-title {
+  margin-bottom: 25px;
+}
