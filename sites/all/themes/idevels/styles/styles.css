@@ -3081,23 +3081,19 @@ h2.pane-title {
   width: 350px;
   float: left;
   margin-bottom: 30px;
-  margin-right: 90px;
+  margin-right: 60px;
 }
 
 .footer-third {
-  width: 350px;
+  margin-right: 20px;
+  width: 370px;
   float: left;
-  margin-bottom: 30px;
-  /*margin-right: 90px;*/
 }
 .footer-first .panel-pane .pane-title,
 .footer-second .panel-pane .pane-title{
-  font-size: 15px;
-  /*font-family: 'open_sans';*/
-  font-family: 'PT Sans';
+  font-size: 2em;
   padding: 2px 0px;
   font-weight: 700;
-  text-transform: uppercase;
   margin-bottom: 20px;
 }
 /*.footer-first .view-group-comments .views-field-comment{
@@ -5932,4 +5928,18 @@ body.page-user ul.primary li.active {
   color: #FFF;
   font-weight: bold;
   padding: 10px 152px;
+}
+.footer-first .panel-pane .pane-title a {
+  font-family: 'PT Sans Narrow';
+}
+.pane-upcoming-events-panel-pane-1 .views-row {
+  background: #fafafa;
+  border-bottom: 2px #cdcdcd solid;
+  margin-right: 0;
+  margin-bottom: 4px;
+  padding-left: 5px;
+}
+.pane-upcoming-events-panel-pane-1 .view-footer a {
+  color: #000;
+  text-decoration: underline;
 }
