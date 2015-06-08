@@ -1264,6 +1264,7 @@ function _idevels_email_notification_about_event($i, $time_period, $email, $nid)
   while ($event_request = db_fetch_object($result)) {
 
     $timestamp = strtotime($event_request->field_event_date_value);
+    $timezone = variable_get('date_default_timezone', '');
     $city = taxonomy_get_term($event_request->field_city_value)->name ?: FALSE;
     $user = user_load(array('mail' => $event_request->field_email_value));
 
@@ -1284,7 +1285,7 @@ function _idevels_email_notification_about_event($i, $time_period, $email, $nid)
     $tokens = array(
       '!logo' => $event_request->filepath ? theme_imagecache('100x100', $event_request->filepath) : '',
       '!name' => $event_request->field_name_value,
-      '!date' => ua_month_perfecty($timestamp + 2 * 60 * 60),
+      '!date' => ua_month_perfecty($timestamp + $timezone),
       '!event_name' => $event_request->title,
       '!city' => $city,
       '!link' => $base_url . '/' . drupal_get_path_alias('node/' . $event_request->nid),
