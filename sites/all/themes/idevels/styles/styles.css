@@ -5710,6 +5710,7 @@ body.front .view-display-id-block_1 .views-row {
   position: absolute;
   right: 0px;
   top: -95px;
+  z-index: 5;
 }
 
 #block-views-question-block_1 h3.block-title {
